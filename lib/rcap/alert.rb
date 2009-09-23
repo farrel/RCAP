@@ -4,12 +4,15 @@ module CAP
 
     XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
 
-    REQUIRED_ELEMENTS = [ :identifier, :sender, :sent, :status, :msg_type, :scope ] 
-    OPTIONAL_ELEMENTS = [ :source, :restriction, :addresses, :code, :note, :references, :incidents ]
-    ALL_ELEMENTS = REQUIRED_ELEMENTS + OPTIONAL_ELEMENTS
+    REQUIRED_ATOMIC_ELEMENTS = [ :identifier, :sender, :sent, :status, :msg_type, :scope ] 
+    OPTIONAL_ATOMIC_ELEMENTS = [ :source, :restriction, :code, :note ]
+    OPTIONAL_GROUP_ELEMENTS = [ :addresses, :references, :incidents ]
+    ALL_ELEMENTS = REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS + OPTIONAL_GROUP_ELEMENTS
 
-    attr_accessor( *ALL_ELEMENTS )
-    validates_presence_of( *REQUIRED_ELEMENTS )
+    attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
+    attr_reader( *OPTIONAL_GROUP_ELEMENTS )
+
+    validates_presence_of( *REQUIRED_ATOMIC_ELEMENTS )
 
 
     STATUS_ACTUAL   = "Actual"
@@ -40,7 +43,7 @@ module CAP
       alert.errors[ attribute ] << 'does not have a valid scope' unless ALL_SCOPES.include?( scope )
     end
 
-    attr_accessor( :infos )
+    attr_reader( :infos )
 
     def initialize( attributes = {})
       @identifier = attributes[ :identifier ] || UUIDTools::UUID.random_create.to_s
@@ -50,9 +53,10 @@ module CAP
       @scope = attributes[ :scope ]
       @source = attributes[ :source ]
       @restriction = attributes[ :source ]
-      @addresses = attributes[ :addresses ] || []
-      @references = attributes[ :references ] || []
-      @incidents = attributes[ :incidents ] || []
+      @addresses =  []
+      @references = []
+      @incidents = []
+      @infos = []
     end
   end
 end
