@@ -2,9 +2,12 @@ module CAP
   class Info
     include Validation
 
-    OPTIONAL_ATOMIC_ELEMENTS = [ :language ]  
-    REQUIRED_ATOMIC_ELEMENTS = [ :event, :urgency ]
-    OPTIONAL_GROUP_ELEMENTS = [ :response_types ]
+    OPTIONAL_ATOMIC_ELEMENTS = [ :language, :audience, :effective, :onset,
+      :expires, :sender_name, :headline, :description, :instruction,
+      :web, :contact ]
+    OPTIONAL_GROUP_ELEMENTS = [ :response_types, :event_codes, :parameters ]
+
+    REQUIRED_ATOMIC_ELEMENTS = [ :event, :urgency, :severity, :certainty ]
     REQUIRED_GROUP_ELEMENTS = [ :categories ]
 
     attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
@@ -69,10 +72,34 @@ module CAP
       URGENCY_PAST, URGENCY_UNKNOWN ]
     validates_each( :urgency ) do |info, attribute, urgency |
       unless ALL_URGENCIES.include?( urgency )
-        info.errors[ attribute ] << "is not a valid ugency code" 
+        info.errors[ attribute ] << 'is not a valid urgency' 
       end
     end
 
+    SEVERITY_EXTREME  = "Extreme"
+    SEVERITY_SEVERE   = "Severe"
+    SEVERITY_MODERATE = "Moderate"
+    SEVERITY_UNKNOWN  = "Unknown"
+     ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE,  SEVERITY_MODERATE,
+       SEVERITY_UNKNOWN ] 
+     validates_each( :severity ) do |info, attribute, severity|
+       unless ALL_SEVERITIES.include?( severity )
+         info.errors[ attribute ] << 'is not a valid severity'
+       end
+     end
+
+     CERTAINTY_OBSERVED = "Observed"
+     CERTAINTY_LIKELY   = "Likely"
+     CERTAINTY_POSSIBLE = "Possible"
+     CERTAINTY_UNLIKELY = "Unlikely"
+     CERTAINTY_UNKNOWN  = "Unknown"
+     ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
+       CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ] 
+     validates_each( :certainty ) do |info, attribute, certainty|
+       unless ALL_CERTAINTIES.include?( certainty )
+         info.errors[ attribute ] << 'is not a valid certainty'
+       end
+     end
 
     def initialize( attributes = {} )
       @language = attributes[ :language ] || 'en-US'
@@ -80,6 +107,9 @@ module CAP
       @event = attributes [ :event ]
       @response_types = []
       @urgency = attributes[ :urgency ]
+      @audience = attributes[ :audience ]
+      @event_codes = {}
+      @parameters = {}
     end
   end
 end
