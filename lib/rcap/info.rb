@@ -2,13 +2,16 @@ module CAP
   class Info
     include Validation
 
-    OPTIONAL_ATOMIC_ELEMENTS = [ :language, :audience, :effective, :onset,
-      :expires, :sender_name, :headline, :description, :instruction,
-      :web, :contact ]
-    OPTIONAL_GROUP_ELEMENTS = [ :response_types, :event_codes, :parameters ]
+    LANGUAGE       = :language
+    EVENT          = :event
+    URGENCY        = :urgency
+    RESPONSE_TYPES = :response_types
+    CATEGORIES     = :categories
 
-    REQUIRED_ATOMIC_ELEMENTS = [ :event, :urgency, :severity, :certainty ]
-    REQUIRED_GROUP_ELEMENTS = [ :categories ]
+    OPTIONAL_ATOMIC_ELEMENTS = [ LANGUAGE ]
+    REQUIRED_ATOMIC_ELEMENTS = [ EVENT, URGENCY ]
+    OPTIONAL_GROUP_ELEMENTS  = [ RESPONSE_TYPES ]
+    REQUIRED_GROUP_ELEMENTS  = [ CATEGORIES ]
 
     attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
 
@@ -31,12 +34,12 @@ module CAP
     CATEGORY_INFRA     = "Infra"
     CATEGORY_CBRNE     = "CBRNE"
     CATEGORY_OTHER     = "Other"
-    ALL_CATEGORIES =    [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY, 
+    ALL_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY, 
       CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
       CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
       CATEGORY_OTHER ]
     
-    validates_each( :categories ) do |info, attribute, categories|
+    validates_each( CATEGORIES ) do |info, attribute, categories|
       categories.each do |category|
         unless ALL_CATEGORIES.include?( category )
           info.errors[ attribute ] << "contains an invalid category: '#{ category }'" 
@@ -55,9 +58,9 @@ module CAP
       RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
       RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
-    validates_each( :response_types ) do |info, attribute, response_types|
+    validates_each( RESPONSE_TYPES ) do |info, attribute, response_types|
       response_types.each do |response_type|
-        unless ALL_CATEGORIES.include?( response_type )
+        unless ALL_RESPONSE_TYPES.include?( response_type )
           info.errors[ attribute ] << "contains an invalid response type: '#{ response_type }'" 
         end
       end
@@ -70,46 +73,19 @@ module CAP
     URGENCY_UNKNOWN   = "Unknown"
     ALL_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
       URGENCY_PAST, URGENCY_UNKNOWN ]
-    validates_each( :urgency ) do |info, attribute, urgency |
+    validates_each( URGENCY ) do |info, attribute, urgency |
       unless ALL_URGENCIES.include?( urgency )
-        info.errors[ attribute ] << 'is not a valid urgency' 
+        info.errors[ attribute ] << "is not a valid ugency code" 
       end
     end
 
-    SEVERITY_EXTREME  = "Extreme"
-    SEVERITY_SEVERE   = "Severe"
-    SEVERITY_MODERATE = "Moderate"
-    SEVERITY_UNKNOWN  = "Unknown"
-     ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE,  SEVERITY_MODERATE,
-       SEVERITY_UNKNOWN ] 
-     validates_each( :severity ) do |info, attribute, severity|
-       unless ALL_SEVERITIES.include?( severity )
-         info.errors[ attribute ] << 'is not a valid severity'
-       end
-     end
-
-     CERTAINTY_OBSERVED = "Observed"
-     CERTAINTY_LIKELY   = "Likely"
-     CERTAINTY_POSSIBLE = "Possible"
-     CERTAINTY_UNLIKELY = "Unlikely"
-     CERTAINTY_UNKNOWN  = "Unknown"
-     ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
-       CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ] 
-     validates_each( :certainty ) do |info, attribute, certainty|
-       unless ALL_CERTAINTIES.include?( certainty )
-         info.errors[ attribute ] << 'is not a valid certainty'
-       end
-     end
 
     def initialize( attributes = {} )
-      @language = attributes[ :language ] || 'en-US'
+      @language = attributes[ LANGUAGE ] || 'en-US'
       @categories = []
-      @event = attributes [ :event ]
+      @event = attributes [ EVENT ]
       @response_types = []
-      @urgency = attributes[ :urgency ]
-      @audience = attributes[ :audience ]
-      @event_codes = {}
-      @parameters = {}
+      @urgency = attributes[ URGENCY ]
     end
   end
 end

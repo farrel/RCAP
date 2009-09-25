@@ -4,17 +4,16 @@ require 'spec/rake/spectask'
 require 'rcov/rcovtask'
 
 SPEC = Gem::Specification.new do |spec|
-  spec.name = "rcap"
+  spec.name = "rCAP"
   spec.version = "0.1"
   spec.author = "Farrel Lifson"
   spec.email = "farrel.lifson@aimred.com"
   spec.homepage = "http://www.aimred.com/projects/rcap"
-	spec.rubyforge_project = "rcap"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "CAP(Common Alerting Protocol) API"
-	spec.description = "An API to create and generate Common Alerting Protocol messages"
   spec.files = Dir.glob("{lib,examples}/**/*")
   spec.require_path = "lib"
+  spec.autorequire = "rcap"
   spec.has_rdoc = true
   spec.extra_rdoc_files = [ "README","CHANGELOG" ]
   spec.add_dependency( 'assistance' )

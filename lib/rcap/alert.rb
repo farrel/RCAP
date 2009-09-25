@@ -1,62 +1,79 @@
 module CAP
-  class Alert
-    include Validation
+	class Alert
+		include Validation
 
-    XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
+		XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
 
-    REQUIRED_ATOMIC_ELEMENTS = [ :identifier, :sender, :sent, :status, :msg_type, :scope ] 
-    OPTIONAL_ATOMIC_ELEMENTS = [ :source, :restriction, :code, :note ]
-    OPTIONAL_GROUP_ELEMENTS = [ :addresses, :references, :incidents ]
-    ALL_ELEMENTS = REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS + OPTIONAL_GROUP_ELEMENTS
+		ADDRESSES   = :addresses
+		REFERENCES  = :references
+		INCIDENTS   = :incidents
+		SOURCE      = :source
+		RESTRICTION = :restriction
+		CODE        = :code
+		NOTE        = :note
+		IDENTIFIER  = :identifier
+		SENDER      = :sender
+		SENT        = :sent
+		STATUS      = :status
+		MSG_TYPE    = :msg_type
+		SCOPE       = :scope
 
-    attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
-    attr_reader( *OPTIONAL_GROUP_ELEMENTS )
 
-    validates_presence_of( *REQUIRED_ATOMIC_ELEMENTS )
+		REQUIRED_ATOMIC_ELEMENTS = [ IDENTIFIER, SENDER, SENT, STATUS, MSG_TYPE, SCOPE ] 
+		OPTIONAL_ATOMIC_ELEMENTS = [ SOURCE, RESTRICTION, CODE, NOTE ]
+
+		OPTIONAL_GROUP_ELEMENTS = [ ADDRESSES, REFERENCES, INCIDENTS ]
+
+		ALL_ELEMENTS = REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS + OPTIONAL_GROUP_ELEMENTS
+
+		attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
+		attr_reader( *OPTIONAL_GROUP_ELEMENTS )
+
+		validates_presence_of( *REQUIRED_ATOMIC_ELEMENTS )
 
 
-    STATUS_ACTUAL   = "Actual"
-    STATUS_EXERCISE = "Exercise"
-    STATUS_SYSTEM   = "System"
-    STATUS_TEST     = "Test"
-    STATUS_DRAFT    = "Draft"
-    ALL_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
-    validates_each( :status ) do |object, attribute, value|
-      object.errors[ attribute ] << 'does not have a valid status value' unless ALL_STATUSES.include?( value )
-    end
+		STATUS_ACTUAL   = "Actual"
+		STATUS_EXERCISE = "Exercise"
+		STATUS_SYSTEM   = "System"
+		STATUS_TEST     = "Test"
+		STATUS_DRAFT    = "Draft"
+		ALL_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
+		validates_each( STATUS ) do |object, attribute, value|
+			object.errors[ attribute ] << 'does not have a valid status value' unless ALL_STATUSES.include?( value )
+		end
 
-    MSG_TYPE_ALERT  = "Alert"
-    MSG_TYPE_UPDATE = "Update"
-    MSG_TYPE_CANCEL = "Cancel"
-    MSG_TYPE_ACK    = "Ack"
-    MSG_TYPE_ERROR  = "Error"
-    ALL_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
-    validates_each( :msg_type ) do |alert, attribute, msg_type|
-      alert.errors[ attribute ] << 'does not have a valid message type' unless ALL_MSG_TYPES.include?( msg_type )
-    end
+		MSG_TYPE_ALERT  = "Alert"
+		MSG_TYPE_UPDATE = "Update"
+		MSG_TYPE_CANCEL = "Cancel"
+		MSG_TYPE_ACK    = "Ack"
+		MSG_TYPE_ERROR  = "Error"
+		ALL_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
+		validates_each( MSG_TYPE ) do |alert, attribute, msg_type|
+			alert.errors[ attribute ] << 'does not have a valid message type' unless ALL_MSG_TYPES.include?( msg_type )
+		end
 
-    SCOPE_PUBLIC     = "Public"
-    SCOPE_RESTRICTED = "Restricted"
-    SCOPE_PRIVATE    = "Private"
-    ALL_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
-    validates_each( :scope ) do |alert, attribute, scope|
-      alert.errors[ attribute ] << 'does not have a valid scope' unless ALL_SCOPES.include?( scope )
-    end
+		SCOPE_PUBLIC     = "Public"
+		SCOPE_RESTRICTED = "Restricted"
+		SCOPE_PRIVATE    = "Private"
+		ALL_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
+		validates_each( SCOPE ) do |alert, attribute, scope|
+			alert.errors[ attribute ] << 'does not have a valid scope' unless ALL_SCOPES.include?( scope )
+		end
 
-    attr_reader( :infos )
+		attr_reader( :infos )
 
-    def initialize( attributes = {})
-      @identifier = attributes[ :identifier ] || UUIDTools::UUID.random_create.to_s
-      @sender = attributes[ :sender ]
-      @sent = attributes[ :sent ] || Time.now
-      @status = attributes[ :status ]
-      @scope = attributes[ :scope ]
-      @source = attributes[ :source ]
-      @restriction = attributes[ :source ]
-      @addresses =  []
-      @references = []
-      @incidents = []
-      @infos = []
-    end
-  end
+		def initialize( attributes = {})
+			@identifier = attributes[ IDENTIFIER ] || UUIDTools::UUID.random_create.to_s
+			@sender = attributes[ SENDER ]
+			@sent = attributes[ SENT ] || Time.now
+			@status = attributes[ STATUS ]
+			@scope = attributes[ SCOPE ]
+			@source = attributes[ SOURCE ]
+			@restriction = attributes[ SOURCE ]
+			@addresses =  []
+			@references = []
+			@incidents = []
+			@infos = []
+		end
+	end
 end
