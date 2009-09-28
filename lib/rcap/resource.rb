@@ -16,6 +16,8 @@ module CAP
 
     validates_presence_of( *REQUIRED_ATOMIC_ELEMENTS )
 
+    attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
+
     def initialize( attributes = {} )
       @mime_type = attributes[ MIME_TYPE ]
       @size = attributes[ SIZE ]
