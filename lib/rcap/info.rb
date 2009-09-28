@@ -7,10 +7,26 @@ module CAP
     URGENCY        = :urgency
     RESPONSE_TYPES = :response_types
     CATEGORIES     = :categories
+    SEVERITY       = :severity
+    CERTAINTY      = :certainty
+    AUDIENCE       = :audience
+    EVENT_CODES    = :event_codes
+    EFFECTIVE      = :effective
+    ONSET          = :onset
+    EXPIRES = :expires
+    SENDER_NAME = :sender_name
+    HEADLINE = :headline
+    DESCRIPTION = :description
+    INSTRUCTION = :instruction
+    WEB = :web
+    CONTACT = :contact
+    PARAMETERS = :parameters
 
-    OPTIONAL_ATOMIC_ELEMENTS = [ LANGUAGE ]
-    REQUIRED_ATOMIC_ELEMENTS = [ EVENT, URGENCY ]
-    OPTIONAL_GROUP_ELEMENTS  = [ RESPONSE_TYPES ]
+    OPTIONAL_ATOMIC_ELEMENTS = [ LANGUAGE, AUDIENCE, EFFECTIVE, ONSET, EXPIRES,
+      SENDER_NAME, HEADLINE, DESCRIPTION, INSTRUCTION, WEB, CONTACT ]
+    REQUIRED_ATOMIC_ELEMENTS = [ EVENT, URGENCY, SEVERITY, CERTAINTY ]
+
+    OPTIONAL_GROUP_ELEMENTS  = [ RESPONSE_TYPES, EVENT_CODES, PARAMETERS ]
     REQUIRED_GROUP_ELEMENTS  = [ CATEGORIES ]
 
     attr_accessor( *( REQUIRED_ATOMIC_ELEMENTS + OPTIONAL_ATOMIC_ELEMENTS ))
@@ -38,7 +54,7 @@ module CAP
       CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
       CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
       CATEGORY_OTHER ]
-    
+
     validates_each( CATEGORIES ) do |info, attribute, categories|
       categories.each do |category|
         unless ALL_CATEGORIES.include?( category )
@@ -79,6 +95,31 @@ module CAP
       end
     end
 
+    SEVERITY_EXTREME  = "Extreme"
+    SEVERITY_SEVERE   = "Severe"
+    SEVERITY_MODERATE = "Moderate"
+    SEVERITY_MINOR    = "Minor"
+    SEVERITY_UNKNOWN  = "Unknown"
+    ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
+      SEVERITY_MINOR, SEVERITY_UNKNOWN ] 
+    validates_each( SEVERITY ) do |info, attribute, severity|
+      unless ALL_SEVERITIES.incllude?( severity )
+        info.errors[ attribute ] << "is not a valid severity code"
+      end
+    end
+
+    CERTAINTY_OBSERVED = "Observed"
+    CERTAINTY_LIKELY   = "Likely"
+    CERTAINTY_POSSIBLE = "Possible"
+    CERTAINTY_UNLIKELY = "Unlikely"
+    CERTAINTY_UNKNOWN  = "Unknown"
+    ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
+      CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
+    validates_each( CERTAINTY ) do |info, attribute, certainty|
+      unless ALL_CERTAINTIES.incllude?( certainty )
+        info.errors[ attribute ] << "is not a valid certainty code"
+      end
+    end
 
     def initialize( attributes = {} )
       @language = attributes[ LANGUAGE ] || 'en-US'
@@ -86,6 +127,16 @@ module CAP
       @event = attributes [ EVENT ]
       @response_types = []
       @urgency = attributes[ URGENCY ]
+      @severity = attributes[ SEVERITY ]
+      @certainty = attributes[ CERTAINTY ]
+      @event_codes = {}
+      @sender_name = attributes[ SENDER_NAME ]
+      @headline = attributes[ HEADLINE ]
+      @description = attributes[ DESCRIPTION ]
+      @instruction = attributes[ INSTRUCTION ]
+      @web = attributes[ WEB ]
+      @contact = attributes[ CONTACT ]
+      @parameters = {}
     end
   end
 end
