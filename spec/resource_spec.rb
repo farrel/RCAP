@@ -5,6 +5,7 @@ describe( CAP::Resource ) do
     before( :each ) do
       @resource = CAP::Resource.new
     end
+
     it( 'should have no mime_type' ){ @resource.mime_type.should( be_nil )}    
     it( 'should have no size' ){ @resource.size.should( be_nil )}         
     it( 'should have no uri' ){ @resource.uri.should( be_nil )}          

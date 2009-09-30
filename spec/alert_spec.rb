@@ -1,7 +1,7 @@
 require 'spec/spec_helper'
 
 describe( CAP::Alert ) do
-  context( 'on initialization' ) do
+  context( 'on initialisation' ) do
     before( :each )  do
       @alert = CAP::Alert.new
     end
@@ -18,7 +18,6 @@ describe( CAP::Alert ) do
     it( 'should not have a note' ){ @alert.note.should( be_nil )}
     it( 'should not have any references' ){ @alert.references.should( be_empty )}
     it( 'should not have any incidents' ){ @alert.incidents.should( be_empty )}
-
     it( 'should not have any infos' ){ @alert.infos.should( be_empty )}
   end
 end

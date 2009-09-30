@@ -13,14 +13,14 @@ module CAP
     EVENT_CODES    = :event_codes
     EFFECTIVE      = :effective
     ONSET          = :onset
-    EXPIRES = :expires
-    SENDER_NAME = :sender_name
-    HEADLINE = :headline
-    DESCRIPTION = :description
-    INSTRUCTION = :instruction
-    WEB = :web
-    CONTACT = :contact
-    PARAMETERS = :parameters
+    EXPIRES        = :expires
+    SENDER_NAME    = :sender_name
+    HEADLINE       = :headline
+    DESCRIPTION    = :description
+    INSTRUCTION    = :instruction
+    WEB            = :web
+    CONTACT        = :contact
+    PARAMETERS     = :parameters
 
     OPTIONAL_ATOMIC_ELEMENTS = [ LANGUAGE, AUDIENCE, EFFECTIVE, ONSET, EXPIRES,
       SENDER_NAME, HEADLINE, DESCRIPTION, INSTRUCTION, WEB, CONTACT ]
@@ -122,21 +122,21 @@ module CAP
     end
 
     def initialize( attributes = {} )
-      @language = attributes[ LANGUAGE ] || 'en-US'
-      @categories = []
-      @event = attributes [ EVENT ]
+      @language       = attributes[ LANGUAGE ] || 'en-US'
+      @categories     = []
+      @event          = attributes [ EVENT ]
       @response_types = []
-      @urgency = attributes[ URGENCY ]
-      @severity = attributes[ SEVERITY ]
-      @certainty = attributes[ CERTAINTY ]
-      @event_codes = {}
-      @sender_name = attributes[ SENDER_NAME ]
-      @headline = attributes[ HEADLINE ]
-      @description = attributes[ DESCRIPTION ]
-      @instruction = attributes[ INSTRUCTION ]
-      @web = attributes[ WEB ]
-      @contact = attributes[ CONTACT ]
-      @parameters = {}
+      @urgency        = attributes[ URGENCY ]
+      @severity       = attributes[ SEVERITY ]
+      @certainty      = attributes[ CERTAINTY ]
+      @event_codes    = {}
+      @sender_name    = attributes[ SENDER_NAME ]
+      @headline       = attributes[ HEADLINE ]
+      @description    = attributes[ DESCRIPTION ]
+      @instruction    = attributes[ INSTRUCTION ]
+      @web            = attributes[ WEB ]
+      @contact        = attributes[ CONTACT ]
+      @parameters     = {}
     end
   end
 end

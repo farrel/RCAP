@@ -3,20 +3,19 @@ require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'rcov/rcovtask'
 
-SPEC = Gem::Specification.new do |spec|
-  spec.name = "rCAP"
-  spec.version = "0.1"
-  spec.author = "Farrel Lifson"
-  spec.email = "farrel.lifson@aimred.com"
-  spec.homepage = "http://www.aimred.com/projects/rcap"
-  spec.platform = Gem::Platform::RUBY
-  spec.summary = "CAP(Common Alerting Protocol) API"
-  spec.files = Dir.glob("{lib,examples}/**/*")
-  spec.require_path = "lib"
-  spec.autorequire = "rcap"
-  spec.has_rdoc = true
-  spec.extra_rdoc_files = [ "README","CHANGELOG" ]
-  spec.add_dependency( 'assistance' )
+SPEC = Gem::Specification.new do |gem|
+  gem.name = "rcap"
+  gem.version = "0.1"
+  gem.author = "Farrel Lifson"
+  gem.email = "farrel.lifson@aimred.com"
+  gem.homepage = "http://www.aimred.com/projects/rcap"
+  gem.platform = Gem::Platform::RUBY
+  gem.summary = "CAP(Common Alerting Protocol) API"
+  gem.files = Dir.glob("{lib,examples}/**/*")
+  gem.require_path = "lib"
+  gem.has_rdoc = true
+  gem.extra_rdoc_files = [ "README","CHANGELOG" ]
+  gem.add_dependency( 'assistance' )
 end
 
 Rake::GemPackageTask.new(SPEC) do |pkg|
@@ -36,4 +35,5 @@ end
 Spec::Rake::SpecTask.new do |spec|
   spec.libs = ['lib']
   spec.warning = true
+  spec.spec_opts = ['--options spec/spec.opts']
 end
