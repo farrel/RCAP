@@ -42,5 +42,18 @@ module Validation
         end
       end
     end
+
+    def validates_responsiveness_of( *attributes )
+      options = {
+        :message => 'does not respond to the given method'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, value|
+        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.blank? && options[ :allow_blank ])
+        unless options[ :to ].all?{ |method_name| object.respond_to?( method_name )}
+          object.errors[ attribute ] << options [ :message ]
+        end
+      end
+    end
   end
 end

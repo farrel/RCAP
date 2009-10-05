@@ -35,9 +35,6 @@ module CAP
 
     validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
 
-    validates_length_of( REQUIRED_GROUP_ATTRIBUTES, :minimum => 1,
-                        :message => 'requires at least one element' ) 
-
     CATEGORY_GEO       = "Geo"
     CATEGORY_MET       = "Met"
     CATEGORY_SAFETY    = "Safety"
@@ -55,13 +52,7 @@ module CAP
       CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
       CATEGORY_OTHER ]
 
-    validates_each( CATEGORIES ) do |info, attribute, categories|
-      categories.each do |category|
-        unless ALL_CATEGORIES.include?( category )
-          info.errors[ attribute ] << "contains an invalid category: '#{ category }'" 
-        end
-      end
-    end
+		validates_inclusion_of( CATEGORIES, :in => ALL_CATEGORIES )
 
     RESPONSE_TYPE_SHELTER  = "Shelter"
     RESPONSE_TYPE_EVACUATE = "Evacuate"
@@ -74,13 +65,7 @@ module CAP
       RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
       RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
-    validates_each( RESPONSE_TYPES ) do |info, attribute, response_types|
-      response_types.each do |response_type|
-        unless ALL_RESPONSE_TYPES.include?( response_type )
-          info.errors[ attribute ] << "contains an invalid response type: '#{ response_type }'" 
-        end
-      end
-    end
+		validates_inclusion_of( RESPONSE_TYPES, :in => ALL_RESPONSE_TYPES )
 
     URGENCY_IMMEDIATE = "Immediate"
     URGENCY_EXPECTED  = "Expected"
@@ -89,11 +74,8 @@ module CAP
     URGENCY_UNKNOWN   = "Unknown"
     ALL_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
       URGENCY_PAST, URGENCY_UNKNOWN ]
-    validates_each( URGENCY ) do |info, attribute, urgency |
-      unless ALL_URGENCIES.include?( urgency )
-        info.errors[ attribute ] << "is not a valid ugency code" 
-      end
-    end
+
+		validates_inclusion_of( URGENCY, :in => ALL_URGENCIES )
 
     SEVERITY_EXTREME  = "Extreme"
     SEVERITY_SEVERE   = "Severe"
@@ -102,11 +84,8 @@ module CAP
     SEVERITY_UNKNOWN  = "Unknown"
     ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
       SEVERITY_MINOR, SEVERITY_UNKNOWN ] 
-    validates_each( SEVERITY ) do |info, attribute, severity|
-      unless ALL_SEVERITIES.incllude?( severity )
-        info.errors[ attribute ] << "is not a valid severity code"
-      end
-    end
+		
+		validates_inclusion_of( SEVERITY, :in => ALL_SEVERITIES )
 
     CERTAINTY_OBSERVED = "Observed"
     CERTAINTY_LIKELY   = "Likely"
@@ -115,11 +94,29 @@ module CAP
     CERTAINTY_UNKNOWN  = "Unknown"
     ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
       CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
-    validates_each( CERTAINTY ) do |info, attribute, certainty|
-      unless ALL_CERTAINTIES.incllude?( certainty )
-        info.errors[ attribute ] << "is not a valid certainty code"
-      end
-    end
+		
+		validates_inclusion_of( CERTAINTY, :in => ALL_CERTAINTIES )
+
+		XML_ELEMENT_NAME = 'info'
+		LANGUAGE_ELEMENT_NAME = 'language'
+		CATEGORY_ELEMENT_NAME = 'category'
+		EVENT_ELEMENT_NAME = 'event'
+		RESPONSE_TYPE_ELEMENT_NAME = 'responseType'
+		URGENCY_ELEMENT_NAME = 'urgency'
+		SEVERITY_ELEMENT_NAME = 'severity'
+		CERTAINTY_ELEMENT_NAME = 'certainty'
+		AUDIENCE_ELEMENT_NAME = 'audience'
+		EVENT_CODE_ELEMENT_NAME = 'eventCode'
+		EFFECTIVE_ELEMENT_NAME = 'effective'
+		ONSET_ELEMENT_NAME = 'onset'
+		EXPIRES_ELEMENT_NAME = 'expires'
+		SENDER_NAME_ELEMENT_NAME = 'sernderName'
+		HEADLINE_ELEMENT_NAME = 'headline'
+		DESCRIPTION_ELEMENT_NAME = 'description'
+		INSTRUCTION_ELEMENT_NAME = 'instruction'
+		WEB_ELEMENT_NAME = 'web'
+		CONTACT_ELEMENT_NAME = 'contact'
+		PARAMETER_ELEMENT_NAME = 'parameter'
 
     def initialize( attributes = {} )
       @language       = attributes[ LANGUAGE ] || 'en-US'
@@ -138,5 +135,41 @@ module CAP
       @contact        = attributes[ CONTACT ]
       @parameters     = {}
     end
+
+		def to_xml_element
+			xml_element = REXML::Element.new( XML_ELEMENT_NAME )
+      xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
+			@categories.each do |category|
+				xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( @category )
+			end
+			xml_element.add_text( EVENT_ELEMENT_NAME ).add_text( @event )
+			@response_types.each do |response_type|
+				xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( @response_type )
+			end
+			xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( @urgency )
+			xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( @serverity )
+			xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( @certainty )
+			xml_element.add_element( AUDIENCE_ELEMENT_NAME ).add_text( @audience ) if @audience
+			@event_codes.each do |event_code|
+				xml_element.add_lement( event_code.to_xml_element )
+			end
+			xml_element.add_element( EFFECTIVE_ELEMENT_NAME ).add_text( @effective ) if @effective
+			xml_element.add_element( ONSET_ELEMENT_NAME ).add_text( @onset ) if @onset
+			xml_element.add_element( EXPIRES_ELEMENT_NAME ).add_text( @expires ) if @expires
+			xml_element.add_element( SENDER_NAME_ELEMENT_NAME ).add_text( @sender_name ) if @sender_name
+			xml_element.add_element( HEADLINE_ELEMENT_NAME ).add_text( @headline ) if @headline
+			xml_element.add_element( DESCRIPTION_ELEMENT_NAME ).add_text( @description ) if @description
+			xml_element.add_element( INSTRUCTION_ELEMENT_NAME ).add_text( @instruction ) if @instruction
+			xml_element.add_element( WEB_ELEMENT_NAME ).add_text( @web ) if @web
+			xml_element.add_element( CONTACT_ELEMENT_NAME ).add_text( @contact ) if @contact
+			@parameters.each do |parameter|
+				xml_element.add_element( parameter.to_xml_element )
+			end
+			xml_element
+		end
+
+		def to_xml
+			self.to_xml_element.to_s
+		end
   end
 end
