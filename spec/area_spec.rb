@@ -17,6 +17,9 @@ describe( CAP::Area ) do
 		it( 'should have an empty geocodes' ){ @area.geocodes.should( be_empty )}
 	end
 
-  context( 'exporting to xml' ) do
+  context( 'is valid' ) do
+    before( :each ) do
+      @area = CAP::Area.new( :area_desc => "Cape Town Metropole" )
+    end
   end
 end

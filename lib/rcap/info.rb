@@ -126,25 +126,25 @@ module CAP
       @urgency        = attributes[ URGENCY ]
       @severity       = attributes[ SEVERITY ]
       @certainty      = attributes[ CERTAINTY ]
-      @event_codes    = {}
+      @event_codes    = []
       @sender_name    = attributes[ SENDER_NAME ]
       @headline       = attributes[ HEADLINE ]
       @description    = attributes[ DESCRIPTION ]
       @instruction    = attributes[ INSTRUCTION ]
       @web            = attributes[ WEB ]
       @contact        = attributes[ CONTACT ]
-      @parameters     = {}
+      @parameters     = []
     end
 
 		def to_xml_element
 			xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
 			@categories.each do |category|
-				xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( @category )
+				xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( category )
 			end
-			xml_element.add_text( EVENT_ELEMENT_NAME ).add_text( @event )
+			xml_element.add_element( EVENT_ELEMENT_NAME ).add_text( @event )
 			@response_types.each do |response_type|
-				xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( @response_type )
+				xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( response_type )
 			end
 			xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( @urgency )
 			xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( @serverity )

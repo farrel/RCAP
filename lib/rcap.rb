@@ -1,6 +1,7 @@
 require 'assistance'
 require 'uuidtools'
 require 'rexml/document'
+require 'rcap/utilities'
 require 'rcap/validations'
 require 'rcap/alert'
 require 'rcap/parameter'

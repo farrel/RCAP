@@ -6,19 +6,28 @@ module CAP
     LONGITUDE = :longitude
     ATOMIC_ATTRIBUTES = [ LATTITUDE, LONGITUDE ]
 
+    MAX_LONGITUDE = 180
+    MIN_LONGITUDE = -180
+    MAX_LATTITUDE = 90
+    MIN_LATTITUDE= -90
+
     attr_accessor( *ATOMIC_ATTRIBUTES )
 
     validates_numericality_of( *ATOMIC_ATTRIBUTES )
-    validates_inclusion_of( LATTITUDE, :in => -90..90 )
-    validates_inclusion_of( LONGITUDE, :in => -180..180 )
+    validates_inclusion_of( LATTITUDE, :in => MIN_LATTITUDE..MAX_LATTITUDE )
+    validates_inclusion_of( LONGITUDE, :in => MIN_LONGITUDE..MAX_LONGITUDE)
 
-    def initialize( lattitude, longitude )
+    def initialize( longitude, lattitude )
       @lattitude = lattitude
       @longitude = longitude
     end
 
     def to_s
-      "#{ @lattitude },#{ @longitude }"
+      "#{ self.lattitude },#{ self.longitude }"
+    end
+
+    def inspect
+      '('+self.to_s+')'
     end
   end
 end

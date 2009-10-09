@@ -9,7 +9,7 @@ module CAP
     attr_accessor( *ATOMIC_ATTRIBUTES )
 
     validates_presence_of( *ATOMIC_ATTRIBUTES )
-    validates_numericality_of( RADIUS )
+    validates_numericality_of( RADIUS, :greater_than => 0 )
     validates_validity_of( POINT )
 
     XML_ELEMENT_NAME = 'circle'

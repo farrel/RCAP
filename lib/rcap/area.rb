@@ -17,9 +17,8 @@ module CAP
     attr_reader( *( OPTIONAL_GROUP_ATTRIBUTES ))
 
     validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
-
-    validates_validity_of_collection( CIRCLES, POLYGONS, GEOCODES )
-
+    validates_collection_of( CIRCLES, POLYGONS, GEOCODES )
+    validates_dependency_of( CEILING, :on => ALTITUDE )
 
     XML_ELEMENT_NAME       = 'area'
     AREA_DESC_ELEMENT_NAME = 'areaDesc'

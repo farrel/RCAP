@@ -37,3 +37,8 @@ Spec::Rake::SpecTask.new do |spec|
   spec.warning = true
   spec.spec_opts = ['--options spec/spec.opts']
 end
+
+desc( 'Generate a new tag file' )
+task( :tags ) do |t|
+  Kernel.system( 'ctags --recurse lib/* ')
+end

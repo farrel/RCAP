@@ -7,12 +7,17 @@ module CAP
 
     attr_reader( *GROUP_ATTRIBUTES )
 
-    validates_validity_of_collection( POINTS )
+    validates_length_of( POINTS, :minimum => 1 )
+    validates_collection_of( POINTS )
 
     XML_ELEMENT_NAME = 'polygon'
 
+    def initialize
+      @points = []
+    end
+
     def to_s
-      @points.map{ |point| point.to_s }.join( ' ' )
+      (@points.map{ |point| point.to_s }+@points.first).join( ' ' )
     end
 
     def to_xml_element

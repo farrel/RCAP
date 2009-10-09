@@ -24,13 +24,13 @@ module Validation
 
       validates_each( *attributes ) do |object, attribute, value|
         next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
-        unless value.valid?
+        unless value && value.valid?
           object.errors[ attribute ] << options[ :message ]
         end
       end
     end
 
-    def validates_validity_of_collection( *attributes )
+    def validates_collection_of( *attributes )
       options = {
         :message => 'contains an invalid element'
       }.merge!( attributes.extract_options! )
@@ -42,6 +42,36 @@ module Validation
         end
       end
     end
+
+    def validates_dependency_of( *attributes )
+      options = {
+        :message => 'is dependent on :attribute being defined'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, value|
+        next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
+        unless value.blank? && object.send( options[ :on ]).blank? && ( options[ :with_value ].nil? || objest.send( options[ :on ]) == options[ :with_value ])
+          object.errors[ attribute ] << options[ :message ].gsub( /:attribute/, options[ :on ].to_s )
+        end
+      end
+    end
+
+    def validates_numericality_of( *attributes )
+      options = {
+        :message => 'is not a number',
+      }.merge!(attributes.extract_options!)
+
+      re = options[:only_integer] ? INTEGER_RE : NUMBER_RE
+
+      validates_each( *attributes ) do |object, attribute, value|
+        next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        unless ( value.to_s =~ re ) &&
+          ( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
+          object.errors[ attribute ] << options[ :message ] 
+        end
+      end
+    end
+
 
     def validates_responsiveness_of( *attributes )
       options = {
