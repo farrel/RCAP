@@ -7,7 +7,7 @@ module CAP
 
     attr_reader( *GROUP_ATTRIBUTES )
 
-    validates_length_of( POINTS, :minimum => 1 )
+    validates_length_of( POINTS, :minimum => 3 )
     validates_collection_of( POINTS )
 
     XML_ELEMENT_NAME = 'polygon'

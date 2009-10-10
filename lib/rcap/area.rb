@@ -44,8 +44,8 @@ module CAP
       @polygons.inject( xml_element, &add_to_xml_element )
       @circles.inject( xml_element, &add_to_xml_element )
       @geocodes.inject( xml_element, &add_to_xml_element )
-      xml_element.add_element( ALTITUDE_ELEMENT_NAME ).add_text( @altitude.to_s ) if @altitude
-      xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s ) if @ceiling
+      xml_element.add_element( ALTITUDE_ELEMENT_NAME ).add_text( @altitude.to_s ) unless self.altitude.blank?
+      xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s ) unless self.altitude.blank?
       xml_element
     end
 

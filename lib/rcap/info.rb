@@ -29,12 +29,6 @@ module CAP
     OPTIONAL_GROUP_ATTRIBUTES  = [ RESPONSE_TYPES, EVENT_CODES, PARAMETERS ]
     REQUIRED_GROUP_ATTRIBUTES  = [ CATEGORIES ]
 
-    attr_accessor( *( REQUIRED_ATOMIC_ATTRIBUTES + OPTIONAL_ATOMIC_ATTRIBUTES ))
-
-    attr_reader( *( REQUIRED_GROUP_ATTRIBUTES + OPTIONAL_GROUP_ATTRIBUTES))
-
-    validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
-
     CATEGORY_GEO       = "Geo"
     CATEGORY_MET       = "Met"
     CATEGORY_SAFETY    = "Safety"
@@ -52,8 +46,6 @@ module CAP
       CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
       CATEGORY_OTHER ]
 
-		validates_inclusion_of( CATEGORIES, :in => ALL_CATEGORIES )
-
     RESPONSE_TYPE_SHELTER  = "Shelter"
     RESPONSE_TYPE_EVACUATE = "Evacuate"
     RESPONSE_TYPE_PREPARE  = "Prepare"
@@ -65,8 +57,6 @@ module CAP
       RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
       RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
-		validates_inclusion_of( RESPONSE_TYPES, :in => ALL_RESPONSE_TYPES )
-
     URGENCY_IMMEDIATE = "Immediate"
     URGENCY_EXPECTED  = "Expected"
     URGENCY_FUTURE    = "Future"
@@ -75,8 +65,6 @@ module CAP
     ALL_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
       URGENCY_PAST, URGENCY_UNKNOWN ]
 
-		validates_inclusion_of( URGENCY, :in => ALL_URGENCIES )
-
     SEVERITY_EXTREME  = "Extreme"
     SEVERITY_SEVERE   = "Severe"
     SEVERITY_MODERATE = "Moderate"
@@ -84,8 +72,6 @@ module CAP
     SEVERITY_UNKNOWN  = "Unknown"
     ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
       SEVERITY_MINOR, SEVERITY_UNKNOWN ] 
-		
-		validates_inclusion_of( SEVERITY, :in => ALL_SEVERITIES )
 
     CERTAINTY_OBSERVED = "Observed"
     CERTAINTY_LIKELY   = "Likely"
@@ -95,8 +81,6 @@ module CAP
     ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
       CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 		
-		validates_inclusion_of( CERTAINTY, :in => ALL_CERTAINTIES )
-
 		XML_ELEMENT_NAME = 'info'
 		LANGUAGE_ELEMENT_NAME = 'language'
 		CATEGORY_ELEMENT_NAME = 'category'
@@ -118,6 +102,16 @@ module CAP
 		CONTACT_ELEMENT_NAME = 'contact'
 		PARAMETER_ELEMENT_NAME = 'parameter'
 
+    validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
+    validates_length_of_members_of( REQUIRED_GROUP_ATTRIBUTES, :minimum => 1 )
+		validates_inclusion_of( CERTAINTY, :in => ALL_CERTAINTIES )
+		validates_inclusion_of( SEVERITY, :in => ALL_SEVERITIES )
+		validates_inclusion_of( URGENCY, :in => ALL_URGENCIES )
+    validates_inclusion_of_members_of( RESPONSE_TYPES, :in => ALL_RESPONSE_TYPES, :allow_blank => true )
+
+    attr_accessor( *( REQUIRED_ATOMIC_ATTRIBUTES + OPTIONAL_ATOMIC_ATTRIBUTES ))
+    attr_reader( *( REQUIRED_GROUP_ATTRIBUTES + OPTIONAL_GROUP_ATTRIBUTES))
+    
     def initialize( attributes = {} )
       @language       = attributes[ LANGUAGE ] || 'en-US'
       @categories     = []

@@ -17,6 +17,32 @@ module Validation
       end
     end
 
+    def validates_inclusion_of_members_of( *attributes )
+      options = {
+        :message => 'contains members that are not valid'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, collection|
+        next if ( value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        unless collection.all?{ |member| options[ :in ].include?( member )}
+          object.errors[ attribute ] << options[ :message ]
+        end
+      end
+    end
+
+    def validates_length_of_members_of( *attributes )
+      options = {
+        :message => 'contains members with incorrect length'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, collection|
+        next if ( value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        unless collection.all?{ |member| options[ :in ].include?( member )}
+          object.errors[ attribute ] << options[ :message ]
+        end
+      end
+    end
+
     def validates_validity_of( *attributes )
       options = {
         :message => 'is not valid'

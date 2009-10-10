@@ -17,9 +17,9 @@ module CAP
     validates_inclusion_of( LATTITUDE, :in => MIN_LATTITUDE..MAX_LATTITUDE )
     validates_inclusion_of( LONGITUDE, :in => MIN_LONGITUDE..MAX_LONGITUDE)
 
-    def initialize( longitude, lattitude )
-      @lattitude = lattitude
-      @longitude = longitude
+    def initialize( attributes = {} )
+      @lattitude = attributes[ LATTITUDE ]
+      @longitude = attributes[ LONGITUDE ]
     end
 
     def to_s

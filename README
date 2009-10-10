@@ -1,0 +1,13 @@
+= RCAP - Common Alerting Protocol for Ruby
+
+== Overview
+
+The Common Alerting Protocol is a lightweight standard to facilitate the distribution of alerting data.
+
+== License
+
+RCAP is released under the GPL.
+
+== Copyright
+
+2009 Aimred

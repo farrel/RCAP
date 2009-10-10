@@ -13,4 +13,16 @@ describe( CAP::Resource ) do
     it( 'should have no digest' ){ @resource.digest.should( be_nil )}       
     it( 'should have no resource_desc' ){ @resource.resource_desc.should( be_nil )}
   end
+
+  describe( 'should not be valid if it' ) do
+    before( :each ) do
+      @resource = CAP::Resource.new( :resource_desc => 'Resource Description' )
+      @resource.should( be_valid )
+    end
+
+    it( 'does not have a resource description (resource_desc)' ) do
+      @resource.resource_desc = nil
+      @resource.should_not( be_valid )
+    end
+  end
 end

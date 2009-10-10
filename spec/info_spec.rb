@@ -26,4 +26,9 @@ describe( CAP::Info ) do
     it( 'should have no contact' ){ @info.contact.should( be_nil )}
     it( 'should have no parameters' ){ @info.parameters.should( be_empty )}
   end
+
+  describe( 'is valid if' ) do
+    before( :each ) do
+    end
+  end
 end

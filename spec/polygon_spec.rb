@@ -5,7 +5,7 @@ describe( CAP::Polygon ) do
     before( :each ) do
       @polygon = CAP::Polygon.new
       3.times do
-        @polygon.points << CAP::Point.new( 0, 0 )
+        @polygon.points << CAP::Point.new( :lattitude => 0, :longitude => 0 )
       end
       @polygon.should( be_valid )
     end

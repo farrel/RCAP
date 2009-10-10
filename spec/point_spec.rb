@@ -3,7 +3,7 @@ require 'spec/spec_helper'
 describe( CAP::Point ) do
   describe( 'is not valid if' ) do
     before( :each ) do
-      @point = CAP::Point.new( 0, 0 )
+      @point = CAP::Point.new( :lattitude => 0, :longitude => 0 )
       @point.should( be_valid )
     end
 

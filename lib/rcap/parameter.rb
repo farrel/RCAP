@@ -13,9 +13,9 @@ module CAP
 		NAME_ELEMENT_NAME = "valueName"
 		VALUE_ELEMENT_NAME = "value"
 
-		def initialize( name, value )
-			@name = name
-			@value = value 
+		def initialize( attributes = {} )
+			@name = attributes[ NAME ]
+			@value = attributes[ VALUE ] 
 		end
 
 		def to_xml_element

@@ -14,9 +14,9 @@ module CAP
 
     XML_ELEMENT_NAME = 'circle'
 
-    def initialize( point, radius )
-      @point = point
-      @radius = radius
+    def initialize( attributes = {} )
+      @point = attributes[ POINT ]
+      @radius = attributes[ RADIUS ]
     end
 
     def to_s

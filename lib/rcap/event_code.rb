@@ -1,5 +1,6 @@
 module CAP
 	class EventCode < Parameter
+    include Validation
 
 		XML_ELEMENT_NAME = 'eventCode'
 
