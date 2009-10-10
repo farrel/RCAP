@@ -23,7 +23,7 @@ module Validation
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ]) || (collection.blank? && options[ :allow_blank ])
         unless collection.all?{ |member| options[ :in ].include?( member )}
           object.errors[ attribute ] << options[ :message ]
         end
@@ -36,8 +36,8 @@ module Validation
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
-        unless collection.all?{ |member| options[ :in ].include?( member )}
+        next if ( collection.nil? && options[ :allow_nil ]) || (collection.blank? && options[ :allow_blank ])
+        unless options[ :minimum ] && collection.length >= options[ :minimum ]
           object.errors[ attribute ] << options[ :message ]
         end
       end

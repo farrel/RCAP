@@ -103,7 +103,7 @@ module CAP
 		PARAMETER_ELEMENT_NAME = 'parameter'
 
     validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
-    validates_length_of_members_of( REQUIRED_GROUP_ATTRIBUTES, :minimum => 1 )
+    validates_length_of( CATEGORIES, :minimum => 1 )
 		validates_inclusion_of( CERTAINTY, :in => ALL_CERTAINTIES )
 		validates_inclusion_of( SEVERITY, :in => ALL_SEVERITIES )
 		validates_inclusion_of( URGENCY, :in => ALL_URGENCIES )
@@ -114,20 +114,20 @@ module CAP
     
     def initialize( attributes = {} )
       @language       = attributes[ LANGUAGE ] || 'en-US'
-      @categories     = []
+      @categories     = Array( attributes[ CATEGORIES ])
       @event          = attributes [ EVENT ]
-      @response_types = []
+      @response_types = Array( attributes[ RESPONSE_TYPES ])
       @urgency        = attributes[ URGENCY ]
       @severity       = attributes[ SEVERITY ]
       @certainty      = attributes[ CERTAINTY ]
-      @event_codes    = []
+      @event_codes    = Array( attributes[ EVENT_CODES ])
       @sender_name    = attributes[ SENDER_NAME ]
       @headline       = attributes[ HEADLINE ]
       @description    = attributes[ DESCRIPTION ]
       @instruction    = attributes[ INSTRUCTION ]
       @web            = attributes[ WEB ]
       @contact        = attributes[ CONTACT ]
-      @parameters     = []
+      @parameters     = Array( attributes[ PARAMETERS ])
     end
 
 		def to_xml_element

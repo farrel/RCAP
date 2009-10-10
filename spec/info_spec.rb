@@ -27,8 +27,41 @@ describe( CAP::Info ) do
     it( 'should have no parameters' ){ @info.parameters.should( be_empty )}
   end
 
-  describe( 'is valid if' ) do
+  context( 'is not valid if it' ) do
     before( :each ) do
+      @info = CAP::Info.new( :event => 'Info Event',
+                            :categories => CAP::Info::CATEGORY_GEO,
+                            :urgency => CAP::Info::URGENCY_IMMEDIATE,
+                            :severity => CAP::Info::SEVERITY_EXTREME,
+                            :certainty => CAP::Info::CERTAINTY_OBSERVED )
+      @info.valid?
+      puts @info.errors.full_messages
+      @info.should( be_valid )
+    end
+    
+    it( 'does not have an event' ) do
+      @info.event = nil
+      @info.should_not( be_valid )
+    end
+
+    it( 'does not have categories' ) do
+      @info.categories.clear
+      @info.should_not( be_valid )
+    end
+
+    it( 'does not have an urgency' ) do
+      @info.urgency = nil
+      @info.should_not( be_valid )
+    end
+
+    it( 'does not have an severity' ) do
+      @info.severity = nil
+      @info.should_not( be_valid )
+    end
+
+    it( 'does not have an certainty' ) do
+      @info.certainty = nil
+      @info.should_not( be_valid )
     end
   end
 end
