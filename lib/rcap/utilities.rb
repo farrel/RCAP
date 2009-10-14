@@ -1,7 +1,7 @@
 ALLOWED_CHARACTERS = /[^\s&<]+/
 
 class Array
-  def to_s
+  def to_s_for_cap
     self.map{ |element| element.to_s.for_cap_list }.join( ' ' )
   end
 end
@@ -19,7 +19,7 @@ end
 class Time
   RCAP_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
   RCAP_ZONE_FORMAT = "%+02i:00"
-  def to_s
+  def to_s_for_cap
     self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
   end
 

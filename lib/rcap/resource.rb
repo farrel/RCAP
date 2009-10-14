@@ -35,12 +35,12 @@ module CAP
 
     def to_xml_element
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
-      xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( @resource_desc )
-      xml_element.add_element( MIME_TYPE_ELEMENT_NAME ).add_text( @mime_type ) if @mime_type
-      xml_element.add_element( SIZE_ELEMENT_NAME ).add_text( @size ) if @size
-      xml_element.add_element( URI_ELEMENT_NAME ).add_text( @uri ) if @uri
-      xml_element.add_element( DEREF_URI_ELEMENT_NAME ).add_text( @deref_uri ) if @deref_uri
-      xml_element.add_element( DIGEST_ELEMENT_NAME ).add_text( @digest ) if @digest
+      xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( self.resource_desc )
+      xml_element.add_element( MIME_TYPE_ELEMENT_NAME ).add_text( self.mime_type ) if self.mime_type
+      xml_element.add_element( SIZE_ELEMENT_NAME ).add_text( self.size ) if self.size
+      xml_element.add_element( URI_ELEMENT_NAME ).add_text( self.uri ) if self.uri
+      xml_element.add_element( DEREF_URI_ELEMENT_NAME ).add_text( self.deref_uri ) if self.deref_uri
+      xml_element.add_element( DIGEST_ELEMENT_NAME ).add_text( self.digest ) if self.digest
       xml_element
     end
 

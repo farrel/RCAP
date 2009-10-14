@@ -12,8 +12,8 @@ module CAP
 
     XML_ELEMENT_NAME = 'polygon'
 
-    def initialize
-      @points = []
+    def initialize( attributes = {})
+      @points = Array( attributes[ :points ])
     end
 
     def to_s

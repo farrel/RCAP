@@ -29,9 +29,9 @@ module CAP
       @altitude  = attributes[ ALTITUDE ]
       @area_desc = attributes[ AREA_DESC ]
       @ceiling   = attributes[ CEILING ]
-      @circles   = []
-      @geocodes  = []
-      @polygons  = []
+      @circles   = Array( attributes[ CIRCLES ])
+      @geocodes  = Array( attributes[ GEOCODES ])
+      @polygons  = Array( attributes[ POLYGONS ])
     end
 
     def to_xml_element

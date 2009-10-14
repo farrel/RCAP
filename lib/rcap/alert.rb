@@ -45,7 +45,6 @@ module CAP
 
 		attr_accessor( *( REQUIRED_ATOMIC_ATTRIBUTES + OPTIONAL_ATOMIC_ATTRIBUTES ))
 		attr_reader( *OPTIONAL_GROUP_ATTRIBUTES )
-		attr_reader( :infos )
 
 		validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
     validates_inclusion_of( STATUS, :in => ALL_STATUSES )
@@ -64,10 +63,10 @@ module CAP
 			@scope = attributes[ SCOPE ]
 			@source = attributes[ SOURCE ]
 			@restriction = attributes[ SOURCE ]
-			@addresses =  []
-			@references = []
-			@incidents = []
-			@infos = []
+			@addresses =  Array( attributes[ :addresses ])
+			@references = Array( attributes[ :references ])
+			@incidents = Array( attributes[ :incidents ])
+			@infos = Array( attributes[ :infos ])
 		end
 
     XML_ELEMENT_NAME = 'alert'
@@ -88,26 +87,26 @@ module CAP
     def to_xml_element
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_namespace( XMLNS )
-      xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( @identifier ) 
-      xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( @sender ) 
-      xml_element.add_element( SENT_ELEMENT_NAME ).add_text( @sent.to_s ) 
-      xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( @status ) 
-      xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( @msg_type ) 
-      xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( @source ) if @source
-      xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( @scope ) 
-      xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( @restriction ) if @restriction
-      unless @addresses.empty?
-        xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( @addresses )
+      xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier ) 
+      xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender ) 
+      xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s ) 
+      xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status ) 
+      xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type ) 
+      xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source ) if self.source
+      xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope ) 
+      xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( self.restriction ) if self.restriction
+      unless self.addresses.empty?
+        xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( self.addresses )
       end
-      xml_element.add_element( CODE_ELEMENT_NAME ).add_text( @code ) if @code
-      xml_element.add_element( NOTE_ELEMENT_NAME ).add_text( @note ) if @note
-      unless @references.empty?
-        xml_element.add_element( REFERENCES_ELEMENT_NAME ).add_text( @references )
+      xml_element.add_element( CODE_ELEMENT_NAME ).add_text( self.code ) if self.code
+      xml_element.add_element( NOTE_ELEMENT_NAME ).add_text( self.note ) if self.note
+      unless self.references.empty?
+        xml_element.add_element( REFERENCES_ELEMENT_NAME ).add_text( self.references )
       end
-      unless @incidents.empty?
-        xml_element.add_element( INCIDENTS_ELEMENT_NAME ).add_text( @incidents )
+      unless self.incidents.empty?
+        xml_element.add_element( INCIDENTS_ELEMENT_NAME ).add_text( self.incidents )
       end
-      @infos.each do |info|
+      self.infos.each do |info|
         xml_element.add_element( info.to_xml_element )
       end
       xml_element

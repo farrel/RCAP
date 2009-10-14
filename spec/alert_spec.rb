@@ -20,4 +20,24 @@ describe( CAP::Alert ) do
     it( 'should not have any incidents' ){ @alert.incidents.should( be_empty )}
     it( 'should not have any infos' ){ @alert.infos.should( be_empty )}
   end
+
+  describe( 'is not valid if it' ) do
+    before( :each ) do
+    end
+
+    it( 'does not have a identifier' )
+    it( 'does not have a sender' )
+    it( 'does not have a sent time (sent)' )
+    it( 'does not have a status' )
+    it( 'does not have a message type (msg_type)' )
+    it( 'does not have a scope' )
+
+    it( 'does not have a valid status' )
+    it( 'does not have a valid message type (msg_type)' )
+    it( 'does not have a valid scope' )
+
+    context( 'has an info element and it' ) do
+      it( 'is not valid' )
+    end
+  end
 end

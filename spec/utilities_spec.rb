@@ -1,14 +1,14 @@
 require 'spec/spec_helper'
 
 describe( Array ) do
-  describe( 'to_s' ) do
+  describe( 'to_s_for_cap' ) do
     context( 'with an element containing white space' ) do
       before( :all ) do
         @list = [ 'one', 'white space', 'three' ]
       end
 
       it( 'should format the list correctly' ) do
-        @list.to_s.should == 'one "white space" three'
+        @list.to_s_for_cap.should == 'one "white space" three'
       end
     end
 
@@ -17,7 +17,7 @@ describe( Array ) do
         @list = [ 'one', 'two', 'three' ]
       end
       it( 'should format the list correctly' ) do
-        @list.to_s.should == 'one two three'
+        @list.to_s_for_cap.should == 'one two three'
       end
     end
   end
