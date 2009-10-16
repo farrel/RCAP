@@ -54,12 +54,14 @@ module CAP
     validates_format_of( SENDER , :with => ALLOWED_CHARACTERS )
     validates_dependency_of( ADDRESSES, :on => SCOPE, :with_value => SCOPE_PRIVATE )
     validates_dependency_of( RESTRICTION, :on => SCOPE, :with_value => SCOPE_RESTRICTED )
+    validates_collection_of( INFOS )
 
 		def initialize( attributes = {})
 			@identifier = attributes[ IDENTIFIER ] || UUIDTools::UUID.random_create.to_s
 			@sender = attributes[ SENDER ]
 			@sent = attributes[ SENT ] || Time.now
 			@status = attributes[ STATUS ]
+      @msg_type = attributes[ MSG_TYPE ]
 			@scope = attributes[ SCOPE ]
 			@source = attributes[ SOURCE ]
 			@restriction = attributes[ SOURCE ]

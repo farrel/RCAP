@@ -75,8 +75,9 @@ module Validation
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
+        contingent_on_value = object.send( options[ :on ])
         next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
-        unless value.blank? && object.send( options[ :on ]).blank? && ( options[ :with_value ].nil? || objest.send( options[ :on ]) == options[ :with_value ])
+        unless value.blank? || !value.blank? && !contingent_on_value.blank? && ( options[ :with_value ].nil? || contingent_on_value == options[ :with_value ])
           object.errors[ attribute ] << options[ :message ].gsub( /:attribute/, options[ :on ].to_s )
         end
       end
