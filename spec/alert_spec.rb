@@ -86,6 +86,7 @@ describe( CAP::Alert ) do
                               :certainty => CAP::Info::CERTAINTY_OBSERVED )
         @info.event = nil
         @alert.infos << @info
+        @info.should_not( be_valid )
         @alert.should_not( be_valid )
       end
     end
