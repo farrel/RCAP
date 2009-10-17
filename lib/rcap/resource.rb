@@ -44,8 +44,18 @@ module CAP
       xml_element
     end
 
+    def size_in_kb
+      if self.size
+        self.size.to_f/1024
+      end
+    end
+
     def to_xml
       self.to_xml_element.to_s
+    end
+
+    def inspect
+      [ self.resource_desc, self.uri, self.mime_type, self.size ? format( "%.1fKB", self.size_in_kb ) : nil ].compact.join(' - ')
     end
   end
 end

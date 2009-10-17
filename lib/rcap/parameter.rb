@@ -28,5 +28,13 @@ module CAP
 		def to_xml
 			self.to_xml_element.to_s
 		end
+
+    def inspect
+      "#{ self.name }: #{ self.value }"
+    end
+
+    def to_s
+      self.inspect
+    end
 	end
 end

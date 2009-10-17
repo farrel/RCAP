@@ -21,12 +21,14 @@ module CAP
     WEB            = :web
     CONTACT        = :contact
     PARAMETERS     = :parameters
+    RESOURCES      = :resources
+    AREAS          = :areas
 
     OPTIONAL_ATOMIC_ATTRIBUTES = [ LANGUAGE, AUDIENCE, EFFECTIVE, ONSET, EXPIRES,
       SENDER_NAME, HEADLINE, DESCRIPTION, INSTRUCTION, WEB, CONTACT ]
     REQUIRED_ATOMIC_ATTRIBUTES = [ EVENT, URGENCY, SEVERITY, CERTAINTY ]
 
-    OPTIONAL_GROUP_ATTRIBUTES  = [ RESPONSE_TYPES, EVENT_CODES, PARAMETERS ]
+    OPTIONAL_GROUP_ATTRIBUTES  = [ RESPONSE_TYPES, EVENT_CODES, PARAMETERS, RESOURCES, AREAS ]
     REQUIRED_GROUP_ATTRIBUTES  = [ CATEGORIES ]
 
     CATEGORY_GEO       = "Geo"
@@ -100,7 +102,6 @@ module CAP
 		INSTRUCTION_ELEMENT_NAME = 'instruction'
 		WEB_ELEMENT_NAME = 'web'
 		CONTACT_ELEMENT_NAME = 'contact'
-		PARAMETER_ELEMENT_NAME = 'parameter'
 
     validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
     validates_length_of( CATEGORIES, :minimum => 1 )
@@ -108,6 +109,7 @@ module CAP
 		validates_inclusion_of( SEVERITY, :in => ALL_SEVERITIES )
 		validates_inclusion_of( URGENCY, :in => ALL_URGENCIES )
     validates_inclusion_of_members_of( RESPONSE_TYPES, :in => ALL_RESPONSE_TYPES, :allow_blank => true )
+    validates_collection_of( RESOURCES, AREAS )
 
     attr_accessor( *( REQUIRED_ATOMIC_ATTRIBUTES + OPTIONAL_ATOMIC_ATTRIBUTES ))
     attr_reader( *( REQUIRED_GROUP_ATTRIBUTES + OPTIONAL_GROUP_ATTRIBUTES))
@@ -128,6 +130,8 @@ module CAP
       @web            = attributes[ WEB ]
       @contact        = attributes[ CONTACT ]
       @parameters     = Array( attributes[ PARAMETERS ])
+      @resources      = Array( attributes[ RESOURCES ])
+      @areas          = Array( attributes[ AREAS ])
     end
 
 		def to_xml_element
@@ -141,7 +145,7 @@ module CAP
 				xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( response_type )
 			end
 			xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( self.urgency )
-			xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( self.serverity )
+			xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( self.severity )
 			xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( self.certainty )
 			xml_element.add_element( AUDIENCE_ELEMENT_NAME ).add_text( self.audience ) if self.audience
 			@event_codes.each do |event_code|
@@ -159,6 +163,12 @@ module CAP
 			@parameters.each do |parameter|
 				xml_element.add_element( parameter.to_xml_element )
 			end
+      @resources.each do |resource|
+        xml_element.add_element( resource.to_xml_element )
+      end
+      @areas.each do |area|
+        xml_element.add_element( area.to_xml_element )
+      end
 			xml_element
 		end
 

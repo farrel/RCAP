@@ -20,7 +20,11 @@ module CAP
     end
 
     def to_s
-      "#{ @point.to_s } #{ @radius }"
+      "#{ self.point.to_s } #{ self.radius }"
+    end
+
+    def inspect
+      "(#{ self.point.lattitude},#{ self.point.longitude } #{ self.radius })"
     end
 
     def to_xml_element

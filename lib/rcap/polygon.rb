@@ -20,6 +20,10 @@ module CAP
       (@points.map{ |point| point.to_s }+@points.first).join( ' ' )
     end
 
+    def inspect
+      "(#{ @points.map{|point| point.inspect}.join(', ')})"
+    end
+
     def to_xml_element
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_text( self.to_s )
