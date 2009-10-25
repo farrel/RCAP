@@ -29,5 +29,10 @@ module CAP
     def inspect
       '('+self.to_s+')'
     end
+
+		def ==( other )
+			self.lattitude == other.lattitude &&
+				self.longitude == other.longitude
+		end
   end
 end

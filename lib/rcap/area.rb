@@ -25,9 +25,14 @@ module CAP
     ALTITUDE_ELEMENT_NAME  = 'altitude'
     CEILING_ELEMENT_NAME   = 'ceiling'
 
+    XPATH = "/cap:alert/cap:info/cap:#{ XML_ELEMENT_NAME }"
+    ALTITUDE_XPATH = XPATH + "/cap:#{ ALTITUDE_ELEMENT_NAME }" 
+    AREA_DESC_XPATH = XPATH + "/cap:#{ AREA_DESC_ELEMENT_NAME }"
+    CEILING_XPATH = XPATH + "/cap:#{ CEILING_ELEMENT_NAME }"  
+
     def initialize( attributes = {})
-      @altitude  = attributes[ ALTITUDE ]
       @area_desc = attributes[ AREA_DESC ]
+      @altitude  = attributes[ ALTITUDE ]
       @ceiling   = attributes[ CEILING ]
       @circles   = Array( attributes[ CIRCLES ])
       @geocodes  = Array( attributes[ GEOCODES ])
@@ -51,6 +56,15 @@ module CAP
 
     def to_xml
       self.to_xml_element.to_s
+    end
+
+    def self.from_xml_element( area_xml_element )
+      area = CAP::Area.new( :area_desc => CAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
+                            :altitude  => CAP.xpath_text( area_xml_element, ALTITUDE_XPATH ).to_f,
+                            :ceiling   => CAP.xpath_text( area_xml_element, CEILING_XPATH ).to_f,
+                            :circles   => CAP.xpath_match( area_xml_element, CAP::Circle::XPATH ).map{ |circle_element| CAP::Circle.from_xml_element( circle_element )},
+                            :geocodes  => CAP.xpath_match( area_xml_element, CAP::Geocode::XPATH ).map{ |geocode_element| CAP::Geocode.from_xml_element( geocode_element )},
+                            :polygons  => CAP.xpath_match( area_xml_element, CAP::Polygon::XPATH ).map{ |polygon_element| CAP::Polygon.from_xml_element( polygon_element )})
     end
   end
 end

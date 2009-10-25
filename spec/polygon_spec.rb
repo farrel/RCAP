@@ -20,4 +20,24 @@ describe( CAP::Polygon ) do
       @polygon.should_not( be_valid )
     end
   end
+
+  context( 'on initialization' ) do
+    context( 'from XML' ) do
+      before( :each ) do
+        @original_polygon = CAP::Polygon.new( :points => Array.new(3){|i| CAP::Point.new( :lattitude => i, :longitude => i )})
+        @alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :polygons => @original_polygon )))
+        @xml_string = @alert.to_xml
+        @xml_document = REXML::Document.new( @xml_string )
+        @polygon_element = CAP.xpath_first( @xml_document, CAP::Polygon::XPATH )
+        @polygon = CAP::Polygon.from_xml_element( @polygon_element )
+      end
+
+      it( 'should parse all the points' ) do
+        @polygon.points.zip( @original_polygon.points ).each do |point, original_point|
+          point.lattitude.should == original_point.lattitude
+          point.longitude.should == original_point.longitude
+        end
+      end
+    end
+  end
 end

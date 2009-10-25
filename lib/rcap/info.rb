@@ -103,6 +103,8 @@ module CAP
 		WEB_ELEMENT_NAME = 'web'
 		CONTACT_ELEMENT_NAME = 'contact'
 
+    XPATH = '/rcap:alert '+ "/cap:#{ XML_ELEMENT_NAME }"
+
     validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
     validates_length_of( CATEGORIES, :minimum => 1 )
 		validates_inclusion_of( CERTAINTY, :in => ALL_CERTAINTIES )

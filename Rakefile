@@ -16,6 +16,7 @@ SPEC = Gem::Specification.new do |gem|
   gem.has_rdoc = true
   gem.extra_rdoc_files = [ "README","CHANGELOG" ]
   gem.add_dependency( 'assistance' )
+  gem.description = "A Ruby API providing parsing and generation of CAP(Common Alerting Protocol) messages"
 end
 
 Rake::GemPackageTask.new(SPEC) do |pkg|

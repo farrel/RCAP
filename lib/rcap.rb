@@ -13,3 +13,7 @@ require 'rcap/circle'
 require 'rcap/polygon'
 require 'rcap/geocode'
 require 'rcap/area'
+
+module CAP
+	XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
+end

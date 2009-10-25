@@ -27,3 +27,17 @@ class Time
     self.utc_offset/3600
   end
 end
+
+module CAP
+	def self.xpath_text( xml_element, xpath )
+		REXML::XPath.first( xml_element, xpath, { 'cap' => CAP::XMLNS }).text
+	end
+
+	def self.xpath_first( xml_element, xpath )
+		REXML::XPath.first( xml_element, xpath, { 'cap' => CAP::XMLNS })
+	end
+
+	def self.xpath_match( xml_element, xpath )
+		REXML::XPath.match( xml_element, xpath, { 'cap' => CAP::XMLNS })
+	end
+end

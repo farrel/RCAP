@@ -14,9 +14,11 @@ module CAP
 
     XML_ELEMENT_NAME = 'circle'
 
+    XPATH = '/cap:alert/cap:info/cap:area/cap:circle'
+
     def initialize( attributes = {} )
       @point = attributes[ POINT ]
-      @radius = attributes[ RADIUS ]
+      @radius = attributes[ RADIUS ].to_f
     end
 
     def to_s
@@ -35,6 +37,24 @@ module CAP
 
     def to_xml
       self.to_xml_element.to_s
+    end
+
+    def self.parse_circle_string( circle_string )
+      coordinates, radius = circle_string.split( ' ' )
+      lattitude, longitude = coordinates.split( ',' )
+      [ lattitude, longitude, radius ].map{ |e| e.to_f }
+    end
+
+    def self.from_xml_element( circle_xml_element )
+      lattitude, longitude, radius = self.parse_circle_string( CAP.xpath_text( circle_xml_element, XPATH ))
+      point = CAP::Point.new( :lattitude => lattitude, :longitude => longitude )
+      circle = self.new( :point  => point,
+                         :radius => radius )
+    end
+
+    def ==( other )
+      self.point == other.point &&
+        self.radius == other.radius
     end
   end
 end

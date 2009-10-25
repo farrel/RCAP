@@ -2,7 +2,6 @@ module CAP
 	class Alert
 		include Validation
 
-		XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
 
 		ADDRESSES   = :addresses
 		REFERENCES  = :references
@@ -56,21 +55,6 @@ module CAP
     validates_dependency_of( RESTRICTION, :on => SCOPE, :with_value => SCOPE_RESTRICTED )
     validates_collection_of( INFOS )
 
-		def initialize( attributes = {})
-			@identifier = attributes[ IDENTIFIER ] || UUIDTools::UUID.random_create.to_s
-			@sender = attributes[ SENDER ]
-			@sent = attributes[ SENT ] || Time.now
-			@status = attributes[ STATUS ]
-      @msg_type = attributes[ MSG_TYPE ]
-			@scope = attributes[ SCOPE ]
-			@source = attributes[ SOURCE ]
-			@restriction = attributes[ SOURCE ]
-			@addresses =  Array( attributes[ :addresses ])
-			@references = Array( attributes[ :references ])
-			@incidents = Array( attributes[ :incidents ])
-			@infos = Array( attributes[ :infos ])
-		end
-
     XML_ELEMENT_NAME = 'alert'
     IDENTIFIER_ELEMENT_NAME = 'identifier'
     SENDER_ELEMENT_NAME = 'sender'
@@ -86,9 +70,26 @@ module CAP
     REFERENCES_ELEMENT_NAME = 'references'
     INCIDENTS_ELEMENT_NAME = 'incidents'
 
+    XPATH = '/cap:alert'
+
+		def initialize( attributes = {})
+			@identifier = attributes[ IDENTIFIER ] || UUIDTools::UUID.random_create.to_s
+			@sender = attributes[ SENDER ]
+			@sent = attributes[ SENT ] || Time.now
+			@status = attributes[ STATUS ]
+      @msg_type = attributes[ MSG_TYPE ]
+			@scope = attributes[ SCOPE ]
+			@source = attributes[ SOURCE ]
+			@restriction = attributes[ SOURCE ]
+			@addresses =  Array( attributes[ :addresses ])
+			@references = Array( attributes[ :references ])
+			@incidents = Array( attributes[ :incidents ])
+			@infos = Array( attributes[ :infos ])
+		end
+
     def to_xml_element
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
-      xml_element.add_namespace( XMLNS )
+      xml_element.add_namespace( CAP::XMLNS )
       xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier ) 
       xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender ) 
       xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s_for_cap ) 
@@ -116,6 +117,7 @@ module CAP
 
     def to_xml_document
       xml_document = REXML::Document.new
+      xml_document.add( REXML::XMLDecl.new )
       xml_document.add( self.to_xml_element )
       xml_document
     end

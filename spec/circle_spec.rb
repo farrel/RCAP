@@ -31,4 +31,27 @@ describe( CAP::Circle ) do
       @circle.should_not( be_valid )
     end
   end
+
+	context( 'on initialisation' ) do
+		context( 'from XML' ) do
+			before( :each ) do
+				@original_circle = CAP::Circle.new( :radius => 10.5,
+																					 :point => CAP::Point.new( :lattitude => 30, :longitude => 60 ))
+				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :circles => @original_circle )))
+				@xml_string = @alert.to_xml
+        @xml_document = REXML::Document.new( @xml_string )
+				@circle_element = CAP.xpath_first( @xml_document, CAP::Circle::XPATH )
+				@circle = CAP::Circle.from_xml_element( @circle_element )
+			end
+
+			it( 'should parse the radius correctly' ) do
+				@circle.radius.should == @original_circle.radius
+			end
+
+			it( 'should parse the point correctly' ) do
+				@circle.point.lattitude.should == @original_circle.point.lattitude
+				@circle.point.longitude.should == @original_circle.point.longitude
+			end
+		end
+	end
 end

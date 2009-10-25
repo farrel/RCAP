@@ -83,21 +83,21 @@ module Validation
       end
     end
 
-    def validates_numericality_of( *attributes )
-      options = {
-        :message => 'is not a number',
-      }.merge!(attributes.extract_options!)
+		def validates_numericality_of( *attributes )
+			options = {
+				:message => 'is not a number',
+			}.merge!(attributes.extract_options!)
 
-      re = options[:only_integer] ? INTEGER_RE : NUMBER_RE
+			re = options[:only_integer] ? INTEGER_RE : NUMBER_RE
 
-      validates_each( *attributes ) do |object, attribute, value|
-        next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
-        unless ( value.to_s =~ re ) &&
-          ( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
-          object.errors[ attribute ] << options[ :message ] 
-        end
-      end
-    end
+			validates_each( *attributes ) do |object, attribute, value|
+				next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+				unless ( value.to_s =~ re ) &&
+					( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
+					object.errors[ attribute ] << options[ :message ] 
+				end
+			end
+		end
 
 
     def validates_responsiveness_of( *attributes )

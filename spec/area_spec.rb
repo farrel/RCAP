@@ -15,6 +15,47 @@ describe( CAP::Area ) do
 		it( 'should have an empty polygons' ){ @area.polygons.should( be_empty )}
 		it( 'should have an empty circles' ){ @area.circles.should( be_empty )}
 		it( 'should have an empty geocodes' ){ @area.geocodes.should( be_empty )}
+
+		context( 'from XML' ) do
+			before( :each ) do
+				@original_area = CAP::Area.new( :area_desc => 'Area Description',
+																			 :altitude => 100,
+																			 :ceiling => 200,
+																			 :circles => CAP::Circle.new( :point => CAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :geocodes => CAP::Geocode.new( :name => 'name', :value => 'value' ),
+																			 :polygons => CAP::Polygon.new( :points => CAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
+
+				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => @original_area ))
+				@xml_string = @alert.to_xml
+				@xml_document = REXML::Document.new( @xml_string )
+				@area_xml_element = CAP.xpath_first( @xml_document, CAP::Area::XPATH )
+				@area = CAP::Area.from_xml_element( @area_xml_element )
+			end
+
+			it( 'should parse the area_desc correctly' ) do
+				@area.area_desc.should == @original_area.area_desc
+			end
+
+			it( 'should parse the altitude correctly' ) do
+				@area.altitude.should == @original_area.altitude
+			end
+
+			it( 'should parse the ceiling correctly' ) do
+				@area.ceiling.should == @original_area.ceiling
+			end
+			
+			it( 'should parse the circles correctly' ) do
+				@area.circles.should == @original_area.circles
+			end
+
+			it( 'should parse the geocodes correctly' ) do
+				@area.geocodes.should == @original_area.geocodes
+			end
+
+			it( 'should parse the polygons correctly' ) do
+				@area.polygons.should == @original_area.polygons
+			end
+		end
 	end
 
   context( 'is not valid if' ) do

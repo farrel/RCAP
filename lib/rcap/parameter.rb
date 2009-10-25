@@ -9,8 +9,8 @@ module CAP
 
 		attr_accessor( *ATOMIC_ATTRIBUTES )
 
-		XML_ELEMENT_NAME = "parameter"
-		NAME_ELEMENT_NAME = "valueName"
+		XML_ELEMENT_NAME   = "parameter"
+		NAME_ELEMENT_NAME  = "valueName"
 		VALUE_ELEMENT_NAME = "value"
 
 		def initialize( attributes = {} )
@@ -35,6 +35,9 @@ module CAP
 
     def to_s
       self.inspect
-    end
+		end
+
+		def self.from_xml_element( parameter_xml_element )
+		end
 	end
 end

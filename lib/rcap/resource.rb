@@ -24,6 +24,14 @@ module CAP
     DIGEST_ELEMENT_NAME        = 'digest'
     RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc'
 
+    XPATH               = CAP::Info::XPATH + '/cap:resource'
+    MIME_TYPE_XPATH     = XPATH+"/cap:#{ MIME_TYPE_ELEMENT_NAME }"
+    SIZE_XPATH          = XPATH+"/cap:#{ SIZE_ELEMENT_NAME }"
+    URI_XPATH           = XPATH+"/cap:#{ URI_ELEMENT_NAME }"
+    DEREF_URI_XPATH     = XPATH+"/cap:#{ DEREF_URI_ELEMENT_NAME }"
+    DIGEST_XPATH        = XPATH+"/cap:#{ DIGEST_ELEMENT_NAME }"
+    RESOURCE_DESC_XPATH = XPATH+"/cap:#{ RESOURCE_DESC_ELEMENT_NAME }"
+
     def initialize( attributes = {} )
       @mime_type     = attributes[ MIME_TYPE ]
       @size          = attributes[ SIZE ]
@@ -56,6 +64,15 @@ module CAP
 
     def inspect
       [ self.resource_desc, self.uri, self.mime_type, self.size ? format( "%.1fKB", self.size_in_kb ) : nil ].compact.join(' - ')
+    end
+
+    def self.from_xml_element( resource_xml_element )
+      resource = self.new( :resource_desc => CAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH ),
+                           :uri           => CAP.xpath_text( resource_xml_element, URI_XPATH ),
+                           :mime_type     => CAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH ),
+                           :deref_uri     => CAP.xpath_text( resource_xml_element, DEREF_URI_XPATH ),
+                           :size          => CAP.xpath_text( resource_xml_element, SIZE_XPATH ),
+                           :digest        => CAP.xpath_text( resource_xml_element, DIGEST_XPATH ))
     end
   end
 end
