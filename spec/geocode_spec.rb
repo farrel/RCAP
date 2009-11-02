@@ -7,9 +7,11 @@ describe( CAP::Geocode ) do
         @original_geocode = CAP::Geocode.new( :name => 'name', :value => 'value' )
         @alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :geocodes => @original_geocode )))
         @xml_string = @alert.to_xml
-        @xml_document = REXML::Document.new( @xml_string )
-        @geocode_xml_element  = CAP.xpath_first( @xml_document, CAP::Geocode::XPATH )
-        @geocode = CAP::Geocode.from_xml_element( @geocode_xml_element )
+				@xml_document = REXML::Document.new( @xml_string )
+				@info_xml_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
+				@area_xml_element = CAP.xpath_first( @info_xml_element, CAP::Area::XPATH )
+				@geocode_xml_element = CAP.xpath_first( @area_xml_element, CAP::Geocode::XPATH )
+				@geocode = CAP::Geocode.from_xml_element( @geocode_xml_element )
       end
 
       it( 'should parse the name correctly' ) do

@@ -28,7 +28,8 @@ describe( CAP::Area ) do
 				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => @original_area ))
 				@xml_string = @alert.to_xml
 				@xml_document = REXML::Document.new( @xml_string )
-				@area_xml_element = CAP.xpath_first( @xml_document, CAP::Area::XPATH )
+				@info_xml_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
+				@area_xml_element = CAP.xpath_first( @info_xml_element, CAP::Area::XPATH )
 				@area = CAP::Area.from_xml_element( @area_xml_element )
 			end
 

@@ -2,34 +2,30 @@ module CAP
   class Circle
     include Validation
 
-    POINT  = :point
-    RADIUS = :radius
-    ATOMIC_ATTRIBUTES = [ POINT, RADIUS ]
+    attr_accessor( :point, :radius )
 
-    attr_accessor( *ATOMIC_ATTRIBUTES )
+    validates_presence_of( :point, :radius )
+    validates_numericality_of( :radius , :greater_than => 0 )
+    validates_validity_of( :point )
 
-    validates_presence_of( *ATOMIC_ATTRIBUTES )
-    validates_numericality_of( RADIUS, :greater_than => 0 )
-    validates_validity_of( POINT )
+    XML_ELEMENT_NAME = 'circle' # :nodoc:
 
-    XML_ELEMENT_NAME = 'circle'
-
-    XPATH = '/cap:alert/cap:info/cap:area/cap:circle'
+    XPATH = 'cap:circle' # :nodoc:
 
     def initialize( attributes = {} )
-      @point = attributes[ POINT ]
-      @radius = attributes[ RADIUS ].to_f
+      @point = attributes[ :point ]
+      @radius = attributes[ :radius ]
     end
 
-    def to_s
+    def to_s  # :nodoc:
       "#{ self.point.to_s } #{ self.radius }"
     end
 
-    def inspect
+    def inspect # :nodoc:
       "(#{ self.point.lattitude},#{ self.point.longitude } #{ self.radius })"
     end
 
-    def to_xml_element
+    def to_xml_element # :nodoc:
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_text( self.to_s )
       xml_element
@@ -39,14 +35,14 @@ module CAP
       self.to_xml_element.to_s
     end
 
-    def self.parse_circle_string( circle_string )
+    def self.parse_circle_string( circle_string ) # :nodoc:
       coordinates, radius = circle_string.split( ' ' )
       lattitude, longitude = coordinates.split( ',' )
       [ lattitude, longitude, radius ].map{ |e| e.to_f }
     end
 
-    def self.from_xml_element( circle_xml_element )
-      lattitude, longitude, radius = self.parse_circle_string( CAP.xpath_text( circle_xml_element, XPATH ))
+    def self.from_xml_element( circle_xml_element ) # :nodoc:
+      lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
       point = CAP::Point.new( :lattitude => lattitude, :longitude => longitude )
       circle = self.new( :point  => point,
                          :radius => radius )

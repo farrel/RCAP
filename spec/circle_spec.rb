@@ -40,7 +40,9 @@ describe( CAP::Circle ) do
 				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :circles => @original_circle )))
 				@xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@circle_element = CAP.xpath_first( @xml_document, CAP::Circle::XPATH )
+				@info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
+				@area_element = CAP.xpath_first( @info_element, CAP::Area::XPATH )
+				@circle_element = CAP.xpath_first( @area_element, CAP::Circle::XPATH )
 				@circle = CAP::Circle.from_xml_element( @circle_element )
 			end
 

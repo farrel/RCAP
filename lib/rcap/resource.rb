@@ -2,43 +2,33 @@ module CAP
   class Resource
     include Validation
 
-    MIME_TYPE     = :mime_type
-    SIZE          = :size
-    URI           = :uri
-    DEREF_URI     = :deref_uri
-    DIGEST        = :digest
-    RESOURCE_DESC = :resource_desc
+    attr_accessor( :resource_desc, :mime_type, :size, :uri, :deref_uri, :digest )
 
-    OPTIONAL_ATOMIC_ATTRIBUTES = [ MIME_TYPE, SIZE, URI, DEREF_URI, DIGEST ]
-    REQUIRED_ATOMIC_ATTRIBUTES = [ RESOURCE_DESC ]
-
-    validates_presence_of( *REQUIRED_ATOMIC_ATTRIBUTES )
-
-    attr_accessor( *( REQUIRED_ATOMIC_ATTRIBUTES + OPTIONAL_ATOMIC_ATTRIBUTES ))
+    validates_presence_of( :resource_desc )
     
-    XML_ELEMENT_NAME           = 'resource'
-    MIME_TYPE_ELEMENT_NAME     = 'mimeType'
-    SIZE_ELEMENT_NAME          = 'size'
-    URI_ELEMENT_NAME           = 'uri'
-    DEREF_URI_ELEMENT_NAME     = 'derefUri'
-    DIGEST_ELEMENT_NAME        = 'digest'
-    RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc'
+    XML_ELEMENT_NAME           = 'resource'     # :nodoc: 
+    MIME_TYPE_ELEMENT_NAME     = 'mimeType'     # :nodoc: 
+    SIZE_ELEMENT_NAME          = 'size'         # :nodoc: 
+    URI_ELEMENT_NAME           = 'uri'          # :nodoc: 
+    DEREF_URI_ELEMENT_NAME     = 'derefUri'     # :nodoc: 
+    DIGEST_ELEMENT_NAME        = 'digest'       # :nodoc: 
+    RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc' # :nodoc: 
 
-    XPATH               = CAP::Info::XPATH + '/cap:resource'
-    MIME_TYPE_XPATH     = XPATH+"/cap:#{ MIME_TYPE_ELEMENT_NAME }"
-    SIZE_XPATH          = XPATH+"/cap:#{ SIZE_ELEMENT_NAME }"
-    URI_XPATH           = XPATH+"/cap:#{ URI_ELEMENT_NAME }"
-    DEREF_URI_XPATH     = XPATH+"/cap:#{ DEREF_URI_ELEMENT_NAME }"
-    DIGEST_XPATH        = XPATH+"/cap:#{ DIGEST_ELEMENT_NAME }"
-    RESOURCE_DESC_XPATH = XPATH+"/cap:#{ RESOURCE_DESC_ELEMENT_NAME }"
+    XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc: 
+    MIME_TYPE_XPATH     = "cap:#{ MIME_TYPE_ELEMENT_NAME }"     # :nodoc: 
+    SIZE_XPATH          = "cap:#{ SIZE_ELEMENT_NAME }"          # :nodoc: 
+    URI_XPATH           = "cap:#{ URI_ELEMENT_NAME }"           # :nodoc: 
+    DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     # :nodoc: 
+    DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        # :nodoc: 
+    RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" # :nodoc: 
 
     def initialize( attributes = {} )
-      @mime_type     = attributes[ MIME_TYPE ]
-      @size          = attributes[ SIZE ]
-      @uri           = attributes[ URI ]
-      @deref_uri     = attributes[ DEREF_URI ]
-      @digest        = attributes[ DIGEST ]
-      @resource_desc = attributes[ RESOURCE_DESC ]
+      @mime_type     = attributes[ :mime_type ]
+      @size          = attributes[ :size ]
+      @uri           = attributes[ :uri ]
+      @deref_uri     = attributes[ :deref_uri ]
+      @digest        = attributes[ :digest ]
+      @resource_desc = attributes[ :resource_desc ]
     end
 
     def to_xml_element

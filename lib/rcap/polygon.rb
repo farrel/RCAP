@@ -2,16 +2,13 @@ module CAP
   class Polygon
     include Validation
 
-    POINTS = :points
-    GROUP_ATTRIBUTES = [ POINTS ]
+    attr_reader( :points )
 
-    attr_reader( *GROUP_ATTRIBUTES )
+    validates_length_of( :points, :minimum => 3 )
+    validates_collection_of( :points )
 
-    validates_length_of( POINTS, :minimum => 3 )
-    validates_collection_of( POINTS )
-
-    XML_ELEMENT_NAME = 'polygon'
-    XPATH = "/cap:alert/cap:info/cap:area/cap:#{ XML_ELEMENT_NAME }"
+    XML_ELEMENT_NAME = 'polygon'                   # :nodoc: 
+    XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc: 
 
     def initialize( attributes = {})
       @points = Array( attributes[ :points ])
@@ -40,7 +37,7 @@ module CAP
     end
 
     def self.from_xml_element( polygon_xml_element )
-      coordinates = self.parse_polygon_string( CAP.xpath_text( polygon_xml_element, XPATH ))
+      coordinates = self.parse_polygon_string( polygon_xml_element.text )
       points = coordinates.map{ |lattitude, longitude| CAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
       polygon = self.new( :points => points )
     end

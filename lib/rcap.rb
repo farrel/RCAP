@@ -1,3 +1,4 @@
+require 'date'
 require 'assistance'
 require 'uuidtools'
 require 'rexml/document'

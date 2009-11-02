@@ -44,4 +44,14 @@ describe( String ) do
       end
     end
   end
+
+  describe( 'unpack_cap_list' ) do
+    it( 'shoud unpack strings in quotes correctly' ) do
+      'Item1 "Item 2" Item3'.unpack_cap_list.should == [ "Item1", "Item 2", "Item3" ]
+    end
+
+    it( 'should unpack strings correclty' ) do
+      'Item1 Item2 Item3'.unpack_cap_list.should == [ "Item1", "Item2", "Item3" ]
+    end
+  end
 end

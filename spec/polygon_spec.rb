@@ -28,7 +28,9 @@ describe( CAP::Polygon ) do
         @alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :polygons => @original_polygon )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-        @polygon_element = CAP.xpath_first( @xml_document, CAP::Polygon::XPATH )
+				@info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
+				@area_element = CAP.xpath_first( @info_element, CAP::Area::XPATH )
+        @polygon_element = CAP.xpath_first( @area_element, CAP::Polygon::XPATH )
         @polygon = CAP::Polygon.from_xml_element( @polygon_element )
       end
 

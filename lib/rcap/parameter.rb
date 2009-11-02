@@ -1,21 +1,22 @@
 module CAP
 	class Parameter
 		include Validation
-		NAME = :name
-		VALUE = :value
-		ATOMIC_ATTRIBUTES = [ NAME, VALUE ]
 
-		validates_presence_of( *ATOMIC_ATTRIBUTES )
+		validates_presence_of( :name, :value )
 
-		attr_accessor( *ATOMIC_ATTRIBUTES )
+		attr_accessor( :name, :value )
 
-		XML_ELEMENT_NAME   = "parameter"
-		NAME_ELEMENT_NAME  = "valueName"
-		VALUE_ELEMENT_NAME = "value"
+		XML_ELEMENT_NAME   = "parameter" # :nodoc:
+		NAME_ELEMENT_NAME  = "valueName" # :nodoc:
+		VALUE_ELEMENT_NAME = "value"     # :nodoc:
+
+		XPATH       = "cap:#{ XML_ELEMENT_NAME }"     # :nodoc:
+		NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    # :nodoc:
+		VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   # :nodoc:
 
 		def initialize( attributes = {} )
-			@name = attributes[ NAME ]
-			@value = attributes[ VALUE ] 
+			@name = attributes[ :name ]
+			@value = attributes[ :value ] 
 		end
 
 		def to_xml_element
@@ -38,6 +39,12 @@ module CAP
 		end
 
 		def self.from_xml_element( parameter_xml_element )
+			Parameter.new( :name  => CAP.xpath_text( parameter_xml_element, NAME_XPATH ),
+										 :value => CAP.xpath_text( parameter_xml_element, VALUE_XPATH ))
+		end
+
+		def ==( other )
+			[ self.name, self.value ] == [ other.name, other.value ]
 		end
 	end
 end

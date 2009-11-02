@@ -26,7 +26,8 @@ describe( CAP::Resource ) do
         @alert = CAP::Alert.new( :infos => CAP::Info.new( :resources => @original_resource ))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-        @resource_element = REXML::XPath.first( @xml_document, CAP::Resource::XPATH , { 'cap' => CAP::XMLNS })
+        @info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
+				@resource_element = CAP.xpath_first( @info_element, CAP::Resource::XPATH )
         @resource_element.should_not( be_nil )
         @resource = CAP::Resource.from_xml_element( @resource_element )
       end

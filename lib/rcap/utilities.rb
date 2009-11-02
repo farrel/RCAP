@@ -7,6 +7,9 @@ class Array
 end
 
 class String
+  CAP_LIST_REGEX = /"([\w\s]+)"|(\S+)/
+  WHITESPACE_REGEX = /^\s+$/ 
+
   def for_cap_list
     if self =~ /\s/
       '"'+self+'"'
@@ -14,23 +17,20 @@ class String
       self
     end
   end
+
+  def unpack_cap_list
+    self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }  
+  end
 end
 
-class Time
-  RCAP_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
-  RCAP_ZONE_FORMAT = "%+02i:00"
-  def to_s_for_cap
-    self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
-  end
-
-  def utc_hours_offset
-    self.utc_offset/3600
-  end
+class DateTime
+	alias inspect to_s
 end
 
 module CAP
 	def self.xpath_text( xml_element, xpath )
-		REXML::XPath.first( xml_element, xpath, { 'cap' => CAP::XMLNS }).text
+		element = self.xpath_first( xml_element, xpath )
+		element.text if element
 	end
 
 	def self.xpath_first( xml_element, xpath )
