@@ -1,4 +1,4 @@
-module CAP
+module RCAP
   class Geocode < Parameter
 
     XML_ELEMENT_NAME = 'geocode' # :nodoc:
@@ -13,8 +13,8 @@ module CAP
     end
 
     def self.from_xml_element( geocode_xml_element ) # :nodoc:
-      self.new( :name => CAP.xpath_text( geocode_xml_element, NAME_XPATH ),
-               :value => CAP.xpath_text( geocode_xml_element, VALUE_XPATH ))
+      self.new( :name => RCAP.xpath_text( geocode_xml_element, NAME_XPATH ),
+               :value => RCAP.xpath_text( geocode_xml_element, VALUE_XPATH ))
     end
   end
 end

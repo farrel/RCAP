@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# An Area object is valid if
 	# * it has an area description
 	# * all Circle objects contained in circles are valid
@@ -70,12 +70,12 @@ module CAP
 		end
 
     def self.from_xml_element( area_xml_element ) # :nodoc:
-      area = CAP::Area.new( :area_desc => CAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
-                            :altitude  => (( alt = CAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),
-                            :ceiling   => (( ceil = CAP.xpath_text( area_xml_element, CEILING_XPATH )) ? ceil.to_f : nil ),
-                            :circles   => CAP.xpath_match( area_xml_element, CAP::Circle::XPATH ).map{ |circle_element| CAP::Circle.from_xml_element( circle_element )},
-                            :geocodes  => CAP.xpath_match( area_xml_element, CAP::Geocode::XPATH ).map{ |geocode_element| CAP::Geocode.from_xml_element( geocode_element )},
-                            :polygons  => CAP.xpath_match( area_xml_element, CAP::Polygon::XPATH ).map{ |polygon_element| CAP::Polygon.from_xml_element( polygon_element )})
+      area = RCAP::Area.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
+                            :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),
+                            :ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH )) ? ceil.to_f : nil ),
+                            :circles   => RCAP.xpath_match( area_xml_element, RCAP::Circle::XPATH ).map{ |circle_element| RCAP::Circle.from_xml_element( circle_element )},
+                            :geocodes  => RCAP.xpath_match( area_xml_element, RCAP::Geocode::XPATH ).map{ |geocode_element| RCAP::Geocode.from_xml_element( geocode_element )},
+                            :polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
 			area
     end
   end

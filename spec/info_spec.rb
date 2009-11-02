@@ -1,9 +1,9 @@
 require 'spec/spec_helper'
 
-describe( CAP::Info ) do
+describe( RCAP::Info ) do
   context( 'on initialisation' ) do
     before( :each ) do
-      @info = CAP::Info.new
+      @info = RCAP::Info.new
     end
 
     it( 'should have a default language of en-US' ) { @info.language.should == 'en-US' }
@@ -28,12 +28,12 @@ describe( CAP::Info ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_info = CAP::Info.new( :categories     => [ CAP::Info::CATEGORY_GEO, CAP::Info::CATEGORY_FIRE ],
+        @original_info = RCAP::Info.new( :categories     => [ RCAP::Info::CATEGORY_GEO, RCAP::Info::CATEGORY_FIRE ],
                                         :event          => 'Event Description',
-                                        :response_types => [ CAP::Info::RESPONSE_TYPE_MONITOR, CAP::Info::RESPONSE_TYPE_ASSESS ],
-                                        :urgency        => CAP::Info::URGENCY_IMMEDIATE,
-                                        :severity       => CAP::Info::SEVERITY_EXTREME,
-                                        :certainty      => CAP::Info::CERTAINTY_OBSERVED,
+                                        :response_types => [ RCAP::Info::RESPONSE_TYPE_MONITOR, RCAP::Info::RESPONSE_TYPE_ASSESS ],
+                                        :urgency        => RCAP::Info::URGENCY_IMMEDIATE,
+                                        :severity       => RCAP::Info::SEVERITY_EXTREME,
+                                        :certainty      => RCAP::Info::CERTAINTY_OBSERVED,
                                         :audience       => 'Audience',
                                         :effective      => DateTime.now,
                                         :onset          => DateTime.now + 1,
@@ -44,17 +44,17 @@ describe( CAP::Info ) do
                                         :instruction    => 'Instruction',
                                         :web            => 'http://website',
                                         :contact        => 'contact@address',
-                                        :event_codes => [ CAP::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                          CAP::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                        :parameters => [ CAP::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                         CAP::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                        :areas => [ CAP::Area.new( :area_desc => 'Area1' ),
-                                          CAP::Area.new( :area_desc => 'Area2' )]
+                                        :event_codes => [ RCAP::EventCode.new( :name => 'name1', :value => 'value1' ),
+                                                          RCAP::EventCode.new( :name => 'name2', :value => 'value2' )],
+                                        :parameters => [ RCAP::Parameter.new( :name => 'name1', :value => 'value1' ),
+                                                         RCAP::Parameter.new( :name => 'name2', :value => 'value2' )],
+                                        :areas => [ RCAP::Area.new( :area_desc => 'Area1' ),
+                                          RCAP::Area.new( :area_desc => 'Area2' )]
                                       )
-        @alert = CAP::Alert.new( :infos => @original_info )
+        @alert = RCAP::Alert.new( :infos => @original_info )
 				@xml_string = @alert.to_xml
 				@xml_document = REXML::Document.new( @xml_string )
-        @info = CAP::Info.from_xml_element( CAP.xpath_first( @xml_document.root, CAP::Info::XPATH ))
+        @info = RCAP::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH ))
       end
       it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
       it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
@@ -81,11 +81,11 @@ describe( CAP::Info ) do
 
   context( 'is not valid if it' ) do
     before( :each ) do
-      @info = CAP::Info.new( :event => 'Info Event',
-                            :categories => CAP::Info::CATEGORY_GEO,
-                            :urgency => CAP::Info::URGENCY_IMMEDIATE,
-                            :severity => CAP::Info::SEVERITY_EXTREME,
-                            :certainty => CAP::Info::CERTAINTY_OBSERVED )
+      @info = RCAP::Info.new( :event => 'Info Event',
+                            :categories => RCAP::Info::CATEGORY_GEO,
+                            :urgency => RCAP::Info::URGENCY_IMMEDIATE,
+                            :severity => RCAP::Info::SEVERITY_EXTREME,
+                            :certainty => RCAP::Info::CERTAINTY_OBSERVED )
       @info.valid?
       puts @info.errors.full_messages
       @info.should( be_valid )

@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# A Polygon object is valid if
 	# * it has a minimum of three points
 	# * each Point object in the points collection is valid
@@ -43,7 +43,7 @@ module CAP
 
     def self.from_xml_element( polygon_xml_element ) # :nodoc:
       coordinates = self.parse_polygon_string( polygon_xml_element.text )
-      points = coordinates.map{ |lattitude, longitude| CAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
+      points = coordinates.map{ |lattitude, longitude| RCAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
       polygon = self.new( :points => points )
     end
   end

@@ -34,17 +34,17 @@ class Time # :nodoc:
   end
 end
 
-module CAP # :nodoc:
+module RCAP # :nodoc:
 	def self.xpath_text( xml_element, xpath ) 
 		element = self.xpath_first( xml_element, xpath )
 		element.text if element
 	end
 
 	def self.xpath_first( xml_element, xpath )
-		REXML::XPath.first( xml_element, xpath, { 'cap' => CAP::XMLNS })
+		REXML::XPath.first( xml_element, xpath, { 'cap' => RCAP::XMLNS })
 	end
 
 	def self.xpath_match( xml_element, xpath )
-		REXML::XPath.match( xml_element, xpath, { 'cap' => CAP::XMLNS })
+		REXML::XPath.match( xml_element, xpath, { 'cap' => RCAP::XMLNS })
 	end
 end

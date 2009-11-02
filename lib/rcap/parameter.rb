@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# A Parameter object is valid if
 	# * it has a name
 	# * it has a value
@@ -42,8 +42,8 @@ module CAP
 		end
 
 		def self.from_xml_element( parameter_xml_element ) # :nodoc:
-			Parameter.new( :name  => CAP.xpath_text( parameter_xml_element, NAME_XPATH ),
-										 :value => CAP.xpath_text( parameter_xml_element, VALUE_XPATH ))
+			Parameter.new( :name  => RCAP.xpath_text( parameter_xml_element, NAME_XPATH ),
+										 :value => RCAP.xpath_text( parameter_xml_element, VALUE_XPATH ))
 		end
 
 		# Two parameters are equivalent if they have the same name and value.

@@ -1,9 +1,9 @@
 require 'spec/spec_helper'
 
-describe( CAP::Alert ) do
+describe( RCAP::Alert ) do
   context( 'on initialisation' ) do
     before( :each )  do
-      @alert = CAP::Alert.new
+      @alert = RCAP::Alert.new
     end
 
     it( 'should have a default identifier' ){ @alert.identifier.should_not( be_nil )}
@@ -22,21 +22,21 @@ describe( CAP::Alert ) do
 
 		context( 'from XML' ) do
 			before( :each ) do
-				@original_alert = CAP::Alert.new( :sender => 'Sender',
-													 :status => CAP::Alert::STATUS_TEST,
-													 :scope => CAP::Alert::SCOPE_PUBLIC,
+				@original_alert = RCAP::Alert.new( :sender => 'Sender',
+													 :status => RCAP::Alert::STATUS_TEST,
+													 :scope => RCAP::Alert::SCOPE_PUBLIC,
 													 :source => 'Source',
 													 :restriction => 'No Restriction',
 													 :addresses => [ 'Address 1', 'Address 2'],
 													 :code => 'Code',
 													 :note => 'Note',
-													 :references => [ CAP::Alert.new( :sender => 'Sender1' ).to_reference, CAP::Alert.new( :sender => 'Sender2' ).to_reference ],
+													 :references => [ RCAP::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::Alert.new( :sender => 'Sender2' ).to_reference ],
 													 :incidents => [ 'Incident1', 'Incident2' ],
-													 :infos => [ CAP::Info.new, CAP::Info.new ])
+													 :infos => [ RCAP::Info.new, RCAP::Info.new ])
 				@xml_string = @original_alert.to_xml
 				@xml_document = REXML::Document.new( @xml_string )
 				@alert_element = @xml_document.root
-				@alert = CAP::Alert.from_xml_element( @alert_element )
+				@alert = RCAP::Alert.from_xml_element( @alert_element )
 			end
 
 			it( 'should parse identifier correctly' ){ @alert.identifier.should == @original_alert.identifier }
@@ -54,17 +54,17 @@ describe( CAP::Alert ) do
       it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
       it( 'should parse infos correctly' ) do 
         @alert.infos.size.should == @original_alert.infos.size 
-        @alert.infos.each{ |info| info.class.should == CAP::Info }
+        @alert.infos.each{ |info| info.class.should == RCAP::Info }
       end
     end
   end
 
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @alert = CAP::Alert.new( :sender => "cap@tempuri.org",
-                              :status => CAP::Alert::STATUS_TEST,
-                              :msg_type => CAP::Alert::MSG_TYPE_ALERT,
-                              :scope => CAP::Alert::SCOPE_PUBLIC )
+      @alert = RCAP::Alert.new( :sender => "cap@tempuri.org",
+                              :status => RCAP::Alert::STATUS_TEST,
+                              :msg_type => RCAP::Alert::MSG_TYPE_ALERT,
+                              :scope => RCAP::Alert::SCOPE_PUBLIC )
       @alert.should( be_valid )
     end
 
@@ -117,11 +117,11 @@ describe( CAP::Alert ) do
 
     context( 'has an info element and it' ) do
       it( 'is not valid' ) do
-        @info = CAP::Info.new( :event => 'Info Event',
-                              :categories => CAP::Info::CATEGORY_GEO,
-                              :urgency => CAP::Info::URGENCY_IMMEDIATE,
-                              :severity => CAP::Info::SEVERITY_EXTREME,
-                              :certainty => CAP::Info::CERTAINTY_OBSERVED )
+        @info = RCAP::Info.new( :event => 'Info Event',
+                              :categories => RCAP::Info::CATEGORY_GEO,
+                              :urgency => RCAP::Info::URGENCY_IMMEDIATE,
+                              :severity => RCAP::Info::SEVERITY_EXTREME,
+                              :certainty => RCAP::Info::CERTAINTY_OBSERVED )
         @info.event = nil
         @alert.infos << @info
         @info.should_not( be_valid )

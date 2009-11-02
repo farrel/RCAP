@@ -15,7 +15,7 @@ require 'rcap/polygon'
 require 'rcap/geocode'
 require 'rcap/area'
 
-module CAP
+module RCAP
 	XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
 	VERSION = "0.1"
 end

@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# In Info object is valid if
 	# * it has an event
 	# * it has an urgency with a valid value
@@ -213,26 +213,26 @@ module CAP
 
     def self.from_xml_element( info_xml_element ) # :nodoc:
       self.new(
-        :language       => CAP.xpath_text( info_xml_element, LANGUAGE_XPATH ) || DEFAULT_LANGUAGE,
-        :categories     => CAP.xpath_match( info_xml_element, CATEGORY_XPATH ).map{ |element| element.text },
-        :event          => CAP.xpath_text( info_xml_element, EVENT_XPATH ),
-        :response_types => CAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH ).map{ |element| element.text },
-        :urgency        => CAP.xpath_text( info_xml_element, URGENCY_XPATH ),
-        :severity       => CAP.xpath_text( info_xml_element, SEVERITY_XPATH ),
-        :certainty      => CAP.xpath_text( info_xml_element, CERTAINTY_XPATH ),
-        :audience       => CAP.xpath_text( info_xml_element, AUDIENCE_XPATH ),
-        :effective      => (( effective = CAP.xpath_first( info_xml_element, EFFECTIVE_XPATH )) ? DateTime.parse( effective.text ) : nil ),
-        :onset          => (( onset = CAP.xpath_first( info_xml_element, ONSET_XPATH )) ? DateTime.parse( onset.text ) : nil ),
-        :expires        => (( expires = CAP.xpath_first( info_xml_element, EXPIRES_XPATH )) ? DateTime.parse( expires.text ) : nil ),
-        :sender_name    => CAP.xpath_text( info_xml_element, SENDER_NAME_XPATH ),
-        :headline       => CAP.xpath_text( info_xml_element, HEADLINE_XPATH ),
-        :description    => CAP.xpath_text( info_xml_element, DESCRIPTION_XPATH ),
-        :instruction    => CAP.xpath_text( info_xml_element, INSTRUCTION_XPATH ),
-        :web            => CAP.xpath_text( info_xml_element, WEB_XPATH ),
-        :contact        => CAP.xpath_text( info_xml_element, CONTACT_XPATH ),
-				:event_codes    => CAP.xpath_match( info_xml_element, CAP::EventCode::XPATH ).map{ |element| CAP::EventCode.from_xml_element( element )},
-				:parameters => CAP.xpath_match( info_xml_element, CAP::Parameter::XPATH ).map{ |element| CAP::Parameter.from_xml_element( element )},
-				:areas => CAP.xpath_match( info_xml_element, CAP::Area::XPATH ).map{ |element| CAP::Area.from_xml_element( element )}
+        :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH ) || DEFAULT_LANGUAGE,
+        :categories     => RCAP.xpath_match( info_xml_element, CATEGORY_XPATH ).map{ |element| element.text },
+        :event          => RCAP.xpath_text( info_xml_element, EVENT_XPATH ),
+        :response_types => RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH ).map{ |element| element.text },
+        :urgency        => RCAP.xpath_text( info_xml_element, URGENCY_XPATH ),
+        :severity       => RCAP.xpath_text( info_xml_element, SEVERITY_XPATH ),
+        :certainty      => RCAP.xpath_text( info_xml_element, CERTAINTY_XPATH ),
+        :audience       => RCAP.xpath_text( info_xml_element, AUDIENCE_XPATH ),
+        :effective      => (( effective = RCAP.xpath_first( info_xml_element, EFFECTIVE_XPATH )) ? DateTime.parse( effective.text ) : nil ),
+        :onset          => (( onset = RCAP.xpath_first( info_xml_element, ONSET_XPATH )) ? DateTime.parse( onset.text ) : nil ),
+        :expires        => (( expires = RCAP.xpath_first( info_xml_element, EXPIRES_XPATH )) ? DateTime.parse( expires.text ) : nil ),
+        :sender_name    => RCAP.xpath_text( info_xml_element, SENDER_NAME_XPATH ),
+        :headline       => RCAP.xpath_text( info_xml_element, HEADLINE_XPATH ),
+        :description    => RCAP.xpath_text( info_xml_element, DESCRIPTION_XPATH ),
+        :instruction    => RCAP.xpath_text( info_xml_element, INSTRUCTION_XPATH ),
+        :web            => RCAP.xpath_text( info_xml_element, WEB_XPATH ),
+        :contact        => RCAP.xpath_text( info_xml_element, CONTACT_XPATH ),
+				:event_codes    => RCAP.xpath_match( info_xml_element, RCAP::EventCode::XPATH ).map{ |element| RCAP::EventCode.from_xml_element( element )},
+				:parameters => RCAP.xpath_match( info_xml_element, RCAP::Parameter::XPATH ).map{ |element| RCAP::Parameter.from_xml_element( element )},
+				:areas => RCAP.xpath_match( info_xml_element, RCAP::Area::XPATH ).map{ |element| RCAP::Area.from_xml_element( element )}
       )
     end
   end

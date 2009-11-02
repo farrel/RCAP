@@ -11,7 +11,7 @@ RCAP supports CAP Version 1.1.
 === Creating an Alert
 
  require 'rcap/rcap' # Requires RCAP API
- include CAP         # Include CAP module into namespace
+ include RCAP         # Include RCAP module into namespace
 
  alert = Alert.new( :sender   => 'cape_town_disaster_relief@capetown.municipal.za',
                     :status   => Alert::STATUS_ACTUAL, 

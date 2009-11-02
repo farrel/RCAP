@@ -1,9 +1,9 @@
 require 'spec/spec_helper'
 
-describe( CAP::Area ) do
+describe( RCAP::Area ) do
 	context( 'on initialisation' ) do
 		before( :each ) do
-			@area = CAP::Area.new
+			@area = RCAP::Area.new
 		end
 
 		# Atomic
@@ -18,19 +18,19 @@ describe( CAP::Area ) do
 
 		context( 'from XML' ) do
 			before( :each ) do
-				@original_area = CAP::Area.new( :area_desc => 'Area Description',
+				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
 																			 :altitude => 100,
 																			 :ceiling => 200,
-																			 :circles => CAP::Circle.new( :point => CAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
-																			 :geocodes => CAP::Geocode.new( :name => 'name', :value => 'value' ),
-																			 :polygons => CAP::Polygon.new( :points => CAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
+																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
+																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
 
-				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => @original_area ))
+				@alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => @original_area ))
 				@xml_string = @alert.to_xml
 				@xml_document = REXML::Document.new( @xml_string )
-				@info_xml_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
-				@area_xml_element = CAP.xpath_first( @info_xml_element, CAP::Area::XPATH )
-				@area = CAP::Area.from_xml_element( @area_xml_element )
+				@info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
+				@area_xml_element = RCAP.xpath_first( @info_xml_element, RCAP::Area::XPATH )
+				@area = RCAP::Area.from_xml_element( @area_xml_element )
 			end
 
 			it( 'should parse the area_desc correctly' ) do
@@ -61,7 +61,7 @@ describe( CAP::Area ) do
 
   context( 'is not valid if' ) do
     before( :each ) do
-      @area = CAP::Area.new( :area_desc => "Cape Town Metropole" )
+      @area = RCAP::Area.new( :area_desc => "Cape Town Metropole" )
       @area.should( be_valid )
     end
 
@@ -78,7 +78,7 @@ describe( CAP::Area ) do
 
     context( 'it contains circles and it' ) do
       before( :each ) do
-        @area.circles << CAP::Circle.new( :point => CAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1)
+        @area.circles << RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1)
         @area.should( be_valid )
       end
 
@@ -90,10 +90,10 @@ describe( CAP::Area ) do
 
     context( 'it contains polygons and it' ) do
       before( :each ) do
-        @polygon = CAP::Polygon.new
-        @polygon.points.push( CAP::Point.new( :lattitude => 0, :longitude => 0 ),
-                             CAP::Point.new( :lattitude => 0, :longitude => 1 ),
-                             CAP::Point.new( :lattitude => 1, :longitude => 0 ))
+        @polygon = RCAP::Polygon.new
+        @polygon.points.push( RCAP::Point.new( :lattitude => 0, :longitude => 0 ),
+                             RCAP::Point.new( :lattitude => 0, :longitude => 1 ),
+                             RCAP::Point.new( :lattitude => 1, :longitude => 0 ))
         @area.polygons << @polygon
         @area.should( be_valid )
       end
@@ -106,7 +106,7 @@ describe( CAP::Area ) do
 
     context( 'it contains geocodes and it' ) do
       before( :each ) do
-        @geocode = CAP::Geocode.new( :name => 'foo', :value => 'bar' )
+        @geocode = RCAP::Geocode.new( :name => 'foo', :value => 'bar' )
         @area.geocodes << @geocode
         @area.should( be_valid )
       end

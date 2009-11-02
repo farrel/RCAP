@@ -1,9 +1,9 @@
 require 'spec/spec_helper'
 
-describe( CAP::Resource ) do
+describe( RCAP::Resource ) do
   context( 'on initialisation' ) do
     before( :each ) do
-      @resource = CAP::Resource.new
+      @resource = RCAP::Resource.new
     end
 
     it( 'should have no mime_type' ){ @resource.mime_type.should( be_nil )}    
@@ -15,7 +15,7 @@ describe( CAP::Resource ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_resource = CAP::Resource.new
+        @original_resource = RCAP::Resource.new
         @original_resource.resource_desc = "Image of incident"
         @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
         @original_resource.mime_type     = 'image/png'
@@ -23,13 +23,13 @@ describe( CAP::Resource ) do
         @original_resource.size          = "20480"
         @original_resource.digest        = "2048"
 
-        @alert = CAP::Alert.new( :infos => CAP::Info.new( :resources => @original_resource ))
+        @alert = RCAP::Alert.new( :infos => RCAP::Info.new( :resources => @original_resource ))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-        @info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
-				@resource_element = CAP.xpath_first( @info_element, CAP::Resource::XPATH )
+        @info_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
+				@resource_element = RCAP.xpath_first( @info_element, RCAP::Resource::XPATH )
         @resource_element.should_not( be_nil )
-        @resource = CAP::Resource.from_xml_element( @resource_element )
+        @resource = RCAP::Resource.from_xml_element( @resource_element )
       end
 
       it( 'should parse resource_desc correctly' ) do
@@ -60,7 +60,7 @@ describe( CAP::Resource ) do
 
   context( 'which is valid' ) do
     before( :each ) do
-      @resource = CAP::Resource.new( :resource_desc => 'Resource Description' )
+      @resource = RCAP::Resource.new( :resource_desc => 'Resource Description' )
       @resource.should( be_valid )
     end
 

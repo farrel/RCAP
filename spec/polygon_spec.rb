@@ -1,11 +1,11 @@
 require 'spec/spec_helper'
 
-describe( CAP::Polygon ) do
+describe( RCAP::Polygon ) do
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @polygon = CAP::Polygon.new
+      @polygon = RCAP::Polygon.new
       3.times do
-        @polygon.points << CAP::Point.new( :lattitude => 0, :longitude => 0 )
+        @polygon.points << RCAP::Point.new( :lattitude => 0, :longitude => 0 )
       end
       @polygon.should( be_valid )
     end
@@ -24,14 +24,14 @@ describe( CAP::Polygon ) do
   context( 'on initialization' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_polygon = CAP::Polygon.new( :points => Array.new(3){|i| CAP::Point.new( :lattitude => i, :longitude => i )})
-        @alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :polygons => @original_polygon )))
+        @original_polygon = RCAP::Polygon.new( :points => Array.new(3){|i| RCAP::Point.new( :lattitude => i, :longitude => i )})
+        @alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => RCAP::Area.new( :polygons => @original_polygon )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
-				@area_element = CAP.xpath_first( @info_element, CAP::Area::XPATH )
-        @polygon_element = CAP.xpath_first( @area_element, CAP::Polygon::XPATH )
-        @polygon = CAP::Polygon.from_xml_element( @polygon_element )
+				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
+				@area_element = RCAP.xpath_first( @info_element, RCAP::Area::XPATH )
+        @polygon_element = RCAP.xpath_first( @area_element, RCAP::Polygon::XPATH )
+        @polygon = RCAP::Polygon.from_xml_element( @polygon_element )
       end
 
       it( 'should parse all the points' ) do

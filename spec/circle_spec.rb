@@ -1,9 +1,9 @@
 require 'spec/spec_helper'
 
-describe( CAP::Circle ) do
+describe( RCAP::Circle ) do
   describe( 'should not be valid if' ) do
     before( :each ) do
-      @circle = CAP::Circle.new( :point => CAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1 )
+      @circle = RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1 )
       @circle.should( be_valid )
     end
 
@@ -35,15 +35,15 @@ describe( CAP::Circle ) do
 	context( 'on initialisation' ) do
 		context( 'from XML' ) do
 			before( :each ) do
-				@original_circle = CAP::Circle.new( :radius => 10.5,
-																					 :point => CAP::Point.new( :lattitude => 30, :longitude => 60 ))
-				@alert = CAP::Alert.new( :infos => CAP::Info.new( :areas => CAP::Area.new( :circles => @original_circle )))
+				@original_circle = RCAP::Circle.new( :radius => 10.5,
+																					 :point => RCAP::Point.new( :lattitude => 30, :longitude => 60 ))
+				@alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => RCAP::Area.new( :circles => @original_circle )))
 				@xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@info_element = CAP.xpath_first( @xml_document.root, CAP::Info::XPATH )
-				@area_element = CAP.xpath_first( @info_element, CAP::Area::XPATH )
-				@circle_element = CAP.xpath_first( @area_element, CAP::Circle::XPATH )
-				@circle = CAP::Circle.from_xml_element( @circle_element )
+				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
+				@area_element = RCAP.xpath_first( @info_element, RCAP::Area::XPATH )
+				@circle_element = RCAP.xpath_first( @area_element, RCAP::Circle::XPATH )
+				@circle = RCAP::Circle.from_xml_element( @circle_element )
 			end
 
 			it( 'should parse the radius correctly' ) do

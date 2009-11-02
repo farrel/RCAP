@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# A Resourse object is valid if
 	# * it has a resource description
   class Resource
@@ -70,12 +70,12 @@ module CAP
     end
 
     def self.from_xml_element( resource_xml_element ) # :nodoc:
-      resource = self.new( :resource_desc => CAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH ),
-                           :uri           => CAP.xpath_text( resource_xml_element, URI_XPATH ),
-                           :mime_type     => CAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH ),
-                           :deref_uri     => CAP.xpath_text( resource_xml_element, DEREF_URI_XPATH ),
-                           :size          => CAP.xpath_text( resource_xml_element, SIZE_XPATH ),
-                           :digest        => CAP.xpath_text( resource_xml_element, DIGEST_XPATH ))
+      resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH ),
+                           :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH ),
+                           :mime_type     => RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH ),
+                           :deref_uri     => RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH ),
+                           :size          => RCAP.xpath_text( resource_xml_element, SIZE_XPATH ),
+                           :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH ))
     end
   end
 end

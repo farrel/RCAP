@@ -1,4 +1,4 @@
-module CAP
+module RCAP
 	# A Circle object is valid if
 	# * it has a point which is a valid Point object
 	# * it has a radius with a value greater than zero
@@ -49,7 +49,7 @@ module CAP
 
     def self.from_xml_element( circle_xml_element ) # :nodoc:
       lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
-      point = CAP::Point.new( :lattitude => lattitude, :longitude => longitude )
+      point = RCAP::Point.new( :lattitude => lattitude, :longitude => longitude )
       circle = self.new( :point  => point,
                          :radius => radius )
     end
