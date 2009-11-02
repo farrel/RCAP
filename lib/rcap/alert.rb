@@ -1,4 +1,12 @@
 module CAP
+  # An Alert object is valid if 
+  # * it has an identifier
+  # * it has a sender
+  # * it has a sent time
+  # * it has a valid status value
+  # * it has a valid messge type value
+  # * it has a valid scope value
+  # * all Info objects contained in infos are valid
 	class Alert
 		include Validation
 
@@ -51,19 +59,40 @@ module CAP
     REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"  # :nodoc: 
     INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"   # :nodoc: 
 
-		attr_accessor( :identifier, :sender, :sent, :status, :msg_type, :scope, :source, :restriction, :code, :note )
-		attr_reader(:addresses, :references, :incidents, :infos )
+    # If not set a UUID will be set by default
+		attr_accessor( :identifier)
+    attr_accessor( :sender )
+    # Sent Time - If not set will value will be time of creation.
+    attr_accessor( :sent )
+    attr_accessor( :status )
+    # Message Type
+    attr_accessor( :msg_type )
+    attr_accessor( :scope )
+    attr_accessor( :source )
+    # Depends on scope being SCOPE_RESTRICTED. 
+    attr_accessor( :restriction )
+    attr_accessor( :code )
+    attr_accessor( :note )
+
+    # Collection of address strings. Depends on scope being SCOPE_PRIVATE.
+		attr_reader( :addresses )
+    # Collection of reference strings - see Alert#to_reference
+    attr_reader( :references) 
+    # Collection of incident strings
+    attr_reader( :incidents )
+    # Collection of Info objects
+    attr_reader( :infos )
 
 		validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )
 
-    validates_inclusion_of( :status, :in => ALL_STATUSES )
+    validates_inclusion_of( :status,   :in => ALL_STATUSES )
     validates_inclusion_of( :msg_type, :in => ALL_MSG_TYPES )
-    validates_inclusion_of( :scope, :in => ALL_SCOPES )
+    validates_inclusion_of( :scope,    :in => ALL_SCOPES )
 
     validates_format_of( :identifier, :with => ALLOWED_CHARACTERS )
-    validates_format_of( :sender , :with => ALLOWED_CHARACTERS )
+    validates_format_of( :sender ,    :with => ALLOWED_CHARACTERS )
 
-    validates_dependency_of( :addresses, :on => :scope, :with_value => SCOPE_PRIVATE )
+    validates_dependency_of( :addresses,   :on => :scope, :with_value => SCOPE_PRIVATE )
     validates_dependency_of( :restriction, :on => :scope, :with_value => SCOPE_RESTRICTED )
 
     validates_collection_of( :infos )
@@ -118,29 +147,40 @@ module CAP
       xml_document
     end
 
+    # Returns a string containing the XML representation of the alert.
     def to_xml
       self.to_xml_document.to_s
     end
 
+    # Returns a string of the format 'sender,identifier,sent' suitable for usage as a reference in a CAP message.
     def to_reference
       "#{ self.sender },#{ self.identifier },#{ self.sent }"
     end
 
-    def self.from_xml_element( alert_xml_element )
+    def self.from_xml_element( alert_xml_element ) # :nodoc:
       alert = CAP::Alert.new( :identifier  => CAP.xpath_text( alert_xml_element, CAP::Alert::IDENTIFIER_XPATH ),
                               :sender      => CAP.xpath_text( alert_xml_element, SENDER_XPATH ),
-                              :sent        => ( CAP.xpath_first( alert_xml_element, SENT_XPATH ) ? DateTime.strptime( CAP.xpath_text( alert_xml_element, SENT_XPATH )) : nil ),
+                              :sent        => (( sent = CAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
                               :status      => CAP.xpath_text( alert_xml_element, STATUS_XPATH ),
                               :msg_type    => CAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
                               :source      => CAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
                               :scope       => CAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
                               :restriction => CAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
-                              :addresses   => CAP.xpath_text( alert_xml_element, ADDRESSES_XPATH ).unpack_cap_list,
+                              :addresses   => (( address = CAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
                               :code        => CAP.xpath_text( alert_xml_element, CODE_XPATH ),
                               :note        => CAP.xpath_text( alert_xml_element, NOTE_XPATH ),
-                              :references  => CAP.xpath_text( alert_xml_element, REFERENCES_XPATH ).split( ' ' ),
-                              :incidents   => CAP.xpath_text( alert_xml_element, INCIDENTS_XPATH ).split( ' ' ),
-                              :infos       => CAP.xpath_match( alert_xml_element, CAP::Info::XPATH ).each{ |element| CAP::Info.from_xml_element( element )})
+                              :references  => (( references = CAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
+                              :incidents   => (( incidents = CAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
+                              :infos       => CAP.xpath_match( alert_xml_element, CAP::Info::XPATH ).map{ |element| CAP::Info.from_xml_element( element )})
+    end
+
+    def self.from_xml_document( xml_document ) # :nodoc:
+      self.from_xml_element( xml_document.root )
+    end
+
+    # Initialised an Alert object from the XML string.
+    def self.from_xml( xml_string )
+      self.from_xml_document( REXML::Document.new( xml_string ))
     end
 	end
 end

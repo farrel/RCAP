@@ -1,8 +1,14 @@
 module CAP
+	# A Circle object is valid if
+	# * it has a point which is a valid Point object
+	# * it has a radius with a value greater than zero
   class Circle
     include Validation
 
-    attr_accessor( :point, :radius )
+		# Instance of Point class
+    attr_accessor( :point )
+		# Expresed in kilometers 
+		attr_accessor( :radius )
 
     validates_presence_of( :point, :radius )
     validates_numericality_of( :radius , :greater_than => 0 )
@@ -31,7 +37,7 @@ module CAP
       xml_element
     end
 
-    def to_xml
+    def to_xml # :nodoc:
       self.to_xml_element.to_s
     end
 
@@ -48,9 +54,9 @@ module CAP
                          :radius => radius )
     end
 
+		# Two circles are equivalent if their point and radius are equal.
     def ==( other )
-      self.point == other.point &&
-        self.radius == other.radius
+      self.point == other.point && self.radius == other.radius
     end
   end
 end

@@ -88,7 +88,7 @@ You can also create the various message elements seperately and then combine the
 
 === Validating an alert
 
-The RCAP API aims to codify as many of the rules of the CAP format into validation rules that can be checked using the Assistance API (http://assistance.rubyforge.org). The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
+The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API (http://assistance.rubyforge.org). The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
 
  info = Info.new( :event      => 'Liquid Petroleoum Tanker Fire',
                   :language   => 'en-ZA',
@@ -105,7 +105,11 @@ Will produce the folling output:
  severity is not present
  certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
 
-A full spec suite using RSpec (http://www.rspec.info) was used to test the validations and currently numbers over 100 tests.
+A full spec suite using RSpec (http://www.rspec.info) was used to test the validations and currently numbers over 140 tests.
+
+== Version
+
+0.1
  
 == Authors
 

@@ -3,7 +3,7 @@ module CAP
 
     XML_ELEMENT_NAME = 'eventCode' # :nodoc:
 
-		XPATH = "cap:#{ XML_ELEMENT_NAME }" # :nodoc
+		XPATH = "cap:#{ XML_ELEMENT_NAME }" # :nodoc:
 
     def to_xml_element # :nodoc:
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
@@ -12,7 +12,7 @@ module CAP
       xml_element
     end
 
-		def self.from_xml_element( event_code_xml_element )
+		def self.from_xml_element( event_code_xml_element ) # :nodoc:
 			EventCode.new( :name => CAP.xpath_text( event_code_xml_element, NAME_XPATH ),
 										 :value => CAP.xpath_text( event_code_xml_element, VALUE_XPATH ))
 		end

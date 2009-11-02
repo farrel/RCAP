@@ -1,4 +1,7 @@
 module CAP
+	# A Parameter object is valid if
+	# * it has a name
+	# * it has a value
 	class Parameter
 		include Validation
 
@@ -19,30 +22,31 @@ module CAP
 			@value = attributes[ :value ] 
 		end
 
-		def to_xml_element
+		def to_xml_element # :nodoc:
 			xml_element = REXML::Element.new( XML_ELEMENT_NAME )
 			xml_element.add_element( NAME_ELEMENT_NAME ).add_text( self.name )
 			xml_element.add_element( VALUE_ELEMENT_NAME ).add_text( self.value )
 			xml_element
 		end
 
-		def to_xml
+		def to_xml # :nodoc:
 			self.to_xml_element.to_s
 		end
 
-    def inspect
+    def inspect # :nodoc:
       "#{ self.name }: #{ self.value }"
     end
 
-    def to_s
+    def to_s # :nodoc:
       self.inspect
 		end
 
-		def self.from_xml_element( parameter_xml_element )
+		def self.from_xml_element( parameter_xml_element ) # :nodoc:
 			Parameter.new( :name  => CAP.xpath_text( parameter_xml_element, NAME_XPATH ),
 										 :value => CAP.xpath_text( parameter_xml_element, VALUE_XPATH ))
 		end
 
+		# Two parameters are equivalent if they have the same name and value.
 		def ==( other )
 			[ self.name, self.value ] == [ other.name, other.value ]
 		end

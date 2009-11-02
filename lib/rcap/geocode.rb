@@ -16,10 +16,5 @@ module CAP
       self.new( :name => CAP.xpath_text( geocode_xml_element, NAME_XPATH ),
                :value => CAP.xpath_text( geocode_xml_element, VALUE_XPATH ))
     end
-
-    def ==( other )
-      self.name == other.name &&
-        self.value == other.value
-    end
   end
 end

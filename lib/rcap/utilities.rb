@@ -1,12 +1,12 @@
-ALLOWED_CHARACTERS = /[^\s&<]+/
+ALLOWED_CHARACTERS = /[^\s&<]+/ # :nodoc:
 
-class Array
+class Array # :nodoc:
   def to_s_for_cap
     self.map{ |element| element.to_s.for_cap_list }.join( ' ' )
   end
 end
 
-class String
+class String # :nodoc:
   CAP_LIST_REGEX = /"([\w\s]+)"|(\S+)/
   WHITESPACE_REGEX = /^\s+$/ 
 
@@ -23,12 +23,19 @@ class String
   end
 end
 
-class DateTime
+class DateTime # :nodoc:
 	alias inspect to_s
+  alias to_s_for_cap to_s
 end
 
-module CAP
-	def self.xpath_text( xml_element, xpath )
+class Time # :nodoc:
+  def to_s_for_cap
+
+  end
+end
+
+module CAP # :nodoc:
+	def self.xpath_text( xml_element, xpath ) 
 		element = self.xpath_first( xml_element, xpath )
 		element.text if element
 	end

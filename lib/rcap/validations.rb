@@ -1,5 +1,5 @@
-module Validation
-  module ClassMethods
+module Validation  # :nodoc: 
+  module ClassMethods # :nodoc:
 
 		NUMBER_RE  = /^-{0,1}\d*\.{0,1}\d+$/
 		INTEGER_RE = /\-{0,1}A[+-]?\d+\Z/

@@ -51,9 +51,12 @@ describe( CAP::Alert ) do
 			it( 'should parse code correctly' ){ @alert.code.should == @original_alert.code }
 			it( 'should parse note correctly' ){ @alert.note.should == @original_alert.note }
 			it( 'should parse references correctly' ){ @alert.references.should == @original_alert.references }
-			it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
-			it( 'should parse infos correctly' ){ @alert.infos.size.should == @original_alert.infos.size }
-		end
+      it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
+      it( 'should parse infos correctly' ) do 
+        @alert.infos.size.should == @original_alert.infos.size 
+        @alert.infos.each{ |info| info.class.should == CAP::Info }
+      end
+    end
   end
 
   describe( 'is not valid if it' ) do

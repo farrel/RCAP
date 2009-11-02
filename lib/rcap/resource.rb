@@ -1,8 +1,20 @@
 module CAP
+	# A Resourse object is valid if
+	# * it has a resource description
   class Resource
     include Validation
 
-    attr_accessor( :resource_desc, :mime_type, :size, :uri, :deref_uri, :digest )
+		# Resource Description
+    attr_accessor( :resource_desc )
+		attr_accessor( :mime_type )
+		# Expressed in bytes
+		attr_accessor( :size )
+		# Resource location
+		attr_accessor( :uri )
+		# Dereferenced URI - contents of URI Base64 encoded
+		attr_accessor( :deref_uri )
+			# SHA-1 hash of contents of resource
+		attr_accessor( :digest )
 
     validates_presence_of( :resource_desc )
     
@@ -31,7 +43,7 @@ module CAP
       @resource_desc = attributes[ :resource_desc ]
     end
 
-    def to_xml_element
+    def to_xml_element # :nodoc:
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( self.resource_desc )
       xml_element.add_element( MIME_TYPE_ELEMENT_NAME ).add_text( self.mime_type ) if self.mime_type
@@ -42,21 +54,22 @@ module CAP
       xml_element
     end
 
+		# If size is defined returns the size in kilobytes
     def size_in_kb
       if self.size
         self.size.to_f/1024
       end
     end
 
-    def to_xml
+    def to_xml # :nodoc:
       self.to_xml_element.to_s
     end
 
-    def inspect
+    def inspect # :nodoc:
       [ self.resource_desc, self.uri, self.mime_type, self.size ? format( "%.1fKB", self.size_in_kb ) : nil ].compact.join(' - ')
     end
 
-    def self.from_xml_element( resource_xml_element )
+    def self.from_xml_element( resource_xml_element ) # :nodoc:
       resource = self.new( :resource_desc => CAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH ),
                            :uri           => CAP.xpath_text( resource_xml_element, URI_XPATH ),
                            :mime_type     => CAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH ),

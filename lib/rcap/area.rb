@@ -1,9 +1,25 @@
 module CAP
+	# An Area object is valid if
+	# * it has an area description
+	# * all Circle objects contained in circles are valid
+	# * all Geocode objects contained in geocodes are valid
+	# * all Polygon objects contained in polygons are valid
+	# * altitude has a value if ceiling is set
   class Area
     include Validation
-
-    attr_accessor( :area_desc, :altitude, :ceiling )
-    attr_reader( :circles, :geocodes, :polygons )
+		
+		# Area Description - Textual description of area.
+		attr_accessor( :area_desc ) 
+		# Expressed in feet above sea level 
+    attr_accessor( :altitude )
+		# Expressed in feet above sea level.
+		attr_accessor( :ceiling )
+		# Collection of Circle objects
+    attr_reader( :circles )
+		# Collection of Geocode objects
+		attr_reader( :geocodes )
+		# Collection of Polygon objects
+		attr_reader( :polygons )
 
     validates_presence_of( :area_desc )
     validates_collection_of( :circles, :geocodes, :polygons )
@@ -43,11 +59,12 @@ module CAP
       xml_element
     end
 
-    def to_xml
+    def to_xml # :nodoc:
       self.to_xml_element.to_s
     end
 
-		def ==( other )
+		# Implements an equality operator for the Area object. Two Area objects are equal if all their attributes are equal.
+		def ==( other )  
 			comparison_attributes = lambda{ |area| [ area.area_desc, area.altitude, area.ceiling, area.circles, area.geocodes, area.polygons ]}
 			comparison_attributes.call( self ) == comparison_attributes.call( other )
 		end

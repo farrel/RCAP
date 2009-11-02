@@ -1,7 +1,11 @@
 module CAP
-  class Polygon
+	# A Polygon object is valid if
+	# * it has a minimum of three points
+	# * each Point object in the points collection is valid
+	class Polygon
     include Validation
 
+		# Collection of Point objects.
     attr_reader( :points )
 
     validates_length_of( :points, :minimum => 3 )
@@ -14,29 +18,30 @@ module CAP
       @points = Array( attributes[ :points ])
     end
 
-    def to_s
+    def to_s # :nodoc:
       (@points.map{ |point| point.to_s } + [ @points.first ]).join( ' ' )
     end
 
-    def inspect
+    def inspect # :nodoc:
       "(#{ @points.map{|point| point.inspect}.join(', ')})"
     end
 
-    def to_xml_element
+    def to_xml_element # :nodoc:
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_text( self.to_s )
       xml_element
     end
 
+		# Two polygons are equivalent if their collection of points is equivalent.
     def ==( other )
       self.points == other.points
     end
 
-    def self.parse_polygon_string( polygon_string )
+    def self.parse_polygon_string( polygon_string ) # :nodoc:
       polygon_string.split( ' ' ).map{ |coordinate_string| coordinate_string.split( ',' ).map{|coordinate| coordinate.to_f }}
     end
 
-    def self.from_xml_element( polygon_xml_element )
+    def self.from_xml_element( polygon_xml_element ) # :nodoc:
       coordinates = self.parse_polygon_string( polygon_xml_element.text )
       points = coordinates.map{ |lattitude, longitude| CAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
       polygon = self.new( :points => points )

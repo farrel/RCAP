@@ -1,4 +1,13 @@
 module CAP
+	# In Info object is valid if
+	# * it has an event
+	# * it has an urgency with a valid value
+	# * it has a severity with a valid value
+	# * it has a certainty with a valid value
+	# * all categories are valid and categories has at minimum 1 entry
+	# * all Resource objects in the resources collection are valid
+	# * all Area objects in the areas collection are valid
+	#
   class Info
     include Validation
 
@@ -102,10 +111,40 @@ module CAP
     validates_inclusion_of( :severity, :allow_nil  => true, :in => ALL_SEVERITIES, :message  => "can only be assigned the following values: #{ ALL_SEVERITIES.join(', ') }" )
     validates_inclusion_of( :urgency, :allow_nil   => true, :in => ALL_URGENCIES, :message   => "can only be assigned the following values: #{ ALL_URGENCIES.join(', ') }" )
     validates_inclusion_of_members_of( :response_types, :in => ALL_RESPONSE_TYPES, :allow_blank => true )
+		validates_inclusion_of_members_of( :categories, :in => ALL_CATEGORIES, :allow_blank => true )
     validates_collection_of( :resources, :areas )
 
-    attr_accessor( :event, :urgency, :severity, :certainty, :language, :audience, :effective, :onset, :expires, :sender_name, :headline, :description, :instruction, :web, :contact )
-    attr_reader( :categories, :response_types, :event_codes, :parameters, :resources, :areas )
+    attr_accessor( :event )
+		attr_accessor( :urgency )
+		attr_accessor( :severity )
+		attr_accessor( :certainty )
+		attr_accessor( :language )
+		attr_accessor( :audience )
+		# Effective start time of information
+		attr_accessor( :effective )
+		# Expected start of event
+		attr_accessor( :onset )
+		# Effected expiry time of information
+		attr_accessor( :expires )
+		attr_accessor( :sender_name )
+		attr_accessor( :headline )
+		attr_accessor( :description )
+		attr_accessor( :instruction )
+		attr_accessor( :web )
+		attr_accessor( :contact )
+
+		# Collection of textual categories
+    attr_reader( :categories )
+		#  Collection of textual response types
+		attr_reader( :response_types )
+		# Collectoin of EventCode objects
+		attr_reader( :event_codes )
+		# Collection of Parameter objects
+		attr_reader( :parameters )
+		# Collection of Resource objects
+		attr_reader( :resources )
+		# Collection of Area objects
+		attr_reader( :areas )
 
     def initialize( attributes = {} )
       @language       = attributes[ :language ] || DEFAULT_LANGUAGE
@@ -130,7 +169,7 @@ module CAP
       @areas          = Array( attributes[ :areas ])
     end
 
-    def to_xml_element
+    def to_xml_element # :nodoc:
       xml_element = REXML::Element.new( XML_ELEMENT_NAME )
       xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( self.language ) if self.language
       @categories.each do |category|
@@ -168,11 +207,11 @@ module CAP
       xml_element
     end
 
-    def to_xml
+    def to_xml # :nodoc:
       self.to_xml_element.to_s
     end
 
-    def self.from_xml_element( info_xml_element )
+    def self.from_xml_element( info_xml_element ) # :nodoc:
       self.new(
         :language       => CAP.xpath_text( info_xml_element, LANGUAGE_XPATH ) || DEFAULT_LANGUAGE,
         :categories     => CAP.xpath_match( info_xml_element, CATEGORY_XPATH ).map{ |element| element.text },
@@ -182,9 +221,9 @@ module CAP
         :severity       => CAP.xpath_text( info_xml_element, SEVERITY_XPATH ),
         :certainty      => CAP.xpath_text( info_xml_element, CERTAINTY_XPATH ),
         :audience       => CAP.xpath_text( info_xml_element, AUDIENCE_XPATH ),
-        :effective      => ( CAP.xpath_first( info_xml_element, EFFECTIVE_XPATH ) ? DateTime.strptime( CAP.xpath_text( info_xml_element, EFFECTIVE_XPATH )) : nil ),
-        :onset          => ( CAP.xpath_first( info_xml_element, ONSET_XPATH) ? DateTime.strptime( CAP.xpath_text( info_xml_element, ONSET_XPATH )) : nil ),
-        :expires        => ( CAP.xpath_first( info_xml_element, EXPIRES_XPATH ) ? DateTime.strptime( CAP.xpath_text( info_xml_element, EXPIRES_XPATH )) : nil ),
+        :effective      => (( effective = CAP.xpath_first( info_xml_element, EFFECTIVE_XPATH )) ? DateTime.parse( effective.text ) : nil ),
+        :onset          => (( onset = CAP.xpath_first( info_xml_element, ONSET_XPATH )) ? DateTime.parse( onset.text ) : nil ),
+        :expires        => (( expires = CAP.xpath_first( info_xml_element, EXPIRES_XPATH )) ? DateTime.parse( expires.text ) : nil ),
         :sender_name    => CAP.xpath_text( info_xml_element, SENDER_NAME_XPATH ),
         :headline       => CAP.xpath_text( info_xml_element, HEADLINE_XPATH ),
         :description    => CAP.xpath_text( info_xml_element, DESCRIPTION_XPATH ),
