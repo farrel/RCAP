@@ -110,8 +110,8 @@ module RCAP
     validates_inclusion_of( :certainty, :allow_nil => true, :in => ALL_CERTAINTIES, :message => "can only be assigned the following values: #{ ALL_CERTAINTIES.join(', ') }")
     validates_inclusion_of( :severity, :allow_nil  => true, :in => ALL_SEVERITIES, :message  => "can only be assigned the following values: #{ ALL_SEVERITIES.join(', ') }" )
     validates_inclusion_of( :urgency, :allow_nil   => true, :in => ALL_URGENCIES, :message   => "can only be assigned the following values: #{ ALL_URGENCIES.join(', ') }" )
-    validates_inclusion_of_members_of( :response_types, :in => ALL_RESPONSE_TYPES, :allow_blank => true )
-		validates_inclusion_of_members_of( :categories, :in => ALL_CATEGORIES, :allow_blank => true )
+    validates_inclusion_of_members_of( :response_types, :in  => ALL_RESPONSE_TYPES, :allow_blank => true )
+    validates_inclusion_of_members_of( :categories,     :in  => ALL_CATEGORIES,     :allow_blank => true )
     validates_collection_of( :resources, :areas )
 
     attr_accessor( :event )
@@ -186,15 +186,15 @@ module RCAP
       @event_codes.each do |event_code|
         xml_element.add_element( event_code.to_xml_element )
       end
-      xml_element.add_element( EFFECTIVE_ELEMENT_NAME ).add_text( self.effective.to_s ) if self.effective
-      xml_element.add_element( ONSET_ELEMENT_NAME ).add_text( self.onset.to_s )         if self.onset
-      xml_element.add_element( EXPIRES_ELEMENT_NAME ).add_text( self.expires.to_s )     if self.expires
-      xml_element.add_element( SENDER_NAME_ELEMENT_NAME ).add_text( self.sender_name )  if self.sender_name
-      xml_element.add_element( HEADLINE_ELEMENT_NAME ).add_text( self.headline )        if self.headline
-      xml_element.add_element( DESCRIPTION_ELEMENT_NAME ).add_text( self.description )  if self.description
-      xml_element.add_element( INSTRUCTION_ELEMENT_NAME ).add_text( self.instruction )  if self.instruction
-      xml_element.add_element( WEB_ELEMENT_NAME ).add_text( self.web )                  if self.web
-      xml_element.add_element( CONTACT_ELEMENT_NAME ).add_text( self.contact )          if self.contact
+      xml_element.add_element( EFFECTIVE_ELEMENT_NAME ).add_text( self.effective.to_s_for_cap ) if self.effective
+      xml_element.add_element( ONSET_ELEMENT_NAME ).add_text( self.onset.to_s_for_cap )         if self.onset
+      xml_element.add_element( EXPIRES_ELEMENT_NAME ).add_text( self.expires.to_s_for_cap )     if self.expires
+      xml_element.add_element( SENDER_NAME_ELEMENT_NAME ).add_text( self.sender_name )          if self.sender_name
+      xml_element.add_element( HEADLINE_ELEMENT_NAME ).add_text( self.headline )                if self.headline
+      xml_element.add_element( DESCRIPTION_ELEMENT_NAME ).add_text( self.description )          if self.description
+      xml_element.add_element( INSTRUCTION_ELEMENT_NAME ).add_text( self.instruction )          if self.instruction
+      xml_element.add_element( WEB_ELEMENT_NAME ).add_text( self.web )                          if self.web
+      xml_element.add_element( CONTACT_ELEMENT_NAME ).add_text( self.contact )                  if self.contact
       @parameters.each do |parameter|
         xml_element.add_element( parameter.to_xml_element )
       end

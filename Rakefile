@@ -13,7 +13,7 @@ SPEC = Gem::Specification.new do |gem|
   gem.files = Dir.glob("{lib,examples}/**/*")
   gem.require_path = "lib"
   gem.has_rdoc = true
-  gem.extra_rdoc_files = [ "README","CHANGELOG" ]
+  gem.extra_rdoc_files = [ "README.rdoc","CHANGELOG.rdoc" ]
   gem.add_dependency( 'assistance' )
   gem.add_dependency( 'uuidtools', '>= 2.0.0' )
   gem.description = "A Ruby API providing parsing and generation of CAP(Common Alerting Protocol) messages."
@@ -26,12 +26,9 @@ end
 
 Rake::RDocTask.new do |rdoc|
   rdoc.main = "README"
-  rdoc.rdoc_files.include( "README", "CHANGELOG", "lib/**/*.rb" )
+  rdoc.rdoc_files.include( "README.rdoc", "CHANGELOG.rdoc", "lib/**/*.rb" )
   rdoc.rdoc_dir = "doc"
-end
-
-task( :load_environment ) do
-
+  rdoc.title = "RCAP Ruby API"
 end
 
 Spec::Rake::SpecTask.new do |spec|

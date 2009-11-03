@@ -55,7 +55,7 @@ module RCAP
       @circles.inject( xml_element, &add_to_xml_element )
       @geocodes.inject( xml_element, &add_to_xml_element )
       xml_element.add_element( ALTITUDE_ELEMENT_NAME ).add_text( @altitude.to_s ) unless self.altitude.blank?
-      xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s ) unless self.altitude.blank?
+      xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s )   unless self.altitude.blank?
       xml_element
     end
 
@@ -70,13 +70,12 @@ module RCAP
 		end
 
     def self.from_xml_element( area_xml_element ) # :nodoc:
-      area = RCAP::Area.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
-                            :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),
-                            :ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH )) ? ceil.to_f : nil ),
-                            :circles   => RCAP.xpath_match( area_xml_element, RCAP::Circle::XPATH ).map{ |circle_element| RCAP::Circle.from_xml_element( circle_element )},
-                            :geocodes  => RCAP.xpath_match( area_xml_element, RCAP::Geocode::XPATH ).map{ |geocode_element| RCAP::Geocode.from_xml_element( geocode_element )},
-                            :polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
-			area
+      RCAP::Area.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
+											:altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),
+											:ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH )) ? ceil.to_f : nil ),
+											:circles   => RCAP.xpath_match( area_xml_element, RCAP::Circle::XPATH ).map{ |circle_element| RCAP::Circle.from_xml_element( circle_element )},
+											:geocodes  => RCAP.xpath_match( area_xml_element, RCAP::Geocode::XPATH ).map{ |geocode_element| RCAP::Geocode.from_xml_element( geocode_element )},
+											:polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
     end
   end
 end
