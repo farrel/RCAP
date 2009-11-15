@@ -10,24 +10,27 @@ module RCAP
 	class Alert
 		include Validation
 
-		STATUS_ACTUAL   = "Actual"
-		STATUS_EXERCISE = "Exercise"
-		STATUS_SYSTEM   = "System"
-		STATUS_TEST     = "Test"
-		STATUS_DRAFT    = "Draft"
-		ALL_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ] #:nodoc:
+		STATUS_ACTUAL   = "Actual"   # :nodoc:
+		STATUS_EXERCISE = "Exercise" # :nodoc:
+		STATUS_SYSTEM   = "System"   # :nodoc:
+		STATUS_TEST     = "Test"     # :nodoc:
+		STATUS_DRAFT    = "Draft"    # :nodoc:
+    # Valid values for status
+		VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ] 
 
-		MSG_TYPE_ALERT  = "Alert"
-		MSG_TYPE_UPDATE = "Update"
-		MSG_TYPE_CANCEL = "Cancel"
-		MSG_TYPE_ACK    = "Ack"
-		MSG_TYPE_ERROR  = "Error"
-		ALL_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ] #:nodoc:  
+		MSG_TYPE_ALERT  = "Alert"  # :nodoc:
+		MSG_TYPE_UPDATE = "Update" # :nodoc:
+		MSG_TYPE_CANCEL = "Cancel" # :nodoc:
+		MSG_TYPE_ACK    = "Ack"    # :nodoc:
+		MSG_TYPE_ERROR  = "Error"  # :nodoc:
+    # Valid values for msg_type
+		VALID_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
 
-		SCOPE_PUBLIC     = "Public"
-		SCOPE_RESTRICTED = "Restricted"
-		SCOPE_PRIVATE    = "Private"
-		ALL_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ] #:nodoc:
+		SCOPE_PUBLIC     = "Public"     # :nodoc:
+		SCOPE_RESTRICTED = "Restricted" # :nodoc:
+		SCOPE_PRIVATE    = "Private"    # :nodoc:
+    # Valid values for scope
+		VALID_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
 
     XML_ELEMENT_NAME         = 'alert'       # :nodoc:
     IDENTIFIER_ELEMENT_NAME  = 'identifier'  # :nodoc:
@@ -64,9 +67,11 @@ module RCAP
     attr_accessor( :sender )
     # Sent Time - If not set will value will be time of creation.
     attr_accessor( :sent )
+    # Value can only be one of VALID_STATUSES
     attr_accessor( :status )
-    # Message Type
+    # Value can only be one of VALID_MSG_TYPES
     attr_accessor( :msg_type )
+    # Value can only be one of VALID_SCOPES
     attr_accessor( :scope )
     attr_accessor( :source )
     # Depends on scope being SCOPE_RESTRICTED. 
@@ -85,9 +90,9 @@ module RCAP
 
 		validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )
 
-    validates_inclusion_of( :status,   :in => ALL_STATUSES )
-    validates_inclusion_of( :msg_type, :in => ALL_MSG_TYPES )
-    validates_inclusion_of( :scope,    :in => ALL_SCOPES )
+    validates_inclusion_of( :status,   :in => VALID_STATUSES )
+    validates_inclusion_of( :msg_type, :in => VALID_MSG_TYPES )
+    validates_inclusion_of( :scope,    :in => VALID_SCOPES )
 
     validates_format_of( :identifier, :with => ALLOWED_CHARACTERS )
     validates_format_of( :sender ,    :with => ALLOWED_CHARACTERS )
@@ -152,9 +157,37 @@ module RCAP
       self.to_xml_document.to_s
     end
 
-    # Returns a string of the format 'sender,identifier,sent' suitable for usage as a reference in a CAP message.
+    # Returns a string representation of the alert suitable for usage as a reference in a CAP message of the form
+    #  sender,identifier,sent
     def to_reference
       "#{ self.sender },#{ self.identifier },#{ self.sent }"
+    end
+
+    def inspect # :nodoc:
+      <<EOF
+Identifier:   #{ self.identifier }"
+Sender:       #{ self.sender }
+Sent:         #{ self.sent }
+Status:       #{ self.status }
+Message Type: #{ self.msg_type }
+Source:       #{ self.source }
+Scope:        #{ self.scope }
+Restriction:  #{ self.restriction }
+Addresses:    #{ self.addresses.to_s_for_cap }
+Code:         #{ self.code }
+Note:         #{ self.note }
+References:   #{ self.references.join( ' ' )}
+Incidents:    #{ self.incidents.join( ' ')}
+Information:
+#{ self.infos.map{ |info| "\t" + info.to_s }.join( "\n" )}
+EOF
+    end
+
+    # Returns a string representation of the alert of the form
+    #  sender/identifier/sent
+    # See Alert#to_reference for another string representation suitable as a CAP reference.
+    def to_s
+      "#{ self.sender }/#{ self.identifier }/#{ self.sent }"
     end
 
     def self.from_xml_element( alert_xml_element ) # :nodoc:
@@ -178,7 +211,7 @@ module RCAP
       self.from_xml_element( xml_document.root )
     end
 
-    # Initialised an Alert object from the XML string.
+    # Initialise an Alert object from an XML string. Any object that is a subclass of IO (e.g. File) can be passed in.
     def self.from_xml( xml_string )
       self.from_xml_document( REXML::Document.new( xml_string ))
     end

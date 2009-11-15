@@ -34,10 +34,12 @@ module RCAP
 		end
 
     def inspect # :nodoc:
-      "#{ self.name }: #{ self.value }"
+			"#{ self.name }: #{ self.value }"
     end
 
-    def to_s # :nodoc:
+		# Returns a string representation of the parameter of the form
+		#  name: value
+    def to_s
       self.inspect
 		end
 

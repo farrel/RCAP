@@ -69,6 +69,22 @@ module RCAP
 			comparison_attributes.call( self ) == comparison_attributes.call( other )
 		end
 
+		def inspect # :nodoc:
+      <<EOF
+Area Description: #{ self.area_desc }
+Polygons:
+#{ self.polygons.map{ |polygon| "\t" + polygon.inspect( indent_level +1 )}.join("\n" )}
+Circles:          #{ self.circles.inspect }
+Geocodes:         #{ self.geocodes.inspect }
+EOF
+		end
+
+		# Returns a string representation of the area of the form
+		#  area_desc
+    def to_s 
+      self.area_desc
+    end
+
     def self.from_xml_element( area_xml_element ) # :nodoc:
       RCAP::Area.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
 											:altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),

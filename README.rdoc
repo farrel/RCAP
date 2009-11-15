@@ -8,7 +8,7 @@ RCAP currently supports only CAP Version 1.1.
 
 == Version
 
-0.1
+0.2
 
 == Dependencies
 
@@ -31,6 +31,7 @@ The gem is also available for download and manual installtion at http://www.aimr
 
 * The RCAP project page can be found at http://www.aimred.com/projects/rcap 
 * The RCAP API docs can be fount at http://www.aimred.com/projects/rcap/api
+* A public git repository can be found at http:///www.aimred.com/git/rcap.git 
  
 == Usage
 

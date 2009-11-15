@@ -23,6 +23,8 @@ module RCAP
       @radius = attributes[ :radius ]
     end
 
+		# Returns a string representation of the circle of the form
+		#  point radius
     def to_s  # :nodoc:
       "#{ self.point.to_s } #{ self.radius }"
     end

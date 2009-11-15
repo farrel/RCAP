@@ -18,7 +18,9 @@ module RCAP
       @points = Array( attributes[ :points ])
     end
 
-    def to_s # :nodoc:
+		# Returns a string representation of the polygon of the form
+		#  points[0] points[1] points[2] ... points[n-1] points[0]
+    def to_s
       (@points.map{ |point| point.to_s } + [ @points.first ]).join( ' ' )
     end
 

@@ -11,57 +11,62 @@ module RCAP
   class Info
     include Validation
 
-    CATEGORY_GEO       = "Geo"
-    CATEGORY_MET       = "Met"
-    CATEGORY_SAFETY    = "Safety"
-    CATEGORY_SECURITY  = "Security"
-    CATEGORY_RESCUE    = "Rescue"
-    CATEGORY_FIRE      = "Fire"
-    CATEGORY_HEALTH    = "Health"
-    CATEGORY_ENV       = "Env"
-    CATEGORY_TRANSPORT = "Transport"
-    CATEGORY_INFRA     = "Infra"
-    CATEGORY_CBRNE     = "CBRNE"
-    CATEGORY_OTHER     = "Other"
-    ALL_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,  
+    CATEGORY_GEO       = "Geo"       # :nodoc:
+    CATEGORY_MET       = "Met"       # :nodoc:
+    CATEGORY_SAFETY    = "Safety"    # :nodoc:
+    CATEGORY_SECURITY  = "Security"  # :nodoc:
+    CATEGORY_RESCUE    = "Rescue"    # :nodoc:
+    CATEGORY_FIRE      = "Fire"      # :nodoc:
+    CATEGORY_HEALTH    = "Health"    # :nodoc:
+    CATEGORY_ENV       = "Env"       # :nodoc:
+    CATEGORY_TRANSPORT = "Transport" # :nodoc:
+    CATEGORY_INFRA     = "Infra"     # :nodoc:
+    CATEGORY_CBRNE     = "CBRNE"     # :nodoc:
+    CATEGORY_OTHER     = "Other"     # :nodoc:
+		# Valid values for categories
+    VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,  
       CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
       CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
-      CATEGORY_OTHER ] # :nodoc:
+      CATEGORY_OTHER ]
 
-    RESPONSE_TYPE_SHELTER  = "Shelter"
-    RESPONSE_TYPE_EVACUATE = "Evacuate"
-    RESPONSE_TYPE_PREPARE  = "Prepare"
-    RESPONSE_TYPE_EXECUTE  = "Execute"
-    RESPONSE_TYPE_MONITOR  = "Monitor"
-    RESPONSE_TYPE_ASSESS   = "Assess"
-    RESPONSE_TYPE_NONE     = "None"
-    ALL_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, 
+    RESPONSE_TYPE_SHELTER  = "Shelter"  # :nodoc:
+    RESPONSE_TYPE_EVACUATE = "Evacuate" # :nodoc:
+    RESPONSE_TYPE_PREPARE  = "Prepare"  # :nodoc:
+    RESPONSE_TYPE_EXECUTE  = "Execute"  # :nodoc:
+    RESPONSE_TYPE_MONITOR  = "Monitor"  # :nodoc:
+    RESPONSE_TYPE_ASSESS   = "Assess"   # :nodoc:
+    RESPONSE_TYPE_NONE     = "None"     # :nodoc:
+		# Valid values for response_type
+    VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, 
       RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
-      RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ] # :nodoc:
+      RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
-    URGENCY_IMMEDIATE = "Immediate"
-    URGENCY_EXPECTED  = "Expected"
-    URGENCY_FUTURE    = "Future"
-    URGENCY_PAST      = "Past"
-    URGENCY_UNKNOWN   = "Unknown"
-    ALL_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
-      URGENCY_PAST, URGENCY_UNKNOWN ] # :nodoc:
+    URGENCY_IMMEDIATE = "Immediate" # :nodoc:
+    URGENCY_EXPECTED  = "Expected"  # :nodoc:
+    URGENCY_FUTURE    = "Future"    # :nodoc:
+    URGENCY_PAST      = "Past"      # :nodoc:
+    URGENCY_UNKNOWN   = "Unknown"   # :nodoc:
+		# Valid values for urgency
+    VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
+      URGENCY_PAST, URGENCY_UNKNOWN ]
 
-    SEVERITY_EXTREME  = "Extreme"
-    SEVERITY_SEVERE   = "Severe"
-    SEVERITY_MODERATE = "Moderate"
-    SEVERITY_MINOR    = "Minor"
-    SEVERITY_UNKNOWN  = "Unknown"
-    ALL_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
-      SEVERITY_MINOR, SEVERITY_UNKNOWN ] # :nodoc: 
+    SEVERITY_EXTREME  = "Extreme"  # :nodoc:
+    SEVERITY_SEVERE   = "Severe"   # :nodoc:
+    SEVERITY_MODERATE = "Moderate" # :nodoc:
+    SEVERITY_MINOR    = "Minor"    # :nodoc:
+    SEVERITY_UNKNOWN  = "Unknown"  # :nodoc:
+		# Valid values for severity
+    VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
+      SEVERITY_MINOR, SEVERITY_UNKNOWN ] 
 
-    CERTAINTY_OBSERVED = "Observed"
-    CERTAINTY_LIKELY   = "Likely"
-    CERTAINTY_POSSIBLE = "Possible"
-    CERTAINTY_UNLIKELY = "Unlikely"
-    CERTAINTY_UNKNOWN  = "Unknown"
-    ALL_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
-      CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ] # :nodoc:
+    CERTAINTY_OBSERVED = "Observed" # :nodoc:
+    CERTAINTY_LIKELY   = "Likely"   # :nodoc:
+    CERTAINTY_POSSIBLE = "Possible" # :nodoc:
+    CERTAINTY_UNLIKELY = "Unlikely" # :nodoc:
+    CERTAINTY_UNKNOWN  = "Unknown"  # :nodoc:
+		# Valid valies for certainty
+    VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
+      CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
     XML_ELEMENT_NAME           = 'info'         # :nodoc:
     LANGUAGE_ELEMENT_NAME      = 'language'     # :nodoc:
@@ -107,16 +112,19 @@ module RCAP
 
     validates_presence_of( :event, :urgency, :severity, :certainty )
     validates_length_of( :categories, :minimum => 1 )
-    validates_inclusion_of( :certainty, :allow_nil => true, :in => ALL_CERTAINTIES, :message => "can only be assigned the following values: #{ ALL_CERTAINTIES.join(', ') }")
-    validates_inclusion_of( :severity, :allow_nil  => true, :in => ALL_SEVERITIES, :message  => "can only be assigned the following values: #{ ALL_SEVERITIES.join(', ') }" )
-    validates_inclusion_of( :urgency, :allow_nil   => true, :in => ALL_URGENCIES, :message   => "can only be assigned the following values: #{ ALL_URGENCIES.join(', ') }" )
-    validates_inclusion_of_members_of( :response_types, :in  => ALL_RESPONSE_TYPES, :allow_blank => true )
-    validates_inclusion_of_members_of( :categories,     :in  => ALL_CATEGORIES,     :allow_blank => true )
+    validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
+    validates_inclusion_of( :severity, :allow_nil  => true, :in => VALID_SEVERITIES, :message  => "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }" )
+    validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES, :message   => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
+    validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
+    validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
     validates_collection_of( :resources, :areas )
 
     attr_accessor( :event )
+		# Value can only be one of VALID_URGENCIES
 		attr_accessor( :urgency )
+		# Value can only be one of VALID_SEVERITIES
 		attr_accessor( :severity )
+		# Value can only be one of VALID_CERTAINTIES
 		attr_accessor( :certainty )
 		attr_accessor( :language )
 		attr_accessor( :audience )
@@ -124,7 +132,7 @@ module RCAP
 		attr_accessor( :effective )
 		# Expected start of event
 		attr_accessor( :onset )
-		# Effected expiry time of information
+		# Effective expiry time of information
 		attr_accessor( :expires )
 		attr_accessor( :sender_name )
 		attr_accessor( :headline )
@@ -133,7 +141,7 @@ module RCAP
 		attr_accessor( :web )
 		attr_accessor( :contact )
 
-		# Collection of textual categories
+		# Collection of textual categories; elements can be one of VALID_CATEGORIES
     attr_reader( :categories )
 		#  Collection of textual response types
 		attr_reader( :response_types )
@@ -209,6 +217,43 @@ module RCAP
 
     def to_xml # :nodoc:
       self.to_xml_element.to_s
+    end
+
+		def inspect( indent_level = 0 ) # :nodoc:
+			info_inspect = <<EOF
+Language:       #{ self.language }
+Categories:     #{ self.categories.to_s_for_cap }
+Event:          #{ self.event }
+Response Types: #{ self.response_types.to_s_for_cap }
+Urgency:        #{ self.urgency }
+Severity:       #{ self.severity }
+Certainty:      #{ self.certainty }
+Audience:       #{ self.audience }
+Event Codes:    #{ self.event_codes.inspect }
+Effective:      #{ self.effective }
+Onset:          #{ self.onset }
+Expires:        #{ self.expires }
+Sender Name:    #{ self.sender_name }
+Headline:       #{ self.headline }
+Description:
+#{ self.description.lines.map{ |line| "\t" + line }.join }
+Instruction:    #{ self.instruction }
+Web:            #{ self.web }
+Contact:        #{ self.contact }
+Parameters:
+#{ self.parameters.map{ |parameter| parameter.inspect( indent_level + 1 )}.join( "\n" )}
+Resources:
+#{ self.resources.map{ |resource| resource.inspect( indent_level + 1 )}.join( "\n" )}
+Area:
+#{ self.areas.map{ |area| area.inspect( indent_level + 1 )}.join( "\nArea:\n" )}
+EOF
+			info_inspect.lines.map{ |line| "\t"*indent_level + line }.join
+		end
+
+		# Returns a string representation of the event of the form
+		#  event(urgency/severity/certainty)
+    def to_s 
+      "#{ self.event }(#{ self.urgency }/#{ self.severity }/#{ self.certainty })"
     end
 
     def self.from_xml_element( info_xml_element ) # :nodoc:

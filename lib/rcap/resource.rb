@@ -69,6 +69,12 @@ module RCAP
       [ self.resource_desc, self.uri, self.mime_type, self.size ? format( "%.1fKB", self.size_in_kb ) : nil ].compact.join(' - ')
     end
 
+		# Returns a string representation of the resource of the form
+		#  resource_desc
+    def to_s
+      self.resource_desc
+    end
+
     def self.from_xml_element( resource_xml_element ) # :nodoc:
       resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH ),
                            :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH ),

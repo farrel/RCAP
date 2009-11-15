@@ -1,3 +1,9 @@
 = Change Log
+
+== 0.2 - 1th November 2009
+
+* Implemented to_s/inspect methods for all classes
+
 == 0.1 - 5th November 2009
+
 * Initial release

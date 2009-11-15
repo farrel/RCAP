@@ -22,7 +22,9 @@ module RCAP
       @longitude = attributes[ :longitude ]
     end
 
-    def to_s # :nodoc:
+		# Returns a string representation of the point of the form
+		#  lattitude,longitude
+    def to_s
       "#{ self.lattitude },#{ self.longitude }"
     end
 
