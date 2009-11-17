@@ -70,13 +70,14 @@ module RCAP
 		end
 
 		def inspect # :nodoc:
-      <<EOF
+      area_inspect =  <<EOF
 Area Description: #{ self.area_desc }
 Polygons:
-#{ self.polygons.map{ |polygon| "\t" + polygon.inspect( indent_level +1 )}.join("\n" )}
+#{ self.polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )}
 Circles:          #{ self.circles.inspect }
 Geocodes:         #{ self.geocodes.inspect }
 EOF
+      RCAP.format_lines_for_inspect( 'AREA', area_inspect )
 		end
 
 		# Returns a string representation of the area of the form

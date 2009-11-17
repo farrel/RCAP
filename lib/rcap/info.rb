@@ -219,7 +219,7 @@ module RCAP
       self.to_xml_element.to_s
     end
 
-		def inspect( indent_level = 0 ) # :nodoc:
+		def inspect # :nodoc:
 			info_inspect = <<EOF
 Language:       #{ self.language }
 Categories:     #{ self.categories.to_s_for_cap }
@@ -236,18 +236,18 @@ Expires:        #{ self.expires }
 Sender Name:    #{ self.sender_name }
 Headline:       #{ self.headline }
 Description:
-#{ self.description.lines.map{ |line| "\t" + line }.join }
+#{ self.description.to_s.lines.map{ |line| "  " + line }.join }
 Instruction:    #{ self.instruction }
 Web:            #{ self.web }
 Contact:        #{ self.contact }
 Parameters:
-#{ self.parameters.map{ |parameter| parameter.inspect( indent_level + 1 )}.join( "\n" )}
+#{ self.parameters.map{ |parameter| parameter.inspect }.join( "\n" )}
 Resources:
-#{ self.resources.map{ |resource| resource.inspect( indent_level + 1 )}.join( "\n" )}
+#{ self.resources.map{ |resource| resource.inspect }.join( "\n" )}
 Area:
-#{ self.areas.map{ |area| area.inspect( indent_level + 1 )}.join( "\nArea:\n" )}
+#{ self.areas.map{ |area| "  #{ area }" }.join( "\n" )}
 EOF
-			info_inspect.lines.map{ |line| "\t"*indent_level + line }.join
+      RCAP.format_lines_for_inspect( 'INFO', info_inspect )
 		end
 
 		# Returns a string representation of the event of the form

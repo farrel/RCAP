@@ -164,8 +164,8 @@ module RCAP
     end
 
     def inspect # :nodoc:
-      <<EOF
-Identifier:   #{ self.identifier }"
+      alert_inspect = <<EOF
+Identifier:   #{ self.identifier }
 Sender:       #{ self.sender }
 Sent:         #{ self.sent }
 Status:       #{ self.status }
@@ -179,8 +179,9 @@ Note:         #{ self.note }
 References:   #{ self.references.join( ' ' )}
 Incidents:    #{ self.incidents.join( ' ')}
 Information:
-#{ self.infos.map{ |info| "\t" + info.to_s }.join( "\n" )}
+#{ self.infos.map{ |info| "  " + info.to_s }.join( "\n" )}
 EOF
+    RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
     end
 
     # Returns a string representation of the alert of the form

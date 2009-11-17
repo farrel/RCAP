@@ -50,4 +50,13 @@ module RCAP # :nodoc:
 	def self.xpath_match( xml_element, xpath )
 		REXML::XPath.match( xml_element, xpath, { 'cap' => RCAP::XMLNS })
 	end
+
+  def self.format_lines_for_inspect( header, inspect_string )
+    max_line_length = inspect_string.lines.inject( 0 ){ |max_length, line| line.chomp.length > max_length ? line.chomp.length : max_length }
+    "\n." + '-' * max_line_length + ".\n"+
+    '|' + header.ljust( max_line_length ) + "|\n"+
+    '|' + '-' * max_line_length + "|\n"+
+    inspect_string.lines.map{ |line| '|' + line.chomp.ljust( max_line_length ) +'|'}.join( "\n" ) + "\n" +
+    "'" + '-' * max_line_length + "'\n"
+  end
 end
