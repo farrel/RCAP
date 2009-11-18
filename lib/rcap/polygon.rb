@@ -48,5 +48,13 @@ module RCAP
       points = coordinates.map{ |lattitude, longitude| RCAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
       polygon = self.new( :points => points )
     end
+
+
+    def to_yaml( options = {} )
+      yaml_points = self.points.map{ |point| [ point.lattitude, point.longitude ]}
+      class << yaml_points; def to_yaml_style; :inline; end; end
+
+      yaml_points.to_yaml( options )
+    end
   end
 end

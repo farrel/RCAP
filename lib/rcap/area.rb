@@ -94,5 +94,26 @@ EOF
 											:geocodes  => RCAP.xpath_match( area_xml_element, RCAP::Geocode::XPATH ).map{ |geocode_element| RCAP::Geocode.from_xml_element( geocode_element )},
 											:polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
     end
+
+     AREA_DESC_YAML = 'Area Description'
+     ALTITUDE_YAML  = 'Altitude'
+     CEILING_YAML   = 'Ceiling'
+     CIRCLES_YAML   = 'Circles'
+     GEOCODES_YAML  = 'Geocodes'
+     POLYGONS_YAML  = 'Polygons'
+
+     def to_yaml( options = {} )
+       circles_yaml = self.circles.map{ |circle| [[ circle.point.lattitude, circle.point.longitude ], circle.radius ]}
+       class << circles_yaml; def to_yaml_style; :inline; end; end
+
+       RCAP.attribute_values_to_yaml_hash(
+         [ AREA_DESC_YAML,  self.area_desc],
+         [ ALTITUDE_YAML,   self.altitude],
+         [ CEILING_YAML,    self.ceiling],
+         [ CIRCLES_YAML,    circles_yaml],
+         [ GEOCODES_YAML,   self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
+         [ POLYGONS_YAML,   self.polygons]
+       ).to_yaml( options )
+    end
   end
 end

@@ -59,4 +59,8 @@ module RCAP # :nodoc:
     inspect_string.lines.map{ |line| '|' + line.chomp.ljust( max_line_length ) +'|'}.join( "\n" ) + "\n" +
     "'" + '-' * max_line_length + "'\n"
   end
+
+  def self.attribute_values_to_yaml_hash( *attribute_values )
+    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten ] 
+  end
 end

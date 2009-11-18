@@ -243,7 +243,7 @@ Contact:        #{ self.contact }
 Parameters:
 #{ self.parameters.map{ |parameter| parameter.inspect }.join( "\n" )}
 Resources:
-#{ self.resources.map{ |resource| resource.inspect }.join( "\n" )}
+#{ self.resources.map{ |resource| "  " + resource.inspect }.join( "\n" )}
 Area:
 #{ self.areas.map{ |area| "  #{ area }" }.join( "\n" )}
 EOF
@@ -275,10 +275,63 @@ EOF
         :instruction    => RCAP.xpath_text( info_xml_element, INSTRUCTION_XPATH ),
         :web            => RCAP.xpath_text( info_xml_element, WEB_XPATH ),
         :contact        => RCAP.xpath_text( info_xml_element, CONTACT_XPATH ),
-				:event_codes    => RCAP.xpath_match( info_xml_element, RCAP::EventCode::XPATH ).map{ |element| RCAP::EventCode.from_xml_element( element )},
-				:parameters => RCAP.xpath_match( info_xml_element, RCAP::Parameter::XPATH ).map{ |element| RCAP::Parameter.from_xml_element( element )},
-				:areas => RCAP.xpath_match( info_xml_element, RCAP::Area::XPATH ).map{ |element| RCAP::Area.from_xml_element( element )}
+        :event_codes    => RCAP.xpath_match( info_xml_element, RCAP::EventCode::XPATH ).map{ |element| RCAP::EventCode.from_xml_element( element )},
+        :parameters     => RCAP.xpath_match( info_xml_element, RCAP::Parameter::XPATH ).map{ |element| RCAP::Parameter.from_xml_element( element )},
+        :resources      => RCAP.xpath_match( info_xml_element, RCAP::Resource::XPATH ).map{ |element| RCAP::Resource.from_xml_element( element )},
+        :areas          => RCAP.xpath_match( info_xml_element, RCAP::Area::XPATH ).map{ |element| RCAP::Area.from_xml_element( element )}
       )
+    end
+
+    LANGUAGE_YAML       = 'Language'
+    CATEGORY_YAML       = 'Category'
+    EVENT_YAML          = 'Event'
+    RESPONSE_TYPES_YAML = 'Response Types'
+    URGENCY_YAML        = 'Urgency'
+    SEVERITY_YAML       = 'Severity'
+    CERTAINTY_YAML      = 'Certainty'
+    AUDIENCE_YAML       = 'Audience'
+    EFFECTIVE_YAML      = 'Effective'
+    ONSET_YAML          = 'Onset'
+    EXPIRES_YAML        = 'Expires'
+    SENDER_NAME_YAML    = 'Sender Name'
+    HEADLINE_YAML       = 'Headline'
+    DESCRIPTION_YAML    = 'Description'
+    INSTRUCTION_YAML    = 'Instruction'
+    WEB_YAML            = 'Web'
+    CONTACT_YAML        = 'Contact'
+    EVENT_CODES_YAML    = 'Event Codes'
+    PARAMETERS_YAML     = 'Parameters'
+    RESOURCES_YAML      = 'Resources'
+    AREAS_YAML          = 'Areas'
+
+    def to_yaml( options = {} )
+      response_types_yaml = self.response_types
+      def response_types_yaml.to_yaml_style; :inline; end
+      parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
+
+      RCAP.attribute_values_to_yaml_hash( 
+        [ LANGUAGE_YAML, self.language ],
+        [ CATEGORY_YAML, self.categories ],
+        [ EVENT_YAML, self.event ],
+        [ RESPONSE_TYPES_YAML, response_types_yaml ],
+        [ URGENCY_YAML, self.urgency ],
+        [ SEVERITY_YAML, self.severity ],
+        [ CERTAINTY_YAML, self.certainty ],
+        [ AUDIENCE_YAML, self.audience ],
+        [ EFFECTIVE_YAML, self.effective ],
+        [ ONSET_YAML, self.onset ],
+        [ EXPIRES_YAML, self.expires ],
+        [ SENDER_NAME_YAML, self.sender_name ],
+        [ HEADLINE_YAML, self.headline ],
+        [ DESCRIPTION_YAML, self.description ],
+        [ INSTRUCTION_YAML, self.instruction ],
+        [ WEB_YAML, self.web ],
+        [ CONTACT_YAML, self.contact ],
+        [ EVENT_CODES_YAML, self.event_codes.inject({}, &parameter_to_hash )],
+        [ PARAMETERS_YAML, self.parameters.inject({}, &parameter_to_hash )],
+        [ RESOURCES_YAML, self.resources ],
+        [ AREAS_YAML, self.areas ]
+      ).to_yaml( options )
     end
   end
 end

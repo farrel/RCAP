@@ -191,6 +191,24 @@ EOF
       "#{ self.sender }/#{ self.identifier }/#{ self.sent }"
     end
 
+    def to_txt
+      <<EOF
+Identifier:   #{ self.identifier }
+Sender:       #{ self.sender }
+Sent:         #{ self.sent }
+Status:       #{ self.status }
+Message Type: #{ self.msg_type }
+Source:       #{ self.source }
+Scope:        #{ self.scope }
+Restriction:  #{ self.restriction }
+Addresses:    #{ self.addresses.to_s_for_cap }
+Code:         #{ self.code }
+Note:         #{ self.note }
+References:   #{ self.references.join( ' ' )}
+Incidents:    #{ self.incidents.join( ' ')}
+EOF
+    end
+
     def self.from_xml_element( alert_xml_element ) # :nodoc:
       RCAP::Alert.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
                        :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
@@ -216,5 +234,39 @@ EOF
     def self.from_xml( xml_string )
       self.from_xml_document( REXML::Document.new( xml_string ))
     end
-	end
+
+     IDENTIFIER_YAML  = "Identifier"
+     SENDER_YAML      = "Sender"
+     SENT_YAML        = "Sent"
+     STATUS_YAML      = "Status"
+     MSG_TYPE_YAML    = "Message Type"
+     SOURCE_YAML      = "Source"
+     SCOPE_YAML       = "Scope"
+     RESTRICTION_YAML = "Restriction"
+     ADDRESSES_YAML   = "Addresses"
+     CODE_YAML        = "Code"
+     NOTE_YAML        = "Note"
+     REFERENCES_YAML  = "References"
+     INCIDENTS_YAML   = "Incidents"
+     INFOS_YAML       = "Information"
+
+     def to_yaml( options = {} )
+       RCAP.attribute_values_to_yaml_hash(
+         [ IDENTIFIER_YAML, self.identifier ],
+         [ SENDER_YAML, self.sender ],
+         [ SENT_YAML, self.sent ],
+         [ STATUS_YAML, self.status ],
+         [ MSG_TYPE_YAML, self.msg_type ],
+         [ SOURCE_YAML, self.source ],
+         [ SCOPE_YAML, self.scope ],
+         [ RESTRICTION_YAML , self.restriction ],
+         [ ADDRESSES_YAML, self.addresses ],
+         [ CODE_YAML, self.code ],
+         [ NOTE_YAML, self.note ],
+         [ REFERENCES_YAML  , self.references ],
+         [ INCIDENTS_YAML, self.incidents ],
+         [ INFOS_YAML, self.infos ]
+       ).to_yaml( options )
+     end
+  end
 end
