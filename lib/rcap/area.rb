@@ -104,16 +104,27 @@ EOF
 
      def to_yaml( options = {} )
        circles_yaml = self.circles.map{ |circle| [[ circle.point.lattitude, circle.point.longitude ], circle.radius ]}
-       class << circles_yaml; def to_yaml_style; :inline; end; end
+       def circles_yaml.to_yaml_style; :inline; end
 
        RCAP.attribute_values_to_yaml_hash(
-         [ AREA_DESC_YAML,  self.area_desc],
-         [ ALTITUDE_YAML,   self.altitude],
-         [ CEILING_YAML,    self.ceiling],
-         [ CIRCLES_YAML,    circles_yaml],
+         [ AREA_DESC_YAML,  self.area_desc ],
+         [ ALTITUDE_YAML,   self.altitude ],
+         [ CEILING_YAML,    self.ceiling ],
+         [ CIRCLES_YAML,    circles_yaml ],
          [ GEOCODES_YAML,   self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-         [ POLYGONS_YAML,   self.polygons]
+         [ POLYGONS_YAML,   self.polygons ]
        ).to_yaml( options )
-    end
+     end
+
+     def from_yaml_data( area_yaml_data )
+       Area.new(
+         :area_desc => area_yaml_data[ AREA_DESC_YAML ],
+         :altitude  => area_yaml_data[ ALTITUDE_YAML ],
+         :ceiling   => area_yaml_data[ CEILING_YAML ],
+         :circles   => Array( area_yaml_data[ CIRCLES_YAML ]).map{ |circle_yaml_data| RCAP::Circle.from_yaml_data( circle_yaml_data )},
+         :geocodes  => Array( area_yaml_data[ GEOCODES_YAML ]).map{ |name, value| RCAP::Geocode.new( :name => name, :value => value )},
+         :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| RCAP::Polygon.from_yaml_data( polyon_yaml_data )}
+       )
+     end
   end
 end

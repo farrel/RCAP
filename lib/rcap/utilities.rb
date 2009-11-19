@@ -61,6 +61,6 @@ module RCAP # :nodoc:
   end
 
   def self.attribute_values_to_yaml_hash( *attribute_values )
-    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten ] 
+    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten( 1 )] 
   end
 end

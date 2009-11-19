@@ -20,6 +20,26 @@ describe( RCAP::Alert ) do
     it( 'should not have any incidents' ){ @alert.incidents.should( be_empty )}
     it( 'should not have any infos' ){ @alert.infos.should( be_empty )}
 
+		shared_examples_for( "a successfully parsed alert" ) do
+			it( 'should parse identifier correctly' ){ @alert.identifier.should == @original_alert.identifier }
+			it( 'should parse sender correctly' ){ @alert.sender.should == @original_alert.sender }
+			it( 'should parse sent correctly' ){ @alert.sent.should( be_close( @original_alert.sent, Rational( 1, 86400 )))}
+			it( 'should parse status correctly' ){ @alert.status.should == @original_alert.status }
+			it( 'should parse msg_type correctly' ){ @alert.msg_type.should == @original_alert.msg_type }
+			it( 'should parse source correctly' ){ @alert.source.should == @original_alert.source }
+			it( 'should parse scope correctly' ){ @alert.scope.should == @original_alert.scope }
+			it( 'should parse restriction correctly' ){ @alert.restriction.should == @original_alert.restriction }
+			it( 'should parse addresses correctly' ){ @alert.addresses.should == @original_alert.addresses }
+			it( 'should parse code correctly' ){ @alert.code.should == @original_alert.code }
+			it( 'should parse note correctly' ){ @alert.note.should == @original_alert.note }
+			it( 'should parse references correctly' ){ @alert.references.should == @original_alert.references }
+			it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
+			it( 'should parse infos correctly' ) do 
+				@alert.infos.size.should == @original_alert.infos.size 
+				@alert.infos.each{ |info| info.class.should == RCAP::Info }
+			end
+		end
+
 		context( 'from XML' ) do
 			before( :each ) do
 				@original_alert = RCAP::Alert.new( :sender => 'Sender',
@@ -39,24 +59,28 @@ describe( RCAP::Alert ) do
 				@alert = RCAP::Alert.from_xml_element( @alert_element )
 			end
 
-			it( 'should parse identifier correctly' ){ @alert.identifier.should == @original_alert.identifier }
-			it( 'should parse sender correctly' ){ @alert.sender.should == @original_alert.sender }
-			it( 'should parse sent correctly' ){ @alert.sent.should( be_close( @original_alert.sent, Rational( 1, 86400 )))}
-			it( 'should parse status correctly' ){ @alert.status.should == @original_alert.status }
-			it( 'should parse msg_type correctly' ){ @alert.msg_type.should == @original_alert.msg_type }
-			it( 'should parse source correctly' ){ @alert.source.should == @original_alert.source }
-			it( 'should parse scope correctly' ){ @alert.scope.should == @original_alert.scope }
-			it( 'should parse restriction correctly' ){ @alert.restriction.should == @original_alert.restriction }
-			it( 'should parse addresses correctly' ){ @alert.addresses.should == @original_alert.addresses }
-			it( 'should parse code correctly' ){ @alert.code.should == @original_alert.code }
-			it( 'should parse note correctly' ){ @alert.note.should == @original_alert.note }
-			it( 'should parse references correctly' ){ @alert.references.should == @original_alert.references }
-      it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
-      it( 'should parse infos correctly' ) do 
-        @alert.infos.size.should == @original_alert.infos.size 
-        @alert.infos.each{ |info| info.class.should == RCAP::Info }
-      end
+			it_should_behave_like( "a successfully parsed alert" ) 
+
     end
+
+		context( 'from YAML' ) do
+			before( :each ) do
+				@original_alert = RCAP::Alert.new( :sender => 'Sender',
+													 :status => RCAP::Alert::STATUS_TEST,
+													 :scope => RCAP::Alert::SCOPE_PUBLIC,
+													 :source => 'Source',
+													 :restriction => 'No Restriction',
+													 :addresses => [ 'Address 1', 'Address 2'],
+													 :code => 'Code',
+													 :note => 'Note',
+													 :references => [ RCAP::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::Alert.new( :sender => 'Sender2' ).to_reference ],
+													 :incidents => [ 'Incident1', 'Incident2' ],
+													 :infos => [ RCAP::Info.new, RCAP::Info.new ])
+				@yaml_string = @original_alert.to_yaml
+				@alert = RCAP::Alert.from_yaml( @yaml_string )
+			end
+			it_should_behave_like( "a successfully parsed alert" ) 
+		end
   end
 
   describe( 'is not valid if it' ) do

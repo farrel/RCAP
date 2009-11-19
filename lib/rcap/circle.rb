@@ -60,5 +60,11 @@ module RCAP
     def ==( other )
       self.point == other.point && self.radius == other.radius
     end
+
+    def self.from_yaml_data( circle_yaml_data )
+      point_yaml_data, radius = circle_yaml_data
+      self.new( :point => RCAP::Point.new( :lattitude => point_yaml_data[ 0 ], longitude => point_yaml_data[ 1 ]),
+               :radius => radius )
+    end
   end
 end

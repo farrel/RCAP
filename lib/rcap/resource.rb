@@ -101,5 +101,16 @@ module RCAP
         [ DIGEST_YAML, self.digest ]
       ).to_yaml( options )
     end
+
+    def self.from_yaml_data( resource_yaml_data )
+      self.new(
+        :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
+        :uri           => reource_yaml_data[ URI_YAML ],
+        :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
+        :deref_uri     => reource_yaml_data[ DEREF_URI_YAML ],
+        :size          => reource_yaml_data[ SIZE_YAML ],
+        :digest        => reource_yaml_data[ DIGEST_YAML ]
+      )
+    end
   end
 end

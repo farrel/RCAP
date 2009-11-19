@@ -52,5 +52,8 @@ module RCAP
 		def ==( other )
 			[ self.name, self.value ] == [ other.name, other.value ]
 		end
+
+    def self.from_yaml_data( parameter_yaml_data )
+    end
 	end
 end
