@@ -232,22 +232,23 @@ EOF
      INCIDENTS_YAML   = "Incidents"     # :nodoc:
      INFOS_YAML       = "Information"   # :nodoc:
 
+    # Returns a string containing the YAML representation of the alert.
      def to_yaml( options = {} )
        RCAP.attribute_values_to_yaml_hash(
-         [ IDENTIFIER_YAML, self.identifier ],
-         [ SENDER_YAML, self.sender ],
-         [ SENT_YAML, self.sent ],
-         [ STATUS_YAML, self.status ],
-         [ MSG_TYPE_YAML, self.msg_type ],
-         [ SOURCE_YAML, self.source ],
-         [ SCOPE_YAML, self.scope ],
-         [ RESTRICTION_YAML , self.restriction ],
-         [ ADDRESSES_YAML, self.addresses ],
-         [ CODE_YAML, self.code ],
-         [ NOTE_YAML, self.note ],
-         [ REFERENCES_YAML  , self.references ],
-         [ INCIDENTS_YAML, self.incidents ],
-         [ INFOS_YAML, self.infos ]
+				 [ IDENTIFIER_YAML,    self.identifier ],
+				 [ SENDER_YAML,        self.sender ],
+				 [ SENT_YAML,          self.sent ],
+				 [ STATUS_YAML,        self.status ],
+				 [ MSG_TYPE_YAML,      self.msg_type ],
+				 [ SOURCE_YAML,        self.source ],
+				 [ SCOPE_YAML,         self.scope ],
+				 [ RESTRICTION_YAML,   self.restriction ],
+				 [ ADDRESSES_YAML,     self.addresses ],
+				 [ CODE_YAML,          self.code ],
+				 [ NOTE_YAML,          self.note ],
+				 [ REFERENCES_YAML,    self.references ],
+				 [ INCIDENTS_YAML,     self.incidents ],
+				 [ INFOS_YAML,         self.infos ]
        ).to_yaml( options )
      end
 
@@ -258,20 +259,20 @@ EOF
 
      def self.from_yaml_data( alert_yaml_data ) # :nodoc:
        Alert.new(
-        :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
-        :sender      => alert_yaml_data[ SENDER_YAML ],
-        :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
-        :status      => alert_yaml_data[ STATUS_YAML ],
-        :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
-        :source      => alert_yaml_data[ SOURCE_YAML ],
-        :scope       => alert_yaml_data[ SCOPE_YAML ],
-        :restriction => alert_yaml_data[ RESTRICTION_YAML ],
-        :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
-        :code        => alert_yaml_data[ CODE_YAML ],
-        :note        => alert_yaml_data[ NOTE_YAML ],
-        :references  => alert_yaml_data[ REFERENCES_YAML ],
-        :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
-        :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| RCAP::Info.from_yaml_data( info_yaml_data )}
+				 :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
+				 :sender      => alert_yaml_data[ SENDER_YAML ],
+				 :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
+				 :status      => alert_yaml_data[ STATUS_YAML ],
+				 :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
+				 :source      => alert_yaml_data[ SOURCE_YAML ],
+				 :scope       => alert_yaml_data[ SCOPE_YAML ],
+				 :restriction => alert_yaml_data[ RESTRICTION_YAML ],
+				 :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
+				 :code        => alert_yaml_data[ CODE_YAML ],
+				 :note        => alert_yaml_data[ NOTE_YAML ],
+				 :references  => alert_yaml_data[ REFERENCES_YAML ],
+				 :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
+				 :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| RCAP::Info.from_yaml_data( info_yaml_data )}
        )
      end
   end

@@ -94,11 +94,11 @@ module RCAP
     def to_yaml( options ) # :nodoc:
       RCAP.attribute_values_to_yaml_hash(
         [ RESOURCE_DESC_YAML, self.resource_desc ],
-        [ URI_YAML, self.uri ],
-        [ MIME_TYPE_YAML, self.mime_type ],
-        [ DEREF_URI_YAML, self.deref_uri ],
-        [ SIZE_YAML, self.size ],
-        [ DIGEST_YAML, self.digest ]
+        [ URI_YAML,           self.uri ],
+        [ MIME_TYPE_YAML,     self.mime_type ],
+        [ DEREF_URI_YAML,     self.deref_uri ],
+        [ SIZE_YAML,          self.size ],
+        [ DIGEST_YAML,        self.digest ]
       ).to_yaml( options )
     end
 

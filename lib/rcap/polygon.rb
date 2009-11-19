@@ -20,6 +20,7 @@ module RCAP
 
 		# Returns a string representation of the polygon of the form
 		#  points[0] points[1] points[2] ... points[n-1] points[0]
+    # where each point is formatted with RCAP::Point#to_s
     def to_s
       (@points.map{ |point| point.to_s } + [ @points.first ]).join( ' ' )
     end
@@ -59,8 +60,8 @@ module RCAP
 
     def self.from_yaml_data( polyon_yaml_data ) # :nodoc:
       self.new( 
-               :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
-              )
+        :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
+      )
     end
   end
 end

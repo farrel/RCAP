@@ -304,7 +304,7 @@ EOF
     RESOURCES_YAML      = 'Resources'
     AREAS_YAML          = 'Areas'
 
-    def to_yaml( options = {} )
+    def to_yaml( options = {} ) # :nodoc:
       response_types_yaml = self.response_types
       def response_types_yaml.to_yaml_style; :inline; end
 
@@ -314,27 +314,27 @@ EOF
       parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
       RCAP.attribute_values_to_yaml_hash( 
-        [ LANGUAGE_YAML, self.language ],
-        [ CATEGORIES_YAML, categories_yaml ],
-        [ EVENT_YAML, self.event ],
+        [ LANGUAGE_YAML,       self.language ],
+        [ CATEGORIES_YAML,     categories_yaml ],
+        [ EVENT_YAML,          self.event ],
         [ RESPONSE_TYPES_YAML, response_types_yaml ],
-        [ URGENCY_YAML, self.urgency ],
-        [ SEVERITY_YAML, self.severity ],
-        [ CERTAINTY_YAML, self.certainty ],
-        [ AUDIENCE_YAML, self.audience ],
-        [ EFFECTIVE_YAML, self.effective ],
-        [ ONSET_YAML, self.onset ],
-        [ EXPIRES_YAML, self.expires ],
-        [ SENDER_NAME_YAML, self.sender_name ],
-        [ HEADLINE_YAML, self.headline ],
-        [ DESCRIPTION_YAML, self.description ],
-        [ INSTRUCTION_YAML, self.instruction ],
-        [ WEB_YAML, self.web ],
-        [ CONTACT_YAML, self.contact ],
-        [ EVENT_CODES_YAML, self.event_codes.inject({}, &parameter_to_hash )],
-        [ PARAMETERS_YAML, self.parameters.inject({}, &parameter_to_hash )],
-        [ RESOURCES_YAML, self.resources ],
-        [ AREAS_YAML, self.areas ]
+        [ URGENCY_YAML,        self.urgency ],
+        [ SEVERITY_YAML,       self.severity ],
+        [ CERTAINTY_YAML,      self.certainty ],
+        [ AUDIENCE_YAML,       self.audience ],
+        [ EFFECTIVE_YAML,      self.effective ],
+        [ ONSET_YAML,          self.onset ],
+        [ EXPIRES_YAML,        self.expires ],
+        [ SENDER_NAME_YAML,    self.sender_name ],
+        [ HEADLINE_YAML,       self.headline ],
+        [ DESCRIPTION_YAML,    self.description ],
+        [ INSTRUCTION_YAML,    self.instruction ],
+        [ WEB_YAML,            self.web ],
+        [ CONTACT_YAML,        self.contact ],
+        [ EVENT_CODES_YAML,    self.event_codes.inject({}, &parameter_to_hash )],
+        [ PARAMETERS_YAML,     self.parameters.inject({}, &parameter_to_hash )],
+        [ RESOURCES_YAML,      self.resources ],
+        [ AREAS_YAML,          self.areas ]
       ).to_yaml( options )
     end
 

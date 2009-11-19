@@ -34,8 +34,7 @@ module RCAP
 
 		# Two points are equivalent if they have the same lattitude and longitude
 		def ==( other )
-			self.lattitude == other.lattitude &&
-				self.longitude == other.longitude
+			[ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
 		end
   end
 end

@@ -107,10 +107,13 @@ Will print the following CAP XML
 
 ==== To YAML
 
+YAML is a plain text serialization format designed to be easily readable and editable by both human and machine. RCAP has custom YAML generation and parsing methods to produce a YAML document that is as human friednly as possible. The following code
+
  alert.to_yaml
 
 will produce the following YAML document
 
+ ---
  Identifier: 2a1ba96d-16e4-4f52-85ea-0258c1440bd5
  Sender: cape_town_disaster_relief@capetown.municipal.za
  Sent: 2009-11-19T02:41:29+02:00
@@ -133,7 +136,7 @@ will produce the following YAML document
 
 Note: If you use Ruby 1.8 the order of the attributes is jumbled due to hashes being unorderd (Ruby 1.9 implements ordered hashes). This does not affect the ability to parse documents generated from RCAP::Alert#to_yaml, it just makes things the output slightly messy. 
 
-=== Parsing an Alert
+=== Parsing an Alert From An Externtal Source
 
 ==== From XML
 
@@ -170,7 +173,7 @@ Will produce the folling output:
 
 All RCAP classes include the Validation module.
 
-A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 140 tests.
+A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 150 tests.
 
 === DateTime and Time
 
@@ -186,4 +189,4 @@ RCAP is released under the BSD License.
 
 == Copyright
 
-2009 Aimred CC
+2009-2010 Aimred CC
