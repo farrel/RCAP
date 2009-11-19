@@ -95,14 +95,14 @@ EOF
 											:polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
     end
 
-     AREA_DESC_YAML = 'Area Description'
-     ALTITUDE_YAML  = 'Altitude'
-     CEILING_YAML   = 'Ceiling'
-     CIRCLES_YAML   = 'Circles'
-     GEOCODES_YAML  = 'Geocodes'
-     POLYGONS_YAML  = 'Polygons'
+     AREA_DESC_YAML = 'Area Description' # :nodoc:
+     ALTITUDE_YAML  = 'Altitude'         # :nodoc:
+     CEILING_YAML   = 'Ceiling'          # :nodoc:
+     CIRCLES_YAML   = 'Circles'          # :nodoc:
+     GEOCODES_YAML  = 'Geocodes'         # :nodoc:
+     POLYGONS_YAML  = 'Polygons'         # :nodoc:
 
-     def to_yaml( options = {} )
+     def to_yaml( options = {} ) # :nodoc:
        circles_yaml = self.circles.map{ |circle| [[ circle.point.lattitude, circle.point.longitude ], circle.radius ]}
        def circles_yaml.to_yaml_style; :inline; end
 
@@ -116,7 +116,7 @@ EOF
        ).to_yaml( options )
      end
 
-     def from_yaml_data( area_yaml_data )
+     def from_yaml_data( area_yaml_data )  # :nodoc:
        Area.new(
          :area_desc => area_yaml_data[ AREA_DESC_YAML ],
          :altitude  => area_yaml_data[ ALTITUDE_YAML ],

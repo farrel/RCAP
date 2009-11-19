@@ -283,7 +283,7 @@ EOF
     end
 
     LANGUAGE_YAML       = 'Language'
-    CATEGORY_YAML       = 'Category'
+    CATEGORIES_YAML     = 'Categories'
     EVENT_YAML          = 'Event'
     RESPONSE_TYPES_YAML = 'Response Types'
     URGENCY_YAML        = 'Urgency'
@@ -307,11 +307,15 @@ EOF
     def to_yaml( options = {} )
       response_types_yaml = self.response_types
       def response_types_yaml.to_yaml_style; :inline; end
+
+      categories_yaml = self.categories
+      def categories_yaml.to_yaml_style; :inline; end
+
       parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
       RCAP.attribute_values_to_yaml_hash( 
         [ LANGUAGE_YAML, self.language ],
-        [ CATEGORY_YAML, self.categories ],
+        [ CATEGORIES_YAML, categories_yaml ],
         [ EVENT_YAML, self.event ],
         [ RESPONSE_TYPES_YAML, response_types_yaml ],
         [ URGENCY_YAML, self.urgency ],
@@ -334,10 +338,10 @@ EOF
       ).to_yaml( options )
     end
 
-    def self.from_yaml_data( info_yaml_data )
+    def self.from_yaml_data( info_yaml_data ) # :nodoc:
       self.new(
         :language       => info_yaml_data [ LANGUAGE_YAML ],
-        :category       => info_yaml_data [ CATEGORY_YAML ],
+        :categories     => info_yaml_data [ CATEGORIES_YAML ],
         :event          => info_yaml_data [ EVENT_YAML ],
         :response_types => info_yaml_data [ RESPONSE_TYPES_YAML ],
         :urgency        => info_yaml_data [ URGENCY_YAML ],

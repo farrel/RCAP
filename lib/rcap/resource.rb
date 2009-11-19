@@ -102,7 +102,7 @@ module RCAP
       ).to_yaml( options )
     end
 
-    def self.from_yaml_data( resource_yaml_data )
+    def self.from_yaml_data( resource_yaml_data ) # :nodoc:
       self.new(
         :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
         :uri           => reource_yaml_data[ URI_YAML ],

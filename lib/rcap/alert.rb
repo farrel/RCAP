@@ -191,24 +191,6 @@ EOF
       "#{ self.sender }/#{ self.identifier }/#{ self.sent }"
     end
 
-    def to_txt
-      <<EOF
-Identifier:   #{ self.identifier }
-Sender:       #{ self.sender }
-Sent:         #{ self.sent }
-Status:       #{ self.status }
-Message Type: #{ self.msg_type }
-Source:       #{ self.source }
-Scope:        #{ self.scope }
-Restriction:  #{ self.restriction }
-Addresses:    #{ self.addresses.to_s_for_cap }
-Code:         #{ self.code }
-Note:         #{ self.note }
-References:   #{ self.references.join( ' ' )}
-Incidents:    #{ self.incidents.join( ' ')}
-EOF
-    end
-
     def self.from_xml_element( alert_xml_element ) # :nodoc:
       RCAP::Alert.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
                        :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
@@ -231,24 +213,24 @@ EOF
     end
 
     # Initialise an Alert object from an XML string. Any object that is a subclass of IO (e.g. File) can be passed in.
-    def self.from_xml( xml_string )
-      self.from_xml_document( REXML::Document.new( xml_string ))
+    def self.from_xml( xml )
+      self.from_xml_document( REXML::Document.new( xml ))
     end
 
-     IDENTIFIER_YAML  = "Identifier"
-     SENDER_YAML      = "Sender"
-     SENT_YAML        = "Sent"
-     STATUS_YAML      = "Status"
-     MSG_TYPE_YAML    = "Message Type"
-     SOURCE_YAML      = "Source"
-     SCOPE_YAML       = "Scope"
-     RESTRICTION_YAML = "Restriction"
-     ADDRESSES_YAML   = "Addresses"
-     CODE_YAML        = "Code"
-     NOTE_YAML        = "Note"
-     REFERENCES_YAML  = "References"
-     INCIDENTS_YAML   = "Incidents"
-     INFOS_YAML       = "Information"
+     IDENTIFIER_YAML  = "Identifier"    # :nodoc:
+     SENDER_YAML      = "Sender"        # :nodoc:
+     SENT_YAML        = "Sent"          # :nodoc:
+     STATUS_YAML      = "Status"        # :nodoc:
+     MSG_TYPE_YAML    = "Message Type"  # :nodoc:
+     SOURCE_YAML      = "Source"        # :nodoc:
+     SCOPE_YAML       = "Scope"         # :nodoc:
+     RESTRICTION_YAML = "Restriction"   # :nodoc:
+     ADDRESSES_YAML   = "Addresses"     # :nodoc:
+     CODE_YAML        = "Code"          # :nodoc:
+     NOTE_YAML        = "Note"          # :nodoc:
+     REFERENCES_YAML  = "References"    # :nodoc:
+     INCIDENTS_YAML   = "Incidents"     # :nodoc:
+     INFOS_YAML       = "Information"   # :nodoc:
 
      def to_yaml( options = {} )
        RCAP.attribute_values_to_yaml_hash(
@@ -269,11 +251,12 @@ EOF
        ).to_yaml( options )
      end
 
+    # Initialise an Alert object from a YAML string. Any object that is a subclass of IO (e.g. File) can be passed in.
      def self.from_yaml( yaml )
        self.from_yaml_data( YAML.load( yaml ))
      end
 
-     def self.from_yaml_data( alert_yaml_data )
+     def self.from_yaml_data( alert_yaml_data ) # :nodoc:
        Alert.new(
         :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
         :sender      => alert_yaml_data[ SENDER_YAML ],

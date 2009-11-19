@@ -50,14 +50,14 @@ module RCAP
     end
 
 
-    def to_yaml( options = {} )
+    def to_yaml( options = {} ) # :nodoc:
       yaml_points = self.points.map{ |point| [ point.lattitude, point.longitude ]}
       def yaml_points.to_yaml_style; :inline; end
 
       yaml_points.to_yaml( options )
     end
 
-    def self.from_yaml_data( polyon_yaml_data )
+    def self.from_yaml_data( polyon_yaml_data ) # :nodoc:
       self.new( 
                :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
               )
