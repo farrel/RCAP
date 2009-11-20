@@ -136,7 +136,7 @@ will produce the following YAML document
 
 Note: If you use Ruby 1.8 the order of the attributes is jumbled due to hashes being unorderd (Ruby 1.9 implements ordered hashes). This does not affect the ability to parse documents generated from RCAP::Alert#to_yaml, it just makes things the output slightly messy. 
 
-=== Parsing an Alert From An Externtal Source
+=== Parsing an Alert From An External Source
 
 ==== From XML
 
