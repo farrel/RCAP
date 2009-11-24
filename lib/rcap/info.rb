@@ -282,27 +282,27 @@ EOF
       )
     end
 
-    LANGUAGE_YAML       = 'Language'
-    CATEGORIES_YAML     = 'Categories'
-    EVENT_YAML          = 'Event'
-    RESPONSE_TYPES_YAML = 'Response Types'
-    URGENCY_YAML        = 'Urgency'
-    SEVERITY_YAML       = 'Severity'
-    CERTAINTY_YAML      = 'Certainty'
-    AUDIENCE_YAML       = 'Audience'
-    EFFECTIVE_YAML      = 'Effective'
-    ONSET_YAML          = 'Onset'
-    EXPIRES_YAML        = 'Expires'
-    SENDER_NAME_YAML    = 'Sender Name'
-    HEADLINE_YAML       = 'Headline'
-    DESCRIPTION_YAML    = 'Description'
-    INSTRUCTION_YAML    = 'Instruction'
-    WEB_YAML            = 'Web'
-    CONTACT_YAML        = 'Contact'
-    EVENT_CODES_YAML    = 'Event Codes'
-    PARAMETERS_YAML     = 'Parameters'
-    RESOURCES_YAML      = 'Resources'
-    AREAS_YAML          = 'Areas'
+    LANGUAGE_YAML       = 'Language'       # :nodoc:
+    CATEGORIES_YAML     = 'Categories'     # :nodoc:
+    EVENT_YAML          = 'Event'          # :nodoc:
+    RESPONSE_TYPES_YAML = 'Response Types' # :nodoc:
+    URGENCY_YAML        = 'Urgency'        # :nodoc:
+    SEVERITY_YAML       = 'Severity'       # :nodoc:
+    CERTAINTY_YAML      = 'Certainty'      # :nodoc:
+    AUDIENCE_YAML       = 'Audience'       # :nodoc:
+    EFFECTIVE_YAML      = 'Effective'      # :nodoc:
+    ONSET_YAML          = 'Onset'          # :nodoc:
+    EXPIRES_YAML        = 'Expires'        # :nodoc:
+    SENDER_NAME_YAML    = 'Sender Name'    # :nodoc:
+    HEADLINE_YAML       = 'Headline'       # :nodoc:
+    DESCRIPTION_YAML    = 'Description'    # :nodoc:
+    INSTRUCTION_YAML    = 'Instruction'    # :nodoc:
+    WEB_YAML            = 'Web'            # :nodoc:
+    CONTACT_YAML        = 'Contact'        # :nodoc:
+    EVENT_CODES_YAML    = 'Event Codes'    # :nodoc:
+    PARAMETERS_YAML     = 'Parameters'     # :nodoc:
+    RESOURCES_YAML      = 'Resources'      # :nodoc:
+    AREAS_YAML          = 'Areas'          # :nodoc:
 
     def to_yaml( options = {} ) # :nodoc:
       response_types_yaml = self.response_types
