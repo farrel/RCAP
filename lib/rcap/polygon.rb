@@ -22,7 +22,7 @@ module RCAP
 		#  points[0] points[1] points[2] ... points[n-1] points[0]
     # where each point is formatted with RCAP::Point#to_s
     def to_s
-      (@points.map{ |point| point.to_s } + [ @points.first ]).join( ' ' )
+      (@points + [ @points.first ]).join( ' ' )
     end
 
     def inspect # :nodoc:
@@ -58,7 +58,7 @@ module RCAP
       yaml_points.to_yaml( options )
     end
 
-    def self.from_yaml_data( polyon_yaml_data ) # :nodoc:
+    def self.from_yaml_data( polygon_yaml_data ) # :nodoc:
       self.new( 
         :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
       )
