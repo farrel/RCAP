@@ -17,5 +17,5 @@ require 'rcap/area'
 
 module RCAP
 	XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
-	VERSION = "0.2"
+	VERSION = "0.3"
 end
