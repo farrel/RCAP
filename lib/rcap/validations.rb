@@ -1,8 +1,8 @@
 module Validation  # :nodoc: 
   module ClassMethods # :nodoc:
 
-		CAP_NUMBER_RE  = /^-{0,1}\d*\.{0,1}\d+$/
-		CAP_INTEGER_RE = /\-{0,1}A[+-]?\d+\Z/
+    CAP_NUMBER_RE  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
+    CAP_INTEGER_RE = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )
 
     def validates_inclusion_of( *attributes )
       options = { 
@@ -83,21 +83,21 @@ module Validation  # :nodoc:
       end
     end
 
-		def validates_numericality_of( *attributes )
-			options = {
-				:message => 'is not a number',
-			}.merge!(attributes.extract_options!)
+    def validates_numericality_of( *attributes )
+      options = {
+        :message => 'is not a number',
+      }.merge!(attributes.extract_options!)
 
-			re = options[:only_integer] ? CAP_INTEGER_RE : CAP_NUMBER_RE
+      re = options[:only_integer] ? CAP_INTEGER_RE : CAP_NUMBER_RE
 
-			validates_each( *attributes ) do |object, attribute, value|
-				next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
-				unless ( value.to_s =~ re ) &&
-					( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
-					object.errors[ attribute ] << options[ :message ] 
-				end
-			end
-		end
+      validates_each( *attributes ) do |object, attribute, value|
+        next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        unless ( value.to_s =~ re ) &&
+          ( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
+          object.errors[ attribute ] << options[ :message ] 
+        end
+      end
+    end
 
 
     def validates_responsiveness_of( *attributes )

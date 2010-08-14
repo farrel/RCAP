@@ -25,7 +25,7 @@ Rake::GemPackageTask.new(SPEC) do |pkg|
 end
 
 Rake::RDocTask.new do |rdoc|
-  rdoc.main = "README"
+  rdoc.main = "README.rdoc"
   rdoc.rdoc_files.include( "README.rdoc", "CHANGELOG.rdoc", "lib/**/*.rb" )
   rdoc.rdoc_dir = "doc"
   rdoc.title = "RCAP Ruby API"

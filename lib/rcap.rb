@@ -1,6 +1,8 @@
 require 'date'
 require 'assistance'
 require 'uuidtools'
+require 'yaml'
+require 'json'
 require 'rexml/document'
 require 'rcap/utilities'
 require 'rcap/validations'

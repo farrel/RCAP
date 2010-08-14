@@ -1,3 +1,4 @@
+require 'yaml'
 require 'lib/rcap'
 
 def random_circle_hash
