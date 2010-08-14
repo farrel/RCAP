@@ -7,8 +7,8 @@ ALLOWED_CHARACTERS = /[^\s&<]+/ # :nodoc:
   end
 
 class String # :nodoc:
-  CAP_LIST_REGEX = Regexp.new( '([\w\s]+)"|(\S+)' )
-  WHITESPACE_REGEX = Regexp.new( '^\s+$' )
+  CAP_LIST_REGEX = Regexp.new( '"([\w\s]+)"|(\S+)' )
+  WHITESPACE_REGEX = Regexp.new('^\s+$')
 
   def for_cap_list
     if self =~ /\s/
