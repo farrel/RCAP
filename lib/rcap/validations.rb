@@ -1,8 +1,8 @@
 module Validation  # :nodoc: 
   module ClassMethods # :nodoc:
 
-    CAP_NUMBER_RE  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
-    CAP_INTEGER_RE = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )
+    CAP_NUMBER_REGEX  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
+    CAP_INTEGER_REGEX = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )
 
     def validates_inclusion_of( *attributes )
       options = { 
@@ -88,7 +88,7 @@ module Validation  # :nodoc:
         :message => 'is not a number',
       }.merge!(attributes.extract_options!)
 
-      re = options[:only_integer] ? CAP_INTEGER_RE : CAP_NUMBER_RE
+      re = options[:only_integer] ? CAP_INTEGER_REGEX : CAP_NUMBER_REGEX
 
       validates_each( *attributes ) do |object, attribute, value|
         next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])

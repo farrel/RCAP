@@ -1,5 +1,5 @@
 require 'rake/gempackagetask'
-require 'hanna/rdoctask'
+require 'rake/rdoctask'
 require 'spec/rake/spectask'
 
 SPEC = Gem::Specification.new do |gem|
@@ -41,3 +41,5 @@ desc( 'Generate a new tag file' )
 task( :tags ) do |t|
   Kernel.system( 'ctags --recurse lib/* ')
 end
+
+task( :default => :spec )
