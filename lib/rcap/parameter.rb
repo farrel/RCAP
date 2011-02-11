@@ -52,5 +52,13 @@ module RCAP
 		def ==( other )
 			[ self.name, self.value ] == [ other.name, other.value ]
 		end
+
+    def to_h
+      { @name => @value }
+    end
+
+    def self.from_hash( hash )
+      self.new( :name => hash.keys.first, :value => hash.values.first ) 
+    end
 	end
 end

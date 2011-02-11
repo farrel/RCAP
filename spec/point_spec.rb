@@ -31,4 +31,16 @@ describe( RCAP::Point ) do
       @point.should_not( be_valid )
     end
   end
+
+  context( 'when exported' ) do
+    before( :each ) do
+      @point = RCAP::Point.new( :lattitude => 1, :longitude => 1 )
+    end
+
+    context( 'to hash' ) do
+      it( 'should export correctly' ) do
+        @point.to_h.should == { :lattitude => 1, :longitude => 1 }
+      end
+    end
+  end
 end

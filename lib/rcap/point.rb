@@ -36,5 +36,9 @@ module RCAP
 		def ==( other )
 			[ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
 		end
+
+    def to_h
+      { :lattitude => self.lattitude, :longitude => self.longitude }
+    end
   end
 end
