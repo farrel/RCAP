@@ -66,5 +66,9 @@ module RCAP
       self.new( :point => RCAP::Point.new( :lattitude => point_yaml_data[ 0 ], :longitude => point_yaml_data[ 1 ]),
                 :radius => radius )
     end
+
+    def to_h
+      { :radius => self.radius, :lattitude => self.point.lattitude, :longitude => self.point.longitude }
+    end
   end
 end
