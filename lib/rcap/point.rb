@@ -40,5 +40,9 @@ module RCAP
     def to_h
       { :lattitude => self.lattitude, :longitude => self.longitude }
     end
+
+    def self.from_h( point_hash )
+      self.new( :lattitude => point_hash[ :lattitude ], :longitude => point_hash[ :longitude ])
+    end
   end
 end

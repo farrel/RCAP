@@ -55,6 +55,21 @@ describe( RCAP::Circle ) do
 				@circle.point.longitude.should == @original_circle.point.longitude
 			end
 		end
+
+    context( 'from a hash' ) do
+      before( :each ) do
+				@original_circle = RCAP::Circle.new( :radius => 10.5, :point => RCAP::Point.new( :lattitude => 30, :longitude => 60 ))
+        @circle = RCAP::Circle.from_h( @original_circle.to_h )
+      end
+
+      it( 'should set the radius correctly' ) do
+        @circle.radius.should == @original_circle.radius
+      end
+
+      it( 'should set the point correctly' ) do
+        @circle.point.should == @original_circle.point
+      end
+    end
 	end
 
   context( 'when exported' ) do

@@ -112,5 +112,18 @@ module RCAP
         :digest        => reource_yaml_data[ DIGEST_YAML ]
       )
     end
+
+    def to_h
+      { :resource_desc => self.resource_desc,
+        :mime_type     => self.mime_type,
+        :size          => self.size,
+        :uri           => self.uri,
+        :deref_uri     => self.deref_uri,
+        :digest        => self.digest }
+    end
+
+    def self.from_h( resource_hash )
+      self.new( resource_hash )
+    end
   end
 end

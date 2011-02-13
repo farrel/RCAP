@@ -57,7 +57,7 @@ module RCAP
       { @name => @value }
     end
 
-    def self.from_hash( hash )
+    def self.from_h( hash )
       self.new( :name => hash.keys.first, :value => hash.values.first ) 
     end
 	end

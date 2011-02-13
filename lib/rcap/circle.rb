@@ -70,5 +70,9 @@ module RCAP
     def to_h
       { :radius => self.radius, :lattitude => self.point.lattitude, :longitude => self.point.longitude }
     end
+
+    def self.from_h( circle_hash )
+      self.new( :radius => circle_hash[ :radius ], :point => RCAP::Point.new( :lattitude => circle_hash[ :lattitude ], :longitude => circle_hash[ :longitude ]))
+    end
   end
 end

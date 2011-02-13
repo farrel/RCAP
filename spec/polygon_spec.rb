@@ -41,5 +41,28 @@ describe( RCAP::Polygon ) do
         end
       end
     end
+
+    context( 'from a hash' ) do
+      before( :each ) do
+        @polygon = RCAP::Polygon.new( :points => Array.new(3){|i| RCAP::Point.new( :lattitude => i, :longitude => i )})
+      end
+
+      it( 'should load all the points' ) do
+        @new_polygon = RCAP::Polygon.from_h( @polygon.to_h )
+        @new_polygon.points.should == @polygon.points
+      end
+    end
+  end
+  
+  context( 'when exported' ) do
+    before( :each ) do
+      @polygon = RCAP::Polygon.new( :points => Array.new(3){|i| RCAP::Point.new( :lattitude => i, :longitude => i )})
+    end
+
+    context( 'to a hash' ) do
+      it( 'should export correctly' ) do
+        @polygon.to_h.should == { :points => @polygon.points.map{ |point| point.to_h }}
+      end
+    end
   end
 end

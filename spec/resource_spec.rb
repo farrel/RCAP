@@ -56,6 +56,88 @@ describe( RCAP::Resource ) do
         @resource.digest.should == @original_resource.digest
       end
     end
+
+
+    context( 'from a hash' ) do
+      before( :each ) do
+        @original_resource = RCAP::Resource.new
+        @original_resource.resource_desc = "Image of incident"
+        @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+        @original_resource.mime_type     = 'image/png'
+        @original_resource.deref_uri     = "IMAGE DATA"
+        @original_resource.size          = "20480"
+        @original_resource.digest        = "2048"
+
+        @resource = RCAP::Resource.from_h( @original_resource.to_h )
+      end
+
+      it( 'should parse resource_desc correctly' ) do
+        @resource.resource_desc.should == @original_resource.resource_desc
+      end
+
+      it( 'should parse uri correctly' ) do
+        @resource.uri.should == @original_resource.uri
+      end
+
+      it( 'should parse mime_type correctly' ) do
+        @resource.mime_type.should == @original_resource.mime_type
+      end
+
+      it( 'should parse deref_uri correctly' ) do
+        @resource.deref_uri.should == @original_resource.deref_uri
+      end
+
+      it( 'should parse size correctly' ) do
+        @resource.size.should == @original_resource.size
+      end
+
+      it( 'should parse digest correctly' ) do
+        @resource.digest.should == @original_resource.digest
+      end
+    end
+
+  end
+
+  context( 'when exported' ) do
+    before( :each ) do
+      @resource = RCAP::Resource.new
+      @resource.resource_desc = "Image of incident"
+      @resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+      @resource.mime_type     = 'image/png'
+      @resource.deref_uri     = "IMAGE DATA"
+      @resource.size          = "20480"
+      @resource.digest        = "2048"
+    end
+
+    context( 'to a hash' ) do
+      before( :each ) do
+        @resource_hash = @resource.to_h
+      end
+
+      it( 'should set the resource description' ) do
+        @resource_hash[ :resource_desc ].should == @resource.resource_desc
+      end
+
+      it( 'should set the mime type' ) do
+        @resource_hash[ :mime_type ].should == @resource.mime_type
+      end
+
+      it( 'should set the size' ) do
+        @resource_hash[ :size ].should == @resource.size
+      end
+
+      it( 'should set the URI' ) do
+        @resource_hash[ :uri ].should == @resource.uri
+      end
+
+      it( 'should set the dereferenced URI' ) do
+        @resource_hash[ :deref_uri ].should == @resource.deref_uri
+      end 
+
+      it( 'should set the digest' ) do
+        @resource_hash[ :digest ].should == @resource.digest
+      end 
+    end
   end
 
   context( 'which is valid' ) do
