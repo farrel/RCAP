@@ -126,5 +126,14 @@ EOF
          :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| RCAP::Polygon.from_yaml_data( polyon_yaml_data )}
        )
      end
+
+     def to_h
+       { :area_desc => self.area_desc,
+         :altitude => self.altitude,
+         :ceiling => self.ceiling,
+         :circles => self.circles.map{ |circle| circle.to_h },
+         :geocodes => self.geocodes.map{ |geocode| geocode.to_h },
+         :polygons => self.polygons.map{ |polygon| polygon.to_h }}
+     end
   end
 end

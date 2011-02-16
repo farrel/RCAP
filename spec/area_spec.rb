@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( RCAP::Area ) do
 	context( 'on initialisation' ) do
@@ -58,6 +58,46 @@ describe( RCAP::Area ) do
 			end
 		end
 	end
+
+  context( 'when exported' ) do
+    before( :each ) do
+      @area = RCAP::Area.new( :area_desc => 'Area Description',
+                             :altitude => 100,
+                             :ceiling => 200,
+                             :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+                             :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
+                             :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
+    end
+    context( 'to a hash' ) do
+      before( :each ) do
+        @area_hash = @area.to_h
+      end
+
+      it( 'should export the area description correctly' ) do
+        @area_hash[ :area_desc ].should == @area.area_desc 
+      end
+
+      it( 'should export the altitude correctly' ) do
+        @area_hash[ :altitude ].should == @area.altitude 
+      end
+
+      it( 'should set the ceiling correctly' ) do
+        @area_hash[ :ceiling ].should == @area.ceiling
+      end
+
+      it( 'should export the circles correctly' ) do
+        @area_hash[ :circles ].should == @area.circles.map{ |circle| circle.to_h }
+      end
+
+      it( 'should export the geocodes correctly' ) do
+        @area_hash[ :geocodes ].should == @area.geocodes.map{ |geocode| geocode.to_h }
+      end
+
+      it( 'should export the polygons correctly' ) do
+        @area_hash[ :polygons ].should == @area.polygons.map{ |polygon| polygon.to_h }
+      end
+    end
+  end
 
   context( 'is not valid if' ) do
     before( :each ) do
