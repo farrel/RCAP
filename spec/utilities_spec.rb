@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( Array ) do
   describe( 'to_s_for_cap' ) do

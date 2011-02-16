@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( RCAP::Point ) do
   describe( 'is not valid if' ) do

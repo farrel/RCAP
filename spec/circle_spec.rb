@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( RCAP::Circle ) do
   describe( 'should not be valid if' ) do

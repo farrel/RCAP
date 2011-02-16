@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( RCAP::Alert ) do
   context( 'on initialisation' ) do

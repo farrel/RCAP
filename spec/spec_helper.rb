@@ -1,5 +1,5 @@
 require 'yaml'
-require 'lib/rcap'
+require 'rcap'
 
 def random_circle_hash
   { :lattitude => rand( 360 ) - 180,

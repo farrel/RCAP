@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe( RCAP::Polygon ) do
   describe( 'is not valid if it' ) do

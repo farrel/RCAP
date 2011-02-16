@@ -32,7 +32,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 Spec::Rake::SpecTask.new do |spec|
-  spec.libs = ['lib']
+  spec.libs = ['lib','spec']
   spec.warning = true
   spec.spec_opts = ['--options spec/spec.opts']
 end
