@@ -363,5 +363,28 @@ EOF
         :areas          => Array( info_yaml_data [ AREAS_YAML ]).map{ |area_yaml_data| RCAP::Area.from_yaml_data( area_yaml_data )}
       )
     end
+
+    def to_h
+      { :language       => self.language,
+        :categories     => self.categories,
+        :event          => self.event,
+        :response_types => self.response_types,
+        :urgency        => self.urgency,
+        :severity       => self.severity,
+        :certainty      => self.certainty,
+        :effective      => self.effective,
+        :onset          => self.onset,
+        :expires        => self.expires,
+        :sender_name    => self.sender_name,
+        :headline       => self.headline,
+        :description    => self.description,
+        :instruction    => self.instruction,
+        :web            => self.web,
+        :contact        => self.contact,
+        :resources      => self.resources.map{ |resource| resource.to_h },
+        :event_codes    => self.event_codes.map{ |event_code| event_code.to_h },
+        :parameters     => self.parameters.map{ |parameter| parameter.to_h },
+        :areas          => self.areas.map{ |area| area.to_h }}
+    end
   end
 end

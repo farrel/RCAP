@@ -116,4 +116,120 @@ describe( RCAP::Info ) do
       @info.should_not( be_valid )
     end
   end
+
+
+  describe( 'when exported' ) do
+    context( 'to hash' ) do
+      before( :each ) do
+        @info = RCAP::Info.new( :categories     => [ RCAP::Info::CATEGORY_GEO, RCAP::Info::CATEGORY_FIRE ],
+                                :event          => 'Event Description',
+                                :response_types => [ RCAP::Info::RESPONSE_TYPE_MONITOR, RCAP::Info::RESPONSE_TYPE_ASSESS ],
+                                :urgency        => RCAP::Info::URGENCY_IMMEDIATE,
+                                :severity       => RCAP::Info::SEVERITY_EXTREME,
+                                :certainty      => RCAP::Info::CERTAINTY_OBSERVED,
+                                :audience       => 'Audience',
+                                :effective      => DateTime.now,
+                                :onset          => DateTime.now + 1,
+                                :expires        => DateTime.now + 2,
+                                :sender_name    => 'Sender Name',
+                                :headline       => 'Headline',
+                                :description    => 'Description',
+                                :instruction    => 'Instruction',
+                                :web            => 'http://website',
+                                :contact        => 'contact@address',
+                                :resources      => [ RCAP::Resource.new( :resource_desc => 'Resource Description', :uri => 'http://tempuri.org/resource' )],
+                                :event_codes    => [ RCAP::EventCode.new( :name => 'name1', :value => 'value1' ),
+                                                     RCAP::EventCode.new( :name => 'name2', :value => 'value2' )],
+                                :parameters     => [ RCAP::Parameter.new( :name => 'name1', :value => 'value1' ),
+                                                     RCAP::Parameter.new( :name => 'name2', :value => 'value2' )],
+                                :areas          => [ RCAP::Area.new( :area_desc => 'Area1' ),
+                                                     RCAP::Area.new( :area_desc => 'Area2' )])
+        @info_hash = @info.to_h
+      end
+
+      it( 'should export the language correctly' ) do
+        @info_hash[ :language ].should == @info.language
+      end
+
+      it( 'should export the categories' ) do
+        @info_hash[ :categories ].should == @info.categories
+      end
+      
+      it( 'should export the event' ) do
+        @info_hash[ :event ].should == @info.event
+      end
+
+      it( 'should export the response types' ) do
+        @info_hash[ :response_types ].should == @info.response_types
+      end
+
+      it( 'should export the urgency' ) do
+        @info_hash[  :urgency ].should == @info.urgency
+      end
+
+      it( 'should export the severity' ) do
+        @info_hash[  :severity ].should == @info.severity
+      end
+
+      it( 'should export the certainty' ) do
+        @info_hash[  :certainty ].should == @info.certainty
+      end
+
+      it( 'should export the audience' ) do
+        @info_hash[  :audience ].should == @info.audience
+      end
+
+      it( 'should export the effective date' ) do
+        @info_hash[ :effective ].should == @info.effective
+      end
+
+      it( 'should export the onset date' ) do
+        @info_hash[ :onset ].should == @info.onset
+      end
+
+      it( 'should export the expires date' ) do
+        @info_hash[ :expires ].should == @info.expires
+      end
+
+       it( 'should export the sender name' ) do
+         @info_hash[ :sender_name ].should == @info.sender_name
+       end
+
+       it( 'should export the headline' ) do
+         @info_hash[ :headline ].should == @info.headline
+       end
+
+       it( 'should export the description' ) do
+         @info_hash[ :description ].should == @info.description
+       end
+
+       it( 'should export the instruction' ) do
+         @info_hash[ :instruction ].should == @info.instruction
+       end
+
+       it( 'should export the web address ' ) do
+         @info_hash[ :web ].should == @info.web
+       end
+
+       it( 'should export the contact' ) do
+         @info_hash[ :contact ].should == @info.contact
+       end
+
+       it( 'should export the event codes' ) do
+         @info_hash[ :event_codes ].should == @info.event_codes.map{ |event_code| event_code.to_h }
+       end
+
+       it( 'should export the parameters ' ) do
+         @info_hash[ :parameters ].should == @info.parameters.map{ |parameter| parameter.to_h }
+       end
+
+       it( 'should export the resources ' ) do
+         @info_hash[ :resources ].should == @info.resources.map{ |resource| resource.to_h }  
+       end
+
+       it( 'should export the areas' ) do
+         @info_hash[ :areas ].should == @info.areas.map{ |area| area.to_h }      
+       end
+    end
+  end
 end
