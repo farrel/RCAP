@@ -129,11 +129,21 @@ EOF
 
      def to_h
        { :area_desc => self.area_desc,
-         :altitude => self.altitude,
-         :ceiling => self.ceiling,
-         :circles => self.circles.map{ |circle| circle.to_h },
-         :geocodes => self.geocodes.map{ |geocode| geocode.to_h },
-         :polygons => self.polygons.map{ |polygon| polygon.to_h }}
+         :altitude  => self.altitude,
+         :ceiling   => self.ceiling,
+         :circles   => self.circles.map{ |circle| circle.to_h },
+         :geocodes  => self.geocodes.map{ |geocode| geocode.to_h },
+         :polygons  => self.polygons.map{ |polygon| polygon.to_h }}
+     end
+
+     def self.from_h( area_hash )
+       self.new(
+        :area_desc => area_hash[ :area_desc ],
+        :altitude  => area_hash[ :altitude ],
+        :ceiling   => area_hash[ :ceiling ],
+        :circles   => area_hash[ :circles ].map{ |circle_hash| RCAP::Circle.from_h( circle_hash )},
+        :geocodes  => area_hash[ :geocodes ].map{ |geocode_hash| RCAP::Geocode.from_h( geocode_hash )},
+        :polygons  => area_hash[ :polygons ].map{ |polygon_hash| RCAP::Polygon.from_h( polygon_hash )})
      end
   end
 end

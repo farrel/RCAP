@@ -16,23 +16,7 @@ describe( RCAP::Area ) do
 		it( 'should have an empty circles' ){ @area.circles.should( be_empty )}
 		it( 'should have an empty geocodes' ){ @area.geocodes.should( be_empty )}
 
-		context( 'from XML' ) do
-			before( :each ) do
-				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
-																			 :altitude => 100,
-																			 :ceiling => 200,
-																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
-																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
-																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
-
-				@alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => @original_area ))
-				@xml_string = @alert.to_xml
-				@xml_document = REXML::Document.new( @xml_string )
-				@info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
-				@area_xml_element = RCAP.xpath_first( @info_xml_element, RCAP::Area::XPATH )
-				@area = RCAP::Area.from_xml_element( @area_xml_element )
-			end
-
+    shared_examples_for( "it can parse into an Area object" ) do
 			it( 'should parse the area_desc correctly' ) do
 				@area.area_desc.should == @original_area.area_desc
 			end
@@ -56,7 +40,42 @@ describe( RCAP::Area ) do
 			it( 'should parse the polygons correctly' ) do
 				@area.polygons.should == @original_area.polygons
 			end
+    end
+
+		context( 'from XML' ) do
+			before( :each ) do
+				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
+																			 :altitude => 100,
+																			 :ceiling => 200,
+																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
+																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
+
+				@alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => @original_area ))
+				@xml_string = @alert.to_xml
+				@xml_document = REXML::Document.new( @xml_string )
+				@info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH )
+				@area_xml_element = RCAP.xpath_first( @info_xml_element, RCAP::Area::XPATH )
+				@area = RCAP::Area.from_xml_element( @area_xml_element )
+			end
+
+      it_should_behave_like( "it can parse into an Area object" )
 		end
+
+    context( 'from a hash' ) do
+			before( :each ) do
+				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
+																			 :altitude => 100,
+																			 :ceiling => 200,
+																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
+																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
+
+				@area = RCAP::Area.from_h( @original_area.to_h )
+			end
+
+      it_should_behave_like( "it can parse into an Area object" )
+    end
 	end
 
   context( 'when exported' ) do
