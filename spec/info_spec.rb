@@ -26,6 +26,29 @@ describe( RCAP::Info ) do
     it( 'should have no contact' )                  { @info.contact.should( be_nil )}
     it( 'should have no parameters' )               { @info.parameters.should( be_empty )}
 
+    shared_examples_for( 'it can parse into an Info object' ) do
+      it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
+      it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
+      it( 'should parse response_types correctly' ){ @info .response_types.should ==    @original_info.response_types }
+      it( 'should parse urgency correctly' ){        @info .urgency.should        ==    @original_info.urgency }
+      it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
+      it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
+      it( 'should parse audience correctly' ){       @info .audience.should       ==    @original_info.audience }
+      it( 'should parse effective correctly' ){      @info .effective.should( be_close( @original_info.effective, Rational( 1, 86400 )))}
+      it( 'should parse onset correctly' ){          @info .onset.should( be_close(     @original_info.onset, Rational( 1, 86400 )))}
+      it( 'should parse expires correctly' ){        @info .expires.should( be_close(   @original_info.expires, Rational( 1, 86400 )))}
+      it( 'should parse sender_name correctly' ){    @info .sender_name.should    ==    @original_info.sender_name }
+      it( 'should parse headline correctly' ){       @info .headline.should       ==    @original_info.headline }
+      it( 'should parse description correctly' ){    @info .description.should    ==    @original_info.description }
+      it( 'should parse instruction correctly' ){    @info .instruction.should    ==    @original_info.instruction }
+      it( 'should parse web correctly' ){            @info .web.should            ==    @original_info.web }
+      it( 'should parse contact correctly' ){        @info .contact.should        ==    @original_info.contact }
+      it( 'should parse event_codes correctly' ){    @info .event_codes.should    ==    @original_info.event_codes }
+      it( 'should parse parameters correctly' ){     @info .parameters.should     ==    @original_info.parameters }
+      it( 'should parse resources correctly' ){      @info .resources.should      ==    @original_info.resources }
+      it( 'should parse areas correctly' ){          @info .areas.should          ==    @original_info.areas }
+    end
+
     context( 'from XML' ) do
       before( :each ) do
         @original_info = RCAP::Info.new( :categories     => [ RCAP::Info::CATEGORY_GEO, RCAP::Info::CATEGORY_FIRE ],
@@ -56,26 +79,38 @@ describe( RCAP::Info ) do
 				@xml_document = REXML::Document.new( @xml_string )
         @info = RCAP::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::Info::XPATH ))
       end
-      it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
-      it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
-      it( 'should parse response_types correctly' ){ @info .response_types.should ==    @original_info.response_types }
-      it( 'should parse urgency correctly' ){        @info .urgency.should        ==    @original_info.urgency }
-      it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
-      it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
-      it( 'should parse audience correctly' ){       @info .audience.should       ==    @original_info.audience }
-      it( 'should parse effective correctly' ){      @info .effective.should( be_close( @original_info.effective, Rational( 1, 86400 )))}
-      it( 'should parse onset correctly' ){          @info .onset.should( be_close(     @original_info.onset, Rational( 1, 86400 )))}
-      it( 'should parse expires correctly' ){        @info .expires.should( be_close(   @original_info.expires, Rational( 1, 86400 )))}
-      it( 'should parse sender_name correctly' ){    @info .sender_name.should    ==    @original_info.sender_name }
-      it( 'should parse headline correctly' ){       @info .headline.should       ==    @original_info.headline }
-      it( 'should parse description correctly' ){    @info .description.should    ==    @original_info.description }
-      it( 'should parse instruction correctly' ){    @info .instruction.should    ==    @original_info.instruction }
-      it( 'should parse web correctly' ){            @info .web.should            ==    @original_info.web }
-      it( 'should parse contact correctly' ){        @info .contact.should        ==    @original_info.contact }
-      it( 'should parse event_codes correctly' ){    @info .event_codes.should    ==    @original_info.event_codes }
-      it( 'should parse parameters correctly' ){     @info .parameters.should     ==    @original_info.parameters }
-      it( 'should parse resources correctly' ){      @info .resources.should      ==    @original_info.resources }
-      it( 'should parse areas correctly' ){          @info .areas.should          ==    @original_info.areas }
+
+      it_should_behave_like( "it can parse into an Info object" )
+    end
+
+    context( 'from a hash' ) do
+      before( :each ) do
+        @original_info = RCAP::Info.new( :categories     => [ RCAP::Info::CATEGORY_GEO, RCAP::Info::CATEGORY_FIRE ],
+                                        :event          => 'Event Description',
+                                        :response_types => [ RCAP::Info::RESPONSE_TYPE_MONITOR, RCAP::Info::RESPONSE_TYPE_ASSESS ],
+                                        :urgency        => RCAP::Info::URGENCY_IMMEDIATE,
+                                        :severity       => RCAP::Info::SEVERITY_EXTREME,
+                                        :certainty      => RCAP::Info::CERTAINTY_OBSERVED,
+                                        :audience       => 'Audience',
+                                        :effective      => DateTime.now,
+                                        :onset          => DateTime.now + 1,
+                                        :expires        => DateTime.now + 2,
+                                        :sender_name    => 'Sender Name',
+                                        :headline       => 'Headline',
+                                        :description    => 'Description',
+                                        :instruction    => 'Instruction',
+                                        :web            => 'http://website',
+                                        :contact        => 'contact@address',
+                                        :event_codes => [ RCAP::EventCode.new( :name => 'name1', :value => 'value1' ),
+                                                          RCAP::EventCode.new( :name => 'name2', :value => 'value2' )],
+                                        :parameters => [ RCAP::Parameter.new( :name => 'name1', :value => 'value1' ),
+                                                         RCAP::Parameter.new( :name => 'name2', :value => 'value2' )],
+                                        :areas => [ RCAP::Area.new( :area_desc => 'Area1' ),
+                                          RCAP::Area.new( :area_desc => 'Area2' )]
+                                      )
+        @info = RCAP::Info.from_h( @original_info.to_h )
+      end
+      it_should_behave_like( "it can parse into an Info object" )
     end
   end
 

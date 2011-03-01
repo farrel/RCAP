@@ -386,5 +386,28 @@ EOF
         :parameters     => self.parameters.map{ |parameter| parameter.to_h },
         :areas          => self.areas.map{ |area| area.to_h }}
     end
+
+    def self.from_h( info_hash )
+      self.new( :language       => info_hash[ :language ],
+                :categories     => info_hash[ :categories ],
+                :event          => info_hash[ :event ],
+                :response_types => info_hash[ :response_types ],
+                :urgency        => info_hash[ :urgency ],
+                :severity       => info_hash[ :severity ],
+                :certainty      => info_hash[ :certainty ],
+                :effective      => info_hash[ :effective ],
+                :onset          => info_hash[ :onset ],
+                :expires        => info_hash[ :expires ],
+                :sender_name    => info_hash[ :sender_name ],
+                :headline       => info_hash[ :headline ],
+                :description    => info_hash[ :description ],
+                :instruction    => info_hash[ :instruction ],
+                :web            => info_hash[ :web ],
+                :contact        => info_hash[ :contact ],
+                :resources      => info_hash[ :resources ].map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
+                :event_codes    => info_hash[ :event_codes ].map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
+                :parameters     => info_hash[ :parameters ].map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
+                :areas          => info_hash[ :areas ].map{ |area_hash| RCAP::Area.from_h( area_hash )})
+    end
   end
 end
