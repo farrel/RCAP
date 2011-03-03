@@ -312,6 +312,13 @@ EOF
         :incidents   => alert_hash[ 'incidents' ],
         :infos       => alert_hash[ 'infos' ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
     end
+
+    def to_json
+      self.to_h.to_json
+    end
+
+    def self.from_json( json_string )
+      self.from_h( JSON.parse( json_string ))
     end
   end
 end
