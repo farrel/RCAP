@@ -79,8 +79,28 @@ describe( RCAP::Alert ) do
 				@yaml_string = @original_alert.to_yaml
 				@alert = RCAP::Alert.from_yaml( @yaml_string )
 			end
+
 			it_should_behave_like( "a successfully parsed alert" ) 
 		end
+
+    context( 'from a hash' ) do
+			before( :each ) do
+				@original_alert = RCAP::Alert.new( :sender => 'Sender',
+													 :status => RCAP::Alert::STATUS_TEST,
+													 :scope => RCAP::Alert::SCOPE_PUBLIC,
+													 :source => 'Source',
+													 :restriction => 'No Restriction',
+													 :addresses => [ 'Address 1', 'Address 2'],
+													 :code => 'Code',
+													 :note => 'Note',
+													 :references => [ RCAP::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::Alert.new( :sender => 'Sender2' ).to_reference ],
+													 :incidents => [ 'Incident1', 'Incident2' ],
+													 :infos => [ RCAP::Info.new, RCAP::Info.new ])
+				@alert = RCAP::Alert.from_h( @original_alert.to_h )
+			end
+
+			it_should_behave_like( "a successfully parsed alert" ) 
+    end
   end
 
   describe( 'is not valid if it' ) do

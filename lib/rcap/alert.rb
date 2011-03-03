@@ -193,19 +193,19 @@ EOF
 
     def self.from_xml_element( alert_xml_element ) # :nodoc:
       RCAP::Alert.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
-                      :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
-                      :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
-                      :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
-                      :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
-                      :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
-                      :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
-                      :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
-                      :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
-                      :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH ),
-                      :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
-                      :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
-                      :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
-                      :infos       => RCAP.xpath_match( alert_xml_element, RCAP::Info::XPATH ).map{ |element| RCAP::Info.from_xml_element( element )})
+                       :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
+                       :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
+                       :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
+                       :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
+                       :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
+                       :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
+                       :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
+                       :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
+                       :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH ),
+                       :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
+                       :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
+                       :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
+                       :infos       => RCAP.xpath_match( alert_xml_element, RCAP::Info::XPATH ).map{ |element| RCAP::Info.from_xml_element( element )})
     end
 
     def self.from_xml_document( xml_document ) # :nodoc:
@@ -274,6 +274,43 @@ EOF
         :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
         :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| RCAP::Info.from_yaml_data( info_yaml_data )}
       )
+    end
+
+    def to_h
+      {
+        :identifier  => self.identifier,
+        :sender      => self.sender,
+        :sent        => self.sent,
+        :status      => self.status,
+        :msg_type    => self.msg_type,
+        :source      => self.source,
+        :scope       => self.scope,
+        :restriction => self.restriction,
+        :addresses   => self.addresses,
+        :code        => self.code,
+        :note        => self.note,
+        :references  => self.references,
+        :incidents   => self.incidents,
+        :infos       => self.infos.map{ |info| info.to_h }
+      }
+    end
+
+    def self.from_h( alert_hash )
+      self.new(
+        :identifier  => alert_hash[ :identifier ],
+        :sender      => alert_hash[ :sender ],
+        :sent        => alert_hash[ :sent ],
+        :status      => alert_hash[ :status ],
+        :msg_type    => alert_hash[ :msg_type ],
+        :source      => alert_hash[ :source ],
+        :scope       => alert_hash[ :scope ],
+        :restriction => alert_hash[ :restriction ],
+        :addresses   => alert_hash[ :addresses ],
+        :code        => alert_hash[ :code ],
+        :note        => alert_hash[ :note ],
+        :references  => alert_hash[ :references ],
+        :incidents   => alert_hash[ :incidents ],
+        :infos       => alert_hash[ :infos ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
     end
   end
 end
