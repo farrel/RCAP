@@ -276,6 +276,7 @@ EOF
       )
     end
 
+    # Returns a Hash representation of an Alert object
     def to_h
       {
         'identifier'  => self.identifier,
@@ -295,6 +296,7 @@ EOF
       }
     end
 
+    # Initialises an Alert object from a Hash produced by Alert#to_h
     def self.from_h( alert_hash )
       self.new(
         :identifier  => alert_hash[ 'identifier' ],
@@ -313,10 +315,12 @@ EOF
         :infos       => alert_hash[ 'infos' ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
     end
 
+    # Returns a JSON string representation of an Alert object
     def to_json
       self.to_h.to_json
     end
 
+    # Initiialises an Alert object from a JSON string produced by Alert#to_json
     def self.from_json( json_string )
       self.from_h( JSON.parse( json_string ))
     end

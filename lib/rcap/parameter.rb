@@ -53,11 +53,11 @@ module RCAP
 			[ self.name, self.value ] == [ other.name, other.value ]
 		end
 
-    def to_h
+    def to_h # :nodoc:
       { @name => @value }
     end
 
-    def self.from_h( hash )
+    def self.from_h( hash ) # :nodoc:
       key = hash.keys.first
       self.new( :name => key, :value => hash[ key ]) 
     end

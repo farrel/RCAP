@@ -364,7 +364,7 @@ EOF
       )
     end
 
-    def to_h
+    def to_h # :nodoc:
       { 'language'       => self.language,
         'categories'     => self.categories,
         'event'          => self.event,
@@ -387,7 +387,7 @@ EOF
         'areas'          => self.areas.map{ |area| area.to_h }}
     end
 
-    def self.from_h( info_hash )
+    def self.from_h( info_hash ) # :nodoc:
       self.new( :language       => info_hash[ 'language' ],
                 :categories     => info_hash[ 'categories' ],
                 :event          => info_hash[ 'event' ],

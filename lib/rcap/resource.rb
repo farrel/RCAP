@@ -113,7 +113,7 @@ module RCAP
       )
     end
 
-    def to_h
+    def to_h # :nodoc:
       { :resource_desc => self.resource_desc,
         :mime_type     => self.mime_type,
         :size          => self.size,
@@ -122,7 +122,7 @@ module RCAP
         :digest        => self.digest }
     end
 
-    def self.from_h( resource_hash )
+    def self.from_h( resource_hash ) # :nodoc:
       self.new( resource_hash )
     end
   end

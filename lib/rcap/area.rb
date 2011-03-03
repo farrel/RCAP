@@ -127,7 +127,7 @@ EOF
        )
      end
 
-     def to_h
+     def to_h # :nodoc:
        { 'area_desc' => self.area_desc,
          'altitude'  => self.altitude,
          'ceiling'   => self.ceiling,
@@ -136,7 +136,7 @@ EOF
          'polygons'  => self.polygons.map{ |polygon| polygon.to_h }}
      end
 
-     def self.from_h( area_hash )
+     def self.from_h( area_hash ) # :nodoc:
        self.new(
         :area_desc => area_hash[ 'area_desc' ],
         :altitude  => area_hash[ 'altitude' ],

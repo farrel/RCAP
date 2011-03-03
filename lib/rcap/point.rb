@@ -37,11 +37,11 @@ module RCAP
 			[ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
 		end
 
-    def to_h
+    def to_h # :nodoc:
       { 'lattitude' => self.lattitude, 'longitude' => self.longitude }
     end
 
-    def self.from_h( point_hash )
+    def self.from_h( point_hash ) # :nodoc:
       self.new( :lattitude => point_hash[ 'lattitude' ], :longitude => point_hash[ 'longitude' ])
     end
   end

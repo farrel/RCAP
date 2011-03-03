@@ -67,11 +67,11 @@ module RCAP
                 :radius => radius )
     end
 
-    def to_h
+    def to_h # :nodoc:
       { 'radius' => self.radius, 'lattitude' => self.point.lattitude, 'longitude' => self.point.longitude }
     end
 
-    def self.from_h( circle_hash )
+    def self.from_h( circle_hash ) # :nodoc:
       self.new( :radius => circle_hash[ 'radius' ], :point => RCAP::Point.new( :lattitude => circle_hash[ 'lattitude' ], :longitude => circle_hash[ 'longitude' ]))
     end
   end
