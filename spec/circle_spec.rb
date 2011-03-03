@@ -80,7 +80,7 @@ describe( RCAP::Circle ) do
 
     context( 'to hash' ) do
       it( 'should be correct' ) do
-        @circle.to_h.should == { :radius => 10.5, :lattitude => 30, :longitude => 60 }
+        @circle.to_h.should == { 'radius' => 10.5, 'lattitude' => 30, 'longitude' => 60 }
       end
     end
   end

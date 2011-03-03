@@ -278,39 +278,40 @@ EOF
 
     def to_h
       {
-        :identifier  => self.identifier,
-        :sender      => self.sender,
-        :sent        => self.sent,
-        :status      => self.status,
-        :msg_type    => self.msg_type,
-        :source      => self.source,
-        :scope       => self.scope,
-        :restriction => self.restriction,
-        :addresses   => self.addresses,
-        :code        => self.code,
-        :note        => self.note,
-        :references  => self.references,
-        :incidents   => self.incidents,
-        :infos       => self.infos.map{ |info| info.to_h }
+        'identifier'  => self.identifier,
+        'sender'      => self.sender,
+        'sent'        => self.sent.to_s_for_cap,
+        'status'      => self.status,
+        'msg_type'    => self.msg_type,
+        'source'      => self.source,
+        'scope'       => self.scope,
+        'restriction' => self.restriction,
+        'addresses'   => self.addresses,
+        'code'        => self.code,
+        'note'        => self.note,
+        'references'  => self.references,
+        'incidents'   => self.incidents,
+        'infos'       => self.infos.map{ |info| info.to_h }
       }
     end
 
     def self.from_h( alert_hash )
       self.new(
-        :identifier  => alert_hash[ :identifier ],
-        :sender      => alert_hash[ :sender ],
-        :sent        => alert_hash[ :sent ],
-        :status      => alert_hash[ :status ],
-        :msg_type    => alert_hash[ :msg_type ],
-        :source      => alert_hash[ :source ],
-        :scope       => alert_hash[ :scope ],
-        :restriction => alert_hash[ :restriction ],
-        :addresses   => alert_hash[ :addresses ],
-        :code        => alert_hash[ :code ],
-        :note        => alert_hash[ :note ],
-        :references  => alert_hash[ :references ],
-        :incidents   => alert_hash[ :incidents ],
-        :infos       => alert_hash[ :infos ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
+        :identifier  => alert_hash[ 'identifier' ],
+        :sender      => alert_hash[ 'sender' ],
+        :sent        => DateTime.parse( alert_hash[ 'sent' ]),
+        :status      => alert_hash[ 'status' ],
+        :msg_type    => alert_hash[ 'msg_type' ],
+        :source      => alert_hash[ 'source' ],
+        :scope       => alert_hash[ 'scope' ],
+        :restriction => alert_hash[ 'restriction' ],
+        :addresses   => alert_hash[ 'addresses' ],
+        :code        => alert_hash[ 'code' ],
+        :note        => alert_hash[ 'note' ],
+        :references  => alert_hash[ 'references' ],
+        :incidents   => alert_hash[ 'incidents' ],
+        :infos       => alert_hash[ 'infos' ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
+    end
     end
   end
 end

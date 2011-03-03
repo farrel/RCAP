@@ -61,7 +61,7 @@ describe( RCAP::Polygon ) do
 
     context( 'to a hash' ) do
       it( 'should export correctly' ) do
-        @polygon.to_h.should == { :points => @polygon.points.map{ |point| point.to_h }}
+        @polygon.to_h.should == { 'points' => @polygon.points.map{ |point| point.to_h }}
       end
     end
   end

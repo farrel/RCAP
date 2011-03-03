@@ -183,87 +183,87 @@ describe( RCAP::Info ) do
       end
 
       it( 'should export the language correctly' ) do
-        @info_hash[ :language ].should == @info.language
+        @info_hash[ 'language' ].should == @info.language
       end
 
       it( 'should export the categories' ) do
-        @info_hash[ :categories ].should == @info.categories
+        @info_hash[ 'categories' ].should == @info.categories
       end
       
       it( 'should export the event' ) do
-        @info_hash[ :event ].should == @info.event
+        @info_hash[ 'event' ].should == @info.event
       end
 
       it( 'should export the response types' ) do
-        @info_hash[ :response_types ].should == @info.response_types
+        @info_hash[ 'response_types' ].should == @info.response_types
       end
 
       it( 'should export the urgency' ) do
-        @info_hash[  :urgency ].should == @info.urgency
+        @info_hash[  'urgency' ].should == @info.urgency
       end
 
       it( 'should export the severity' ) do
-        @info_hash[  :severity ].should == @info.severity
+        @info_hash[  'severity' ].should == @info.severity
       end
 
       it( 'should export the certainty' ) do
-        @info_hash[  :certainty ].should == @info.certainty
+        @info_hash[  'certainty' ].should == @info.certainty
       end
 
       it( 'should export the audience' ) do
-        @info_hash[  :audience ].should == @info.audience
+        @info_hash[  'audience' ].should == @info.audience
       end
 
       it( 'should export the effective date' ) do
-        @info_hash[ :effective ].should == @info.effective
+        @info_hash[ 'effective' ].should == @info.effective
       end
 
       it( 'should export the onset date' ) do
-        @info_hash[ :onset ].should == @info.onset
+        @info_hash[ 'onset' ].should == @info.onset
       end
 
       it( 'should export the expires date' ) do
-        @info_hash[ :expires ].should == @info.expires
+        @info_hash[ 'expires' ].should == @info.expires
       end
 
        it( 'should export the sender name' ) do
-         @info_hash[ :sender_name ].should == @info.sender_name
+         @info_hash[ 'sender_name' ].should == @info.sender_name
        end
 
        it( 'should export the headline' ) do
-         @info_hash[ :headline ].should == @info.headline
+         @info_hash[ 'headline' ].should == @info.headline
        end
 
        it( 'should export the description' ) do
-         @info_hash[ :description ].should == @info.description
+         @info_hash[ 'description' ].should == @info.description
        end
 
        it( 'should export the instruction' ) do
-         @info_hash[ :instruction ].should == @info.instruction
+         @info_hash[ 'instruction' ].should == @info.instruction
        end
 
        it( 'should export the web address ' ) do
-         @info_hash[ :web ].should == @info.web
+         @info_hash[ 'web' ].should == @info.web
        end
 
        it( 'should export the contact' ) do
-         @info_hash[ :contact ].should == @info.contact
+         @info_hash[ 'contact' ].should == @info.contact
        end
 
        it( 'should export the event codes' ) do
-         @info_hash[ :event_codes ].should == @info.event_codes.map{ |event_code| event_code.to_h }
+         @info_hash[ 'event_codes' ].should == @info.event_codes.map{ |event_code| event_code.to_h }
        end
 
        it( 'should export the parameters ' ) do
-         @info_hash[ :parameters ].should == @info.parameters.map{ |parameter| parameter.to_h }
+         @info_hash[ 'parameters' ].should == @info.parameters.map{ |parameter| parameter.to_h }
        end
 
        it( 'should export the resources ' ) do
-         @info_hash[ :resources ].should == @info.resources.map{ |resource| resource.to_h }  
+         @info_hash[ 'resources' ].should == @info.resources.map{ |resource| resource.to_h }  
        end
 
        it( 'should export the areas' ) do
-         @info_hash[ :areas ].should == @info.areas.map{ |area| area.to_h }      
+         @info_hash[ 'areas' ].should == @info.areas.map{ |area| area.to_h }      
        end
     end
   end

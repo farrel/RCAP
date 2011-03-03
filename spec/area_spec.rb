@@ -93,27 +93,27 @@ describe( RCAP::Area ) do
       end
 
       it( 'should export the area description correctly' ) do
-        @area_hash[ :area_desc ].should == @area.area_desc 
+        @area_hash[ 'area_desc' ].should == @area.area_desc 
       end
 
       it( 'should export the altitude correctly' ) do
-        @area_hash[ :altitude ].should == @area.altitude 
+        @area_hash[ 'altitude' ].should == @area.altitude 
       end
 
       it( 'should set the ceiling correctly' ) do
-        @area_hash[ :ceiling ].should == @area.ceiling
+        @area_hash[ 'ceiling' ].should == @area.ceiling
       end
 
       it( 'should export the circles correctly' ) do
-        @area_hash[ :circles ].should == @area.circles.map{ |circle| circle.to_h }
+        @area_hash[ 'circles' ].should == @area.circles.map{ |circle| circle.to_h }
       end
 
       it( 'should export the geocodes correctly' ) do
-        @area_hash[ :geocodes ].should == @area.geocodes.map{ |geocode| geocode.to_h }
+        @area_hash[ 'geocodes' ].should == @area.geocodes.map{ |geocode| geocode.to_h }
       end
 
       it( 'should export the polygons correctly' ) do
-        @area_hash[ :polygons ].should == @area.polygons.map{ |polygon| polygon.to_h }
+        @area_hash[ 'polygons' ].should == @area.polygons.map{ |polygon| polygon.to_h }
       end
     end
   end

@@ -65,11 +65,11 @@ module RCAP
     end
 
     def to_h
-      { :points => self.points.map{ |point| point.to_h }}
+      { 'points' => self.points.map{ |point| point.to_h }}
     end
 
     def self.from_h( polygon_hash )
-      self.new( :points => polygon_hash[ :points ].map{ |point_hash| Point.from_h( point_hash )})
+      self.new( :points => polygon_hash[ 'points' ].map{ |point_hash| Point.from_h( point_hash )})
     end
   end
 end
