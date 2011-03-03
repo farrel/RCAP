@@ -1,5 +1,10 @@
 = Change Log
 
+== 0.4 - 6th March 2011
+
+* Implemented Hash generation and parsing
+* Implemented JSON generation and parsing
+
 == 0.3 - 26th November 2009
 
 * Bugfix release

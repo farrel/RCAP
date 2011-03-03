@@ -4,7 +4,7 @@ require 'spec/rake/spectask'
 
 SPEC = Gem::Specification.new do |gem|
   gem.name = "rcap"
-  gem.version = "0.3"
+  gem.version = "0.4"
   gem.authors = [ "Farrel Lifson" ]
   gem.email = "farrel.lifson@aimred.com"
   gem.homepage = "http://www.aimred.com/projects/rcap"
@@ -15,6 +15,7 @@ SPEC = Gem::Specification.new do |gem|
   gem.has_rdoc = true
   gem.extra_rdoc_files = [ "README.rdoc","CHANGELOG.rdoc" ]
   gem.add_dependency( 'assistance' )
+  gem.add_dependency( 'json' )
   gem.add_dependency( 'uuidtools', '>= 2.0.0' )
   gem.description = "A Ruby API providing parsing and generation of CAP(Common Alerting Protocol) messages."
   gem.test_files = Dir.glob("spec/*.rb")

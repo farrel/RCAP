@@ -8,7 +8,7 @@ RCAP currently supports only CAP Version 1.1.
 
 == Version
 
-0.3
+0.4
 
 == Dependencies
 
@@ -16,6 +16,7 @@ RCAP depends on the following gems
 
 * {Assistance}[http://assistance.rubyforge.org]
 * {UUIDTools}[http://uuidtools.rubyforge.org]
+* {JSON}[http://json.rubyforge.org]
 
 RCAP uses the REXML API, included in Ruby, to parse and generate XML.
 
@@ -31,7 +32,7 @@ The gem is also available for download and manual installtion at http://www.aimr
 
 * The RCAP project page can be found at http://www.aimred.com/projects/rcap 
 * The RCAP API docs can be fount at http://www.aimred.com/projects/rcap/api
-* A public git repository can be found at http:///www.aimred.com/git/rcap.git 
+* A public git repository can be found at git://github.com/farrel/RCAP.git 
  
 == Usage
 
