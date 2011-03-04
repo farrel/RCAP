@@ -10,25 +10,25 @@ module RCAP
   class Alert
     include Validation
 
-    STATUS_ACTUAL   = "Actual"   # :nodoc:
-    STATUS_EXERCISE = "Exercise" # :nodoc:
-    STATUS_SYSTEM   = "System"   # :nodoc:
-    STATUS_TEST     = "Test"     # :nodoc:
-    STATUS_DRAFT    = "Draft"    # :nodoc:
+    STATUS_ACTUAL   = "Actual"   
+    STATUS_EXERCISE = "Exercise" 
+    STATUS_SYSTEM   = "System"   
+    STATUS_TEST     = "Test"     
+    STATUS_DRAFT    = "Draft"    
     # Valid values for status
     VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ] 
 
-    MSG_TYPE_ALERT  = "Alert"  # :nodoc:
-    MSG_TYPE_UPDATE = "Update" # :nodoc:
-    MSG_TYPE_CANCEL = "Cancel" # :nodoc:
-    MSG_TYPE_ACK    = "Ack"    # :nodoc:
-    MSG_TYPE_ERROR  = "Error"  # :nodoc:
+    MSG_TYPE_ALERT  = "Alert"  
+    MSG_TYPE_UPDATE = "Update" 
+    MSG_TYPE_CANCEL = "Cancel" 
+    MSG_TYPE_ACK    = "Ack"    
+    MSG_TYPE_ERROR  = "Error"  
     # Valid values for msg_type
     VALID_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
 
-    SCOPE_PUBLIC     = "Public"     # :nodoc:
-    SCOPE_RESTRICTED = "Restricted" # :nodoc:
-    SCOPE_PRIVATE    = "Private"    # :nodoc:
+    SCOPE_PUBLIC     = "Public"     
+    SCOPE_RESTRICTED = "Restricted" 
+    SCOPE_PRIVATE    = "Private"    
     # Valid values for scope
     VALID_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
 
@@ -192,20 +192,20 @@ EOF
     end
 
     def self.from_xml_element( alert_xml_element ) # :nodoc:
-      RCAP::Alert.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
-                       :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
-                       :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
-                       :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
-                       :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
-                       :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
-                       :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
-                       :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
-                       :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
-                       :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH ),
-                       :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
-                       :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
-                       :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
-                       :infos       => RCAP.xpath_match( alert_xml_element, RCAP::Info::XPATH ).map{ |element| RCAP::Info.from_xml_element( element )})
+      self.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
+                :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
+                :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
+                :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
+                :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
+                :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
+                :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
+                :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
+                :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
+                :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH ),
+                :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
+                :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
+                :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
+                :infos       => RCAP.xpath_match( alert_xml_element, RCAP::Info::XPATH ).map{ |element| RCAP::Info.from_xml_element( element )})
     end
 
     def self.from_xml_document( xml_document ) # :nodoc:
