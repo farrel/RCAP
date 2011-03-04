@@ -313,7 +313,7 @@ EOF
 
       parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
-      RCAP.attribute_values_to_yaml_hash( 
+      RCAP.attribute_values_to_hash( 
         [ LANGUAGE_YAML,       self.language ],
         [ CATEGORIES_YAML,     categories_yaml ],
         [ EVENT_YAML,          self.event ],
@@ -365,26 +365,26 @@ EOF
     end
 
     def to_h # :nodoc:
-      { 'language'       => self.language,
-        'categories'     => self.categories,
-        'event'          => self.event,
-        'response_types' => self.response_types,
-        'urgency'        => self.urgency,
-        'severity'       => self.severity,
-        'certainty'      => self.certainty,
-        'effective'      => self.effective,
-        'onset'          => self.onset,
-        'expires'        => self.expires,
-        'sender_name'    => self.sender_name,
-        'headline'       => self.headline,
-        'description'    => self.description,
-        'instruction'    => self.instruction,
-        'web'            => self.web,
-        'contact'        => self.contact,
-        'resources'      => self.resources.map{ |resource| resource.to_h },
-        'event_codes'    => self.event_codes.map{ |event_code| event_code.to_h },
-        'parameters'     => self.parameters.map{ |parameter| parameter.to_h },
-        'areas'          => self.areas.map{ |area| area.to_h }}
+      RCAP.attribute_values_to_hash( [ 'language',       self.language ],
+                                     [ 'categories',     self.categories ],
+                                     [ 'event',          self.event ],
+                                     [ 'response_types', self.response_types ],
+                                     [ 'urgency',        self.urgency ],
+                                     [ 'severity',       self.severity ],
+                                     [ 'certainty',      self.certainty ],
+                                     [ 'effective',      self.effective ],
+                                     [ 'onset',          self.onset ],
+                                     [ 'expires',        self.expires ],
+                                     [ 'sender_name',    self.sender_name ],
+                                     [ 'headline',       self.headline ],
+                                     [ 'description',    self.description ],
+                                     [ 'instruction',    self.instruction ],
+                                     [ 'web',            self.web ],
+                                     [ 'contact',        self.contact ],
+                                     [ 'resources',      self.resources.map{ |resource| resource.to_h } ],
+                                     [ 'event_codes',    self.event_codes.map{ |event_code| event_code.to_h } ],
+                                     [ 'parameters',     self.parameters.map{ |parameter| parameter.to_h } ],
+                                     [ 'areas',          self.areas.map{ |area| area.to_h }])
     end
 
     def self.from_h( info_hash ) # :nodoc:
@@ -404,10 +404,10 @@ EOF
                 :instruction    => info_hash[ 'instruction' ],
                 :web            => info_hash[ 'web' ],
                 :contact        => info_hash[ 'contact' ],
-                :resources      => info_hash[ 'resources' ].map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
-                :event_codes    => info_hash[ 'event_codes' ].map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
-                :parameters     => info_hash[ 'parameters' ].map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
-                :areas          => info_hash[ 'areas' ].map{ |area_hash| RCAP::Area.from_h( area_hash )})
+                :resources      => Array( info_hash[ 'resources' ]).map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
+                :event_codes    => Array( info_hash[ 'event_codes' ]).map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
+                :parameters     => Array( info_hash[ 'parameters' ]).map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
+                :areas          => Array( info_hash[ 'areas' ]).map{ |area_hash| RCAP::Area.from_h( area_hash )})
     end
   end
 end

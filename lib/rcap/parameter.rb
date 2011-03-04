@@ -54,7 +54,8 @@ module RCAP
 		end
 
     def to_h # :nodoc:
-      { @name => @value }
+      RCAP.attribute_values_to_hash(
+      [ @name, @value ])
     end
 
     def self.from_h( hash ) # :nodoc:

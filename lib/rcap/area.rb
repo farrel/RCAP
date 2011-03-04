@@ -106,7 +106,7 @@ EOF
        circles_yaml = self.circles.map{ |circle| [[ circle.point.lattitude, circle.point.longitude ], circle.radius ]}
        def circles_yaml.to_yaml_style; :inline; end
 
-       RCAP.attribute_values_to_yaml_hash(
+       RCAP.attribute_values_to_hash(
          [ AREA_DESC_YAML,  self.area_desc ],
          [ ALTITUDE_YAML,   self.altitude ],
          [ CEILING_YAML,    self.ceiling ],

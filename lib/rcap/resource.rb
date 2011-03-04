@@ -92,7 +92,7 @@ module RCAP
     DIGEST_YAML        = "Digest"               # :nodoc:
 
     def to_yaml( options ) # :nodoc:
-      RCAP.attribute_values_to_yaml_hash(
+      RCAP.attribute_values_to_hash(
         [ RESOURCE_DESC_YAML, self.resource_desc ],
         [ URI_YAML,           self.uri ],
         [ MIME_TYPE_YAML,     self.mime_type ],

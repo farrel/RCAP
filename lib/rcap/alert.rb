@@ -234,7 +234,7 @@ EOF
 
     # Returns a string containing the YAML representation of the alert.
     def to_yaml( options = {} )
-      RCAP.attribute_values_to_yaml_hash(
+      RCAP.attribute_values_to_hash(
         [ IDENTIFIER_YAML,    self.identifier ],
         [ SENDER_YAML,        self.sender ],
         [ SENT_YAML,          self.sent ],
@@ -278,22 +278,20 @@ EOF
 
     # Returns a Hash representation of an Alert object
     def to_h
-      {
-        'identifier'  => self.identifier,
-        'sender'      => self.sender,
-        'sent'        => self.sent.to_s_for_cap,
-        'status'      => self.status,
-        'msg_type'    => self.msg_type,
-        'source'      => self.source,
-        'scope'       => self.scope,
-        'restriction' => self.restriction,
-        'addresses'   => self.addresses,
-        'code'        => self.code,
-        'note'        => self.note,
-        'references'  => self.references,
-        'incidents'   => self.incidents,
-        'infos'       => self.infos.map{ |info| info.to_h }
-      }
+      RCAP.attribute_values_to_hash([ 'identifier',   self.identifier ],
+                                    [ 'sender',       self.sender ],
+                                    [ 'sent',         self.sent.to_s_for_cap ],
+                                    [ 'status',       self.status ],
+                                    [ 'msg_type',     self.msg_type ],
+                                    [ 'source',       self.source ],
+                                    [ 'scope',        self.scope ],
+                                    [ 'restriction',  self.restriction ],
+                                    [ 'addresses',    self.addresses ],
+                                    [ 'code',         self.code ],
+                                    [ 'note',         self.note ],
+                                    [ 'references',   self.references ],
+                                    [ 'incidents',    self.incidents ],
+                                    [ 'infos',        self.infos.map{ |info| info.to_h  }])
     end
 
     # Initialises an Alert object from a Hash produced by Alert#to_h
@@ -312,7 +310,7 @@ EOF
         :note        => alert_hash[ 'note' ],
         :references  => alert_hash[ 'references' ],
         :incidents   => alert_hash[ 'incidents' ],
-        :infos       => alert_hash[ 'infos' ].map{ |info_hash| RCAP::Info.from_h( info_hash )})
+        :infos       => Array( alert_hash[ 'infos' ]).map{ |info_hash| RCAP::Info.from_h( info_hash )})
     end
 
     # Returns a JSON string representation of an Alert object
