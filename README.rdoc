@@ -23,7 +23,7 @@ RCAP uses the REXML API, included in Ruby, to parse and generate XML.
 == Installation
 
 RCAP is distributed as a Ruby gem and is available from {Gemcutter}[http://gemcutter.org]. If you have Gemcutter set as a source of your gems then RCAP can be installed from the command line
- 
+
  gem install rcap
 
 The gem is also available for download and manual installtion at http://www.aimred.com/gems .
@@ -33,7 +33,7 @@ The gem is also available for download and manual installtion at http://www.aimr
 * The RCAP project page can be found at http://www.aimred.com/projects/rcap 
 * The RCAP API docs can be fount at http://www.aimred.com/projects/rcap/api
 * A public git repository can be found at git://github.com/farrel/RCAP.git 
- 
+
 == Usage
 
 To include RCAP into your application add the following require
@@ -137,6 +137,32 @@ will produce the following YAML document
 
 Note: If you use Ruby 1.8 the order of the attributes is jumbled due to hashes being unorderd (Ruby 1.9 implements ordered hashes). This does not affect the ability to parse documents generated from RCAP::Alert#to_yaml, it just makes things the output slightly messy. 
 
+=== To JSON
+
+JSON(JavaScript Object Notation) is a text serialization format that can be easily loaded in a JavaScript environment.
+
+ alert.to_json
+
+will produce the following JSON string
+ 
+ {"identifier":"0eb97e40-195b-437b-9a01-55fe89691def",
+  "sender":"cape_town_disaster_relief@capetown.municipal.za",
+  "sent":"2011-03-04T15:58:01+02:00",
+  "status":"Actual",
+  "msg_type":"Alert",
+  "scope":"Public",
+  "infos":[ 
+    {"language":"en-ZA",
+     "categories":["Transport","Fire"],
+     "event":"Liquid Petroleoum Tanker Fire",
+     "urgency":"Immediate",
+     "severity":"Severe",
+     "certainty":"Observed",
+     "headline":"LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY",
+     "description":"A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
+                    after the R300 interchange. Municipal fire fighting crews have been dispatched.
+                    Traffic control officers are on the scene and have diverted traffic onto \nalternate routes."}]}
+
 === Parsing an Alert From An External Source
 
 ==== From XML
@@ -153,6 +179,12 @@ Alert messgaes can be read in from text files containing data formatted in YAML 
 
  alert = RCAP::Alert.from_yaml( yaml_string )
 
+==== From JSON
+
+An Alert can also be initialised from a JSON string produced by Alert#to_json
+
+ alert = RCAP::Alert.from_json( json_string )
+
 === Validating an alert
 
 The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
@@ -163,18 +195,19 @@ The RCAP API aims to codify as many of the rules of the CAP XML format into vali
                   :urgency    => Info::URGENCY_IMMEDIATE,
                   :severity   => nil,                   # Severity is not assigned
                   :certainty  => 'Unknown Certainty' )  # Certainty is assigned in incorrect value
- puts info.valid?
- puts info.errors.full_messages
+
+ puts "Is info valid: #{ info.valid? }"
+ info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
 
 Will produce the folling output:
 
- false
- severity is not present
- certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
+ Is info valid: false
+ Error: severity is not present
+ Error: certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
 
 All RCAP classes include the Validation module.
 
-A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 150 tests.
+A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 250 tests.
 
 === DateTime and Time
 
