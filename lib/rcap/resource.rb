@@ -113,17 +113,31 @@ module RCAP
       )
     end
 
+    RESOURCE_DESC_KEY = 'resource_desc' # :nodoc:
+    URI_KEY           = 'uri'           # :nodoc:
+    MIME_TYPE_KEY     = 'mime_type'     # :nodoc:    
+    DEREF_URI_KEY     = 'deref_uri'     # :nodoc:     
+    SIZE_KEY          = 'size'          # :nodoc:
+    DIGEST_KEY        = 'digest'        # :nodoc:
+
     def to_h # :nodoc:
-      { :resource_desc => self.resource_desc,
-        :mime_type     => self.mime_type,
-        :size          => self.size,
-        :uri           => self.uri,
-        :deref_uri     => self.deref_uri,
-        :digest        => self.digest }
+      RCAP.attribute_values_to_hash(
+        [ RESOURCE_DESC_KEY, self.resource_desc ],
+        [ URI_KEY,           self.uri],
+        [ MIME_TYPE_KEY,     self.mime_type],
+        [ DEREF_URI_KEY,     self.deref_uri],
+        [ SIZE_KEY,          self.size ],
+        [ DIGEST_KEY,        self.digest ])
     end
 
     def self.from_h( resource_hash ) # :nodoc:
-      self.new( resource_hash )
+      self.new(
+        :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
+        :uri => resource_hash[ URI_KEY ],
+        :mime_type => resource_hash[ MIME_TYPE_KEY ],
+        :deref_uri => resource_hash[ DEREF_URI_KEY ],
+        :size => resource_hash[ SIZE_KEY ],
+        :digest => resource_hash[ DIGEST_KEY ])
     end
   end
 end

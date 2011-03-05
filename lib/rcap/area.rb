@@ -127,23 +127,30 @@ EOF
        )
      end
 
+     AREA_DESC_KEY = 'area_desc'  # :nodoc:
+     ALTITUDE_KEY  = 'altitude'   # :nodoc:
+     CEILING_KEY   = 'ceiling'    # :nodoc:
+     CIRCLES_KEY   = 'circles'    # :nodoc:
+     GEOCODES_KEY  = 'geocodes'   # :nodoc:
+     POLYGONS_KEY  = 'polygons'   # :nodoc:
+
      def to_h # :nodoc:
-       { 'area_desc' => self.area_desc,
-         'altitude'  => self.altitude,
-         'ceiling'   => self.ceiling,
-         'circles'   => self.circles.map{ |circle| circle.to_h },
-         'geocodes'  => self.geocodes.map{ |geocode| geocode.to_h },
-         'polygons'  => self.polygons.map{ |polygon| polygon.to_h }}
+       { AREA_DESC_KEY => self.area_desc,
+         ALTITUDE_KEY  => self.altitude,
+         CEILING_KEY   => self.ceiling,
+         CIRCLES_KEY   => self.circles.map{ |circle| circle.to_h },
+         GEOCODES_KEY  => self.geocodes.map{ |geocode| geocode.to_h },
+         POLYGONS_KEY  => self.polygons.map{ |polygon| polygon.to_h }}
      end
 
      def self.from_h( area_hash ) # :nodoc:
        self.new(
-        :area_desc => area_hash[ 'area_desc' ],
-        :altitude  => area_hash[ 'altitude' ],
-        :ceiling   => area_hash[ 'ceiling' ],
-        :circles   => area_hash[ 'circles' ].map{ |circle_hash| RCAP::Circle.from_h( circle_hash )},
-        :geocodes  => area_hash[ 'geocodes' ].map{ |geocode_hash| RCAP::Geocode.from_h( geocode_hash )},
-        :polygons  => area_hash[ 'polygons' ].map{ |polygon_hash| RCAP::Polygon.from_h( polygon_hash )})
+        :area_desc => area_hash[ AREA_DESC_KEY ],
+        :altitude  => area_hash[ ALTITUDE_KEY ],
+        :ceiling   => area_hash[ CEILING_KEY ],
+        :circles   => area_hash[ CIRCLES_KEY ].map{ |circle_hash| RCAP::Circle.from_h( circle_hash )},
+        :geocodes  => area_hash[ GEOCODES_KEY ].map{ |geocode_hash| RCAP::Geocode.from_h( geocode_hash )},
+        :polygons  => area_hash[ POLYGONS_KEY ].map{ |polygon_hash| RCAP::Polygon.from_h( polygon_hash )})
      end
   end
 end

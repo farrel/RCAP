@@ -39,7 +39,7 @@ describe( RCAP::Point ) do
 
     context( 'to hash' ) do
       it( 'should export correctly' ) do
-        @point.to_h.should == { 'lattitude' => 1, 'longitude' => 1 }
+        @point.to_h.should == { RCAP::Point::LATTITUDE_KEY => 1, RCAP::Point::LONGITUDE_KEY => 1 }
       end
     end
   end

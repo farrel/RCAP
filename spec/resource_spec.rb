@@ -115,27 +115,27 @@ describe( RCAP::Resource ) do
       end
 
       it( 'should set the resource description' ) do
-        @resource_hash[ :resource_desc ].should == @resource.resource_desc
+        @resource_hash[ RCAP::Resource::RESOURCE_DESC_KEY ].should == @resource.resource_desc
       end
 
       it( 'should set the mime type' ) do
-        @resource_hash[ :mime_type ].should == @resource.mime_type
+        @resource_hash[ RCAP::Resource::MIME_TYPE_KEY ].should == @resource.mime_type
       end
 
       it( 'should set the size' ) do
-        @resource_hash[ :size ].should == @resource.size
+        @resource_hash[ RCAP::Resource::SIZE_KEY ].should == @resource.size
       end
 
       it( 'should set the URI' ) do
-        @resource_hash[ :uri ].should == @resource.uri
+        @resource_hash[ RCAP::Resource::URI_KEY ].should == @resource.uri
       end
 
       it( 'should set the dereferenced URI' ) do
-        @resource_hash[ :deref_uri ].should == @resource.deref_uri
+        @resource_hash[ RCAP::Resource::DEREF_URI_KEY ].should == @resource.deref_uri
       end 
 
       it( 'should set the digest' ) do
-        @resource_hash[ :digest ].should == @resource.digest
+        @resource_hash[ RCAP::Resource::DIGEST_KEY ].should == @resource.digest
       end 
     end
   end
