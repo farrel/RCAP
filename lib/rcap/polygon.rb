@@ -64,12 +64,14 @@ module RCAP
       )
     end
 
+    POINTS_KEY  = 'points' # :nodoc:
+
     def to_h # :nodoc:
-      { 'points' => self.points.map{ |point| point.to_h }}
+      { POINTS_KEY => self.points.map{ |point| point.to_h }}
     end
 
     def self.from_h( polygon_hash ) # :nodoc:
-      self.new( :points => polygon_hash[ 'points' ].map{ |point_hash| Point.from_h( point_hash )})
+      self.new( :points => polygon_hash[ POINTS_KEY ].map{ |point_hash| Point.from_h( point_hash )})
     end
   end
 end

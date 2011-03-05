@@ -37,14 +37,17 @@ module RCAP
 			[ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
 		end
 
+    LATTITUDE_KEY = 'lattitude_hash'  # :nodoc:
+    LONGITUDE_KEY = 'longitude_hash'  # :nodoc:
+
     def to_h # :nodoc:
       RCAP.attribute_values_to_hash(
-        [ 'lattitude', self.lattitude ],
-        [ 'longitude', self.longitude ])
+        [ LATTITUDE_KEY, self.lattitude ],
+        [ LONGITUDE_KEY, self.longitude ])
     end
 
     def self.from_h( point_hash ) # :nodoc:
-      self.new( :lattitude => point_hash[ 'lattitude' ], :longitude => point_hash[ 'longitude' ])
+      self.new( :lattitude => point_hash[ LATTITUDE_KEY ], :longitude => point_hash[ LONGITUDE_KEY ])
     end
   end
 end

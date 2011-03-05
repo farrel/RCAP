@@ -21,19 +21,19 @@ describe( RCAP::Alert ) do
     it( 'should not have any infos' ){ @alert.infos.should( be_empty )}
 
 		shared_examples_for( "a successfully parsed alert" ) do
-			it( 'should parse identifier correctly' ){ @alert.identifier.should == @original_alert.identifier }
-			it( 'should parse sender correctly' ){ @alert.sender.should == @original_alert.sender }
-			it( 'should parse sent correctly' ){ @alert.sent.should( be_close( @original_alert.sent, Rational( 1, 86400 )))}
-			it( 'should parse status correctly' ){ @alert.status.should == @original_alert.status }
-			it( 'should parse msg_type correctly' ){ @alert.msg_type.should == @original_alert.msg_type }
-			it( 'should parse source correctly' ){ @alert.source.should == @original_alert.source }
-			it( 'should parse scope correctly' ){ @alert.scope.should == @original_alert.scope }
+			it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
+			it( 'should parse sender correctly' )     { @alert.sender.should      == @original_alert.sender }
+			it( 'should parse sent correctly' )       { @alert.sent.should( be_close( @original_alert.sent, Rational( 1, 86400 )))}
+			it( 'should parse status correctly' )     { @alert.status.should      == @original_alert.status }
+			it( 'should parse msg_type correctly' )   { @alert.msg_type.should    == @original_alert.msg_type }
+			it( 'should parse source correctly' )     { @alert.source.should      == @original_alert.source }
+			it( 'should parse scope correctly' )      { @alert.scope.should       == @original_alert.scope }
 			it( 'should parse restriction correctly' ){ @alert.restriction.should == @original_alert.restriction }
-			it( 'should parse addresses correctly' ){ @alert.addresses.should == @original_alert.addresses }
-			it( 'should parse code correctly' ){ @alert.code.should == @original_alert.code }
-			it( 'should parse note correctly' ){ @alert.note.should == @original_alert.note }
-			it( 'should parse references correctly' ){ @alert.references.should == @original_alert.references }
-			it( 'should parse incidents correctly' ){ @alert.incidents.should == @original_alert.incidents }
+			it( 'should parse addresses correctly' )  { @alert.addresses.should   == @original_alert.addresses }
+			it( 'should parse code correctly' )       { @alert.code.should        == @original_alert.code }
+			it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
+			it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
+			it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
 			it( 'should parse infos correctly' ) do 
 				@alert.infos.size.should == @original_alert.infos.size 
 				@alert.infos.each{ |info| info.class.should == RCAP::Info }

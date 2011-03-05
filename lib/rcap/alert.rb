@@ -276,41 +276,56 @@ EOF
       )
     end
 
+    IDENTIFIER_KEY  = 'identifier' 
+    SENDER_KEY      = 'sender'     
+    SENT_KEY        = 'sent'       
+    STATUS_KEY      = 'status'     
+    MSG_TYPE_KEY    = 'msg_type'   
+    SOURCE_KEY      = 'source'     
+    SCOPE_KEY       = 'scope'      
+    RESTRICTION_KEY = 'restriction'
+    ADDRESSES_KEY   = 'addresses'  
+    CODE_KEY        = 'code'       
+    NOTE_KEY        = 'note'       
+    REFERENCES_KEY  = 'references' 
+    INCIDENTS_KEY   = 'incidents'  
+    INFOS_KEY       = 'infos'      
+
     # Returns a Hash representation of an Alert object
     def to_h
-      RCAP.attribute_values_to_hash([ 'identifier',   self.identifier ],
-                                    [ 'sender',       self.sender ],
-                                    [ 'sent',         self.sent.to_s_for_cap ],
-                                    [ 'status',       self.status ],
-                                    [ 'msg_type',     self.msg_type ],
-                                    [ 'source',       self.source ],
-                                    [ 'scope',        self.scope ],
-                                    [ 'restriction',  self.restriction ],
-                                    [ 'addresses',    self.addresses ],
-                                    [ 'code',         self.code ],
-                                    [ 'note',         self.note ],
-                                    [ 'references',   self.references ],
-                                    [ 'incidents',    self.incidents ],
-                                    [ 'infos',        self.infos.map{ |info| info.to_h  }])
+      RCAP.attribute_values_to_hash([ IDENTIFIER_KEY,   self.identifier ],
+                                    [ SENDER_KEY,       self.sender ],
+                                    [ SENT_KEY,         self.sent.to_s_for_cap ],
+                                    [ STATUS_KEY,       self.status ],
+                                    [ MSG_TYPE_KEY,     self.msg_type ],
+                                    [ SOURCE_KEY,       self.source ],
+                                    [ SCOPE_KEY,        self.scope ],
+                                    [ RESTRICTION_KEY,  self.restriction ],
+                                    [ ADDRESSES_KEY,    self.addresses ],
+                                    [ CODE_KEY,         self.code ],
+                                    [ NOTE_KEY,         self.note ],
+                                    [ REFERENCES_KEY,   self.references ],
+                                    [ INCIDENTS_KEY,    self.incidents ],
+                                    [ INFOS_KEY,        self.infos.map{ |info| info.to_h  }])
     end
 
     # Initialises an Alert object from a Hash produced by Alert#to_h
     def self.from_h( alert_hash )
       self.new(
-        :identifier  => alert_hash[ 'identifier' ],
-        :sender      => alert_hash[ 'sender' ],
-        :sent        => DateTime.parse( alert_hash[ 'sent' ]),
-        :status      => alert_hash[ 'status' ],
-        :msg_type    => alert_hash[ 'msg_type' ],
-        :source      => alert_hash[ 'source' ],
-        :scope       => alert_hash[ 'scope' ],
-        :restriction => alert_hash[ 'restriction' ],
-        :addresses   => alert_hash[ 'addresses' ],
-        :code        => alert_hash[ 'code' ],
-        :note        => alert_hash[ 'note' ],
-        :references  => alert_hash[ 'references' ],
-        :incidents   => alert_hash[ 'incidents' ],
-        :infos       => Array( alert_hash[ 'infos' ]).map{ |info_hash| RCAP::Info.from_h( info_hash )})
+        :identifier  => alert_hash[ IDENTIFIER_KEY ],
+        :sender      => alert_hash[ SENDER_KEY ],
+        :sent        => DateTime.parse( alert_hash[ SENT_KEY ]),
+        :status      => alert_hash[ STATUS_KEY ],
+        :msg_type    => alert_hash[ MSG_TYPE_KEY ],
+        :source      => alert_hash[ SOURCE_KEY ],
+        :scope       => alert_hash[ SCOPE_KEY ],
+        :restriction => alert_hash[ RESTRICTION_KEY ],
+        :addresses   => alert_hash[ ADDRESSES_KEY ],
+        :code        => alert_hash[ CODE_KEY ],
+        :note        => alert_hash[ NOTE_KEY ],
+        :references  => alert_hash[ REFERENCES_KEY ],
+        :incidents   => alert_hash[ INCIDENTS_KEY ],
+        :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| RCAP::Info.from_h( info_hash )})
     end
 
     # Returns a JSON string representation of an Alert object

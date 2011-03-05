@@ -364,50 +364,74 @@ EOF
       )
     end
 
+    LANGUAGE_KEY       = 'language'       # :nodoc:      
+    CATEGORIES_KEY     = 'categories'     # :nodoc:    
+    EVENT_KEY          = 'event'          # :nodoc:         
+    RESPONSE_TYPES_KEY = 'response_types' # :nodoc:
+    URGENCY_KEY        = 'urgency'        # :nodoc:       
+    SEVERITY_KEY       = 'severity'       # :nodoc:      
+    CERTAINTY_KEY      = 'certainty'      # :nodoc:     
+    AUDIENCE_KEY       = 'audience'       # :nodoc:
+    EFFECTIVE_KEY      = 'effective'      # :nodoc:     
+    ONSET_KEY          = 'onset'          # :nodoc:         
+    EXPIRES_KEY        = 'expires'        # :nodoc:       
+    SENDER_NAME_KEY    = 'sender_name'    # :nodoc:   
+    HEADLINE_KEY       = 'headline'       # :nodoc:      
+    DESCRIPTION_KEY    = 'description'    # :nodoc:   
+    INSTRUCTION_KEY    = 'instruction'    # :nodoc:   
+    WEB_KEY            = 'web'            # :nodoc:           
+    CONTACT_KEY        = 'contact'        # :nodoc:       
+    RESOURCES_KEY      = 'resources'      # :nodoc:     
+    EVENT_CODES_KEY    = 'event_codes'    # :nodoc:   
+    PARAMETERS_KEY     = 'parameters'     # :nodoc:    
+    AREAS_KEY          = 'areas'          # :nodoc:         
+
     def to_h # :nodoc:
-      RCAP.attribute_values_to_hash( [ 'language',       self.language ],
-                                     [ 'categories',     self.categories ],
-                                     [ 'event',          self.event ],
-                                     [ 'response_types', self.response_types ],
-                                     [ 'urgency',        self.urgency ],
-                                     [ 'severity',       self.severity ],
-                                     [ 'certainty',      self.certainty ],
-                                     [ 'effective',      self.effective ],
-                                     [ 'onset',          self.onset ],
-                                     [ 'expires',        self.expires ],
-                                     [ 'sender_name',    self.sender_name ],
-                                     [ 'headline',       self.headline ],
-                                     [ 'description',    self.description ],
-                                     [ 'instruction',    self.instruction ],
-                                     [ 'web',            self.web ],
-                                     [ 'contact',        self.contact ],
-                                     [ 'resources',      self.resources.map{ |resource| resource.to_h } ],
-                                     [ 'event_codes',    self.event_codes.map{ |event_code| event_code.to_h } ],
-                                     [ 'parameters',     self.parameters.map{ |parameter| parameter.to_h } ],
-                                     [ 'areas',          self.areas.map{ |area| area.to_h }])
+      RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,       self.language ],
+                                     [ CATEGORIES_KEY,     self.categories ],
+                                     [ EVENT_KEY,          self.event ],
+                                     [ RESPONSE_TYPES_KEY, self.response_types ],
+                                     [ URGENCY_KEY,        self.urgency ],
+                                     [ SEVERITY_KEY,       self.severity ],
+                                     [ CERTAINTY_KEY,      self.certainty ],
+                                     [ AUDIENCE_KEY,       self.audience ],
+                                     [ EFFECTIVE_KEY,      self.effective ],
+                                     [ ONSET_KEY,          self.onset ],
+                                     [ EXPIRES_KEY,        self.expires ],
+                                     [ SENDER_NAME_KEY,    self.sender_name ],
+                                     [ HEADLINE_KEY,       self.headline ],
+                                     [ DESCRIPTION_KEY,    self.description ],
+                                     [ INSTRUCTION_KEY,    self.instruction ],
+                                     [ WEB_KEY,            self.web ],
+                                     [ CONTACT_KEY,        self.contact ],
+                                     [ RESOURCES_KEY,      self.resources.map{ |resource| resource.to_h } ],
+                                     [ EVENT_CODES_KEY,    self.event_codes.map{ |event_code| event_code.to_h } ],
+                                     [ PARAMETERS_KEY,     self.parameters.map{ |parameter| parameter.to_h } ],
+                                     [ AREAS_KEY,          self.areas.map{ |area| area.to_h }])
     end
 
     def self.from_h( info_hash ) # :nodoc:
-      self.new( :language       => info_hash[ 'language' ],
-                :categories     => info_hash[ 'categories' ],
-                :event          => info_hash[ 'event' ],
-                :response_types => info_hash[ 'response_types' ],
-                :urgency        => info_hash[ 'urgency' ],
-                :severity       => info_hash[ 'severity' ],
-                :certainty      => info_hash[ 'certainty' ],
-                :effective      => info_hash[ 'effective' ],
-                :onset          => info_hash[ 'onset' ],
-                :expires        => info_hash[ 'expires' ],
-                :sender_name    => info_hash[ 'sender_name' ],
-                :headline       => info_hash[ 'headline' ],
-                :description    => info_hash[ 'description' ],
-                :instruction    => info_hash[ 'instruction' ],
-                :web            => info_hash[ 'web' ],
-                :contact        => info_hash[ 'contact' ],
-                :resources      => Array( info_hash[ 'resources' ]).map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
-                :event_codes    => Array( info_hash[ 'event_codes' ]).map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
-                :parameters     => Array( info_hash[ 'parameters' ]).map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
-                :areas          => Array( info_hash[ 'areas' ]).map{ |area_hash| RCAP::Area.from_h( area_hash )})
+      self.new( :language       => info_hash[ LANGUAGE_KEY ],
+                :categories     => info_hash[ CATEGORIES_KEY ],
+                :event          => info_hash[ EVENT_KEY ],
+                :response_types => info_hash[ RESPONSE_TYPES_KEY ],
+                :urgency        => info_hash[ URGENCY_KEY ],
+                :severity       => info_hash[ SEVERITY_KEY ],
+                :certainty      => info_hash[ CERTAINTY_KEY ],
+                :audience       => info_hash[ AUDIENCE_KEY ],
+                :effective      => info_hash[ EFFECTIVE_KEY ],
+                :onset          => info_hash[ ONSET_KEY ],
+                :expires        => info_hash[ EXPIRES_KEY ],
+                :sender_name    => info_hash[ SENDER_NAME_KEY ],
+                :headline       => info_hash[ HEADLINE_KEY ],
+                :description    => info_hash[ DESCRIPTION_KEY ],
+                :instruction    => info_hash[ INSTRUCTION_KEY ],
+                :web            => info_hash[ WEB_KEY ],
+                :contact        => info_hash[ CONTACT_KEY ],
+                :resources      => Array( info_hash[ RESOURCES_KEY ]).map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
+                :event_codes    => Array( info_hash[ EVENT_CODES_KEY ]).map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
+                :parameters     => Array( info_hash[ PARAMETERS_KEY ]).map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
+                :areas          => Array( info_hash[ AREAS_KEY ]).map{ |area_hash| RCAP::Area.from_h( area_hash )})
     end
   end
 end
