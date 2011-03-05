@@ -4,6 +4,7 @@
 
 * Implemented Hash generation and parsing
 * Implemented JSON generation and parsing
+* Circle is now a subclass of Point
 
 == 0.3 - 26th November 2009
 
