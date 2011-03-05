@@ -3,19 +3,20 @@ require 'spec_helper'
 describe( RCAP::Circle ) do
   describe( 'should not be valid if' ) do
     before( :each ) do
-      @circle = RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1 )
+      @circle = RCAP::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 1 )
       @circle.should( be_valid )
     end
 
-    it( 'does not have a point defined' ) do
-      @circle.point = nil
+    it( 'does not have a lattitude defined' ) do
+      @circle.lattitude = nil
       @circle.should_not( be_valid )
     end
     
-    it( 'does not have a valid point' ) do
-      @circle.point.longitude = nil
+    it( 'does not have a longitude defined' ) do
+      @circle.longitude = nil
       @circle.should_not( be_valid )
     end
+
     it( 'does not have a radius defined' ) do
       @circle.radius = nil
       @circle.should_not( be_valid )
@@ -36,7 +37,7 @@ describe( RCAP::Circle ) do
 		context( 'from XML' ) do
 			before( :each ) do
 				@original_circle = RCAP::Circle.new( :radius => 10.5,
-																					 :point => RCAP::Point.new( :lattitude => 30, :longitude => 60 ))
+																					   :lattitude => 30, :longitude => 60 )
 				@alert = RCAP::Alert.new( :infos => RCAP::Info.new( :areas => RCAP::Area.new( :circles => @original_circle )))
 				@xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
@@ -50,15 +51,15 @@ describe( RCAP::Circle ) do
 				@circle.radius.should == @original_circle.radius
 			end
 
-			it( 'should parse the point correctly' ) do
-				@circle.point.lattitude.should == @original_circle.point.lattitude
-				@circle.point.longitude.should == @original_circle.point.longitude
+			it( 'should parse the lattitude and longitude correctly' ) do
+				@circle.lattitude.should == @original_circle.lattitude
+				@circle.longitude.should == @original_circle.longitude
 			end
 		end
 
     context( 'from a hash' ) do
       before( :each ) do
-				@original_circle = RCAP::Circle.new( :radius => 10.5, :point => RCAP::Point.new( :lattitude => 30, :longitude => 60 ))
+				@original_circle = RCAP::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
         @circle = RCAP::Circle.from_h( @original_circle.to_h )
       end
 
@@ -66,16 +67,16 @@ describe( RCAP::Circle ) do
         @circle.radius.should == @original_circle.radius
       end
 
-      it( 'should set the point correctly' ) do
-        @circle.point.should == @original_circle.point
-      end
+			it( 'should parse the lattitude and longitude correctly' ) do
+				@circle.lattitude.should == @original_circle.lattitude
+				@circle.longitude.should == @original_circle.longitude
+			end
     end
 	end
 
   context( 'when exported' ) do
     before( :each ) do
-      @circle = RCAP::Circle.new( :radius => 10.5,
-                                 :point => RCAP::Point.new( :lattitude => 30, :longitude => 60 )) 
+      @circle = RCAP::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 ) 
     end
 
     context( 'to hash' ) do

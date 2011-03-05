@@ -47,7 +47,7 @@ describe( RCAP::Area ) do
 				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
 																			 :altitude => 100,
 																			 :ceiling => 200,
-																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :circles => RCAP::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
 																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
 																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
 
@@ -67,7 +67,7 @@ describe( RCAP::Area ) do
 				@original_area = RCAP::Area.new( :area_desc => 'Area Description',
 																			 :altitude => 100,
 																			 :ceiling => 200,
-																			 :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+																			 :circles => RCAP::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
 																			 :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
 																			 :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
 
@@ -83,7 +83,7 @@ describe( RCAP::Area ) do
       @area = RCAP::Area.new( :area_desc => 'Area Description',
                              :altitude => 100,
                              :ceiling => 200,
-                             :circles => RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 100 ),
+                             :circles => RCAP::Circle.new(  :lattitude => 0, :longitude => 0 , :radius => 100 ),
                              :geocodes => RCAP::Geocode.new( :name => 'name', :value => 'value' ),
                              :polygons => RCAP::Polygon.new( :points => RCAP::Point.new( :lattitude =>1, :longitude => 1 ))) 
     end
@@ -137,12 +137,12 @@ describe( RCAP::Area ) do
 
     context( 'it contains circles and it' ) do
       before( :each ) do
-        @area.circles << RCAP::Circle.new( :point => RCAP::Point.new( :lattitude => 0, :longitude => 0 ), :radius => 1)
+        @area.circles << RCAP::Circle.new( :lattitude => 0, :longitude => 0, :radius => 1)
         @area.should( be_valid )
       end
 
       it( 'has an invalid circle' ) do
-        @area.circles.first.point.lattitude = nil
+        @area.circles.first.lattitude = nil
         @area.should_not( be_valid )
       end
     end

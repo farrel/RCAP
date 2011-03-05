@@ -103,7 +103,7 @@ EOF
      POLYGONS_YAML  = 'Polygons'         # :nodoc:
 
      def to_yaml( options = {} ) # :nodoc:
-       circles_yaml = self.circles.map{ |circle| [[ circle.point.lattitude, circle.point.longitude ], circle.radius ]}
+       circles_yaml = self.circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]}
        def circles_yaml.to_yaml_style; :inline; end
 
        RCAP.attribute_values_to_hash(
