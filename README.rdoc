@@ -144,7 +144,7 @@ JSON(JavaScript Object Notation) is a text serialization format that can be easi
  alert.to_json
 
 will produce the following JSON string
- 
+
  {"identifier":"0eb97e40-195b-437b-9a01-55fe89691def",
   "sender":"cape_town_disaster_relief@capetown.municipal.za",
   "sent":"2011-03-04T15:58:01+02:00",
