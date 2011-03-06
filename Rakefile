@@ -1,5 +1,5 @@
 require 'rake/gempackagetask'
-require 'rake/rdoctask'
+require 'hanna/rdoctask'
 require 'spec/rake/spectask'
 
 SPEC = Gem::Specification.new do |gem|

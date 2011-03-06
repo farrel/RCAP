@@ -223,4 +223,4 @@ RCAP is released under the BSD License.
 
 == Copyright
 
-2009-2010 Aimred CC
+2009-2011 Aimred CC
