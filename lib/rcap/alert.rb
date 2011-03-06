@@ -295,7 +295,7 @@ EOF
     def to_h
       RCAP.attribute_values_to_hash([ IDENTIFIER_KEY,   self.identifier ],
                                     [ SENDER_KEY,       self.sender ],
-                                    [ SENT_KEY,         self.sent.to_s_for_cap ],
+                                    [ SENT_KEY,         RCAP.to_s_for_cap( self.sent )],
                                     [ STATUS_KEY,       self.status ],
                                     [ MSG_TYPE_KEY,     self.msg_type ],
                                     [ SOURCE_KEY,       self.source ],
@@ -314,7 +314,7 @@ EOF
       self.new(
         :identifier  => alert_hash[ IDENTIFIER_KEY ],
         :sender      => alert_hash[ SENDER_KEY ],
-        :sent        => DateTime.parse( alert_hash[ SENT_KEY ]),
+        :sent        => RCAP.parse_datetime( alert_hash[ SENT_KEY ]),
         :status      => alert_hash[ STATUS_KEY ],
         :msg_type    => alert_hash[ MSG_TYPE_KEY ],
         :source      => alert_hash[ SOURCE_KEY ],

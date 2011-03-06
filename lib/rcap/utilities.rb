@@ -67,4 +67,20 @@ module RCAP # :nodoc:
   def self.attribute_values_to_hash( *attribute_values )
     Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten( 1 )] 
   end
+
+  def self.to_s_for_cap( object )
+    if object
+      if object.respond_to?( :to_s_for_cap )
+        object.to_s_for_cap
+      else
+        object.to_s
+      end
+    end
+  end
+
+  def self.parse_datetime( date_string )
+    if date_string.is_a?( String )
+      DateTime.parse( date_string )
+    end
+  end
 end

@@ -215,15 +215,15 @@ describe( RCAP::Info ) do
       end
 
       it( 'should export the effective date' ) do
-        @info_hash[ RCAP::Info::EFFECTIVE_KEY ].should == @info.effective
+        @info_hash[ RCAP::Info::EFFECTIVE_KEY ].should == @info.effective.to_s_for_cap
       end
 
       it( 'should export the onset date' ) do
-        @info_hash[ RCAP::Info::ONSET_KEY ].should == @info.onset
+        @info_hash[ RCAP::Info::ONSET_KEY ].should == @info.onset.to_s_for_cap
       end
 
       it( 'should export the expires date' ) do
-        @info_hash[ RCAP::Info::EXPIRES_KEY ].should == @info.expires
+        @info_hash[ RCAP::Info::EXPIRES_KEY ].should == @info.expires.to_s_for_cap
       end
 
        it( 'should export the sender name' ) do
