@@ -10,25 +10,25 @@ module RCAP
   class Alert
     include Validation
 
-    STATUS_ACTUAL   = "Actual"   
-    STATUS_EXERCISE = "Exercise" 
-    STATUS_SYSTEM   = "System"   
-    STATUS_TEST     = "Test"     
-    STATUS_DRAFT    = "Draft"    
+    STATUS_ACTUAL   = "Actual"   # :nodoc:
+    STATUS_EXERCISE = "Exercise" # :nodoc:
+    STATUS_SYSTEM   = "System"   # :nodoc:
+    STATUS_TEST     = "Test"     # :nodoc:
+    STATUS_DRAFT    = "Draft"    # :nodoc:
     # Valid values for status
     VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ] 
 
-    MSG_TYPE_ALERT  = "Alert"  
-    MSG_TYPE_UPDATE = "Update" 
-    MSG_TYPE_CANCEL = "Cancel" 
-    MSG_TYPE_ACK    = "Ack"    
-    MSG_TYPE_ERROR  = "Error"  
+    MSG_TYPE_ALERT  = "Alert"   # :nodoc:
+    MSG_TYPE_UPDATE = "Update"  # :nodoc:
+    MSG_TYPE_CANCEL = "Cancel"  # :nodoc:
+    MSG_TYPE_ACK    = "Ack"     # :nodoc:
+    MSG_TYPE_ERROR  = "Error"   # :nodoc:
     # Valid values for msg_type
     VALID_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
 
-    SCOPE_PUBLIC     = "Public"     
-    SCOPE_RESTRICTED = "Restricted" 
-    SCOPE_PRIVATE    = "Private"    
+    SCOPE_PUBLIC     = "Public"        # :nodoc:
+    SCOPE_RESTRICTED = "Restricted"    # :nodoc:
+    SCOPE_PRIVATE    = "Private"       # :nodoc:
     # Valid values for scope
     VALID_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
 
