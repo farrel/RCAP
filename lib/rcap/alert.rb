@@ -165,6 +165,7 @@ module RCAP
 
     def inspect # :nodoc:
       alert_inspect = <<EOF
+CAP Version:  #{ RCAP::CAP_VERSION }
 Identifier:   #{ self.identifier }
 Sender:       #{ self.sender }
 Sent:         #{ self.sent }
@@ -217,24 +218,26 @@ EOF
       self.from_xml_document( REXML::Document.new( xml ))
     end
 
-    IDENTIFIER_YAML  = "Identifier"    # :nodoc:
-    SENDER_YAML      = "Sender"        # :nodoc:
-    SENT_YAML        = "Sent"          # :nodoc:
-    STATUS_YAML      = "Status"        # :nodoc:
-    MSG_TYPE_YAML    = "Message Type"  # :nodoc:
-    SOURCE_YAML      = "Source"        # :nodoc:
-    SCOPE_YAML       = "Scope"         # :nodoc:
-    RESTRICTION_YAML = "Restriction"   # :nodoc:
-    ADDRESSES_YAML   = "Addresses"     # :nodoc:
-    CODE_YAML        = "Code"          # :nodoc:
-    NOTE_YAML        = "Note"          # :nodoc:
-    REFERENCES_YAML  = "References"    # :nodoc:
-    INCIDENTS_YAML   = "Incidents"     # :nodoc:
-    INFOS_YAML       = "Information"   # :nodoc:
+    CAP_VERSION_YAML = "CAP Version"        # :nodoc:
+    IDENTIFIER_YAML  = "Identifier"         # :nodoc:
+    SENDER_YAML      = "Sender"             # :nodoc:
+    SENT_YAML        = "Sent"               # :nodoc:
+    STATUS_YAML      = "Status"             # :nodoc:
+    MSG_TYPE_YAML    = "Message Type"       # :nodoc:
+    SOURCE_YAML      = "Source"             # :nodoc:
+    SCOPE_YAML       = "Scope"              # :nodoc:
+    RESTRICTION_YAML = "Restriction"        # :nodoc:
+    ADDRESSES_YAML   = "Addresses"          # :nodoc:
+    CODE_YAML        = "Code"               # :nodoc:
+    NOTE_YAML        = "Note"               # :nodoc:
+    REFERENCES_YAML  = "References"         # :nodoc:
+    INCIDENTS_YAML   = "Incidents"          # :nodoc:
+    INFOS_YAML       = "Information"        # :nodoc:
 
     # Returns a string containing the YAML representation of the alert.
     def to_yaml( options = {} )
       RCAP.attribute_values_to_hash(
+        [ CAP_VERSION_YAML,  RCAP::CAP_VERSION ],
         [ IDENTIFIER_YAML,    self.identifier ],
         [ SENDER_YAML,        self.sender ],
         [ SENT_YAML,          self.sent ],
@@ -276,6 +279,7 @@ EOF
       )
     end
 
+    CAP_VERSION_KEY = 'cap_version' # :nodoc:
     IDENTIFIER_KEY  = 'identifier'  # :nodoc:
     SENDER_KEY      = 'sender'      # :nodoc:
     SENT_KEY        = 'sent'        # :nodoc:
@@ -293,7 +297,8 @@ EOF
 
     # Returns a Hash representation of an Alert object
     def to_h
-      RCAP.attribute_values_to_hash([ IDENTIFIER_KEY,   self.identifier ],
+      RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, RCAP::CAP_VERSION ],
+                                    [ IDENTIFIER_KEY,   self.identifier ],
                                     [ SENDER_KEY,       self.sender ],
                                     [ SENT_KEY,         RCAP.to_s_for_cap( self.sent )],
                                     [ STATUS_KEY,       self.status ],
