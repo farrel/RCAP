@@ -20,7 +20,7 @@ module RCAP
 
 		# Returns a string representation of the polygon of the form
 		#  points[0] points[1] points[2] ... points[n-1] points[0]
-    # where each point is formatted with RCAP::Point#to_s
+    # where each point is formatted with Point#to_s
     def to_s
       (@points + [ @points.first ]).join( ' ' )
     end
@@ -46,7 +46,7 @@ module RCAP
 
     def self.from_xml_element( polygon_xml_element ) # :nodoc:
       coordinates = self.parse_polygon_string( polygon_xml_element.text )
-      points = coordinates.map{ |lattitude, longitude| RCAP::Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
+      points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
       polygon = self.new( :points => points )
     end
 

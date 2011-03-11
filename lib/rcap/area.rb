@@ -87,12 +87,12 @@ EOF
     end
 
     def self.from_xml_element( area_xml_element ) # :nodoc:
-      RCAP::Area.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
+      self.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH ),
 											:altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH )) ? alt.to_f : nil ),
 											:ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH )) ? ceil.to_f : nil ),
-											:circles   => RCAP.xpath_match( area_xml_element, RCAP::Circle::XPATH ).map{ |circle_element| RCAP::Circle.from_xml_element( circle_element )},
-											:geocodes  => RCAP.xpath_match( area_xml_element, RCAP::Geocode::XPATH ).map{ |geocode_element| RCAP::Geocode.from_xml_element( geocode_element )},
-											:polygons  => RCAP.xpath_match( area_xml_element, RCAP::Polygon::XPATH ).map{ |polygon_element| RCAP::Polygon.from_xml_element( polygon_element )})
+											:circles   => RCAP.xpath_match( area_xml_element, Circle::XPATH ).map{ |circle_element| Circle.from_xml_element( circle_element )},
+											:geocodes  => RCAP.xpath_match( area_xml_element, Geocode::XPATH ).map{ |geocode_element| Geocode.from_xml_element( geocode_element )},
+											:polygons  => RCAP.xpath_match( area_xml_element, Polygon::XPATH ).map{ |polygon_element| Polygon.from_xml_element( polygon_element )})
     end
 
      AREA_DESC_YAML = 'Area Description' # :nodoc:
@@ -117,13 +117,13 @@ EOF
      end
 
      def from_yaml_data( area_yaml_data )  # :nodoc:
-       Area.new(
+       self.new(
          :area_desc => area_yaml_data[ AREA_DESC_YAML ],
          :altitude  => area_yaml_data[ ALTITUDE_YAML ],
          :ceiling   => area_yaml_data[ CEILING_YAML ],
-         :circles   => Array( area_yaml_data[ CIRCLES_YAML ]).map{ |circle_yaml_data| RCAP::Circle.from_yaml_data( circle_yaml_data )},
-         :geocodes  => Array( area_yaml_data[ GEOCODES_YAML ]).map{ |name, value| RCAP::Geocode.new( :name => name, :value => value )},
-         :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| RCAP::Polygon.from_yaml_data( polyon_yaml_data )}
+         :circles   => Array( area_yaml_data[ CIRCLES_YAML ]).map{ |circle_yaml_data| Circle.from_yaml_data( circle_yaml_data )},
+         :geocodes  => Array( area_yaml_data[ GEOCODES_YAML ]).map{ |name, value| Geocode.new( :name => name, :value => value )},
+         :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| Polygon.from_yaml_data( polyon_yaml_data )}
        )
      end
 
@@ -148,9 +148,9 @@ EOF
         :area_desc => area_hash[ AREA_DESC_KEY ],
         :altitude  => area_hash[ ALTITUDE_KEY ],
         :ceiling   => area_hash[ CEILING_KEY ],
-        :circles   => area_hash[ CIRCLES_KEY ].map{ |circle_hash| RCAP::Circle.from_h( circle_hash )},
-        :geocodes  => area_hash[ GEOCODES_KEY ].map{ |geocode_hash| RCAP::Geocode.from_h( geocode_hash )},
-        :polygons  => area_hash[ POLYGONS_KEY ].map{ |polygon_hash| RCAP::Polygon.from_h( polygon_hash )})
+        :circles   => area_hash[ CIRCLES_KEY ].map{ |circle_hash| Circle.from_h( circle_hash )},
+        :geocodes  => area_hash[ GEOCODES_KEY ].map{ |geocode_hash| Geocode.from_h( geocode_hash )},
+        :polygons  => area_hash[ POLYGONS_KEY ].map{ |polygon_hash| Polygon.from_h( polygon_hash )})
      end
   end
 end

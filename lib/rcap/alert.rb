@@ -193,7 +193,7 @@ EOF
     end
 
     def self.from_xml_element( alert_xml_element ) # :nodoc:
-      self.new( :identifier  => RCAP.xpath_text( alert_xml_element, RCAP::Alert::IDENTIFIER_XPATH ),
+      self.new( :identifier  => RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH ),
                 :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
                 :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
                 :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
@@ -206,7 +206,7 @@ EOF
                 :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
                 :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
                 :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
-                :infos       => RCAP.xpath_match( alert_xml_element, RCAP::Info::XPATH ).map{ |element| RCAP::Info.from_xml_element( element )})
+                :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH ).map{ |element| Info.from_xml_element( element )})
     end
 
     def self.from_xml_document( xml_document ) # :nodoc:
@@ -330,7 +330,7 @@ EOF
         :note        => alert_hash[ NOTE_KEY ],
         :references  => alert_hash[ REFERENCES_KEY ],
         :incidents   => alert_hash[ INCIDENTS_KEY ],
-        :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| RCAP::Info.from_h( info_hash )})
+        :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| Info.from_h( info_hash )})
     end
 
     # Returns a JSON string representation of an Alert object

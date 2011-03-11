@@ -275,10 +275,10 @@ EOF
         :instruction    => RCAP.xpath_text( info_xml_element, INSTRUCTION_XPATH ),
         :web            => RCAP.xpath_text( info_xml_element, WEB_XPATH ),
         :contact        => RCAP.xpath_text( info_xml_element, CONTACT_XPATH ),
-        :event_codes    => RCAP.xpath_match( info_xml_element, RCAP::EventCode::XPATH ).map{ |element| RCAP::EventCode.from_xml_element( element )},
-        :parameters     => RCAP.xpath_match( info_xml_element, RCAP::Parameter::XPATH ).map{ |element| RCAP::Parameter.from_xml_element( element )},
-        :resources      => RCAP.xpath_match( info_xml_element, RCAP::Resource::XPATH ).map{ |element| RCAP::Resource.from_xml_element( element )},
-        :areas          => RCAP.xpath_match( info_xml_element, RCAP::Area::XPATH ).map{ |element| RCAP::Area.from_xml_element( element )}
+        :event_codes    => RCAP.xpath_match( info_xml_element, EventCode::XPATH ).map{ |element| EventCode.from_xml_element( element )},
+        :parameters     => RCAP.xpath_match( info_xml_element, Parameter::XPATH ).map{ |element| Parameter.from_xml_element( element )},
+        :resources      => RCAP.xpath_match( info_xml_element, Resource::XPATH ).map{ |element| Resource.from_xml_element( element )},
+        :areas          => RCAP.xpath_match( info_xml_element, Area::XPATH ).map{ |element| Area.from_xml_element( element )}
       )
     end
 
@@ -357,10 +357,10 @@ EOF
         :instruction    => info_yaml_data [ INSTRUCTION_YAML ],
         :web            => info_yaml_data [ WEB_YAML ],
         :contact        => info_yaml_data [ CONTACT_YAML ],
-        :event_codes    => Array( info_yaml_data [ EVENT_CODES_YAML ]).map{ |name,value| RCAP::EventCode.new( :name => name, :value => value )},
-        :parameters     => Array( info_yaml_data [ PARAMETERS_YAML ]).map{ |parameter_yaml_data| RCAP::Parameter.new( :name => name, :value => value )},
-        :resources      => Array( info_yaml_data [ RESOURCES_YAML ]).map{ |resource_yaml_data| RCAP::Resource.from_yaml_data( resource_yaml_data )},
-        :areas          => Array( info_yaml_data [ AREAS_YAML ]).map{ |area_yaml_data| RCAP::Area.from_yaml_data( area_yaml_data )}
+        :event_codes    => Array( info_yaml_data [ EVENT_CODES_YAML ]).map{ |name,value| EventCode.new( :name => name, :value => value )},
+        :parameters     => Array( info_yaml_data [ PARAMETERS_YAML ]).map{ |parameter_yaml_data| Parameter.new( :name => name, :value => value )},
+        :resources      => Array( info_yaml_data [ RESOURCES_YAML ]).map{ |resource_yaml_data| Resource.from_yaml_data( resource_yaml_data )},
+        :areas          => Array( info_yaml_data [ AREAS_YAML ]).map{ |area_yaml_data| Area.from_yaml_data( area_yaml_data )}
       )
     end
 
@@ -428,10 +428,10 @@ EOF
                 :instruction    => info_hash[ INSTRUCTION_KEY ],
                 :web            => info_hash[ WEB_KEY ],
                 :contact        => info_hash[ CONTACT_KEY ],
-                :resources      => Array( info_hash[ RESOURCES_KEY ]).map{ |resource_hash| RCAP::Resource.from_h( resource_hash ) },
-                :event_codes    => Array( info_hash[ EVENT_CODES_KEY ]).map{ |event_code_hash| RCAP::EventCode.from_h( event_code_hash )},
-                :parameters     => Array( info_hash[ PARAMETERS_KEY ]).map{ |parameter_hash| RCAP::Parameter.from_h( parameter_hash )},
-                :areas          => Array( info_hash[ AREAS_KEY ]).map{ |area_hash| RCAP::Area.from_h( area_hash )})
+                :resources      => Array( info_hash[ RESOURCES_KEY ]).map{ |resource_hash| Resource.from_h( resource_hash ) },
+                :event_codes    => Array( info_hash[ EVENT_CODES_KEY ]).map{ |event_code_hash| EventCode.from_h( event_code_hash )},
+                :parameters     => Array( info_hash[ PARAMETERS_KEY ]).map{ |parameter_hash| Parameter.from_h( parameter_hash )},
+                :areas          => Array( info_hash[ AREAS_KEY ]).map{ |area_hash| Area.from_h( area_hash )})
     end
   end
 end
