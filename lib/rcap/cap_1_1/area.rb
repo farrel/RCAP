@@ -1,4 +1,5 @@
 module RCAP
+  module CAP_1_1
 	# An Area object is valid if
 	# * it has an area description
 	# * all Circle objects contained in circles are valid
@@ -153,4 +154,5 @@ EOF
         :polygons  => area_hash[ POLYGONS_KEY ].map{ |polygon_hash| Polygon.from_h( polygon_hash )})
      end
   end
+end
 end
