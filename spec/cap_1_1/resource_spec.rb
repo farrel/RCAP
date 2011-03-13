@@ -26,8 +26,8 @@ describe( RCAP::CAP_1_1::Resource ) do
         @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :resources => @original_resource ))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-        @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH )
-				@resource_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_1::Resource::XPATH )
+        @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
+				@resource_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_1::Resource::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
         @resource_element.should_not( be_nil )
         @resource = RCAP::CAP_1_1::Resource.from_xml_element( @resource_element )
       end

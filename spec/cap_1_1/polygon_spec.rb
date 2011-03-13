@@ -28,9 +28,9 @@ describe( RCAP::CAP_1_1::Polygon ) do
         @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :areas => RCAP::CAP_1_1::Area.new( :polygons => @original_polygon )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH )
-				@area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_1::Area::XPATH )
-        @polygon_element = RCAP.xpath_first( @area_element, RCAP::CAP_1_1::Polygon::XPATH )
+				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
+				@area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_1::Area::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
+        @polygon_element = RCAP.xpath_first( @area_element, RCAP::CAP_1_1::Polygon::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
         @polygon = RCAP::CAP_1_1::Polygon.from_xml_element( @polygon_element )
       end
 

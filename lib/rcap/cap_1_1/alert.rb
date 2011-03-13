@@ -11,6 +11,9 @@ module RCAP
     class Alert
       include Validation
 
+      XMLNS = "urn:oasis:names:tc:emergency:cap:1.1"
+      CAP_VERSION = "1.1"
+
       STATUS_ACTUAL   = "Actual"   # :nodoc:
       STATUS_EXERCISE = "Exercise" # :nodoc:
       STATUS_SYSTEM   = "System"   # :nodoc:
@@ -120,7 +123,7 @@ module RCAP
 
       def to_xml_element #:nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
-        xml_element.add_namespace( RCAP::XMLNS )
+        xml_element.add_namespace( XMLNS )
         xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier ) 
         xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender ) 
         xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s ) 
@@ -166,7 +169,7 @@ module RCAP
 
       def inspect # :nodoc:
         alert_inspect = <<EOF
-CAP Version:  #{ RCAP::CAP_VERSION }
+CAP Version:  #{ CAP_VERSION }
 Identifier:   #{ self.identifier }
 Sender:       #{ self.sender }
 Sent:         #{ self.sent }
@@ -194,20 +197,20 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       end
 
       def self.from_xml_element( alert_xml_element ) # :nodoc:
-        self.new( :identifier  => RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH ),
-                 :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH ),
-                 :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH )) ? DateTime.parse( sent.text ) : nil ),
-                 :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH ),
-                 :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH ),
-                 :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH ),
-                 :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH ),
-                 :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH ),
-                 :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH )) ? address.unpack_cap_list : nil ),
-                 :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH ),
-                 :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH ),
-                 :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH )) ? references.split( ' ' ) : nil ),
-                 :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH )) ? incidents.split( ' ' ) : nil ),
-                 :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH ).map{ |element| Info.from_xml_element( element )})
+        self.new( :identifier  => RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, Alert::XMLNS ),
+                 :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS ),
+                 :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil ),
+                 :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS ),
+                 :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS ),
+                 :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS ),
+                 :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS ),
+                 :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS ),
+                 :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : nil ),
+                 :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH, Alert::XMLNS ),
+                 :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS ),
+                 :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : nil ),
+                 :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : nil ),
+                 :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).map{ |element| Info.from_xml_element( element )})
       end
 
       def self.from_xml_document( xml_document ) # :nodoc:
@@ -238,7 +241,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       # Returns a string containing the YAML representation of the alert.
       def to_yaml( options = {} )
         RCAP.attribute_values_to_hash(
-          [ CAP_VERSION_YAML,  RCAP::CAP_VERSION ],
+          [ CAP_VERSION_YAML,  CAP_VERSION ],
           [ IDENTIFIER_YAML,    self.identifier ],
           [ SENDER_YAML,        self.sender ],
           [ SENT_YAML,          self.sent ],
@@ -298,7 +301,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
 
       # Returns a Hash representation of an Alert object
       def to_h
-        RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, RCAP::CAP_VERSION ],
+        RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, CAP_VERSION ],
                                       [ IDENTIFIER_KEY,   self.identifier ],
                                       [ SENDER_KEY,       self.sender ],
                                       [ SENT_KEY,         RCAP.to_s_for_cap( self.sent )],

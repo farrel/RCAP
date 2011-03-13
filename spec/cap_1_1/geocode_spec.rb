@@ -8,9 +8,9 @@ describe( RCAP::CAP_1_1::Geocode ) do
         @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :areas => RCAP::CAP_1_1::Area.new( :geocodes => @original_geocode )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-        @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH )
-        @area_xml_element = RCAP.xpath_first( @info_xml_element, RCAP::CAP_1_1::Area::XPATH )
-        @geocode_xml_element = RCAP.xpath_first( @area_xml_element, RCAP::CAP_1_1::Geocode::XPATH )
+        @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
+        @area_xml_element = RCAP.xpath_first( @info_xml_element, RCAP::CAP_1_1::Area::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
+        @geocode_xml_element = RCAP.xpath_first( @area_xml_element, RCAP::CAP_1_1::Geocode::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
         @geocode = RCAP::CAP_1_1::Geocode.from_xml_element( @geocode_xml_element )
       end
 

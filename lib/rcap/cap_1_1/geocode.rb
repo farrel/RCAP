@@ -14,8 +14,8 @@ module RCAP
       end
 
       def self.from_xml_element( geocode_xml_element ) # :nodoc:
-        self.new( :name  => RCAP.xpath_text( geocode_xml_element, NAME_XPATH ),
-                 :value => RCAP.xpath_text( geocode_xml_element, VALUE_XPATH ))
+        self.new( :name  => RCAP.xpath_text( geocode_xml_element, NAME_XPATH, Alert::XMLNS ),
+                 :value => RCAP.xpath_text( geocode_xml_element, VALUE_XPATH, Alert::XMLNS ))
       end
     end
   end

@@ -14,8 +14,8 @@ module RCAP
       end
 
       def self.from_xml_element( event_code_xml_element ) # :nodoc:
-        EventCode.new( :name  => RCAP.xpath_text( event_code_xml_element, NAME_XPATH ),
-                      :value => RCAP.xpath_text( event_code_xml_element, VALUE_XPATH ))
+        EventCode.new( :name  => RCAP.xpath_text( event_code_xml_element, NAME_XPATH, Alert::XMLNS ),
+                      :value => RCAP.xpath_text( event_code_xml_element, VALUE_XPATH, Alert::XMLNS ))
       end
     end
   end

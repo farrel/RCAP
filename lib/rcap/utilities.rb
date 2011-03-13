@@ -42,17 +42,17 @@ class Time # :nodoc:
 end
 
 module RCAP # :nodoc:
-  def self.xpath_text( xml_element, xpath ) 
-    element = self.xpath_first( xml_element, xpath )
+  def self.xpath_text( xml_element, xpath, namespace ) 
+    element = self.xpath_first( xml_element, xpath, namespace )
     element.text if element
   end
 
-  def self.xpath_first( xml_element, xpath )
-    REXML::XPath.first( xml_element, xpath, { 'cap' => RCAP::XMLNS })
+  def self.xpath_first( xml_element, xpath, namespace )
+    REXML::XPath.first( xml_element, xpath, { 'cap' => namespace })
   end
 
-  def self.xpath_match( xml_element, xpath )
-    REXML::XPath.match( xml_element, xpath, { 'cap' => RCAP::XMLNS })
+  def self.xpath_match( xml_element, xpath, namespace )
+    REXML::XPath.match( xml_element, xpath, { 'cap' => namespace })
   end
 
   def self.format_lines_for_inspect( header, inspect_string )

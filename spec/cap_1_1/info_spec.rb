@@ -77,7 +77,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @alert = RCAP::CAP_1_1::Alert.new( :infos => @original_info )
 				@xml_string = @alert.to_xml
 				@xml_document = REXML::Document.new( @xml_string )
-        @info = RCAP::CAP_1_1::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH ))
+        @info = RCAP::CAP_1_1::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS ))
       end
 
       it_should_behave_like( "it can parse into an Info object" )
