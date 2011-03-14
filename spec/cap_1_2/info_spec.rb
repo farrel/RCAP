@@ -26,7 +26,7 @@ describe( RCAP::CAP_1_1::Info ) do
     it( 'should have no contact' )                  { @info.contact.should( be_nil )}
     it( 'should have no parameters' )               { @info.parameters.should( be_empty )}
 
-    shared_examples_for( 'it can parse into a CAP 1.1 Info object' ) do
+    shared_examples_for( 'it can parse into a CAP 1.2 Info object' ) do
       it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
       it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
       it( 'should parse response_types correctly' ){ @info .response_types.should ==    @original_info.response_types }
@@ -80,7 +80,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @info = RCAP::CAP_1_1::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS ))
       end
 
-      it_should_behave_like( "it can parse into a CAP 1.1 Info object" )
+      it_should_behave_like( "it can parse into a CAP 1.2 Info object" )
     end
 
     context( 'from a hash' ) do
@@ -110,7 +110,7 @@ describe( RCAP::CAP_1_1::Info ) do
                                       )
         @info = RCAP::CAP_1_1::Info.from_h( @original_info.to_h )
       end
-      it_should_behave_like( "it can parse into a CAP 1.1 Info object" )
+      it_should_behave_like( "it can parse into a CAP 1.2 Info object" )
     end
   end
 

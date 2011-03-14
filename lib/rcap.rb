@@ -17,7 +17,17 @@ require 'rcap/cap_1_1/circle'
 require 'rcap/cap_1_1/polygon'
 require 'rcap/cap_1_1/geocode'
 require 'rcap/cap_1_1/area'
+require 'rcap/cap_1_2/alert'
+require 'rcap/cap_1_2/parameter'
+require 'rcap/cap_1_2/event_code'
+require 'rcap/cap_1_2/info'
+require 'rcap/cap_1_2/resource'
+require 'rcap/cap_1_2/point'
+require 'rcap/cap_1_2/circle'
+require 'rcap/cap_1_2/polygon'
+require 'rcap/cap_1_2/geocode'
+require 'rcap/cap_1_2/area'
 
 module RCAP
-	VERSION = "0.4"
+	VERSION = "1.0"
 end
