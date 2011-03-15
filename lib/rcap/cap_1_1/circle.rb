@@ -24,11 +24,11 @@ module RCAP
       # Returns a string representation of the circle of the form
       #  lattitude,longitude,radius
       def to_s  # :nodoc:
-        "#{ self.lattitude },#{ self.longitude },#{ self.radius }"
+        "#{ self.lattitude },#{ self.longitude } #{ self.radius }"
       end
 
       def inspect # :nodoc:
-        "(#{ self.lattitude},#{ self.longitude },#{ self.radius })"
+        "(#{ self.to_s })"
       end
 
       def to_xml_element # :nodoc:
@@ -42,7 +42,8 @@ module RCAP
       end
 
       def self.parse_circle_string( circle_string ) # :nodoc:
-        lattitude, longitude, radius = circle_string.split( ',' )
+        coordinates, radius = circle_string.split( ' ' )
+        lattitude, longitude = coordinates.split( ',' )
         [ lattitude, longitude, radius ].map{ |e| e.to_f }
       end
 
