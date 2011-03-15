@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Circle ) do
-  describe( 'should not be valid if' ) do
+  describe( '#to_s' ) do
+    it( 'should return a correct string' ) do
+      @circle = RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 1 )
+      @circle.to_s.should == '0,0 1'
+    end
+  end
+
+  context( 'should not be valid if' ) do
     before( :each ) do
       @circle = RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 1 )
       @circle.should( be_valid )
