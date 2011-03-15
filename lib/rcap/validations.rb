@@ -112,5 +112,18 @@ module Validation  # :nodoc:
         end
       end
     end
+
+    def validates_equality_of_first_and_last( *attributes )
+      options = {
+        :message => 'does not have equal first and last elements'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, collection|
+        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.blank? && options[ :allow_blank ])
+        unless collection.first == collection.last
+          object.errors[ attribute ] << options[ :message ]
+        end
+      end
+    end
   end
 end
