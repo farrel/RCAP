@@ -9,8 +9,9 @@ module RCAP
       # Collection of Point objects.
       attr_reader( :points )
 
-      validates_length_of( :points, :minimum => 3 )
       validates_collection_of( :points )
+      validates_length_of( :points, :minimum => 4 )
+      validates_equality_of_first_and_last( :points )
 
       XML_ELEMENT_NAME = 'polygon'                   # :nodoc: 
       XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc: 
@@ -23,7 +24,7 @@ module RCAP
       #  points[0] points[1] points[2] ... points[n-1] points[0]
       # where each point is formatted with Point#to_s
       def to_s
-        (@points + [ @points.first ]).join( ' ' )
+        @points.join( ' ' )
       end
 
       def inspect # :nodoc:
@@ -47,7 +48,7 @@ module RCAP
 
       def self.from_xml_element( polygon_xml_element ) # :nodoc:
         coordinates = self.parse_polygon_string( polygon_xml_element.text )
-        points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
+        points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
         polygon = self.new( :points => points )
       end
 
@@ -60,9 +61,7 @@ module RCAP
       end
 
       def self.from_yaml_data( polygon_yaml_data ) # :nodoc:
-        self.new( 
-                 :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
-                )
+        self.new( :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )})
       end
 
       POINTS_KEY  = 'points' # :nodoc:

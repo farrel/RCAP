@@ -4,14 +4,19 @@ describe( RCAP::CAP_1_2::Polygon ) do
   describe( 'is not valid if it' ) do
     before( :each ) do
       @polygon = RCAP::CAP_1_2::Polygon.new
-      3.times do
+      4.times do
         @polygon.points << RCAP::CAP_1_2::Point.new( :lattitude => 0, :longitude => 0 )
       end
       @polygon.should( be_valid )
     end
 
-    it( 'does not have any points' ) do
-      @polygon.points.clear
+    it( 'hass less than 4 points' ) do
+      @polygon.points.pop
+      @polygon.should_not( be_valid )
+    end
+
+    it( 'does not have the first and last points equal' ) do
+      @polygon.points.last.lattitude = 1
       @polygon.should_not( be_valid )
     end
 
@@ -24,7 +29,7 @@ describe( RCAP::CAP_1_2::Polygon ) do
   context( 'on initialization' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})
+        @original_polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(4){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})
         @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :polygons => @original_polygon )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
