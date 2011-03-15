@@ -29,17 +29,19 @@ module RCAP
         CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
         CATEGORY_OTHER ]
 
-      RESPONSE_TYPE_SHELTER  = "Shelter"  # :nodoc:
-      RESPONSE_TYPE_EVACUATE = "Evacuate" # :nodoc:
-      RESPONSE_TYPE_PREPARE  = "Prepare"  # :nodoc:
-      RESPONSE_TYPE_EXECUTE  = "Execute"  # :nodoc:
-      RESPONSE_TYPE_MONITOR  = "Monitor"  # :nodoc:
-      RESPONSE_TYPE_ASSESS   = "Assess"   # :nodoc:
-      RESPONSE_TYPE_NONE     = "None"     # :nodoc:
+      RESPONSE_TYPE_SHELTER   = "Shelter"   # :nodoc:
+      RESPONSE_TYPE_EVACUATE  = "Evacuate"  # :nodoc:
+      RESPONSE_TYPE_PREPARE   = "Prepare"   # :nodoc:
+      RESPONSE_TYPE_EXECUTE   = "Execute"   # :nodoc:
+      RESPONSE_TYPE_MONITOR   = "Monitor"   # :nodoc:
+      RESPONSE_TYPE_ASSESS    = "Assess"    # :nodoc:
+      RESPONSE_TYPE_ALL_CLEAR = "All Clear" # :nodoc:
+      RESPONSE_TYPE_AVOID     = "Avoid"     # :nodoc:
+      RESPONSE_TYPE_NONE      = "None"      # :nodoc:
       # Valid values for response_type
       VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, 
         RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
-        RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
+        RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_AVOID, RESPONSE_TYPE_ALL_CLEAR, RESPONSE_TYPE_NONE ]
 
       URGENCY_IMMEDIATE = "Immediate" # :nodoc:
       URGENCY_EXPECTED  = "Expected"  # :nodoc:
