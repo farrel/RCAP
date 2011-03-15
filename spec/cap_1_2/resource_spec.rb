@@ -142,13 +142,18 @@ describe( RCAP::CAP_1_2::Resource ) do
 
   context( 'which is valid' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description' )
+      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv' )
       @resource.should( be_valid )
     end
 
     describe( 'should not be valid if it' ) do
       it( 'does not have a resource description (resource_desc)' ) do
         @resource.resource_desc = nil
+        @resource.should_not( be_valid )
+      end
+
+      it( 'does not have a MIME type' ) do
+        @resource.mime_type = nil
         @resource.should_not( be_valid )
       end
     end

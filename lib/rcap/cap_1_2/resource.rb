@@ -7,6 +7,7 @@ module RCAP
 
       # Resource Description
       attr_accessor( :resource_desc )
+      # MIME type as described in RFC 2046
       attr_accessor( :mime_type )
       # Expressed in bytes
       attr_accessor( :size )
@@ -18,6 +19,7 @@ module RCAP
       attr_accessor( :digest )
 
       validates_presence_of( :resource_desc )
+      validates_presence_of( :mime_type )
 
       XML_ELEMENT_NAME           = 'resource'     # :nodoc: 
       MIME_TYPE_ELEMENT_NAME     = 'mimeType'     # :nodoc: 
