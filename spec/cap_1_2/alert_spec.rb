@@ -203,4 +203,25 @@ describe( RCAP::CAP_1_2::Alert ) do
       end
     end
   end
+
+  describe( 'instance methods' ) do
+    before( :each ) do
+      @alert = RCAP::CAP_1_2::Alert.new
+    end
+
+    describe( '#add_info' ) do
+      before( :each ) do
+        @info = @alert.add_info( :urgency => 'urgent' )
+        @info.urgency.should == 'urgent'
+      end
+
+      it( 'should return a CAP 1.2 Info object' ) do
+        @info.class.should == RCAP::CAP_1_2::Info
+      end
+      
+      it( 'should add an Info object to the infos array' ) do
+        @alert.infos.size.should == 1
+      end
+    end
+  end
 end
