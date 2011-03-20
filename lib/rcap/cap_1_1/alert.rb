@@ -121,7 +121,7 @@ module RCAP
         @infos       = Array( attributes[ :infos ])
       end
 
-      def add_info( info_attributes )
+      def add_info( info_attributes  = {})
         info = Info.new( info_attributes )
         self.infos << info
         info
