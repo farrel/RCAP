@@ -75,13 +75,32 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        contingent_on_value = object.send( options[ :on ])
-        next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
-        unless value.blank? || !value.blank? && !contingent_on_value.blank? && ( options[ :with_value ].nil? || contingent_on_value == options[ :with_value ])
+        next if value.blank? 
+        contingent_on_attribute = object.send( options[ :on ])
+        contingent_on_attribute_value = options[ :with_value ]
+
+        if contingent_on_attribute.nil? || !contingent_on_attribute_value.nil? && contingent_on_attribute_value != contingent_on_attribute
           object.errors[ attribute ] << options[ :message ].gsub( /:attribute/, options[ :on ].to_s )
         end
       end
     end
+
+    def validates_conditional_presence_of( *attributes )
+      options = {
+        :message => 'is not defined but is required by :contingent_attribute'
+      }.merge!( attributes.extract_options! )
+
+      validates_each( *attributes ) do |object, attribute, value|
+        contingent_attribute_value = object.send( options[ :when ] )
+        required_contingent_attribute_value = options[ :is ]
+
+        next if contingent_attribute_value.nil? || contingent_attribute_value != required_contingent_attribute_value && !options[ :is ].blank?
+        if value.blank?
+          object.errors[ attribute ] << options[ :message ].gsub( /:contingent_attribute/, options[ :whenn ].to_s )
+        end
+      end
+    end
+
 
     def validates_numericality_of( *attributes )
       options = {

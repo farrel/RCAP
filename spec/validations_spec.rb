@@ -18,7 +18,19 @@ end
 class DependencyWithObject
   include Validation
   attr_accessor( :dependent_value, :contingent_value )
-  validates_dependency_of( :dependent_value, :on => :contingent_value, :with_value => true )
+  validates_dependency_of( :dependent_value, :on => :contingent_value, :with_value => 1 )
+end
+
+class ConditionalPresenceObject
+  include Validation
+  attr_accessor( :dependent_value, :contingent_value )
+  validates_conditional_presence_of( :dependent_value, when: :contingent_value )
+end
+
+class ConditionalPresenceIsObject
+  include Validation
+  attr_accessor( :dependent_value, :contingent_value )
+  validates_conditional_presence_of( :dependent_value, when: :contingent_value, is: 1 )
 end
 
 describe( Validation::ClassMethods ) do
@@ -42,8 +54,8 @@ describe( Validation::ClassMethods ) do
     context( 'without :with_value' ) do
       before( :each ) do
         @object = DependencyObject.new
-        @object.dependent_value = true
-        @object.contingent_value = true
+        @object.dependent_value = 1
+        @object.contingent_value = 1
         @object.should( be_valid )
       end
 
@@ -51,10 +63,12 @@ describe( Validation::ClassMethods ) do
         @object.contingent_value = nil
         @object.should_not( be_valid )
       end
+
       it( 'should be valid if the dependent value is nil' ) do
         @object.dependent_value = nil
         @object.should( be_valid )
       end
+
       it( 'should be valid if both are nil' ) do
         @object.dependent_value = nil
         @object.contingent_value = nil
@@ -65,8 +79,8 @@ describe( Validation::ClassMethods ) do
     context( 'with :with_value' ) do
       before( :each ) do
         @object = DependencyWithObject.new
-        @object.dependent_value = true
-        @object.contingent_value = true
+        @object.dependent_value = 1
+        @object.contingent_value = 1
         @object.should( be_valid )
       end
 
@@ -86,6 +100,65 @@ describe( Validation::ClassMethods ) do
       end
 
       it( 'should be valid if both are nil' ) do
+        @object.dependent_value = nil
+        @object.contingent_value = nil
+        @object.should( be_valid )
+      end
+    end
+  end
+
+  describe( 'validates_conditional_presence_of' ) do
+    context( 'without :is' ) do
+      before( :each ) do
+        @object = ConditionalPresenceObject.new
+        @object.dependent_value = 1
+        @object.contingent_value = 1
+        @object.should( be_valid )
+      end
+
+      it( 'should not be valid if dependent_value is nil' ) do
+        @object.dependent_value = nil
+        @object.should_not( be_valid )
+      end
+
+      it( 'should be valid if contingent_value is nil' ) do
+        @object.contingent_value = nil
+        @object.should( be_valid )
+      end
+
+      it( 'should be valid if both dependent_value and contingent_value is nil' ) do
+        @object.dependent_value = nil
+        @object.contingent_value = nil
+        @object.should( be_valid )
+      end
+
+    end
+
+    context( 'with :is' ) do
+      before( :each ) do
+        @object = ConditionalPresenceIsObject.new
+        @object.dependent_value = 1
+        @object.contingent_value = 1
+        @object.should( be_valid )
+      end
+
+      it( 'should not be valid if dependent_value is nil' ) do
+        @object.dependent_value = nil
+        @object.should_not( be_valid )
+      end
+
+      it( 'should be valid if contingent_value is nil' ) do
+        @object.contingent_value = nil
+        @object.should( be_valid )
+      end
+
+      it( 'should be valid if dependent_value is nil and contingent_value is not required value' ) do
+        @object.dependent_value = nil
+        @object.contingent_value = 2
+        @object.should( be_valid )
+      end
+
+      it( 'should be valid if both dependent_value and contingent_value is nil' ) do
         @object.dependent_value = nil
         @object.contingent_value = nil
         @object.should( be_valid )
