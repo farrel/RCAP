@@ -121,6 +121,12 @@ module RCAP
         @infos       = Array( attributes[ :infos ])
       end
 
+      def add_info( info_attributes )
+        info = Info.new( info_attributes )
+        self.infos << info
+        info
+      end
+
       def to_xml_element #:nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_namespace( XMLNS )
