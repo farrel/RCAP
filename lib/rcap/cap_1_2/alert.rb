@@ -94,15 +94,15 @@ module RCAP
 
       validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )
 
-      validates_inclusion_of( :status,   :in => VALID_STATUSES )
-      validates_inclusion_of( :msg_type, :in => VALID_MSG_TYPES )
-      validates_inclusion_of( :scope,    :in => VALID_SCOPES )
+      validates_inclusion_of( :status,   in: VALID_STATUSES )
+      validates_inclusion_of( :msg_type, in: VALID_MSG_TYPES )
+      validates_inclusion_of( :scope,    in: VALID_SCOPES )
 
-      validates_format_of( :identifier, :with => ALLOWED_CHARACTERS )
-      validates_format_of( :sender ,    :with => ALLOWED_CHARACTERS )
+      validates_format_of( :identifier, with: ALLOWED_CHARACTERS )
+      validates_format_of( :sender ,    with: ALLOWED_CHARACTERS )
 
-      validates_dependency_of( :addresses,   :on => :scope, :with_value => SCOPE_PRIVATE )
-      validates_dependency_of( :restriction, :on => :scope, :with_value => SCOPE_RESTRICTED )
+      validates_conditional_presence_of( :addresses,   when: :scope, is: SCOPE_PRIVATE )
+      validates_conditional_presence_of( :restriction, when: :scope, is: SCOPE_RESTRICTED )
 
       validates_collection_of( :infos )
 

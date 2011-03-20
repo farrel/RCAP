@@ -177,6 +177,17 @@ describe( RCAP::CAP_1_2::Alert ) do
       @alert.should_not( be_valid )
     end
 
+    it( 'does not have a restriction with a Restricted scope' ) do
+      @alert.scope = RCAP::CAP_1_2::Alert::SCOPE_RESTRICTED
+      @alert.restriction = nil
+      @alert.should_not( be_valid )
+    end
+
+    it( 'does not have any addresses with a Private scope' ) do
+      @alert.scope = RCAP::CAP_1_2::Alert::SCOPE_PRIVATE
+      @alert.addresses.clear
+      @alert.should_not( be_valid )
+    end
 
     context( 'has an info element and it' ) do
       it( 'is not valid' ) do
