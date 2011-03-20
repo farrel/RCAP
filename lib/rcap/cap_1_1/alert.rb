@@ -121,6 +121,8 @@ module RCAP
         @infos       = Array( attributes[ :infos ])
       end
 
+      # Creates a new Info object and adds it to the infos array. The 
+      # info_attributes are passed as a parameter to Info.new.
       def add_info( info_attributes  = {})
         info = Info.new( info_attributes )
         self.infos << info

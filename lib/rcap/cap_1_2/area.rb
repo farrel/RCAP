@@ -45,18 +45,24 @@ module RCAP
         @polygons  = Array( attributes[ :polygons ])
       end
 
+      # Creates a new Polygon object and adds it to the polygons array. The 
+      # polygon_attributes are passed as a parameter to Polygon.new.
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
         self.polygons << polygon
         polygon
       end
 
+      # Creates a new Circle object and adds it to the circles array. The 
+      # circle_attributes are passed as a parameter to Circle.new.
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
         self.circles << circle
         circle
       end
 
+      # Creates a new Geocode object and adds it to the geocodes array. The 
+      # geocode_attributes are passed as a parameter to Geocode.new.
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )
         self.geocodes << geocode

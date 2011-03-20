@@ -179,24 +179,32 @@ module RCAP
         @areas          = Array( attributes[ :areas ])
       end
 
+      # Creates a new EventCode object and adds it to the event_codes array. The 
+      # event_code_attributes are passed as a parameter to EventCode.new.
       def add_event_code( event_code_attributes = {}) 
         event_code = EventCode.new( event_code_attributes )
         self.event_codes << event_code
         event_code
       end
 
+      # Creates a new Parameter object and adds it to the parameters array. The 
+      # parameter_attributes are passed as a parameter to Parameter.new.
       def add_parameter( parameter_attributes = {})
         parameter = Parameter.new( parameter_attributes )
         self.parameters << parameter
         parameter
       end
 
+      # Creates a new Resource object and adds it to the resources array. The 
+      # resource_attributes are passed as a parameter to Resource.new.
       def add_resource( resource_attributes = {})
         resource = Resource.new( resource_attributes )
         self.resources << resource
         resource
       end
 
+      # Creates a new Area object and adds it to the areas array. The 
+      # area_attributes are passed as a parameter to Area.new.
       def add_area( area_attributes = {})
         area = Area.new( area_attributes )
         self.areas << area

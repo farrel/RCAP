@@ -19,6 +19,8 @@ module RCAP
         @points = Array( attributes[ :points ])
       end
 
+      # Creates a new Point object and adds it to the points array. The 
+      # poitn_attributes are passed as a parameter to Point.new.
       def add_point( point_attributes = {})
         point = Point.new( point_attributes )
         self.points << point
