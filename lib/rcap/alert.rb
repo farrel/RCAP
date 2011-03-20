@@ -11,7 +11,7 @@ module RCAP
       case xml_document.root.namespaces[ namespace_key ]
       when CAP_1_1::Alert::XMLNS 
         CAP_1_1::Alert.from_xml_document( xml_document )
-      when CAP_1_2::Alert::XMLNS 
+      else
         CAP_1_2::Alert.from_xml_document( xml_document )
       end
 
@@ -23,7 +23,7 @@ module RCAP
       case yaml_data[ YAML_CAP_VERSION_KEY ]
       when CAP_1_1::Alert::CAP_VERSION
         CAP_1_1::Alert.from_yaml_data( yaml_data )
-      when CAP_1_2::Alert::CAP_VERSION
+      else
         CAP_1_2::Alert.from_yaml_data( yaml_data )
       end
     end
@@ -34,7 +34,7 @@ module RCAP
       case json_hash[ JSON_CAP_VERSION_KEY ]
       when CAP_1_1::Alert::CAP_VERSION
         CAP_1_1::Alert.from_h( json_hash )
-      when CAP_1_2::Alert::CAP_VERSION
+      else
         CAP_1_2::Alert.from_h( json_hash )
       end
     end
