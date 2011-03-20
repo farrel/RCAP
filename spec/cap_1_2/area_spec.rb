@@ -177,4 +177,57 @@ describe( RCAP::CAP_1_2::Area ) do
       end
     end
   end
+
+  describe( 'instance methods' ) do
+    before( :each ) do
+      @area = RCAP::CAP_1_2::Area.new
+    end
+
+    describe( '#add_polygon' ) do
+      before( :each ) do
+        @polygon = @area.add_polygon
+      end
+
+      it( 'should return a CAP 1.1 Polygon' ) do
+        @polygon.class.should == RCAP::CAP_1_2::Polygon
+      end
+
+      it( 'should add a Polygon to the polygons attribute' ) do
+        @area.polygons.size.should == 1
+      end
+    end
+
+    describe( '#add_circle' ) do
+      before( :each ) do
+        @circle = @area.add_circle( lattitude: 1, longitude: 1, radius: 1 )
+      end
+
+      it( 'should return a CAP 1.1 Circle' ) do
+        @circle.class.should == RCAP::CAP_1_2::Circle
+        @circle.lattitude.should == 1
+        @circle.longitude.should == 1
+        @circle.radius.should == 1
+      end
+
+      it( 'should add a circle to the circles attribute' ) do
+        @area.circles.size.should == 1
+      end
+    end
+
+    describe( '#add_geocode' ) do
+      before( :each ) do
+        @geocode = @area.add_geocode( name: 'Geocode', value: '123' )
+      end
+
+      it( 'should return a CAP 1.1 Geocode' ) do
+        @geocode.class.should == RCAP::CAP_1_2::Geocode
+        @geocode.name.should == 'Geocode'
+        @geocode.value.should == '123'
+      end
+
+      it( 'should add a geocode to the geocodes attribute' ) do
+        @area.geocodes.size.should == 1
+      end
+    end
+  end
 end

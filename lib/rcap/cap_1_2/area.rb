@@ -45,6 +45,24 @@ module RCAP
         @polygons  = Array( attributes[ :polygons ])
       end
 
+      def add_polygon( polygon_attributes = {})
+        polygon = Polygon.new( polygon_attributes )
+        self.polygons << polygon
+        polygon
+      end
+
+      def add_circle( circle_attributes = {})
+        circle = Circle.new( circle_attributes )
+        self.circles << circle
+        circle
+      end
+
+      def add_geocode( geocode_attributes = {})
+        geocode = Geocode.new( geocode_attributes )
+        self.geocodes << geocode
+        geocode
+      end
+
       def to_xml_element # :nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( AREA_DESC_ELEMENT_NAME ).add_text( @area_desc.to_s )
