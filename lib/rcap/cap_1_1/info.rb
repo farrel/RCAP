@@ -177,6 +177,30 @@ module RCAP
         @areas          = Array( attributes[ :areas ])
       end
 
+      def add_event_code( event_code_attributes ) 
+        event_code = EventCode.new( event_code_attributes )
+        self.event_codes << event_code
+        event_code
+      end
+
+      def add_parameter( parameter_attributes )
+        parameter = Parameter.new( parameter_attributes )
+        self.parameters << parameter
+        parameter
+      end
+
+      def add_resource( resource_attributes )
+        resource = Resource.new( resource_attributes )
+        self.resources << resource
+        resource
+      end
+
+      def add_area( area_attributes )
+        area = Area.new( area_attributes )
+        self.areas << area
+        area
+      end
+
       def to_xml_element # :nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( self.language ) if self.language

@@ -267,4 +267,72 @@ describe( RCAP::CAP_1_1::Info ) do
        end
     end
   end
+
+  describe( 'instance methods' ) do
+    before( :each ) do
+      @info = RCAP::CAP_1_1::Info.new
+    end
+
+    describe( '#add_event_code' ) do
+      before( :each ) do
+        @event_code = @info.add_event_code( name: 'Event Code', value: '1234' )
+      end
+
+      it( 'should return a 1.2 EventCode' ) do
+        @event_code.class.should == RCAP::CAP_1_1::EventCode
+        @event_code.name.should == 'Event Code'
+        @event_code.value.should == '1234'
+      end
+
+      it( 'should add an EventCode to the event_codes attribute' ) do
+        @info.event_codes.size.should == 1
+      end
+    end
+
+    describe( '#add_parameter' ) do
+      before( :each ) do
+        @parameter = @info.add_parameter( name: 'Parameter', value: '1234' )
+      end
+
+      it( 'should return a 1.2 Parameter' ) do
+        @parameter.class.should == RCAP::CAP_1_1::Parameter
+        @parameter.name.should == 'Parameter'
+        @parameter.value.should == '1234'
+      end
+
+      it( 'should add a Parameter to the parameters attribute' ) do
+        @info.parameters.size.should == 1
+      end
+    end
+
+    describe( '#add_resource' ) do
+      before( :each ) do
+        @resource = @info.add_resource( resource_desc: 'Resource' )
+      end
+
+      it( 'should return a 1.2 Resource' ) do
+        @resource.class.should == RCAP::CAP_1_1::Resource
+        @resource.resource_desc.should == 'Resource'
+      end
+
+      it( 'should add a Resource to the resources attribute' ) do
+        @info.resources.size.should == 1
+      end
+    end
+
+    describe( '#add_area' ) do
+      before( :each ) do
+        @area = @info.add_area( area_desc: 'Area' )
+      end
+
+      it( 'should return a 1.2 area' ) do
+        @area.class.should == RCAP::CAP_1_1::Area
+        @area.area_desc.should == 'Area'
+      end
+
+      it( 'should add a Area to the areas attribute' ) do
+        @info.areas.size.should == 1
+      end
+    end
+  end
 end
