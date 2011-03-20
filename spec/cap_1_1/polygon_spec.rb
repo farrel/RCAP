@@ -65,4 +65,26 @@ describe( RCAP::CAP_1_1::Polygon ) do
       end
     end
   end
+
+  describe( 'instance methods' ) do
+    before( :each ) do
+      @polygon = RCAP::CAP_1_1::Polygon.new
+    end
+
+    describe( '#add_point' ) do
+      before( :each ) do
+        @point = @polygon.add_point( lattitude: 1, longitude: 1 )
+      end
+
+      it( 'should return a 1.1 Point' ) do
+        @point.class.should == RCAP::CAP_1_1::Point
+        @point.lattitude.should == 1
+        @point.longitude.should == 1
+      end
+
+      it( 'should add a Point to the points attribute' ) do
+        @polygon.points.size.should == 1
+      end
+    end
+  end
 end

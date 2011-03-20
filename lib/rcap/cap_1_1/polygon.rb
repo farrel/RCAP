@@ -19,6 +19,12 @@ module RCAP
         @points = Array( attributes[ :points ])
       end
 
+      def add_point( point_attributes = {})
+        point = Point.new( point_attributes )
+        self.points << point
+        point
+      end
+
       # Returns a string representation of the polygon of the form
       #  points[0] points[1] points[2] ... points[n-1] points[0]
       # where each point is formatted with Point#to_s
