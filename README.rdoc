@@ -8,7 +8,7 @@ RCAP currently supports CAP 1.1 and 1.2.
 
 == Version
 
-0.4
+1.0
 
 == Dependencies
 
@@ -31,7 +31,7 @@ The gem is also available for download and manual installtion at {www.aimred.com
 == Web resources
 
 * The RCAP project page can be found at http://www.aimred.com/projects/rcap 
-* The RCAP API docs can be fount at http://www.aimred.com/projects/rcap/api
+* The RCAP API docs can be found at http://www.aimred.com/projects/rcap/api
 * A public git repository can be found at git://github.com/farrel/RCAP.git 
 
 == Usage
@@ -64,16 +64,19 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
                               Traffic control officers are on the scene and have diverted traffic onto 
                               alternate routes.' )
 
+ alert.infos.first.add_area( area_desc: 'N2 Highway/R300 Interchange' ).add_geocode( name: 'Intersection', value: 'N2-15' )
+
  # Accessing attributes
- puts alert.status                           # Print out "Actual"
- puts alert.infos[0].language                # Print out "en-ZA"
- puts alert.infos[0].categories.join( ', ' ) # Print out "Transport, Fire"
+ alert.status                           # "Actual"
+ alert.infos[0].language                # "en-ZA"
+ alert.infos[0].categories.join( ', ' ) # "Transport, Fire"
+ alert.infos[0].areas[0].first          # "N2 Highway/R300 Interchange"
 
 === Parsing an Alert From An External Source
 
-RCAP can parse a CAP alert from a varierty of file formats. Besides the [standard XML]{http://www.oasis-emergency.org/cap} representation YAML[http://yaml.org] and JSON[http://json.org] support is also included. 
+RCAP can parse a CAP alert from a varierty of file formats. Besides the {standard XML}[http://www.oasis-emergency.org/cap] representation, YAML[http://yaml.org] and JSON[http://json.org] support is also included. 
 
-To help return the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert), a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
+To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
 
 ==== From XML
 
@@ -115,7 +118,7 @@ Will produce the folling output:
 
 All RCAP classes include the Validation module.
 
-A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 250 tests.
+A full spec suite using {RSpec}[http://www.rspec.info] was used to test the validations and currently numbers over 600 tests.
 
 === Exporting an Alert
 
@@ -225,6 +228,14 @@ Farrel Lifson - farrel.lifson@aimred.com
 
 RCAP is released under the BSD License.
 
-== Copyright
+Copyright 2010 - 2011 AIMRED CC. All rights reserved.
 
-2009-2011 Aimred CC
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY AIMRED CC ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL AIMRED CC OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those of the authors and should not be interpreted as representing official policies, either expressed or implied, of AIMRED CC.

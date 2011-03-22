@@ -4,7 +4,7 @@ require 'spec/rake/spectask'
 
 SPEC = Gem::Specification.new do |gem|
   gem.name = "rcap"
-  gem.version = "0.4"
+  gem.version = "1.0"
   gem.authors = [ "Farrel Lifson" ]
   gem.email = "farrel.lifson@aimred.com"
   gem.homepage = "http://www.aimred.com/projects/rcap"

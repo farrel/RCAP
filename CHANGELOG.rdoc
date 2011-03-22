@@ -1,5 +1,11 @@
 = Change Log
 
+== 1.0 - 27th March 2011
+
+* Added CAP 1.2 Support
+* Added namespaces (RCAP::CAP_1_1 and RCAP::CAP_1_2) to seperate CAP 1.1 and CAP 1.2 classes
+* Added factory methods to RCAP::Alert module to parse in files and return the correct RCAP objects
+
 == 0.4 - 6th March 2011
 
 * Implemented Hash generation and parsing
