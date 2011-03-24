@@ -80,7 +80,7 @@ module RCAP
       attr_accessor( :source )
       # Depends on scope being SCOPE_RESTRICTED. 
       attr_accessor( :restriction )
-      attr_accessor( :code )
+      attr_accessor( :codes )
       attr_accessor( :note )
 
       # Collection of address strings. Depends on scope being SCOPE_PRIVATE.
@@ -116,6 +116,7 @@ module RCAP
         @source      = attributes[ :source ]
         @restriction = attributes[ :restriction ]
         @addresses   = Array( attributes[ :addresses ])
+        @codes       = Array( attributes[ :codes ])
         @references  = Array( attributes[ :references ])
         @incidents   = Array( attributes[ :incidents ])
         @infos       = Array( attributes[ :infos ])
@@ -143,7 +144,9 @@ module RCAP
         unless self.addresses.empty?
           xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( self.addresses.to_s_for_cap )
         end
-        xml_element.add_element( CODE_ELEMENT_NAME ).add_text( self.code ) if self.code
+        self.codes.each do |code|
+          xml_element.add_element( CODE_ELEMENT_NAME ).add_text( code )
+        end
         xml_element.add_element( NOTE_ELEMENT_NAME ).add_text( self.note ) if self.note
         unless self.references.empty?
           xml_element.add_element( REFERENCES_ELEMENT_NAME ).add_text( self.references.join( ' ' ))
@@ -187,7 +190,8 @@ Source:       #{ self.source }
 Scope:        #{ self.scope }
 Restriction:  #{ self.restriction }
 Addresses:    #{ self.addresses.to_s_for_cap }
-Code:         #{ self.code }
+Codes:        
+#{ self.codes.map{ |code| "  #{ code }" }.join("\n")}
 Note:         #{ self.note }
 References:   #{ self.references.join( ' ' )}
 Incidents:    #{ self.incidents.join( ' ')}
@@ -214,7 +218,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
                  :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS ),
                  :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS ),
                  :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : nil ),
-                 :code        => RCAP.xpath_text( alert_xml_element, CODE_XPATH, Alert::XMLNS ),
+                 :codes       => RCAP.xpath_match( alert_xml_element, CODE_XPATH, Alert::XMLNS ).map{ |element| element.text },
                  :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS ),
                  :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : nil ),
                  :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : nil ),
@@ -240,7 +244,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       SCOPE_YAML       = "Scope"              # :nodoc:
       RESTRICTION_YAML = "Restriction"        # :nodoc:
       ADDRESSES_YAML   = "Addresses"          # :nodoc:
-      CODE_YAML        = "Code"               # :nodoc:
+      CODES_YAML       = "Codes"               # :nodoc:
       NOTE_YAML        = "Note"               # :nodoc:
       REFERENCES_YAML  = "References"         # :nodoc:
       INCIDENTS_YAML   = "Incidents"          # :nodoc:
@@ -259,7 +263,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
           [ SCOPE_YAML,         self.scope ],
           [ RESTRICTION_YAML,   self.restriction ],
           [ ADDRESSES_YAML,     self.addresses ],
-          [ CODE_YAML,          self.code ],
+          [ CODES_YAML,         self.codes ],
           [ NOTE_YAML,          self.note ],
           [ REFERENCES_YAML,    self.references ],
           [ INCIDENTS_YAML,     self.incidents ],
@@ -283,7 +287,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
           :scope       => alert_yaml_data[ SCOPE_YAML ],
           :restriction => alert_yaml_data[ RESTRICTION_YAML ],
           :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
-          :code        => alert_yaml_data[ CODE_YAML ],
+          :codes       => alert_yaml_data[ CODES_YAML ],
           :note        => alert_yaml_data[ NOTE_YAML ],
           :references  => alert_yaml_data[ REFERENCES_YAML ],
           :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
@@ -301,7 +305,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       SCOPE_KEY       = 'scope'       # :nodoc:
       RESTRICTION_KEY = 'restriction' # :nodoc:
       ADDRESSES_KEY   = 'addresses'   # :nodoc:
-      CODE_KEY        = 'code'        # :nodoc:
+      CODES_KEY       = 'codes'       # :nodoc:
       NOTE_KEY        = 'note'        # :nodoc:
       REFERENCES_KEY  = 'references'  # :nodoc:
       INCIDENTS_KEY   = 'incidents'   # :nodoc:
@@ -319,7 +323,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
                                       [ SCOPE_KEY,        self.scope ],
                                       [ RESTRICTION_KEY,  self.restriction ],
                                       [ ADDRESSES_KEY,    self.addresses ],
-                                      [ CODE_KEY,         self.code ],
+                                      [ CODES_KEY,        self.codes ],
                                       [ NOTE_KEY,         self.note ],
                                       [ REFERENCES_KEY,   self.references ],
                                       [ INCIDENTS_KEY,    self.incidents ],
@@ -338,7 +342,7 @@ RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
           :scope       => alert_hash[ SCOPE_KEY ],
           :restriction => alert_hash[ RESTRICTION_KEY ],
           :addresses   => alert_hash[ ADDRESSES_KEY ],
-          :code        => alert_hash[ CODE_KEY ],
+          :codes       => alert_hash[ CODES_KEY ],
           :note        => alert_hash[ NOTE_KEY ],
           :references  => alert_hash[ REFERENCES_KEY ],
           :incidents   => alert_hash[ INCIDENTS_KEY ],

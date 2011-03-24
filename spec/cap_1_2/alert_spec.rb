@@ -14,7 +14,7 @@ describe( RCAP::CAP_1_2::Alert ) do
     it( 'should not have a source'){ @alert.source.should( be_nil )}
     it( 'should not have a restriction'){ @alert.restriction.should( be_nil )}
     it( 'should not have any addresses' ){ @alert.addresses.should( be_empty )}
-    it( 'should not have a code' ){ @alert.code.should( be_nil )}
+    it( 'should not have any codes' ){ @alert.codes.should( be_empty )}
     it( 'should not have a note' ){ @alert.note.should( be_nil )}
     it( 'should not have any references' ){ @alert.references.should( be_empty )}
     it( 'should not have any incidents' ){ @alert.incidents.should( be_empty )}
@@ -30,7 +30,7 @@ describe( RCAP::CAP_1_2::Alert ) do
 			it( 'should parse scope correctly' )      { @alert.scope.should       == @original_alert.scope }
 			it( 'should parse restriction correctly' ){ @alert.restriction.should == @original_alert.restriction }
 			it( 'should parse addresses correctly' )  { @alert.addresses.should   == @original_alert.addresses }
-			it( 'should parse code correctly' )       { @alert.code.should        == @original_alert.code }
+			it( 'should parse codes correctly' )      { @alert.codes              == @original_alert.codes }
 			it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
 			it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
 			it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
@@ -48,7 +48,7 @@ describe( RCAP::CAP_1_2::Alert ) do
 													 :source => 'Source',
 													 :restriction => 'No Restriction',
 													 :addresses => [ 'Address 1', 'Address 2'],
-													 :code => 'Code',
+													 :codes => [ 'Code1', 'Code2' ],
 													 :note => 'Note',
 													 :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
 													 :incidents => [ 'Incident1', 'Incident2' ],
@@ -71,7 +71,7 @@ describe( RCAP::CAP_1_2::Alert ) do
 													 :source => 'Source',
 													 :restriction => 'No Restriction',
 													 :addresses => [ 'Address 1', 'Address 2'],
-													 :code => 'Code',
+													 :codes => [ 'Code1', 'Code2' ],
 													 :note => 'Note',
 													 :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
 													 :incidents => [ 'Incident1', 'Incident2' ],
@@ -91,7 +91,7 @@ describe( RCAP::CAP_1_2::Alert ) do
 													 :source => 'Source',
 													 :restriction => 'No Restriction',
 													 :addresses => [ 'Address 1', 'Address 2'],
-													 :code => 'Code',
+													 :codes => [ 'Code1', 'Code2' ],
 													 :note => 'Note',
 													 :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
 													 :incidents => [ 'Incident1', 'Incident2' ],
@@ -110,7 +110,7 @@ describe( RCAP::CAP_1_2::Alert ) do
 													 :source => 'Source',
 													 :restriction => 'No Restriction',
 													 :addresses => [ 'Address 1', 'Address 2'],
-													 :code => 'Code',
+													 :codes => [ 'Code1', 'Code2' ],
 													 :note => 'Note',
 													 :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
 													 :incidents => [ 'Incident1', 'Incident2' ],
