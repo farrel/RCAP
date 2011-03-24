@@ -80,11 +80,11 @@ module RCAP
       attr_accessor( :source )
       # Depends on scope being SCOPE_RESTRICTED. 
       attr_accessor( :restriction )
-      attr_accessor( :codes )
       attr_accessor( :note )
 
       # Collection of address strings. Depends on scope being SCOPE_PRIVATE.
       attr_reader( :addresses )
+      attr_reader( :codes )
       # Collection of reference strings - see Alert#to_reference
       attr_reader( :references) 
       # Collection of incident strings
