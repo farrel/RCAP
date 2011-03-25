@@ -1,0 +1,33 @@
+PATH
+  remote: .
+  specs:
+    rcap (1.0.0)
+      assistance
+      json
+      uuidtools (>= 2.0.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    assistance (0.1.5)
+    haml (2.2.24)
+    hanna (0.1.12)
+      haml (~> 2.2.8)
+      rake (~> 0.8.2)
+      rdoc (~> 2.3.0)
+    json (1.5.1)
+    rake (0.8.7)
+    rdoc (2.3.0)
+    rspec (1.3.1)
+    uuidtools (2.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  assistance
+  hanna
+  json
+  rcap!
+  rspec (~> 1.3.1)
+  uuidtools (>= 2.0.0)
