@@ -54,6 +54,7 @@ module RCAP
       end
 
       def self.from_xml_element( polygon_xml_element ) # :nodoc:
+        return [] if polygon_xml_element.text.nil?
         coordinates = self.parse_polygon_string( polygon_xml_element.text )
         points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
         polygon = self.new( :points => points )
