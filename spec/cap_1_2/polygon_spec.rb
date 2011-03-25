@@ -50,6 +50,7 @@ describe( RCAP::CAP_1_2::Polygon ) do
       it 'should allow empty polygon xml elements' do
         empty_polygon_element = RCAP.xpath_match( @area_element, RCAP::CAP_1_2::Polygon::XPATH, RCAP::CAP_1_2::Alert::XMLNS )[1]
         empty_polygon = RCAP::CAP_1_2::Polygon.from_xml_element( empty_polygon_element )
+        empty_polygon.should == @empty_original_polygon
       end
     end
 
