@@ -29,5 +29,4 @@ require 'rcap/cap_1_2/geocode'
 require 'rcap/cap_1_2/area'
 
 module RCAP
-	VERSION = "1.0"
 end
