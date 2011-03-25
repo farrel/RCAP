@@ -25,7 +25,8 @@ describe( RCAP::CAP_1_1::Polygon ) do
     context( 'from XML' ) do
       before( :each ) do
         @original_polygon = RCAP::CAP_1_1::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_1::Point.new( :lattitude => i, :longitude => i )})
-        @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :areas => RCAP::CAP_1_1::Area.new( :polygons => @original_polygon )))
+        @empty_original_polygon = RCAP::CAP_1_1::Polygon.new()
+        @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :areas => RCAP::CAP_1_1::Area.new( :polygons => [@original_polygon, @empty_original_polygon] )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
@@ -39,6 +40,11 @@ describe( RCAP::CAP_1_1::Polygon ) do
           point.lattitude.should == original_point.lattitude
           point.longitude.should == original_point.longitude
         end
+      end
+
+      it 'should allow empty polygon xml elements' do
+        empty_polygon_element = RCAP.xpath_match( @area_element, RCAP::CAP_1_1::Polygon::XPATH, RCAP::CAP_1_1::Alert::XMLNS )[1]
+        empty_polygon = RCAP::CAP_1_1::Polygon.from_xml_element( empty_polygon_element )
       end
     end
 
