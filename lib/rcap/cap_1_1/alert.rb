@@ -1,6 +1,6 @@
 module RCAP
   module CAP_1_1
-    # An Alert object is valid if 
+    # An Alert object is valid if
     # * it has an identifier
     # * it has a sender
     # * it has a sent time
@@ -20,7 +20,7 @@ module RCAP
       STATUS_TEST     = "Test"     # :nodoc:
       STATUS_DRAFT    = "Draft"    # :nodoc:
       # Valid values for status
-      VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ] 
+      VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
 
       MSG_TYPE_ALERT  = "Alert"   # :nodoc:
       MSG_TYPE_UPDATE = "Update"  # :nodoc:
@@ -28,7 +28,7 @@ module RCAP
       MSG_TYPE_ACK    = "Ack"     # :nodoc:
       MSG_TYPE_ERROR  = "Error"   # :nodoc:
       # Valid values for msg_type
-      VALID_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]  
+      VALID_MSG_TYPES = [ MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR ]
 
       SCOPE_PUBLIC     = "Public"        # :nodoc:
       SCOPE_RESTRICTED = "Restricted"    # :nodoc:
@@ -51,20 +51,20 @@ module RCAP
       REFERENCES_ELEMENT_NAME  = 'references'  # :nodoc:
       INCIDENTS_ELEMENT_NAME   = 'incidents'   # :nodoc:
 
-      XPATH             = 'cap:alert'                         # :nodoc: 
-      IDENTIFIER_XPATH  = "cap:#{ IDENTIFIER_ELEMENT_NAME }"  # :nodoc: 
-      SENDER_XPATH      = "cap:#{ SENDER_ELEMENT_NAME }"      # :nodoc: 
-      SENT_XPATH        = "cap:#{ SENT_ELEMENT_NAME }"        # :nodoc: 
-      STATUS_XPATH      = "cap:#{ STATUS_ELEMENT_NAME }"      # :nodoc: 
-      MSG_TYPE_XPATH    = "cap:#{ MSG_TYPE_ELEMENT_NAME }"    # :nodoc: 
-      SOURCE_XPATH      = "cap:#{ SOURCE_ELEMENT_NAME }"      # :nodoc: 
-      SCOPE_XPATH       = "cap:#{ SCOPE_ELEMENT_NAME }"       # :nodoc: 
-      RESTRICTION_XPATH = "cap:#{ RESTRICTION_ELEMENT_NAME }" # :nodoc: 
-      ADDRESSES_XPATH   = "cap:#{ ADDRESSES_ELEMENT_NAME }"   # :nodoc: 
-      CODE_XPATH        = "cap:#{ CODE_ELEMENT_NAME }"        # :nodoc: 
-      NOTE_XPATH        = "cap:#{ NOTE_ELEMENT_NAME }"        # :nodoc: 
-      REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"  # :nodoc: 
-      INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"   # :nodoc: 
+      XPATH             = 'cap:alert'                         # :nodoc:
+      IDENTIFIER_XPATH  = "cap:#{ IDENTIFIER_ELEMENT_NAME }"  # :nodoc:
+      SENDER_XPATH      = "cap:#{ SENDER_ELEMENT_NAME }"      # :nodoc:
+      SENT_XPATH        = "cap:#{ SENT_ELEMENT_NAME }"        # :nodoc:
+      STATUS_XPATH      = "cap:#{ STATUS_ELEMENT_NAME }"      # :nodoc:
+      MSG_TYPE_XPATH    = "cap:#{ MSG_TYPE_ELEMENT_NAME }"    # :nodoc:
+      SOURCE_XPATH      = "cap:#{ SOURCE_ELEMENT_NAME }"      # :nodoc:
+      SCOPE_XPATH       = "cap:#{ SCOPE_ELEMENT_NAME }"       # :nodoc:
+      RESTRICTION_XPATH = "cap:#{ RESTRICTION_ELEMENT_NAME }" # :nodoc:
+      ADDRESSES_XPATH   = "cap:#{ ADDRESSES_ELEMENT_NAME }"   # :nodoc:
+      CODE_XPATH        = "cap:#{ CODE_ELEMENT_NAME }"        # :nodoc:
+      NOTE_XPATH        = "cap:#{ NOTE_ELEMENT_NAME }"        # :nodoc:
+      REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"  # :nodoc:
+      INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"   # :nodoc:
 
       # If not set a UUID will be set by default
       attr_accessor( :identifier)
@@ -78,7 +78,7 @@ module RCAP
       # Value can only be one of VALID_SCOPES
       attr_accessor( :scope )
       attr_accessor( :source )
-      # Depends on scope being SCOPE_RESTRICTED. 
+      # Depends on scope being SCOPE_RESTRICTED.
       attr_accessor( :restriction )
       attr_accessor( :note )
 
@@ -86,7 +86,7 @@ module RCAP
       attr_reader( :addresses )
       attr_reader( :codes )
       # Collection of reference strings - see Alert#to_reference
-      attr_reader( :references) 
+      attr_reader( :references)
       # Collection of incident strings
       attr_reader( :incidents )
       # Collection of Info objects
@@ -122,7 +122,7 @@ module RCAP
         @infos       = Array( attributes[ :infos ])
       end
 
-      # Creates a new Info object and adds it to the infos array. The 
+      # Creates a new Info object and adds it to the infos array. The
       # info_attributes are passed as a parameter to Info.new.
       def add_info( info_attributes  = {})
         info = Info.new( info_attributes )
@@ -133,13 +133,13 @@ module RCAP
       def to_xml_element #:nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_namespace( XMLNS )
-        xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier ) 
-        xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender ) 
-        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s ) 
-        xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status ) 
-        xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type ) 
+        xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier )
+        xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender )
+        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s )
+        xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status )
+        xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type )
         xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source ) if self.source
-        xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope ) 
+        xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope )
         xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( self.restriction ) if self.restriction
         unless self.addresses.empty?
           xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( self.addresses.to_s_for_cap )
@@ -190,7 +190,7 @@ Source:       #{ self.source }
 Scope:        #{ self.scope }
 Restriction:  #{ self.restriction }
 Addresses:    #{ self.addresses.to_s_for_cap }
-Codes:        
+Codes:
 #{ self.codes.map{ |code| "  #{ code }" }.join("\n")}
 Note:         #{ self.note }
 References:   #{ self.references.join( ' ' )}

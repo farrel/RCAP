@@ -13,14 +13,14 @@ module RCAP
       validates_length_of( :points, :minimum => 4 )
       validates_equality_of_first_and_last( :points )
 
-      XML_ELEMENT_NAME = 'polygon'                   # :nodoc: 
-      XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc: 
+      XML_ELEMENT_NAME = 'polygon'                   # :nodoc:
+      XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc:
 
       def initialize( attributes = {})
         @points = Array( attributes[ :points ])
       end
 
-      # Creates a new Point object and adds it to the points array. The 
+      # Creates a new Point object and adds it to the points array. The
       # poitn_attributes are passed as a parameter to Point.new.
       def add_point( point_attributes = {})
         point = Point.new( point_attributes )

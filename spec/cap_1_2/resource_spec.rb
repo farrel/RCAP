@@ -6,11 +6,11 @@ describe( RCAP::CAP_1_2::Resource ) do
       @resource = RCAP::CAP_1_2::Resource.new
     end
 
-    it( 'should have no mime_type' ){     @resource.mime_type.should( be_nil )}    
-    it( 'should have no size' ){          @resource.size.should( be_nil )}         
-    it( 'should have no uri' ){           @resource.uri.should( be_nil )}          
-    it( 'should have no deref_uri' ){     @resource.deref_uri.should( be_nil )}    
-    it( 'should have no digest' ){        @resource.digest.should( be_nil )}       
+    it( 'should have no mime_type' ){     @resource.mime_type.should( be_nil )}
+    it( 'should have no size' ){          @resource.size.should( be_nil )}
+    it( 'should have no uri' ){           @resource.uri.should( be_nil )}
+    it( 'should have no deref_uri' ){     @resource.deref_uri.should( be_nil )}
+    it( 'should have no digest' ){        @resource.digest.should( be_nil )}
     it( 'should have no resource_desc' ){ @resource.resource_desc.should( be_nil )}
 
     context( 'from XML' ) do
@@ -27,7 +27,7 @@ describe( RCAP::CAP_1_2::Resource ) do
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
-				@resource_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Resource::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @resource_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Resource::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
         @resource_element.should_not( be_nil )
         @resource = RCAP::CAP_1_2::Resource.from_xml_element( @resource_element )
       end
@@ -132,11 +132,11 @@ describe( RCAP::CAP_1_2::Resource ) do
 
       it( 'should set the dereferenced URI' ) do
         @resource_hash[ RCAP::CAP_1_2::Resource::DEREF_URI_KEY ].should == @resource.deref_uri
-      end 
+      end
 
       it( 'should set the digest' ) do
         @resource_hash[ RCAP::CAP_1_2::Resource::DIGEST_KEY ].should == @resource.digest
-      end 
+      end
     end
   end
 

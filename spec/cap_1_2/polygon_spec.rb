@@ -33,8 +33,8 @@ describe( RCAP::CAP_1_2::Polygon ) do
         @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :polygons => @original_polygon )))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
-				@area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Area::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Area::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
         @polygon_element = RCAP.xpath_first( @area_element, RCAP::CAP_1_2::Polygon::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
         @polygon = RCAP::CAP_1_2::Polygon.from_xml_element( @polygon_element )
       end
@@ -58,7 +58,7 @@ describe( RCAP::CAP_1_2::Polygon ) do
       end
     end
   end
-  
+
   context( 'when exported' ) do
     before( :each ) do
       @polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})

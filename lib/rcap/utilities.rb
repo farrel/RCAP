@@ -19,7 +19,7 @@ class String # :nodoc:
   end
 
   def unpack_cap_list
-    self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }  
+    self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }
   end
 end
 
@@ -33,7 +33,7 @@ class Time # :nodoc:
   RCAP_ZONE_FORMAT = "%+03i:00"
 
   def to_s_for_cap
-    self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset ) 
+    self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
   end
 
   def utc_hours_offset
@@ -42,7 +42,7 @@ class Time # :nodoc:
 end
 
 module RCAP # :nodoc:
-  def self.xpath_text( xml_element, xpath, namespace ) 
+  def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
     element.text if element
   end
@@ -65,7 +65,7 @@ module RCAP # :nodoc:
   end
 
   def self.attribute_values_to_hash( *attribute_values )
-    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten( 1 )] 
+    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten( 1 )]
   end
 
   def self.to_s_for_cap( object )

@@ -75,8 +75,8 @@ describe( RCAP::CAP_1_1::Info ) do
                                           RCAP::CAP_1_1::Area.new( :area_desc => 'Area2' )]
                                       )
         @alert = RCAP::CAP_1_1::Alert.new( :infos => @original_info )
-				@xml_string = @alert.to_xml
-				@xml_document = REXML::Document.new( @xml_string )
+        @xml_string = @alert.to_xml
+        @xml_document = REXML::Document.new( @xml_string )
         @info = RCAP::CAP_1_1::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS ))
       end
 
@@ -125,7 +125,7 @@ describe( RCAP::CAP_1_1::Info ) do
       puts @info.errors.full_messages
       @info.should( be_valid )
     end
-    
+
     it( 'does not have an event' ) do
       @info.event = nil
       @info.should_not( be_valid )
@@ -189,7 +189,7 @@ describe( RCAP::CAP_1_1::Info ) do
       it( 'should export the categories' ) do
         @info_hash[ RCAP::CAP_1_1::Info::CATEGORIES_KEY ].should == @info.categories
       end
-      
+
       it( 'should export the event' ) do
         @info_hash[ RCAP::CAP_1_1::Info::EVENT_KEY ].should == @info.event
       end
@@ -259,11 +259,11 @@ describe( RCAP::CAP_1_1::Info ) do
        end
 
        it( 'should export the resources ' ) do
-         @info_hash[ RCAP::CAP_1_1::Info::RESOURCES_KEY ].should == @info.resources.map{ |resource| resource.to_h }  
+         @info_hash[ RCAP::CAP_1_1::Info::RESOURCES_KEY ].should == @info.resources.map{ |resource| resource.to_h }
        end
 
        it( 'should export the areas' ) do
-         @info_hash[ RCAP::CAP_1_1::Info::AREAS_KEY ].should == @info.areas.map{ |area| area.to_h }      
+         @info_hash[ RCAP::CAP_1_1::Info::AREAS_KEY ].should == @info.areas.map{ |area| area.to_h }
        end
     end
   end

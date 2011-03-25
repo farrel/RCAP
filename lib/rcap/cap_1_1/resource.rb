@@ -19,21 +19,21 @@ module RCAP
 
       validates_presence_of( :resource_desc )
 
-      XML_ELEMENT_NAME           = 'resource'     # :nodoc: 
-      MIME_TYPE_ELEMENT_NAME     = 'mimeType'     # :nodoc: 
-      SIZE_ELEMENT_NAME          = 'size'         # :nodoc: 
-      URI_ELEMENT_NAME           = 'uri'          # :nodoc: 
-      DEREF_URI_ELEMENT_NAME     = 'derefUri'     # :nodoc: 
-      DIGEST_ELEMENT_NAME        = 'digest'       # :nodoc: 
-      RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc' # :nodoc: 
+      XML_ELEMENT_NAME           = 'resource'     # :nodoc:
+      MIME_TYPE_ELEMENT_NAME     = 'mimeType'     # :nodoc:
+      SIZE_ELEMENT_NAME          = 'size'         # :nodoc:
+      URI_ELEMENT_NAME           = 'uri'          # :nodoc:
+      DEREF_URI_ELEMENT_NAME     = 'derefUri'     # :nodoc:
+      DIGEST_ELEMENT_NAME        = 'digest'       # :nodoc:
+      RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc' # :nodoc:
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc: 
-      MIME_TYPE_XPATH     = "cap:#{ MIME_TYPE_ELEMENT_NAME }"     # :nodoc: 
-      SIZE_XPATH          = "cap:#{ SIZE_ELEMENT_NAME }"          # :nodoc: 
-      URI_XPATH           = "cap:#{ URI_ELEMENT_NAME }"           # :nodoc: 
-      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     # :nodoc: 
-      DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        # :nodoc: 
-      RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" # :nodoc: 
+      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc:
+      MIME_TYPE_XPATH     = "cap:#{ MIME_TYPE_ELEMENT_NAME }"     # :nodoc:
+      SIZE_XPATH          = "cap:#{ SIZE_ELEMENT_NAME }"          # :nodoc:
+      URI_XPATH           = "cap:#{ URI_ELEMENT_NAME }"           # :nodoc:
+      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     # :nodoc:
+      DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        # :nodoc:
+      RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" # :nodoc:
 
       def initialize( attributes = {} )
         @mime_type     = attributes[ :mime_type ]
@@ -116,8 +116,8 @@ module RCAP
 
       RESOURCE_DESC_KEY = 'resource_desc' # :nodoc:
       URI_KEY           = 'uri'           # :nodoc:
-      MIME_TYPE_KEY     = 'mime_type'     # :nodoc:    
-      DEREF_URI_KEY     = 'deref_uri'     # :nodoc:     
+      MIME_TYPE_KEY     = 'mime_type'     # :nodoc:
+      DEREF_URI_KEY     = 'deref_uri'     # :nodoc:
       SIZE_KEY          = 'size'          # :nodoc:
       DIGEST_KEY        = 'digest'        # :nodoc:
 

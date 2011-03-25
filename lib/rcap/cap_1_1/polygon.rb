@@ -12,14 +12,14 @@ module RCAP
       validates_length_of( :points, :minimum => 3 )
       validates_collection_of( :points )
 
-      XML_ELEMENT_NAME = 'polygon'                   # :nodoc: 
-      XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc: 
+      XML_ELEMENT_NAME = 'polygon'                   # :nodoc:
+      XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc:
 
       def initialize( attributes = {})
         @points = Array( attributes[ :points ])
       end
 
-      # Creates a new Point object and adds it to the points array. The 
+      # Creates a new Point object and adds it to the points array. The
       # poitn_attributes are passed as a parameter to Point.new.
       def add_point( point_attributes = {})
         point = Point.new( point_attributes )
@@ -68,7 +68,7 @@ module RCAP
       end
 
       def self.from_yaml_data( polygon_yaml_data ) # :nodoc:
-        self.new( 
+        self.new(
                  :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
                 )
       end

@@ -1,12 +1,12 @@
-module Validation  # :nodoc: 
+module Validation  # :nodoc:
   module ClassMethods # :nodoc:
 
     CAP_NUMBER_REGEX  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
     CAP_INTEGER_REGEX = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )
 
     def validates_inclusion_of( *attributes )
-      options = { 
-        :message => 'is not in the required range' 
+      options = {
+        :message => 'is not in the required range'
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
@@ -75,7 +75,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if value.blank? 
+        next if value.blank?
         contingent_on_attribute = object.send( options[ :on ])
         contingent_on_attribute_value = options[ :with_value ]
 
@@ -113,7 +113,7 @@ module Validation  # :nodoc:
         next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
         unless ( value.to_s =~ re ) &&
           ( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
-          object.errors[ attribute ] << options[ :message ] 
+          object.errors[ attribute ] << options[ :message ]
         end
       end
     end

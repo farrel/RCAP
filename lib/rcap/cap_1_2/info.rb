@@ -24,7 +24,7 @@ module RCAP
       CATEGORY_CBRNE     = "CBRNE"     # :nodoc:
       CATEGORY_OTHER     = "Other"     # :nodoc:
       # Valid values for categories
-      VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,  
+      VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,
         CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
         CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
         CATEGORY_OTHER ]
@@ -39,8 +39,8 @@ module RCAP
       RESPONSE_TYPE_AVOID     = "Avoid"     # :nodoc:
       RESPONSE_TYPE_NONE      = "None"      # :nodoc:
       # Valid values for response_type
-      VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, 
-        RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, 
+      VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE,
+        RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR,
         RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_AVOID, RESPONSE_TYPE_ALL_CLEAR, RESPONSE_TYPE_NONE ]
 
       URGENCY_IMMEDIATE = "Immediate" # :nodoc:
@@ -49,7 +49,7 @@ module RCAP
       URGENCY_PAST      = "Past"      # :nodoc:
       URGENCY_UNKNOWN   = "Unknown"   # :nodoc:
       # Valid values for urgency
-      VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,   
+      VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,
         URGENCY_PAST, URGENCY_UNKNOWN ]
 
       SEVERITY_EXTREME  = "Extreme"  # :nodoc:
@@ -59,7 +59,7 @@ module RCAP
       SEVERITY_UNKNOWN  = "Unknown"  # :nodoc:
       # Valid values for severity
       VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
-        SEVERITY_MINOR, SEVERITY_UNKNOWN ] 
+        SEVERITY_MINOR, SEVERITY_UNKNOWN ]
 
       CERTAINTY_OBSERVED = "Observed" # :nodoc:
       CERTAINTY_LIKELY   = "Likely"   # :nodoc:
@@ -90,25 +90,25 @@ module RCAP
       WEB_ELEMENT_NAME           = 'web'          # :nodoc:
       CONTACT_ELEMENT_NAME       = 'contact'      # :nodoc:
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc: 
-      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      # :nodoc: 
-      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         # :nodoc: 
-      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       # :nodoc: 
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" # :nodoc: 
-      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      # :nodoc: 
-      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      # :nodoc: 
-      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     # :nodoc: 
-      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      # :nodoc: 
-      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    # :nodoc: 
-      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     # :nodoc: 
-      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         # :nodoc: 
-      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       # :nodoc: 
-      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   # :nodoc: 
-      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      # :nodoc: 
-      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   # :nodoc: 
-      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   # :nodoc: 
-      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           # :nodoc: 
-      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       # :nodoc: 
+      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc:
+      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      # :nodoc:
+      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         # :nodoc:
+      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       # :nodoc:
+      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" # :nodoc:
+      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      # :nodoc:
+      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      # :nodoc:
+      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     # :nodoc:
+      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      # :nodoc:
+      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    # :nodoc:
+      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     # :nodoc:
+      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         # :nodoc:
+      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       # :nodoc:
+      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   # :nodoc:
+      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      # :nodoc:
+      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   # :nodoc:
+      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   # :nodoc:
+      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           # :nodoc:
+      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       # :nodoc:
 
       DEFAULT_LANGUAGE = 'en-US'
 
@@ -179,15 +179,15 @@ module RCAP
         @areas          = Array( attributes[ :areas ])
       end
 
-      # Creates a new EventCode object and adds it to the event_codes array. The 
+      # Creates a new EventCode object and adds it to the event_codes array. The
       # event_code_attributes are passed as a parameter to EventCode.new.
-      def add_event_code( event_code_attributes = {}) 
+      def add_event_code( event_code_attributes = {})
         event_code = EventCode.new( event_code_attributes )
         self.event_codes << event_code
         event_code
       end
 
-      # Creates a new Parameter object and adds it to the parameters array. The 
+      # Creates a new Parameter object and adds it to the parameters array. The
       # parameter_attributes are passed as a parameter to Parameter.new.
       def add_parameter( parameter_attributes = {})
         parameter = Parameter.new( parameter_attributes )
@@ -195,7 +195,7 @@ module RCAP
         parameter
       end
 
-      # Creates a new Resource object and adds it to the resources array. The 
+      # Creates a new Resource object and adds it to the resources array. The
       # resource_attributes are passed as a parameter to Resource.new.
       def add_resource( resource_attributes = {})
         resource = Resource.new( resource_attributes )
@@ -203,7 +203,7 @@ module RCAP
         resource
       end
 
-      # Creates a new Area object and adds it to the areas array. The 
+      # Creates a new Area object and adds it to the areas array. The
       # area_attributes are passed as a parameter to Area.new.
       def add_area( area_attributes = {})
         area = Area.new( area_attributes )
@@ -286,7 +286,7 @@ RCAP.format_lines_for_inspect( 'INFO', info_inspect )
 
       # Returns a string representation of the event of the form
       #  event(urgency/severity/certainty)
-      def to_s 
+      def to_s
         "#{ self.event }(#{ self.urgency }/#{ self.severity }/#{ self.certainty })"
       end
 
@@ -347,7 +347,7 @@ RCAP.format_lines_for_inspect( 'INFO', info_inspect )
 
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
-        RCAP.attribute_values_to_hash( 
+        RCAP.attribute_values_to_hash(
                                       [ LANGUAGE_YAML,       self.language ],
                                       [ CATEGORIES_YAML,     categories_yaml ],
                                       [ EVENT_YAML,          self.event ],
@@ -398,27 +398,27 @@ RCAP.format_lines_for_inspect( 'INFO', info_inspect )
         )
       end
 
-      LANGUAGE_KEY       = 'language'       # :nodoc:      
-      CATEGORIES_KEY     = 'categories'     # :nodoc:    
-      EVENT_KEY          = 'event'          # :nodoc:         
+      LANGUAGE_KEY       = 'language'       # :nodoc:
+      CATEGORIES_KEY     = 'categories'     # :nodoc:
+      EVENT_KEY          = 'event'          # :nodoc:
       RESPONSE_TYPES_KEY = 'response_types' # :nodoc:
-      URGENCY_KEY        = 'urgency'        # :nodoc:       
-      SEVERITY_KEY       = 'severity'       # :nodoc:      
-      CERTAINTY_KEY      = 'certainty'      # :nodoc:     
+      URGENCY_KEY        = 'urgency'        # :nodoc:
+      SEVERITY_KEY       = 'severity'       # :nodoc:
+      CERTAINTY_KEY      = 'certainty'      # :nodoc:
       AUDIENCE_KEY       = 'audience'       # :nodoc:
-      EFFECTIVE_KEY      = 'effective'      # :nodoc:     
-      ONSET_KEY          = 'onset'          # :nodoc:         
-      EXPIRES_KEY        = 'expires'        # :nodoc:       
-      SENDER_NAME_KEY    = 'sender_name'    # :nodoc:   
-      HEADLINE_KEY       = 'headline'       # :nodoc:      
-      DESCRIPTION_KEY    = 'description'    # :nodoc:   
-      INSTRUCTION_KEY    = 'instruction'    # :nodoc:   
-      WEB_KEY            = 'web'            # :nodoc:           
-      CONTACT_KEY        = 'contact'        # :nodoc:       
-      RESOURCES_KEY      = 'resources'      # :nodoc:     
-      EVENT_CODES_KEY    = 'event_codes'    # :nodoc:   
-      PARAMETERS_KEY     = 'parameters'     # :nodoc:    
-      AREAS_KEY          = 'areas'          # :nodoc:         
+      EFFECTIVE_KEY      = 'effective'      # :nodoc:
+      ONSET_KEY          = 'onset'          # :nodoc:
+      EXPIRES_KEY        = 'expires'        # :nodoc:
+      SENDER_NAME_KEY    = 'sender_name'    # :nodoc:
+      HEADLINE_KEY       = 'headline'       # :nodoc:
+      DESCRIPTION_KEY    = 'description'    # :nodoc:
+      INSTRUCTION_KEY    = 'instruction'    # :nodoc:
+      WEB_KEY            = 'web'            # :nodoc:
+      CONTACT_KEY        = 'contact'        # :nodoc:
+      RESOURCES_KEY      = 'resources'      # :nodoc:
+      EVENT_CODES_KEY    = 'event_codes'    # :nodoc:
+      PARAMETERS_KEY     = 'parameters'     # :nodoc:
+      AREAS_KEY          = 'areas'          # :nodoc:
 
       def to_h # :nodoc:
         RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,       self.language ],

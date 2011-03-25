@@ -10,8 +10,8 @@ module RCAP
       include Validation
 
       # Area Description - Textual description of area.
-      attr_accessor( :area_desc ) 
-      # Expressed in feet above sea level 
+      attr_accessor( :area_desc )
+      # Expressed in feet above sea level
       attr_accessor( :altitude )
       # Expressed in feet above sea level.
       attr_accessor( :ceiling )
@@ -26,15 +26,15 @@ module RCAP
       validates_collection_of( :circles, :geocodes, :polygons )
       validates_dependency_of( :ceiling, :on => :altitude )
 
-      XML_ELEMENT_NAME       = 'area'     # :nodoc: 
-      AREA_DESC_ELEMENT_NAME = 'areaDesc' # :nodoc: 
-      ALTITUDE_ELEMENT_NAME  = 'altitude' # :nodoc: 
-      CEILING_ELEMENT_NAME   = 'ceiling'  # :nodoc: 
+      XML_ELEMENT_NAME       = 'area'     # :nodoc:
+      AREA_DESC_ELEMENT_NAME = 'areaDesc' # :nodoc:
+      ALTITUDE_ELEMENT_NAME  = 'altitude' # :nodoc:
+      CEILING_ELEMENT_NAME   = 'ceiling'  # :nodoc:
 
-      XPATH           = "cap:#{ XML_ELEMENT_NAME }"       # :nodoc: 
-      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }" # :nodoc: 
-      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  # :nodoc: 
-      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   # :nodoc: 
+      XPATH           = "cap:#{ XML_ELEMENT_NAME }"       # :nodoc:
+      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }" # :nodoc:
+      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  # :nodoc:
+      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   # :nodoc:
 
       def initialize( attributes = {})
         @area_desc = attributes[ :area_desc ]
@@ -45,7 +45,7 @@ module RCAP
         @polygons  = Array( attributes[ :polygons ])
       end
 
-      # Creates a new Polygon object and adds it to the polygons array. The 
+      # Creates a new Polygon object and adds it to the polygons array. The
       # polygon_attributes are passed as a parameter to Polygon.new.
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
@@ -53,7 +53,7 @@ module RCAP
         polygon
       end
 
-      # Creates a new Circle object and adds it to the circles array. The 
+      # Creates a new Circle object and adds it to the circles array. The
       # circle_attributes are passed as a parameter to Circle.new.
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
@@ -61,7 +61,7 @@ module RCAP
         circle
       end
 
-      # Creates a new Geocode object and adds it to the geocodes array. The 
+      # Creates a new Geocode object and adds it to the geocodes array. The
       # geocode_attributes are passed as a parameter to Geocode.new.
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )
@@ -89,7 +89,7 @@ module RCAP
       end
 
       # Implements an equality operator for the Area object. Two Area objects are equal if all their attributes are equal.
-      def ==( other )  
+      def ==( other )
         comparison_attributes = lambda{ |area| [ area.area_desc, area.altitude, area.ceiling, area.circles, area.geocodes, area.polygons ]}
         comparison_attributes.call( self ) == comparison_attributes.call( other )
       end
@@ -107,7 +107,7 @@ RCAP.format_lines_for_inspect( 'AREA', area_inspect )
 
       # Returns a string representation of the area of the form
       #  area_desc
-      def to_s 
+      def to_s
         self.area_desc
       end
 

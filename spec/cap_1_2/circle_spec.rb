@@ -18,7 +18,7 @@ describe( RCAP::CAP_1_2::Circle ) do
       @circle.lattitude = nil
       @circle.should_not( be_valid )
     end
-    
+
     it( 'does not have a longitude defined' ) do
       @circle.longitude = nil
       @circle.should_not( be_valid )
@@ -40,33 +40,33 @@ describe( RCAP::CAP_1_2::Circle ) do
     end
   end
 
-	context( 'on initialisation' ) do
-		context( 'from XML' ) do
-			before( :each ) do
-				@original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5,
-																					   :lattitude => 30, :longitude => 60 )
-				@alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :circles => @original_circle )))
-				@xml_string = @alert.to_xml
+  context( 'on initialisation' ) do
+    context( 'from XML' ) do
+      before( :each ) do
+        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5,
+                                             :lattitude => 30, :longitude => 60 )
+        @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :circles => @original_circle )))
+        @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
-				@info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
-				@area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Area::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
-				@circle_element = RCAP.xpath_first( @area_element, RCAP::CAP_1_2::Circle::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
-				@circle = RCAP::CAP_1_2::Circle.from_xml_element( @circle_element )
-			end
+        @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @area_element = RCAP.xpath_first( @info_element, RCAP::CAP_1_2::Area::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @circle_element = RCAP.xpath_first( @area_element, RCAP::CAP_1_2::Circle::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
+        @circle = RCAP::CAP_1_2::Circle.from_xml_element( @circle_element )
+      end
 
-			it( 'should parse the radius correctly' ) do
-				@circle.radius.should == @original_circle.radius
-			end
+      it( 'should parse the radius correctly' ) do
+        @circle.radius.should == @original_circle.radius
+      end
 
-			it( 'should parse the lattitude and longitude correctly' ) do
-				@circle.lattitude.should == @original_circle.lattitude
-				@circle.longitude.should == @original_circle.longitude
-			end
-		end
+      it( 'should parse the lattitude and longitude correctly' ) do
+        @circle.lattitude.should == @original_circle.lattitude
+        @circle.longitude.should == @original_circle.longitude
+      end
+    end
 
     context( 'from a hash' ) do
       before( :each ) do
-				@original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
         @circle = RCAP::CAP_1_2::Circle.from_h( @original_circle.to_h )
       end
 
@@ -74,16 +74,16 @@ describe( RCAP::CAP_1_2::Circle ) do
         @circle.radius.should == @original_circle.radius
       end
 
-			it( 'should parse the lattitude and longitude correctly' ) do
-				@circle.lattitude.should == @original_circle.lattitude
-				@circle.longitude.should == @original_circle.longitude
-			end
+      it( 'should parse the lattitude and longitude correctly' ) do
+        @circle.lattitude.should == @original_circle.lattitude
+        @circle.longitude.should == @original_circle.longitude
+      end
     end
-	end
+  end
 
   context( 'when exported' ) do
     before( :each ) do
-      @circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 ) 
+      @circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
     end
 
     context( 'to hash' ) do

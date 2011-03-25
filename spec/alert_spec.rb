@@ -11,7 +11,7 @@ describe( RCAP::Alert ) do
                                                     :addresses => [ 'Address 1', 'Address 2'],
                                                     :code => ['Code1', 'Code2'],
                                                     :note => 'Note',
-                                                    :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, 
+                                                    :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference,
                                                                      RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
                                                     :incidents => [ 'Incident1', 'Incident2' ],
                                                     :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
@@ -34,8 +34,8 @@ describe( RCAP::Alert ) do
         it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
         it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
         it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
-        it( 'should parse infos correctly' ) do 
-          @alert.infos.size.should == @original_alert.infos.size 
+        it( 'should parse infos correctly' ) do
+          @alert.infos.size.should == @original_alert.infos.size
           @alert.infos.each{ |info| info.class.should == RCAP::CAP_1_1::Info }
         end
       end
@@ -75,7 +75,7 @@ describe( RCAP::Alert ) do
                                                     :addresses => [ 'Address 1', 'Address 2'],
                                                     :codes => [ 'Code1', 'Code2'],
                                                     :note => 'Note',
-                                                    :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference, 
+                                                    :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference,
                                                                      RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
                                                     :incidents => [ 'Incident1', 'Incident2' ],
                                                     :infos => [ RCAP::CAP_1_2::Info.new, RCAP::CAP_1_2::Info.new ])
@@ -98,8 +98,8 @@ describe( RCAP::Alert ) do
         it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
         it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
         it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
-        it( 'should parse infos correctly' ) do 
-          @alert.infos.size.should == @original_alert.infos.size 
+        it( 'should parse infos correctly' ) do
+          @alert.infos.size.should == @original_alert.infos.size
           @alert.infos.each{ |info| info.class.should == RCAP::CAP_1_2::Info }
         end
       end

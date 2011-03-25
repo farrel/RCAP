@@ -20,7 +20,7 @@ module RCAP
 
       def initialize( attributes = {} )
         @name = attributes[ :name ]
-        @value = attributes[ :value ] 
+        @value = attributes[ :value ]
       end
 
       def to_xml_element # :nodoc:
@@ -61,7 +61,7 @@ module RCAP
 
       def self.from_h( hash ) # :nodoc:
         key = hash.keys.first
-        self.new( :name => key, :value => hash[ key ]) 
+        self.new( :name => key, :value => hash[ key ])
       end
     end
   end
