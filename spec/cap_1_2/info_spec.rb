@@ -34,9 +34,9 @@ describe( RCAP::CAP_1_1::Info ) do
       it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
       it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
       it( 'should parse audience correctly' ){       @info .audience.should       ==    @original_info.audience }
-      it( 'should parse effective correctly' ){      @info .effective.should( be_close( @original_info.effective, Rational( 1, 86400 )))}
-      it( 'should parse onset correctly' ){          @info .onset.should( be_close(     @original_info.onset, Rational( 1, 86400 )))}
-      it( 'should parse expires correctly' ){        @info .expires.should( be_close(   @original_info.expires, Rational( 1, 86400 )))}
+      it( 'should parse effective correctly' ){      @info .effective.should( be_within(Rational( 1, 86400 )).of( @original_info.effective ))}
+      it( 'should parse onset correctly' ){          @info .onset.should( be_within( Rational( 1, 86400 )).of( @original_info.onset ))}
+      it( 'should parse expires correctly' ){        @info .expires.should( be_within( Rational( 1, 86400 )).of( @original_info.expires ))}
       it( 'should parse sender_name correctly' ){    @info .sender_name.should    ==    @original_info.sender_name }
       it( 'should parse headline correctly' ){       @info .headline.should       ==    @original_info.headline }
       it( 'should parse description correctly' ){    @info .description.should    ==    @original_info.description }
