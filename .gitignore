@@ -4,3 +4,4 @@ tmp/*
 tags
 *.gem
 .bundle
+Gemfile.lock
