@@ -1,5 +1,6 @@
 pkg/*
 doc/*
+tmp/*
 tags
 *.gem
 .bundle
