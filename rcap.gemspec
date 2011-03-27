@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc','CHANGELOG.rdoc']
   s.add_dependency('assistance', '>= 0.1.5')
   s.add_dependency('json', '>= 1.5.1')
-  s.add_dependency('uuidtools', '>= 2.1.1')
+  s.add_dependency('uuidtools', '>= 2.1.2')
 
   s.add_development_dependency('rspec', '>= 2.5.0')
   s.add_development_dependency('hanna', '>= 0.1.12')
