@@ -135,7 +135,7 @@ module RCAP
         xml_element.add_namespace( XMLNS )
         xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier )
         xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender )
-        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s )
+        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s_for_cap )
         xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status )
         xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type )
         xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source ) if self.source
