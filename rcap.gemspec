@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Farrel Lifson']
   s.email       = ['farrel.lifson@aimred.com']
   s.homepage    = 'http://www.aimred.com/projects/rcap'
-  s.summary     = %q{CAP(Common Alerting Protocol) API}
-  s.description = %q{A Ruby API providing parsing, generation and validation of CAP(Common Alerting Protocol) messages.}
+  s.summary     = 'CAP(Common Alerting Protocol) API'
+  s.description = 'A Ruby API providing parsing, generation and validation of CAP(Common Alerting Protocol) messages.'
 
   s.rubyforge_project = 'rcap'
 
