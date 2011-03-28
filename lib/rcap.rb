@@ -27,6 +27,3 @@ require 'rcap/cap_1_2/circle'
 require 'rcap/cap_1_2/polygon'
 require 'rcap/cap_1_2/geocode'
 require 'rcap/cap_1_2/area'
-
-module RCAP
-end

@@ -23,7 +23,7 @@ describe( RCAP::CAP_1_2::Alert ) do
     shared_examples_for( "a successfully parsed CAP 1.2 alert" ) do
       it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
       it( 'should parse sender correctly' )     { @alert.sender.should      == @original_alert.sender }
-      it( 'should parse sent correctly' )       { @alert.sent.should( be_close( @original_alert.sent, Rational( 1, 86400 )))}
+      it( 'should parse sent correctly' )       { @alert.sent.should( be_within( Rational(1, 86400 )).of( @original_alert.sent ))}
       it( 'should parse status correctly' )     { @alert.status.should      == @original_alert.status }
       it( 'should parse msg_type correctly' )   { @alert.msg_type.should    == @original_alert.msg_type }
       it( 'should parse source correctly' )     { @alert.source.should      == @original_alert.source }

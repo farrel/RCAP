@@ -34,9 +34,9 @@ describe( RCAP::CAP_1_1::Info ) do
       it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
       it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
       it( 'should parse audience correctly' ){       @info .audience.should       ==    @original_info.audience }
-      it( 'should parse effective correctly' ){      @info .effective.should( be_close( @original_info.effective, Rational( 1, 86400 )))}
-      it( 'should parse onset correctly' ){          @info .onset.should( be_close(     @original_info.onset, Rational( 1, 86400 )))}
-      it( 'should parse expires correctly' ){        @info .expires.should( be_close(   @original_info.expires, Rational( 1, 86400 )))}
+      it( 'should parse effective correctly' ){      @info .effective.should( be_within(Rational( 1, 86400 )).of( @original_info.effective ))}
+      it( 'should parse onset correctly' ){          @info .onset.should( be_within( Rational( 1, 86400 )).of( @original_info.onset ))}
+      it( 'should parse expires correctly' ){        @info .expires.should( be_within( Rational( 1, 86400 )).of( @original_info.expires ))}
       it( 'should parse sender_name correctly' ){    @info .sender_name.should    ==    @original_info.sender_name }
       it( 'should parse headline correctly' ){       @info .headline.should       ==    @original_info.headline }
       it( 'should parse description correctly' ){    @info .description.should    ==    @original_info.description }
@@ -278,7 +278,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @event_code = @info.add_event_code( name: 'Event Code', value: '1234' )
       end
 
-      it( 'should return a 1.2 EventCode' ) do
+      it( 'should return a 1.1 EventCode' ) do
         @event_code.class.should == RCAP::CAP_1_1::EventCode
         @event_code.name.should == 'Event Code'
         @event_code.value.should == '1234'
@@ -294,7 +294,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @parameter = @info.add_parameter( name: 'Parameter', value: '1234' )
       end
 
-      it( 'should return a 1.2 Parameter' ) do
+      it( 'should return a 1.1 Parameter' ) do
         @parameter.class.should == RCAP::CAP_1_1::Parameter
         @parameter.name.should == 'Parameter'
         @parameter.value.should == '1234'
@@ -310,7 +310,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @resource = @info.add_resource( resource_desc: 'Resource' )
       end
 
-      it( 'should return a 1.2 Resource' ) do
+      it( 'should return a 1.1 Resource' ) do
         @resource.class.should == RCAP::CAP_1_1::Resource
         @resource.resource_desc.should == 'Resource'
       end
@@ -325,7 +325,7 @@ describe( RCAP::CAP_1_1::Info ) do
         @area = @info.add_area( area_desc: 'Area' )
       end
 
-      it( 'should return a 1.2 area' ) do
+      it( 'should return a 1.1 area' ) do
         @area.class.should == RCAP::CAP_1_1::Area
         @area.area_desc.should == 'Area'
       end

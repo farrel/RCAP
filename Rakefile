@@ -1,6 +1,6 @@
 require 'bundler'
 require 'hanna/rdoctask'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 Bundler::GemHelper.install_tasks
 
@@ -11,10 +11,8 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = 'RCAP Ruby API'
 end
 
-Spec::Rake::SpecTask.new do |spec|
-  spec.libs = ['lib','spec']
-  spec.warning = true
-  spec.spec_opts = ['--options spec/spec.opts']
+RSpec::Core::RakeTask.new do |spec|
+  spec.rspec_opts = ['--options spec/spec.opts']
 end
 
 desc 'Generate a new tag file'

@@ -62,6 +62,21 @@ describe( RCAP::CAP_1_1::Area ) do
       it_should_behave_like( "it can parse into a CAP 1.1 Area object" )
     end
 
+    context( 'from YAML Data' ) do
+      before( :each ) do
+        @original_area = RCAP::CAP_1_1::Area.new( :area_desc => 'Area Description',
+                                                  :altitude => 100,
+                                                  :ceiling => 200,
+                                                  :circles => RCAP::CAP_1_1::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
+                                                  :geocodes => RCAP::CAP_1_1::Geocode.new( :name => 'name', :value => 'value' ),
+                                                  :polygons => RCAP::CAP_1_1::Polygon.new( :points => RCAP::CAP_1_1::Point.new( :lattitude =>1, :longitude => 1 )))
+
+        @area = RCAP::CAP_1_1::Area.from_yaml_data( YAML.load( @original_area.to_yaml ))
+      end
+
+      it_should_behave_like( "it can parse into a CAP 1.1 Area object" )
+    end
+
     context( 'from a hash' ) do
       before( :each ) do
         @original_area = RCAP::CAP_1_1::Area.new( :area_desc => 'Area Description',

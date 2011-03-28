@@ -141,15 +141,13 @@ RCAP.format_lines_for_inspect( 'AREA', area_inspect )
         ).to_yaml( options )
       end
 
-      def from_yaml_data( area_yaml_data )  # :nodoc:
-        self.new(
-          :area_desc => area_yaml_data[ AREA_DESC_YAML ],
-          :altitude  => area_yaml_data[ ALTITUDE_YAML ],
-          :ceiling   => area_yaml_data[ CEILING_YAML ],
-          :circles   => Array( area_yaml_data[ CIRCLES_YAML ]).map{ |circle_yaml_data| Circle.from_yaml_data( circle_yaml_data )},
-          :geocodes  => Array( area_yaml_data[ GEOCODES_YAML ]).map{ |name, value| Geocode.new( :name => name, :value => value )},
-          :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| Polygon.from_yaml_data( polyon_yaml_data )}
-        )
+      def self.from_yaml_data( area_yaml_data )  # :nodoc:
+        self.new( :area_desc => area_yaml_data[ AREA_DESC_YAML ],
+                  :altitude  => area_yaml_data[ ALTITUDE_YAML ],
+                  :ceiling   => area_yaml_data[ CEILING_YAML ],
+                  :circles   => Array( area_yaml_data[ CIRCLES_YAML ]).map{ |circle_yaml_data| Circle.from_yaml_data( circle_yaml_data )},
+                  :geocodes  => Array( area_yaml_data[ GEOCODES_YAML ]).map{ |name, value| Geocode.new( :name => name, :value => value )},
+                  :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| Polygon.from_yaml_data( polyon_yaml_data )})
       end
 
       AREA_DESC_KEY = 'area_desc'  # :nodoc:

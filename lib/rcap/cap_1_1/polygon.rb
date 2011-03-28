@@ -54,10 +54,13 @@ module RCAP
       end
 
       def self.from_xml_element( polygon_xml_element ) # :nodoc:
-        return [] if polygon_xml_element.text.nil?
-        coordinates = self.parse_polygon_string( polygon_xml_element.text )
-        points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
-        polygon = self.new( :points => points )
+        if !polygon_xml_element.text.nil?
+          coordinates = self.parse_polygon_string( polygon_xml_element.text )
+          points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
+          polygon = self.new( :points => points )
+        else
+          self.new
+        end
       end
 
 
@@ -69,9 +72,7 @@ module RCAP
       end
 
       def self.from_yaml_data( polygon_yaml_data ) # :nodoc:
-        self.new(
-                 :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
-                )
+        self.new( :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )})
       end
 
       POINTS_KEY  = 'points' # :nodoc:
