@@ -81,7 +81,7 @@ module RCAP
       EFFECTIVE_ELEMENT_NAME     = 'effective'    # :nodoc:
       ONSET_ELEMENT_NAME         = 'onset'        # :nodoc:
       EXPIRES_ELEMENT_NAME       = 'expires'      # :nodoc:
-      SENDER_NAME_ELEMENT_NAME   = 'sernderName'  # :nodoc:
+      SENDER_NAME_ELEMENT_NAME   = 'senderName'   # :nodoc:
       HEADLINE_ELEMENT_NAME      = 'headline'     # :nodoc:
       DESCRIPTION_ELEMENT_NAME   = 'description'  # :nodoc:
       INSTRUCTION_ELEMENT_NAME   = 'instruction'  # :nodoc:
