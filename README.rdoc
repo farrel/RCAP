@@ -30,9 +30,9 @@ The gem is also available for download and manual installtion at {www.aimred.com
 
 == Web resources
 
-* The RCAP project page can be found at http://www.aimred.com/projects/rcap 
+* The RCAP project page can be found at http://www.aimred.com/projects/rcap
 * The RCAP API docs can be found at http://www.aimred.com/projects/rcap/api
-* A public git repository can be found at git://github.com/farrel/RCAP.git 
+* A public git repository can be found at git://github.com/farrel/RCAP.git
 
 == Usage
 
@@ -48,7 +48,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 === Creating an Alert
 
  alert = Alert.new( sender:   'cape_town_disaster_relief@capetown.municipal.za',
-                    status:   Alert::STATUS_ACTUAL, 
+                    status:   Alert::STATUS_ACTUAL,
                     msg_type: Alert::MSG_TYPE_ALERT,
                     scope:    Alert::SCOPE_PUBLIC )
 
@@ -61,7 +61,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
                  headline:    'LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY',
                  description: 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
                               after the R300 interchange.  Municipal fire fighting crews have been dispatched.
-                              Traffic control officers are on the scene and have diverted traffic onto 
+                              Traffic control officers are on the scene and have diverted traffic onto
                               alternate routes.' )
 
  alert.infos.first.add_area( area_desc: 'N2 Highway/R300 Interchange' ).add_geocode( name: 'Intersection', value: 'N2-15' )
@@ -74,7 +74,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 
 === Parsing an Alert From An External Source
 
-RCAP can parse a CAP alert from a varierty of file formats. Besides the {standard XML}[http://www.oasis-emergency.org/cap] representation, YAML[http://yaml.org] and JSON[http://json.org] support is also included. 
+RCAP can parse a CAP alert from a varierty of file formats. Besides the {standard XML}[http://www.oasis-emergency.org/cap] representation, YAML[http://yaml.org] and JSON[http://json.org] support is also included.
 
 To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
 
@@ -172,7 +172,7 @@ will produce the following YAML document
  Status: Actual
  Message Type: Alert
  Scope: Public
- Information: 
+ Information:
  - Language: en-ZA
    Categories: [Transport, Fire]
    Event: Liquid Petroleoum Tanker Fire
@@ -186,7 +186,7 @@ will produce the following YAML document
      Traffic control officers are on the scene and have diverted traffic onto
      alternate routes.
 
-Note: If you use Ruby 1.8 the order of the attributes is jumbled due to hashes being unorderd (Ruby 1.9 implements ordered hashes). This does not affect the ability to parse documents generated from RCAP::Alert#to_yaml, it just makes things the output slightly messy. 
+Note: If you use Ruby 1.8 the order of the attributes is jumbled due to hashes being unorderd (Ruby 1.9 implements ordered hashes). This does not affect the ability to parse documents generated from RCAP::Alert#to_yaml, it just makes things the output slightly messy.
 
 === To JSON
 
@@ -203,7 +203,7 @@ will produce the following JSON string
   "status":"Actual",
   "msg_type":"Alert",
   "scope":"Public",
-  "infos":[ 
+  "infos":[
     {"language":"en-ZA",
      "categories":["Transport","Fire"],
      "event":"Liquid Petroleoum Tanker Fire",
