@@ -222,7 +222,11 @@ It is highly recommended that when dealing with date and time fields (onset, exp
 
 == Authors
 
-Farrel Lifson - farrel.lifson@aimred.com
+* Farrel Lifson - farrel.lifson@aimred.com - http://www.aimred.com
+
+=== Contributors
+
+* Earle Clubb - eclubb@valcom.com - http://www.valcom.com
 
 == License
 
