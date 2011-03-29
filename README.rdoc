@@ -226,7 +226,7 @@ It is highly recommended that when dealing with date and time fields (onset, exp
 
 === Contributors
 
-* Earle Clubb - eclubb@valcom.com - http://www.valcom.com
+* Earle Clubb - http://github.com/eclubb
 
 == License
 
