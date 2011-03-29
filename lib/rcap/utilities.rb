@@ -33,7 +33,8 @@ class Time # :nodoc:
   RCAP_ZONE_FORMAT = "%+03i:00"
 
   def to_s_for_cap
-    self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
+    t = self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
+    t.sub(/\+(00:\d\d)$/, '-\1')
   end
 
   def utc_hours_offset
