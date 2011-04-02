@@ -107,9 +107,9 @@ module RCAP
       validates_collection_of( :infos )
 
       def initialize( attributes = {})
-        @identifier  = attributes[ :identifier ] || UUIDTools::UUID.random_create.to_s
+        @identifier  = attributes[ :identifier ]
         @sender      = attributes[ :sender ]
-        @sent        = attributes[ :sent ] || DateTime.now
+        @sent        = attributes[ :sent ]
         @status      = attributes[ :status ]
         @msg_type    = attributes[ :msg_type ]
         @scope       = attributes[ :scope ]
@@ -133,13 +133,13 @@ module RCAP
       def to_xml_element #:nodoc:
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_namespace( XMLNS )
-        xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier )
-        xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender )
-        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s_for_cap )
-        xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status )
-        xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type )
-        xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source ) if self.source
-        xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope )
+        xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( self.identifier )   if self.identifier
+        xml_element.add_element( SENDER_ELEMENT_NAME ).add_text( self.sender )           if self.sender
+        xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s_for_cap )  if self.sent
+        xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status )           if self.status
+        xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type )       if self.msg_type
+        xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source )           if self.source
+        xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope )             if self.scope
         xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( self.restriction ) if self.restriction
         unless self.addresses.empty?
           xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( self.addresses.to_s_for_cap )

@@ -4,6 +4,7 @@ describe( RCAP::Alert ) do
     context( 'a CAP 1.1 alert' ) do
       before( :each ) do
         @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
+                                                    :sent => DateTime.now,
                                                     :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
                                                     :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
                                                     :source => 'Source',
@@ -11,8 +12,7 @@ describe( RCAP::Alert ) do
                                                     :addresses => [ 'Address 1', 'Address 2'],
                                                     :code => ['Code1', 'Code2'],
                                                     :note => 'Note',
-                                                    :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference,
-                                                                     RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :references => [ "1,1,1", "1,1,2" ],
                                                     :incidents => [ 'Incident1', 'Incident2' ],
                                                     :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
       end
@@ -23,7 +23,7 @@ describe( RCAP::Alert ) do
         it( 'should use the correct CAP Version' ){ @alert.class.should       == RCAP::CAP_1_1::Alert }
         it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
         it( 'should parse sender correctly' )     { @alert.sender.should      == @original_alert.sender }
-        it( 'should parse sent correctly' )       { @alert.sent.should( be_within( Rational(1, 86400 )).of( @original_alert.sent ))}
+        it( 'should parse sent correctly' )       { @alert.sent.should( be_within( 1 ).of( @original_alert.sent ))}
         it( 'should parse status correctly' )     { @alert.status.should      == @original_alert.status }
         it( 'should parse msg_type correctly' )   { @alert.msg_type.should    == @original_alert.msg_type }
         it( 'should parse source correctly' )     { @alert.source.should      == @original_alert.source }
@@ -68,6 +68,7 @@ describe( RCAP::Alert ) do
     context( 'a CAP 1.2 alert' ) do
       before( :each ) do
         @original_alert = RCAP::CAP_1_2::Alert.new( :sender => 'Sender',
+                                                    :sent => DateTime.now,
                                                     :status => RCAP::CAP_1_2::Alert::STATUS_TEST,
                                                     :scope => RCAP::CAP_1_2::Alert::SCOPE_PUBLIC,
                                                     :source => 'Source',
@@ -75,8 +76,7 @@ describe( RCAP::Alert ) do
                                                     :addresses => [ 'Address 1', 'Address 2'],
                                                     :codes => [ 'Code1', 'Code2'],
                                                     :note => 'Note',
-                                                    :references => [ RCAP::CAP_1_2::Alert.new( :sender => 'Sender1' ).to_reference,
-                                                                     RCAP::CAP_1_2::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :references => [ "1,1,1", "1,1,2" ],
                                                     :incidents => [ 'Incident1', 'Incident2' ],
                                                     :infos => [ RCAP::CAP_1_2::Info.new, RCAP::CAP_1_2::Info.new ])
       end
@@ -87,7 +87,7 @@ describe( RCAP::Alert ) do
         it( 'should use the correct CAP Version' ){ @alert.class.should       == RCAP::CAP_1_2::Alert }
         it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
         it( 'should parse sender correctly' )     { @alert.sender.should      == @original_alert.sender }
-        it( 'should parse sent correctly' )       { @alert.sent.should( be_within( Rational(1, 86400 )).of( @original_alert.sent ))}
+        it( 'should parse sent correctly' )       { @alert.sent.should( be_within( 1 ).of( @original_alert.sent ))}
         it( 'should parse status correctly' )     { @alert.status.should      == @original_alert.status }
         it( 'should parse msg_type correctly' )   { @alert.msg_type.should    == @original_alert.msg_type }
         it( 'should parse source correctly' )     { @alert.source.should      == @original_alert.source }

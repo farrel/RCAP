@@ -6,9 +6,9 @@ describe( RCAP::CAP_1_1::Alert ) do
       @alert = RCAP::CAP_1_1::Alert.new
     end
 
-    it( 'should have a default identifier' ){ @alert.identifier.should_not( be_nil )}
+    it( 'should not have a identifier' ){ @alert.identifier.should( be_nil )}
     it( 'should not have a sender' ){ @alert.sender.should( be_nil )}
-    it( 'should have a default sent time' ){ @alert.sent.should_not( be_nil )}
+    it( 'should not have a sent time' ){ @alert.sent.should( be_nil )}
     it( 'should not have a status' ){ @alert.status.should( be_nil )}
     it( 'should not have a scope' ){ @alert.scope.should( be_nil )}
     it( 'should not have a source'){ @alert.source.should( be_nil )}
@@ -23,7 +23,7 @@ describe( RCAP::CAP_1_1::Alert ) do
     shared_examples_for( "a successfully parsed CAP 1.1 alert" ) do
       it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
       it( 'should parse sender correctly' )     { @alert.sender.should      == @original_alert.sender }
-      it( 'should parse sent correctly' )       { @alert.sent.should( be_within( Rational(1, 86400 )).of( @original_alert.sent ))}
+      it( 'should parse sent correctly' )       { @alert.sent.should( be_within( 1 ).of( @original_alert.sent ))}
       it( 'should parse status correctly' )     { @alert.status.should      == @original_alert.status }
       it( 'should parse msg_type correctly' )   { @alert.msg_type.should    == @original_alert.msg_type }
       it( 'should parse source correctly' )     { @alert.source.should      == @original_alert.source }
@@ -42,17 +42,18 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
-                           :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                           :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                           :source => 'Source',
-                           :restriction => 'No Restriction',
-                           :addresses => [ 'Address 1', 'Address 2'],
-                           :codes => [ 'Code1', 'Code2' ],
-                           :note => 'Note',
-                           :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                           :incidents => [ 'Incident1', 'Incident2' ],
-                           :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
+                                                    :sent        => DateTime.now,
+                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
+                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
+                                                    :source      => 'Source',
+                                                    :restriction => 'No Restriction',
+                                                    :addresses   => [ 'Address 1', 'Address 2'],
+                                                    :codes       => [ 'Code1', 'Code2' ],
+                                                    :note        => 'Note',
+                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :incidents   => [ 'Incident1', 'Incident2' ],
+                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
         @xml_string = @original_alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @alert_element = @xml_document.root
@@ -65,17 +66,18 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from YAML' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
-                           :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                           :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                           :source => 'Source',
-                           :restriction => 'No Restriction',
-                           :addresses => [ 'Address 1', 'Address 2'],
-                           :codes => [ 'Code1', 'Code2' ],
-                           :note => 'Note',
-                           :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                           :incidents => [ 'Incident1', 'Incident2' ],
-                           :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
+                                                    :sent        => DateTime.now,
+                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
+                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
+                                                    :source      => 'Source',
+                                                    :restriction => 'No Restriction',
+                                                    :addresses   => [ 'Address 1', 'Address 2'],
+                                                    :codes       => [ 'Code1', 'Code2' ],
+                                                    :note        => 'Note',
+                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :incidents   => [ 'Incident1', 'Incident2' ],
+                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
         @yaml_string = @original_alert.to_yaml
         @alert = RCAP::CAP_1_1::Alert.from_yaml( @yaml_string )
       end
@@ -85,17 +87,18 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
-                           :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                           :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                           :source => 'Source',
-                           :restriction => 'No Restriction',
-                           :addresses => [ 'Address 1', 'Address 2'],
-                           :codes => [ 'Code1', 'Code2' ],
-                           :note => 'Note',
-                           :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                           :incidents => [ 'Incident1', 'Incident2' ],
-                           :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
+                                                    :sent        => DateTime.now,
+                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
+                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
+                                                    :source      => 'Source',
+                                                    :restriction => 'No Restriction',
+                                                    :addresses   => [ 'Address 1', 'Address 2'],
+                                                    :codes       => [ 'Code1', 'Code2' ],
+                                                    :note        => 'Note',
+                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :incidents   => [ 'Incident1', 'Incident2' ],
+                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
         @alert = RCAP::CAP_1_1::Alert.from_h( @original_alert.to_h )
       end
 
@@ -104,17 +107,18 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from JSON' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
-                           :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                           :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                           :source => 'Source',
-                           :restriction => 'No Restriction',
-                           :addresses => [ 'Address 1', 'Address 2'],
-                           :codes => [ 'Code1', 'Code2' ],
-                           :note => 'Note',
-                           :references => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                           :incidents => [ 'Incident1', 'Incident2' ],
-                           :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
+                                                    :sent        => DateTime.now,
+                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
+                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
+                                                    :source      => 'Source',
+                                                    :restriction => 'No Restriction',
+                                                    :addresses   => [ 'Address 1', 'Address 2'],
+                                                    :codes       => [ 'Code1', 'Code2' ],
+                                                    :note        => 'Note',
+                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
+                                                    :incidents   => [ 'Incident1', 'Incident2' ],
+                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
         @alert = RCAP::CAP_1_1::Alert.from_json( @original_alert.to_json )
       end
 
@@ -124,10 +128,12 @@ describe( RCAP::CAP_1_1::Alert ) do
 
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @alert = RCAP::CAP_1_1::Alert.new( :sender => "cap@tempuri.org",
-                              :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                              :msg_type => RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT,
-                              :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC )
+      @alert = RCAP::CAP_1_1::Alert.new( :identifier => 'Identifier',
+                                         :sender     => "cap@tempuri.org",
+                                         :sent       => DateTime.now,
+                                         :status     => RCAP::CAP_1_1::Alert::STATUS_TEST,
+                                         :msg_type   => RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT,
+                                         :scope      => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC )
       @alert.should( be_valid )
     end
 
