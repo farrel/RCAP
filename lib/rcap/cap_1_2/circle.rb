@@ -10,7 +10,7 @@ module RCAP
       attr_accessor( :radius )
 
       validates_presence_of( :radius )
-      validates_numericality_of( :radius , :greater_than => 0 )
+      validates_numericality_of( :radius , :greater_than_or_equal: 0 )
 
       XML_ELEMENT_NAME = 'circle' # :nodoc:
 
