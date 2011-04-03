@@ -117,7 +117,7 @@ module RCAP
       validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES,   :message => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
       validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
       validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
-      validates_collection_of( :resources, :areas )
+      validates_collection_of( :resources, :areas, :event_codes, :parameters )
 
       attr_accessor( :event )
       # Value can only be one of VALID_URGENCIES
