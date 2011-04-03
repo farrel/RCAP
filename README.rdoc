@@ -8,7 +8,7 @@ RCAP currently supports CAP 1.1 and 1.2.
 
 == Version
 
-1.0
+1.0.0 RC 1
 
 == Dependencies
 
@@ -112,7 +112,7 @@ The RCAP API aims to codify as many of the rules of the CAP XML format into vali
  puts "Is info valid: #{ info.valid? }"
  info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
 
-Will produce the folling output:
+Will produce the following output:
 
  Is info valid: false
  Error: severity is not present
