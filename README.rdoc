@@ -47,10 +47,12 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 
 === Creating an Alert
 
- alert = Alert.new( sender:   'cape_town_disaster_relief@capetown.municipal.za',
-                    status:   Alert::STATUS_ACTUAL,
-                    msg_type: Alert::MSG_TYPE_ALERT,
-                    scope:    Alert::SCOPE_PUBLIC )
+ alert = Alert.new( identifier: RCAP.generate_identifier,
+                    sent:       DateTime.now,
+                    sender:     'cape_town_disaster_relief@capetown.municipal.za',
+                    status:     Alert::STATUS_ACTUAL,
+                    msg_type:   Alert::MSG_TYPE_ALERT,
+                    scope:      Alert::SCOPE_PUBLIC )
 
  alert.add_info( event:       'Liquid Petroleoum Tanker Fire',
                  language:    'en-ZA',
@@ -70,7 +72,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
  alert.status                           # "Actual"
  alert.infos[0].language                # "en-ZA"
  alert.infos[0].categories.join( ', ' ) # "Transport, Fire"
- alert.infos[0].areas[0].first          # "N2 Highway/R300 Interchange"
+ alert.infos[0].areas[0]                # "N2 Highway/R300 Interchange"
 
 === Parsing an Alert From An External Source
 
