@@ -38,8 +38,8 @@ module RCAP
         [ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
       end
 
-      LATTITUDE_KEY = 'lattitude_hash'  # :nodoc:
-      LONGITUDE_KEY = 'longitude_hash'  # :nodoc:
+      LATTITUDE_KEY = 'lattitude'  # :nodoc:
+      LONGITUDE_KEY = 'longitude'  # :nodoc:
 
       def to_h # :nodoc:
         RCAP.attribute_values_to_hash(
