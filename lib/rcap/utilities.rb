@@ -43,6 +43,10 @@ class Time # :nodoc:
 end
 
 module RCAP # :nodoc:
+  def self.generate_identifier
+    UUIDTools::UUID.random_create.to_s
+  end
+
   def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
     element.text if element
