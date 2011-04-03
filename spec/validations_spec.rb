@@ -33,6 +33,14 @@ class ConditionalPresenceIsObject
   validates_conditional_presence_of( :dependent_value, when: :contingent_value, is: 1 )
 end
 
+class NumericalityObject
+  include Validation
+  attr_accessor( :gt, :gte )
+
+  validates_numericality_of( :gt, greater_than: 0 )
+  validates_numericality_of( :gte, greater_than_or_equal: 0 )
+end
+
 describe( Validation::ClassMethods ) do
   describe( 'validates_collection_of' ) do
     before( :each ) do
@@ -163,6 +171,30 @@ describe( Validation::ClassMethods ) do
         @object.contingent_value = nil
         @object.should( be_valid )
       end
+    end
+  end
+
+  describe( 'validates_numericality_of' ) do
+    before( :each ) do
+      @object = NumericalityObject.new
+      @object.gt = 1
+      @object.gte = 0
+      @object.should( be_valid )
+    end
+
+    it( 'should not be valid with a non-numerical value' ) do
+      @object.gt = 'one'
+      @object.should_not( be_valid )
+    end
+
+    it( 'should not be valid if set :greater_than is false' ) do
+      @object.gt = 0
+      @object.should_not( be_valid )
+    end
+
+    it( 'should not be valid if set :greater_than_or_equal is false' ) do
+      @object.gte = -1
+      @object.should_not( be_valid )
     end
   end
 end

@@ -104,7 +104,7 @@ module Validation  # :nodoc:
 
     def validates_numericality_of( *attributes )
       options = {
-        :message => 'is not a number',
+        :message => 'is not a number or does not meet a conditional requirement',
       }.merge!(attributes.extract_options!)
 
       re = options[:only_integer] ? CAP_INTEGER_REGEX : CAP_NUMBER_REGEX
@@ -112,7 +112,8 @@ module Validation  # :nodoc:
       validates_each( *attributes ) do |object, attribute, value|
         next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
         unless ( value.to_s =~ re ) &&
-          ( options[ :greater_than ].nil? || value && value > options[ :greater_than ])
+          ( options[ :greater_than ].nil? || value && value > options[ :greater_than ]) &&
+          ( options[ :greater_than_or_equal ].nil? || value && value >= options[ :greater_than_or_equal])
           object.errors[ attribute ] << options[ :message ]
         end
       end
