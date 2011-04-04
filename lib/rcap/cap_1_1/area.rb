@@ -23,8 +23,8 @@ module RCAP
       attr_reader( :polygons )
 
       validates_presence_of( :area_desc )
-      validates_collection_of( :circles, :geocodes, :polygons )
-      validates_dependency_of( :ceiling, :on => :altitude )
+      validates_collection_of( :circles, :geocodes, :polygons, allow_empty: true )
+      validates_dependency_of( :ceiling, on: :altitude )
 
       XML_ELEMENT_NAME       = 'area'     # :nodoc:
       AREA_DESC_ELEMENT_NAME = 'areaDesc' # :nodoc:

@@ -10,7 +10,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
+        next if ( value.nil? && options[ :allow_nil ])
         unless options[ :in ].include?( value )
           object.errors[ attribute ] << options[ :message ]
         end
@@ -23,7 +23,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( collection.nil? && options[ :allow_nil ]) || (collection.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.empty? && options[ :allow_empty ])
         unless collection.all?{ |member| options[ :in ].include?( member )}
           object.errors[ attribute ] << options[ :message ]
         end
@@ -36,7 +36,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( collection.nil? && options[ :allow_nil ]) || (collection.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ])
         unless options[ :minimum ] && collection.length >= options[ :minimum ]
           object.errors[ attribute ] << options[ :message ]
         end
@@ -49,7 +49,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if ( value.nil? && options[ :allow_nil ]) || ( value.blank? && options[ :allow_blank ])
+        next if ( value.nil? && options[ :allow_nil ]) 
         unless value && value.valid?
           object.errors[ attribute ] << options[ :message ]
         end
@@ -62,7 +62,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.empty? && options[ :allow_empty ])
         unless collection.all?{ |element| element.valid? }
           object.errors[ attribute ] << options[ :message ]
         end
@@ -110,7 +110,7 @@ module Validation  # :nodoc:
       re = options[:only_integer] ? CAP_INTEGER_REGEX : CAP_NUMBER_REGEX
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if (value.nil? && options[ :allow_nil ]) || (value.blank? && options[ :allow_blank ])
+        next if (value.nil? && options[ :allow_nil ])
         unless ( value.to_s =~ re ) &&
           ( options[ :greater_than ].nil? || value && value > options[ :greater_than ]) &&
           ( options[ :greater_than_or_equal ].nil? || value && value >= options[ :greater_than_or_equal])
@@ -126,7 +126,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ])
         unless options[ :to ].all?{ |method_name| object.respond_to?( method_name )}
           object.errors[ attribute ] << options [ :message ]
         end
@@ -139,7 +139,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.blank? && options[ :allow_blank ])
+        next if ( collection.nil? && options[ :allow_nil ])
         unless collection.first == collection.last
           object.errors[ attribute ] << options[ :message ]
         end
