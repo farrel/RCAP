@@ -158,12 +158,12 @@ RCAP.format_lines_for_inspect( 'AREA', area_inspect )
       POLYGONS_KEY  = 'polygons'   # :nodoc:
 
       def to_h # :nodoc:
-        { AREA_DESC_KEY => self.area_desc,
-          ALTITUDE_KEY  => self.altitude,
-          CEILING_KEY   => self.ceiling,
-          CIRCLES_KEY   => self.circles.map{ |circle| circle.to_h },
-          GEOCODES_KEY  => self.geocodes.map{ |geocode| geocode.to_h },
-          POLYGONS_KEY  => self.polygons.map{ |polygon| polygon.to_h }}
+        RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, self.area_desc ],
+                                       [ ALTITUDE_KEY, self.altitude ],
+                                       [ CEILING_KEY, self.ceiling ],
+                                       [ CIRCLES_KEY, self.circles.map{ |circle| circle.to_h } ],
+                                       [ GEOCODES_KEY, self.geocodes.map{ |geocode| geocode.to_h } ],
+                                       [ POLYGONS_KEY, self.polygons.map{ |polygon| polygon.to_h } ])
       end
 
       def self.from_h( area_hash ) # :nodoc:
