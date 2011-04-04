@@ -70,7 +70,7 @@ module RCAP # :nodoc:
   end
 
   def self.attribute_values_to_hash( *attribute_values )
-    Hash[ *attribute_values.reject{ |key, value| value.blank? }.flatten( 1 )]
+    Hash[ *attribute_values.reject{ |key, value| value.nil? || ( value.respond_to?( :'emtpy?' ) && value.empty? )}.flatten( 1 )]
   end
 
   def self.to_s_for_cap( object )
