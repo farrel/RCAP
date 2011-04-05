@@ -348,8 +348,12 @@ module RCAP
       end
 
       # Returns a JSON string representation of an Alert object
-      def to_json
-        self.to_h.to_json
+      def to_json( pretty_print = false )
+        if pretty_print 
+          JSON.pretty_generate( self.to_h )
+        else
+          self.to_h.to_json
+        end
       end
 
       # Initiialises an Alert object from a JSON string produced by Alert#to_json
