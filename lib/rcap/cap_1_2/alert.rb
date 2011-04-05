@@ -179,26 +179,24 @@ module RCAP
       end
 
       def inspect # :nodoc:
-        alert_inspect = <<EOF
-CAP Version:  #{ CAP_VERSION }
-Identifier:   #{ self.identifier }
-Sender:       #{ self.sender }
-Sent:         #{ self.sent }
-Status:       #{ self.status }
-Message Type: #{ self.msg_type }
-Source:       #{ self.source }
-Scope:        #{ self.scope }
-Restriction:  #{ self.restriction }
-Addresses:    #{ self.addresses.to_s_for_cap }
-Codes:
-#{ self.codes.map{ |code| "  #{ code }" }.join("\n")}
-Note:         #{ self.note }
-References:   #{ self.references.join( ' ' )}
-Incidents:    #{ self.incidents.join( ' ')}
-Information:
-#{ self.infos.map{ |info| "  " + info.to_s }.join( "\n" )}
-EOF
-RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
+        alert_inspect = "CAP Version:  #{ CAP_VERSION }\n"+
+                        "Identifier:   #{ self.identifier }\n"+
+                        "Sender:       #{ self.sender }\n"+
+                        "Sent:         #{ self.sent }\n"+
+                        "Status:       #{ self.status }\n"+
+                        "Message Type: #{ self.msg_type }\n"+
+                        "Source:       #{ self.source }\n"+
+                        "Scope:        #{ self.scope }\n"+
+                        "Restriction:  #{ self.restriction }\n"+
+                        "Addresses:    #{ self.addresses.to_s_for_cap }\n"+
+                        "Codes:\n"+
+                        " #{ self.codes.map{ |code| "  #{ code }" }.join("\n")}\n"+
+                        "Note:         #{ self.note }\n"+
+                        "References:   #{ self.references.join( ' ' )}\n"+
+                        "Incidents:    #{ self.incidents.join( ' ')}\n"+
+                        "Information:\n"+
+                        "  #{ self.infos.map{ |info| "  " + info.to_s }.join( "\n" )}\n"
+        RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       end
 
       # Returns a string representation of the alert of the form

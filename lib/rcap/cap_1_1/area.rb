@@ -95,14 +95,12 @@ module RCAP
       end
 
       def inspect # :nodoc:
-        area_inspect =  <<EOF
-Area Description: #{ self.area_desc }
-Polygons:
-#{ self.polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )}
-Circles:          #{ self.circles.inspect }
-Geocodes:         #{ self.geocodes.inspect }
-EOF
-RCAP.format_lines_for_inspect( 'AREA', area_inspect )
+        area_inspect = "Area Description: #{ self.area_desc }\n"+
+                       "Polygons:\n"+
+                       self.polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )+"\n"+
+                       "Circles:          #{ self.circles.inspect }\n"+
+                       "Geocodes:         #{ self.geocodes.inspect }\n"
+        RCAP.format_lines_for_inspect( 'AREA', area_inspect )
       end
 
       # Returns a string representation of the area of the form
@@ -171,9 +169,9 @@ RCAP.format_lines_for_inspect( 'AREA', area_inspect )
           :area_desc => area_hash[ AREA_DESC_KEY ],
           :altitude  => area_hash[ ALTITUDE_KEY ],
           :ceiling   => area_hash[ CEILING_KEY ],
-          :circles   => area_hash[ CIRCLES_KEY ].map{ |circle_hash| Circle.from_h( circle_hash )},
-          :geocodes  => area_hash[ GEOCODES_KEY ].map{ |geocode_hash| Geocode.from_h( geocode_hash )},
-          :polygons  => area_hash[ POLYGONS_KEY ].map{ |polygon_hash| Polygon.from_h( polygon_hash )})
+          :circles   => Array( area_hash[ CIRCLES_KEY ]).map{ |circle_hash| Circle.from_h( circle_hash )},
+          :geocodes  => Array( area_hash[ GEOCODES_KEY ]).map{ |geocode_hash| Geocode.from_h( geocode_hash )},
+          :polygons  => Array( area_hash[ POLYGONS_KEY ]).map{ |polygon_hash| Polygon.from_h( polygon_hash )})
       end
     end
   end

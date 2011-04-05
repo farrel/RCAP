@@ -252,34 +252,32 @@ module RCAP
       end
 
       def inspect # :nodoc:
-        info_inspect = <<EOF
-Language:       #{ self.language }
-Categories:     #{ self.categories.to_s_for_cap }
-Event:          #{ self.event }
-Response Types: #{ self.response_types.to_s_for_cap }
-Urgency:        #{ self.urgency }
-Severity:       #{ self.severity }
-Certainty:      #{ self.certainty }
-Audience:       #{ self.audience }
-Event Codes:    #{ self.event_codes.inspect }
-Effective:      #{ self.effective }
-Onset:          #{ self.onset }
-Expires:        #{ self.expires }
-Sender Name:    #{ self.sender_name }
-Headline:       #{ self.headline }
-Description:
-#{ self.description.to_s.lines.map{ |line| "  " + line }.join }
-Instruction:    #{ self.instruction }
-Web:            #{ self.web }
-Contact:        #{ self.contact }
-Parameters:
-#{ self.parameters.map{ |parameter| parameter.inspect }.join( "\n" )}
-Resources:
-#{ self.resources.map{ |resource| "  " + resource.inspect }.join( "\n" )}
-Area:
-#{ self.areas.map{ |area| "  #{ area }" }.join( "\n" )}
-EOF
-RCAP.format_lines_for_inspect( 'INFO', info_inspect )
+        info_inspect = "Language:       #{ self.language }\n"+
+                       "Categories:     #{ self.categories.to_s_for_cap }\n"+
+                       "Event:          #{ self.event }\n"+
+                       "Response Types: #{ self.response_types.to_s_for_cap }\n"+
+                       "Urgency:        #{ self.urgency }\n"+
+                       "Severity:       #{ self.severity }\n"+
+                       "Certainty:      #{ self.certainty }\n"+
+                       "Audience:       #{ self.audience }\n"+
+                       "Event Codes:    #{ self.event_codes.inspect }\n"+
+                       "Effective:      #{ self.effective }\n"+
+                       "Onset:          #{ self.onset }\n"+
+                       "Expires:        #{ self.expires }\n"+
+                       "Sender Name:    #{ self.sender_name }\n"+
+                       "Headline:       #{ self.headline }\n"+
+                       "Description:\n"+
+                       self.description.to_s.lines.map{ |line| "  " + line }.join( "\n")+"\n"+
+                       "Instruction:    #{ self.instruction }\n"+
+                       "Web:            #{ self.web }\n"+
+                       "Contact:        #{ self.contact }\n"+
+                       "Parameters:\n"+
+                       self.parameters.map{ |parameter| parameter.inspect }.join( "\n" )+"\n"+
+                       "Resources:\n"+
+                       self.resources.map{ |resource| "  " + resource.inspect }.join( "\n" )+"\n"+
+                       "Area:\n"+
+                       self.areas.map{ |area| "  #{ area }" }.join( "\n" )+"\n"
+        RCAP.format_lines_for_inspect( 'INFO', info_inspect )
       end
 
       # Returns a string representation of the event of the form
