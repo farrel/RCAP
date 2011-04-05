@@ -36,7 +36,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, collection|
-        next if ( collection.nil? && options[ :allow_nil ])
+        next if ( collection.nil? && options[ :allow_nil ]) || ( collection.empty? && options[ :allow_empty ])
         unless options[ :minimum ] && collection.length >= options[ :minimum ]
           object.errors[ attribute ] << options[ :message ]
         end
