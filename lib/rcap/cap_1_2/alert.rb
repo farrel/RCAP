@@ -168,8 +168,14 @@ module RCAP
       end
 
       # Returns a string containing the XML representation of the alert.
-      def to_xml
-        self.to_xml_document.to_s
+      def to_xml( pretty_print = false )
+        if pretty_print
+          xml_document = ""
+          XML_PRETTY_PRINTER.write( self.to_xml_document, xml_document )
+          xml_document
+        else
+          self.to_xml_document.to_s
+        end
       end
 
       # Returns a string representation of the alert suitable for usage as a reference in a CAP message of the form
