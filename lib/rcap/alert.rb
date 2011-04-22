@@ -30,12 +30,15 @@ module RCAP
 
     def self.from_json( json_string )
       json_hash = JSON.parse( json_string )
+      self.from_h( json_hash )
+    end
 
-      case json_hash[ JSON_CAP_VERSION_KEY ]
+    def self.from_h( hash ) # :nodoc:
+      case hash[ JSON_CAP_VERSION_KEY ]
       when CAP_1_1::Alert::CAP_VERSION
-        CAP_1_1::Alert.from_h( json_hash )
+        CAP_1_1::Alert.from_h( hash )
       else
-        CAP_1_2::Alert.from_h( json_hash )
+        CAP_1_2::Alert.from_h( hash )
       end
     end
   end

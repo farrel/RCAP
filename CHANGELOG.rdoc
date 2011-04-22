@@ -1,5 +1,9 @@
 = Change Log
 
+== 1.0.1 - 22 April 2011
+
+* Added RCAP::Alert.from_h
+
 == 1.0.0 - 6 April 2011
 
 * Added CAP 1.2 Support
