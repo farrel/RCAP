@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.has_rdoc = true
   s.extra_rdoc_files = ['README.rdoc','CHANGELOG.rdoc']
   s.add_dependency('assistance', '>= 0.1.5')
   s.add_dependency('json', '>= 1.5.1')
