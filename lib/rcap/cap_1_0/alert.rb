@@ -42,6 +42,7 @@ module RCAP
       SENT_ELEMENT_NAME        = 'sent'        # :nodoc:
       STATUS_ELEMENT_NAME      = 'status'      # :nodoc:
       MSG_TYPE_ELEMENT_NAME    = 'msgType'     # :nodoc:
+      PASSWORD_ELEMENT_NAME    = 'password'    # :nodoc:
       SOURCE_ELEMENT_NAME      = 'source'      # :nodoc:
       SCOPE_ELEMENT_NAME       = 'scope'       # :nodoc:
       RESTRICTION_ELEMENT_NAME = 'restriction' # :nodoc:
@@ -57,6 +58,7 @@ module RCAP
       SENT_XPATH        = "cap:#{ SENT_ELEMENT_NAME }"        # :nodoc:
       STATUS_XPATH      = "cap:#{ STATUS_ELEMENT_NAME }"      # :nodoc:
       MSG_TYPE_XPATH    = "cap:#{ MSG_TYPE_ELEMENT_NAME }"    # :nodoc:
+      PASSWORD_XPATH    = "cap:#{ PASSWORD_ELEMENT_NAME }"    # :nodoc:
       SOURCE_XPATH      = "cap:#{ SOURCE_ELEMENT_NAME }"      # :nodoc:
       SCOPE_XPATH       = "cap:#{ SCOPE_ELEMENT_NAME }"       # :nodoc:
       RESTRICTION_XPATH = "cap:#{ RESTRICTION_ELEMENT_NAME }" # :nodoc:
@@ -75,6 +77,7 @@ module RCAP
       attr_accessor( :status )
       # Value can only be one of VALID_MSG_TYPES
       attr_accessor( :msg_type )
+      attr_accessor( :password )
       # Value can only be one of VALID_SCOPES
       attr_accessor( :scope )
       attr_accessor( :source )
@@ -112,6 +115,7 @@ module RCAP
         @sent        = attributes[ :sent ]
         @status      = attributes[ :status ]
         @msg_type    = attributes[ :msg_type ]
+        @password    = attributes[ :password ]
         @scope       = attributes[ :scope ]
         @source      = attributes[ :source ]
         @restriction = attributes[ :restriction ]
@@ -138,6 +142,7 @@ module RCAP
         xml_element.add_element( SENT_ELEMENT_NAME ).add_text( self.sent.to_s_for_cap )  if self.sent
         xml_element.add_element( STATUS_ELEMENT_NAME ).add_text( self.status )           if self.status
         xml_element.add_element( MSG_TYPE_ELEMENT_NAME ).add_text( self.msg_type )       if self.msg_type
+        xml_element.add_element( PASSWORD_ELEMENT_NAME ).add_text( self.password )       if self.password
         xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( self.source )           if self.source
         xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( self.scope )             if self.scope
         xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( self.restriction ) if self.restriction
@@ -191,6 +196,7 @@ module RCAP
                         "Sent:         #{ self.sent }\n"+
                         "Status:       #{ self.status }\n"+
                         "Message Type: #{ self.msg_type }\n"+
+                        "Password:     #{ self.password }\n"+
                         "Source:       #{ self.source }\n"+
                         "Scope:        #{ self.scope }\n"+
                         "Restriction:  #{ self.restriction }\n"+
@@ -218,6 +224,7 @@ module RCAP
                  :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil ),
                  :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS ),
                  :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS ),
+                 :password    => RCAP.xpath_text( alert_xml_element, PASSWORD_XPATH, Alert::XMLNS ),
                  :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS ),
                  :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS ),
                  :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS ),
@@ -244,6 +251,7 @@ module RCAP
       SENT_YAML        = "Sent"               # :nodoc:
       STATUS_YAML      = "Status"             # :nodoc:
       MSG_TYPE_YAML    = "Message Type"       # :nodoc:
+      PASSWORD_YAML    = "Password"           # :nodoc:
       SOURCE_YAML      = "Source"             # :nodoc:
       SCOPE_YAML       = "Scope"              # :nodoc:
       RESTRICTION_YAML = "Restriction"        # :nodoc:
@@ -263,6 +271,7 @@ module RCAP
           [ SENT_YAML,          self.sent ],
           [ STATUS_YAML,        self.status ],
           [ MSG_TYPE_YAML,      self.msg_type ],
+          [ PASSWORD_YAML,      self.password ],
           [ SOURCE_YAML,        self.source ],
           [ SCOPE_YAML,         self.scope ],
           [ RESTRICTION_YAML,   self.restriction ],
@@ -287,6 +296,7 @@ module RCAP
           :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
           :status      => alert_yaml_data[ STATUS_YAML ],
           :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
+          :password    => alert_yaml_data[ PASSWORD_YAML ],
           :source      => alert_yaml_data[ SOURCE_YAML ],
           :scope       => alert_yaml_data[ SCOPE_YAML ],
           :restriction => alert_yaml_data[ RESTRICTION_YAML ],
@@ -305,6 +315,7 @@ module RCAP
       SENT_KEY        = 'sent'        # :nodoc:
       STATUS_KEY      = 'status'      # :nodoc:
       MSG_TYPE_KEY    = 'msg_type'    # :nodoc:
+      PASSWORD_KEY    = 'password'    # :nodoc:
       SOURCE_KEY      = 'source'      # :nodoc:
       SCOPE_KEY       = 'scope'       # :nodoc:
       RESTRICTION_KEY = 'restriction' # :nodoc:
@@ -323,6 +334,7 @@ module RCAP
                                       [ SENT_KEY,         RCAP.to_s_for_cap( self.sent )],
                                       [ STATUS_KEY,       self.status ],
                                       [ MSG_TYPE_KEY,     self.msg_type ],
+                                      [ PASSWORD_KEY,     self.password ],
                                       [ SOURCE_KEY,       self.source ],
                                       [ SCOPE_KEY,        self.scope ],
                                       [ RESTRICTION_KEY,  self.restriction ],
@@ -342,6 +354,7 @@ module RCAP
           :sent        => RCAP.parse_datetime( alert_hash[ SENT_KEY ]),
           :status      => alert_hash[ STATUS_KEY ],
           :msg_type    => alert_hash[ MSG_TYPE_KEY ],
+          :password    => alert_hash[ PASSWORD_KEY ],
           :source      => alert_hash[ SOURCE_KEY ],
           :scope       => alert_hash[ SCOPE_KEY ],
           :restriction => alert_hash[ RESTRICTION_KEY ],
