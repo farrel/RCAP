@@ -97,7 +97,6 @@ module RCAP
       DEFAULT_LANGUAGE = 'en-US'
 
       validates_presence_of( :event, :urgency, :severity, :certainty )
-      validates_length_of( :categories, :minimum => 1 )
       validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
       validates_inclusion_of( :severity, :allow_nil  => true, :in => VALID_SEVERITIES,  :message => "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }" )
       validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES,   :message => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
@@ -311,7 +310,6 @@ module RCAP
       AREAS_YAML          = 'Areas'          # :nodoc:
 
       def to_yaml( options = {} ) # :nodoc:
-
         categories_yaml = self.categories
         def categories_yaml.to_yaml_style; :inline; end
 

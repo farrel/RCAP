@@ -127,11 +127,6 @@ describe( RCAP::CAP_1_0::Info ) do
       @info.should_not( be_valid )
     end
 
-    it( 'does not have categories' ) do
-      @info.categories.clear
-      @info.should_not( be_valid )
-    end
-
     it( 'does not have an urgency' ) do
       @info.urgency = nil
       @info.should_not( be_valid )
