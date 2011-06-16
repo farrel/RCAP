@@ -29,18 +29,6 @@ module RCAP
         CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
         CATEGORY_OTHER ]
 
-      RESPONSE_TYPE_SHELTER  = "Shelter"  # :nodoc:
-      RESPONSE_TYPE_EVACUATE = "Evacuate" # :nodoc:
-      RESPONSE_TYPE_PREPARE  = "Prepare"  # :nodoc:
-      RESPONSE_TYPE_EXECUTE  = "Execute"  # :nodoc:
-      RESPONSE_TYPE_MONITOR  = "Monitor"  # :nodoc:
-      RESPONSE_TYPE_ASSESS   = "Assess"   # :nodoc:
-      RESPONSE_TYPE_NONE     = "None"     # :nodoc:
-      # Valid values for response_type
-      VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE,
-        RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR,
-        RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
-
       URGENCY_IMMEDIATE = "Immediate" # :nodoc:
       URGENCY_EXPECTED  = "Expected"  # :nodoc:
       URGENCY_FUTURE    = "Future"    # :nodoc:
@@ -72,7 +60,6 @@ module RCAP
       LANGUAGE_ELEMENT_NAME      = 'language'     # :nodoc:
       CATEGORY_ELEMENT_NAME      = 'category'     # :nodoc:
       EVENT_ELEMENT_NAME         = 'event'        # :nodoc:
-      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' # :nodoc:
       URGENCY_ELEMENT_NAME       = 'urgency'      # :nodoc:
       SEVERITY_ELEMENT_NAME      = 'severity'     # :nodoc:
       CERTAINTY_ELEMENT_NAME     = 'certainty'    # :nodoc:
@@ -92,7 +79,6 @@ module RCAP
       LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      # :nodoc:
       EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         # :nodoc:
       URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       # :nodoc:
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" # :nodoc:
       CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      # :nodoc:
       SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      # :nodoc:
       CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     # :nodoc:
@@ -115,7 +101,6 @@ module RCAP
       validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
       validates_inclusion_of( :severity, :allow_nil  => true, :in => VALID_SEVERITIES,  :message => "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }" )
       validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES,   :message => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
-      validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
       validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
       validates_collection_of( :resources, :areas, :event_codes, :parameters )
 
@@ -143,8 +128,6 @@ module RCAP
 
       # Collection of textual categories; elements can be one of VALID_CATEGORIES
       attr_reader( :categories )
-      #  Collection of textual response types
-      attr_reader( :response_types )
       # Collectoin of EventCode objects
       attr_reader( :event_codes )
       # Collection of Parameter objects
@@ -158,7 +141,6 @@ module RCAP
         @language       = attributes[ :language ] || DEFAULT_LANGUAGE
         @categories     = Array( attributes[ :categories ])
         @event          = attributes [ :event ]
-        @response_types = Array( attributes[ :response_types ])
         @urgency        = attributes[ :urgency ]
         @severity       = attributes[ :severity ]
         @certainty      = attributes[ :certainty ]
@@ -216,9 +198,6 @@ module RCAP
           xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( category )
         end
         xml_element.add_element( EVENT_ELEMENT_NAME ).add_text( self.event )
-        @response_types.each do |response_type|
-          xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( response_type )
-        end
         xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( self.urgency )
         xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( self.severity )
         xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( self.certainty )
@@ -255,7 +234,6 @@ module RCAP
         info_inspect = "Language:       #{ self.language }\n"+
                        "Categories:     #{ self.categories.to_s_for_cap }\n"+
                        "Event:          #{ self.event }\n"+
-                       "Response Types: #{ self.response_types.to_s_for_cap }\n"+
                        "Urgency:        #{ self.urgency }\n"+
                        "Severity:       #{ self.severity }\n"+
                        "Certainty:      #{ self.certainty }\n"+
@@ -291,7 +269,6 @@ module RCAP
           :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
           :categories     => RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, Alert::XMLNS ).map{ |element| element.text },
           :event          => RCAP.xpath_text( info_xml_element, EVENT_XPATH, Alert::XMLNS ),
-          :response_types => RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, Alert::XMLNS ).map{ |element| element.text },
           :urgency        => RCAP.xpath_text( info_xml_element, URGENCY_XPATH, Alert::XMLNS ),
           :severity       => RCAP.xpath_text( info_xml_element, SEVERITY_XPATH, Alert::XMLNS ),
           :certainty      => RCAP.xpath_text( info_xml_element, CERTAINTY_XPATH, Alert::XMLNS ),
@@ -315,7 +292,6 @@ module RCAP
       LANGUAGE_YAML       = 'Language'       # :nodoc:
       CATEGORIES_YAML     = 'Categories'     # :nodoc:
       EVENT_YAML          = 'Event'          # :nodoc:
-      RESPONSE_TYPES_YAML = 'Response Types' # :nodoc:
       URGENCY_YAML        = 'Urgency'        # :nodoc:
       SEVERITY_YAML       = 'Severity'       # :nodoc:
       CERTAINTY_YAML      = 'Certainty'      # :nodoc:
@@ -335,8 +311,6 @@ module RCAP
       AREAS_YAML          = 'Areas'          # :nodoc:
 
       def to_yaml( options = {} ) # :nodoc:
-        response_types_yaml = self.response_types
-        def response_types_yaml.to_yaml_style; :inline; end
 
         categories_yaml = self.categories
         def categories_yaml.to_yaml_style; :inline; end
@@ -347,7 +321,6 @@ module RCAP
                                       [ LANGUAGE_YAML,       self.language ],
                                       [ CATEGORIES_YAML,     categories_yaml ],
                                       [ EVENT_YAML,          self.event ],
-                                      [ RESPONSE_TYPES_YAML, response_types_yaml ],
                                       [ URGENCY_YAML,        self.urgency ],
                                       [ SEVERITY_YAML,       self.severity ],
                                       [ CERTAINTY_YAML,      self.certainty ],
@@ -373,7 +346,6 @@ module RCAP
           :language       => info_yaml_data [ LANGUAGE_YAML ],
           :categories     => info_yaml_data [ CATEGORIES_YAML ],
           :event          => info_yaml_data [ EVENT_YAML ],
-          :response_types => info_yaml_data [ RESPONSE_TYPES_YAML ],
           :urgency        => info_yaml_data [ URGENCY_YAML ],
           :severity       => info_yaml_data [ SEVERITY_YAML ],
           :certainty      => info_yaml_data [ CERTAINTY_YAML ],
@@ -397,7 +369,6 @@ module RCAP
       LANGUAGE_KEY       = 'language'       # :nodoc:
       CATEGORIES_KEY     = 'categories'     # :nodoc:
       EVENT_KEY          = 'event'          # :nodoc:
-      RESPONSE_TYPES_KEY = 'response_types' # :nodoc:
       URGENCY_KEY        = 'urgency'        # :nodoc:
       SEVERITY_KEY       = 'severity'       # :nodoc:
       CERTAINTY_KEY      = 'certainty'      # :nodoc:
@@ -420,7 +391,6 @@ module RCAP
         RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,       self.language ],
                                       [ CATEGORIES_KEY,     self.categories ],
                                       [ EVENT_KEY,          self.event ],
-                                      [ RESPONSE_TYPES_KEY, self.response_types ],
                                       [ URGENCY_KEY,        self.urgency ],
                                       [ SEVERITY_KEY,       self.severity ],
                                       [ CERTAINTY_KEY,      self.certainty ],
@@ -444,7 +414,6 @@ module RCAP
         self.new( :language       => info_hash[ LANGUAGE_KEY ],
                  :categories     => info_hash[ CATEGORIES_KEY ],
                  :event          => info_hash[ EVENT_KEY ],
-                 :response_types => info_hash[ RESPONSE_TYPES_KEY ],
                  :urgency        => info_hash[ URGENCY_KEY ],
                  :severity       => info_hash[ SEVERITY_KEY ],
                  :certainty      => info_hash[ CERTAINTY_KEY ],

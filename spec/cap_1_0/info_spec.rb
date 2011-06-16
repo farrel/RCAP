@@ -9,7 +9,6 @@ describe( RCAP::CAP_1_0::Info ) do
     it( 'should have a default language of en-US' ) { @info.language.should == 'en-US' }
     it( 'should have no categories' )               { @info.categories.should( be_empty )}
     it( 'should have no event' )                    { @info.event.should( be_nil )}
-    it( 'should have no response types' )           { @info.response_types.should( be_empty )}
     it( 'should have no urgency' )                  { @info.urgency.should( be_nil )}
     it( 'should have no severity' )                 { @info.severity.should( be_nil )}
     it( 'should have no certainty' )                { @info.certainty.should( be_nil )}
@@ -29,7 +28,6 @@ describe( RCAP::CAP_1_0::Info ) do
     shared_examples_for( 'it can parse into a CAP 1.0 Info object' ) do
       it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
       it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
-      it( 'should parse response_types correctly' ){ @info .response_types.should ==    @original_info.response_types }
       it( 'should parse urgency correctly' ){        @info .urgency.should        ==    @original_info.urgency }
       it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
       it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
@@ -53,7 +51,6 @@ describe( RCAP::CAP_1_0::Info ) do
       before( :each ) do
         @original_info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
                                         :event          => 'Event Description',
-                                        :response_types => [ RCAP::CAP_1_0::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_0::Info::RESPONSE_TYPE_ASSESS ],
                                         :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                         :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
                                         :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
@@ -87,7 +84,6 @@ describe( RCAP::CAP_1_0::Info ) do
       before( :each ) do
         @original_info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
                                         :event          => 'Event Description',
-                                        :response_types => [ RCAP::CAP_1_0::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_0::Info::RESPONSE_TYPE_ASSESS ],
                                         :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                         :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
                                         :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
@@ -158,7 +154,6 @@ describe( RCAP::CAP_1_0::Info ) do
       before( :each ) do
         @info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
                                 :event          => 'Event Description',
-                                :response_types => [ RCAP::CAP_1_0::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_0::Info::RESPONSE_TYPE_ASSESS ],
                                 :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                 :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
                                 :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
@@ -192,10 +187,6 @@ describe( RCAP::CAP_1_0::Info ) do
 
       it( 'should export the event' ) do
         @info_hash[ RCAP::CAP_1_0::Info::EVENT_KEY ].should == @info.event
-      end
-
-      it( 'should export the response types' ) do
-        @info_hash[ RCAP::CAP_1_0::Info::RESPONSE_TYPES_KEY ].should == @info.response_types
       end
 
       it( 'should export the urgency' ) do
