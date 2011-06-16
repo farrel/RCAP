@@ -9,7 +9,6 @@ describe( RCAP::CAP_1_0::Resource ) do
     it( 'should have no mime_type' ){     @resource.mime_type.should( be_nil )}
     it( 'should have no size' ){          @resource.size.should( be_nil )}
     it( 'should have no uri' ){           @resource.uri.should( be_nil )}
-    it( 'should have no deref_uri' ){     @resource.deref_uri.should( be_nil )}
     it( 'should have no digest' ){        @resource.digest.should( be_nil )}
     it( 'should have no resource_desc' ){ @resource.resource_desc.should( be_nil )}
 
@@ -19,7 +18,6 @@ describe( RCAP::CAP_1_0::Resource ) do
         @original_resource.resource_desc = "Image of incident"
         @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
         @original_resource.mime_type     = 'image/png'
-        @original_resource.deref_uri     = "IMAGE DATA"
         @original_resource.size          = "20480"
         @original_resource.digest        = "2048"
 
@@ -44,10 +42,6 @@ describe( RCAP::CAP_1_0::Resource ) do
         @resource.mime_type.should == @original_resource.mime_type
       end
 
-      it( 'should parse deref_uri correctly' ) do
-        @resource.deref_uri.should == @original_resource.deref_uri
-      end
-
       it( 'should parse size correctly' ) do
         @resource.size.should == @original_resource.size
       end
@@ -64,7 +58,6 @@ describe( RCAP::CAP_1_0::Resource ) do
         @original_resource.resource_desc = "Image of incident"
         @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
         @original_resource.mime_type     = 'image/png'
-        @original_resource.deref_uri     = "IMAGE DATA"
         @original_resource.size          = "20480"
         @original_resource.digest        = "2048"
 
@@ -81,10 +74,6 @@ describe( RCAP::CAP_1_0::Resource ) do
 
       it( 'should parse mime_type correctly' ) do
         @resource.mime_type.should == @original_resource.mime_type
-      end
-
-      it( 'should parse deref_uri correctly' ) do
-        @resource.deref_uri.should == @original_resource.deref_uri
       end
 
       it( 'should parse size correctly' ) do
@@ -104,7 +93,6 @@ describe( RCAP::CAP_1_0::Resource ) do
       @resource.resource_desc = "Image of incident"
       @resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
       @resource.mime_type     = 'image/png'
-      @resource.deref_uri     = "IMAGE DATA"
       @resource.size          = "20480"
       @resource.digest        = "2048"
     end
@@ -128,10 +116,6 @@ describe( RCAP::CAP_1_0::Resource ) do
 
       it( 'should set the URI' ) do
         @resource_hash[ RCAP::CAP_1_0::Resource::URI_KEY ].should == @resource.uri
-      end
-
-      it( 'should set the dereferenced URI' ) do
-        @resource_hash[ RCAP::CAP_1_0::Resource::DEREF_URI_KEY ].should == @resource.deref_uri
       end
 
       it( 'should set the digest' ) do
