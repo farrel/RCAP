@@ -9,6 +9,8 @@ module RCAP
       xml_document = REXML::Document.new( xml )
 
       case xml_document.root.namespaces[ namespace_key ]
+      when CAP_1_0::Alert::XMLNS
+        CAP_1_0::Alert.from_xml_document( xml_document )
       when CAP_1_1::Alert::XMLNS
         CAP_1_1::Alert.from_xml_document( xml_document )
       else
@@ -21,6 +23,8 @@ module RCAP
       yaml_data = YAML.load( yaml )
 
       case yaml_data[ YAML_CAP_VERSION_KEY ]
+      when CAP_1_0::Alert::CAP_VERSION
+        CAP_1_0::Alert.from_yaml_data( yaml_data )
       when CAP_1_1::Alert::CAP_VERSION
         CAP_1_1::Alert.from_yaml_data( yaml_data )
       else
@@ -35,6 +39,8 @@ module RCAP
 
     def self.from_h( hash ) # :nodoc:
       case hash[ JSON_CAP_VERSION_KEY ]
+      when CAP_1_0::Alert::CAP_VERSION
+        CAP_1_0::Alert.from_h( hash )
       when CAP_1_1::Alert::CAP_VERSION
         CAP_1_1::Alert.from_h( hash )
       else
