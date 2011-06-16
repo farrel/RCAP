@@ -47,13 +47,13 @@ module RCAP
       VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
         SEVERITY_MINOR, SEVERITY_UNKNOWN ]
 
-      CERTAINTY_OBSERVED = "Observed" # :nodoc:
-      CERTAINTY_LIKELY   = "Likely"   # :nodoc:
-      CERTAINTY_POSSIBLE = "Possible" # :nodoc:
-      CERTAINTY_UNLIKELY = "Unlikely" # :nodoc:
-      CERTAINTY_UNKNOWN  = "Unknown"  # :nodoc:
+      CERTAINTY_VERY_LIKELY = "Very Likely" # :nodoc:
+      CERTAINTY_LIKELY      = "Likely"      # :nodoc:
+      CERTAINTY_POSSIBLE    = "Possible"    # :nodoc:
+      CERTAINTY_UNLIKELY    = "Unlikely"    # :nodoc:
+      CERTAINTY_UNKNOWN     = "Unknown"     # :nodoc:
       # Valid valies for certainty
-      VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
+      VALID_CERTAINTIES = [ CERTAINTY_VERY_LIKELY, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
       XML_ELEMENT_NAME           = 'info'         # :nodoc:

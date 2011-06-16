@@ -53,7 +53,7 @@ describe( RCAP::CAP_1_0::Info ) do
                                         :event          => 'Event Description',
                                         :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                         :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
+                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
                                         :audience       => 'Audience',
                                         :effective      => DateTime.now,
                                         :onset          => DateTime.now + 1,
@@ -86,7 +86,7 @@ describe( RCAP::CAP_1_0::Info ) do
                                         :event          => 'Event Description',
                                         :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                         :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
+                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
                                         :audience       => 'Audience',
                                         :effective      => DateTime.now,
                                         :onset          => DateTime.now + 1,
@@ -116,7 +116,7 @@ describe( RCAP::CAP_1_0::Info ) do
                             :categories => RCAP::CAP_1_0::Info::CATEGORY_GEO,
                             :urgency => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                             :severity => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                            :certainty => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED )
+                            :certainty => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY )
       @info.valid?
       puts @info.errors.full_messages
       @info.should( be_valid )
@@ -151,7 +151,7 @@ describe( RCAP::CAP_1_0::Info ) do
                                 :event          => 'Event Description',
                                 :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                                 :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED,
+                                :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
                                 :audience       => 'Audience',
                                 :effective      => DateTime.now,
                                 :onset          => DateTime.now + 1,

@@ -190,7 +190,7 @@ describe( RCAP::CAP_1_0::Alert ) do
                               :categories => RCAP::CAP_1_0::Info::CATEGORY_GEO,
                               :urgency => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                               :severity => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                              :certainty => RCAP::CAP_1_0::Info::CERTAINTY_OBSERVED )
+                              :certainty => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY )
         @info.event = nil
         @alert.infos << @info
         @info.should_not( be_valid )
