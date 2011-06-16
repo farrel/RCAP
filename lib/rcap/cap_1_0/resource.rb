@@ -122,10 +122,10 @@ module RCAP
       def self.from_h( resource_hash ) # :nodoc:
         self.new(
           :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
-          :uri => resource_hash[ URI_KEY ],
-          :mime_type => resource_hash[ MIME_TYPE_KEY ],
-          :size => resource_hash[ SIZE_KEY ],
-          :digest => resource_hash[ DIGEST_KEY ])
+          :uri           => resource_hash[ URI_KEY ],
+          :mime_type     => resource_hash[ MIME_TYPE_KEY ],
+          :size          => resource_hash[ SIZE_KEY ],
+          :digest        => resource_hash[ DIGEST_KEY ])
       end
     end
   end
