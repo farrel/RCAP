@@ -24,9 +24,8 @@ module RCAP
       end
 
       def to_xml_element # :nodoc:
-        xml_element = REXML::Element.new( XML_ELEMENT_NAME )
-        xml_element.add_element( NAME_ELEMENT_NAME ).add_text( self.name )
-        xml_element.add_element( VALUE_ELEMENT_NAME ).add_text( self.value )
+        xml_element = REXML::Element.new( self.class::XML_ELEMENT_NAME )
+        xml_element.add_text( "#{ self.name }=#{ self.value }")
         xml_element
       end
 
@@ -45,8 +44,7 @@ module RCAP
       end
 
       def self.from_xml_element( parameter_xml_element ) # :nodoc:
-        Parameter.new( :name  => RCAP.xpath_text( parameter_xml_element, NAME_XPATH, Alert::XMLNS ),
-                      :value => RCAP.xpath_text( parameter_xml_element, VALUE_XPATH, Alert::XMLNS ))
+        self.new( self.parse_parameter( parameter_xml_element.text ))
       end
 
       # Two parameters are equivalent if they have the same name and value.
@@ -55,13 +53,18 @@ module RCAP
       end
 
       def to_h # :nodoc:
-        RCAP.attribute_values_to_hash(
-          [ @name, @value ])
+        RCAP.attribute_values_to_hash( [ self.name, self.value ])
       end
 
       def self.from_h( hash ) # :nodoc:
         key = hash.keys.first
         self.new( :name => key, :value => hash[ key ])
+      end
+
+      def self.parse_parameter( parameter_string ) # :nodoc:
+        name, value = parameter_string.split("=")
+        { :name  => name,
+          :value => value }
       end
     end
   end
