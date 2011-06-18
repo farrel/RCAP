@@ -18,9 +18,8 @@ module RCAP
       STATUS_EXERCISE = "Exercise" # :nodoc:
       STATUS_SYSTEM   = "System"   # :nodoc:
       STATUS_TEST     = "Test"     # :nodoc:
-      STATUS_DRAFT    = "Draft"    # :nodoc:
       # Valid values for status
-      VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
+      VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST ]
 
       MSG_TYPE_ALERT  = "Alert"   # :nodoc:
       MSG_TYPE_UPDATE = "Update"  # :nodoc:
