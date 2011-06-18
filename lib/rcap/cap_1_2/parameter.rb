@@ -24,7 +24,7 @@ module RCAP
       end
 
       def to_xml_element # :nodoc:
-        xml_element = REXML::Element.new( XML_ELEMENT_NAME )
+        xml_element = REXML::Element.new( self.class::XML_ELEMENT_NAME )
         xml_element.add_element( NAME_ELEMENT_NAME ).add_text( self.name )
         xml_element.add_element( VALUE_ELEMENT_NAME ).add_text( self.value )
         xml_element
@@ -55,8 +55,7 @@ module RCAP
       end
 
       def to_h # :nodoc:
-        RCAP.attribute_values_to_hash(
-          [ @name, @value ])
+        RCAP.attribute_values_to_hash( [ self.name, self.value ])
       end
 
       def self.from_h( hash ) # :nodoc:
