@@ -11,7 +11,7 @@ module RCAP
     class Alert
       include Validation
 
-      XMLNS = "urn:oasis:names:tc:emergency:cap:1.0"
+      XMLNS = "http://www.incident.com/cap/1.0"
       CAP_VERSION = "1.0"
 
       STATUS_ACTUAL   = "Actual"   # :nodoc:
