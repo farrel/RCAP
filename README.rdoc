@@ -4,11 +4,11 @@
 
 The Common Alerting Protocol is a lightweight standard to facilitate the distribution of alerting data. RCAP is an implementation of the CAP document protocol in Ruby. It allows for the creation of RCAP messages from Ruby applications and the parsing of external messages.
 
-RCAP currently supports CAP 1.1 and 1.2.
+RCAP currently supports CAP 1.0, 1.1 and 1.2.
 
 == Version
 
-1.0.0
+1.1.0
 
 == Dependencies
 
