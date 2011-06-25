@@ -6,7 +6,7 @@ describe( RCAP::CAP_1_2::Alert ) do
       @alert = RCAP::CAP_1_2::Alert.new
     end
 
-    it( 'should not have a identifier' ){ @alert.identifier.should( be_nil )}
+    it( 'should have a identifier' ){ @alert.identifier.should_not( be_nil )}
     it( 'should not have a sender' ){ @alert.sender.should( be_nil )}
     it( 'should not have a sent time' ){ @alert.sent.should( be_nil )}
     it( 'should not have a status' ){ @alert.status.should( be_nil )}

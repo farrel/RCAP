@@ -109,7 +109,7 @@ module RCAP
       validates_collection_of( :infos )
 
       def initialize( attributes = {})
-        @identifier  = attributes[ :identifier ]
+        @identifier  = attributes[ :identifier ] || RCAP.generate_identifier
         @sender      = attributes[ :sender ]
         @sent        = attributes[ :sent ]
         @status      = attributes[ :status ]
