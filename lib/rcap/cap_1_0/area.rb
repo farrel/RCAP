@@ -111,11 +111,11 @@ module RCAP
 
       def self.from_xml_element( area_xml_element ) # :nodoc:
         self.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, Alert::XMLNS ),
-                 :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, Alert::XMLNS )) ? alt.to_f : nil ),
-                 :ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH, Alert::XMLNS )) ? ceil.to_f : nil ),
-                 :circles   => RCAP.xpath_match( area_xml_element, Circle::XPATH, Alert::XMLNS ).map{ |circle_element| Circle.from_xml_element( circle_element )},
-                 :geocodes  => RCAP.xpath_match( area_xml_element, Geocode::XPATH, Alert::XMLNS ).map{ |geocode_element| Geocode.from_xml_element( geocode_element )},
-                 :polygons  => RCAP.xpath_match( area_xml_element, Polygon::XPATH, Alert::XMLNS ).map{ |polygon_element| Polygon.from_xml_element( polygon_element )})
+                  :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, Alert::XMLNS )) ? alt.to_f : nil ),
+                  :ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH, Alert::XMLNS )) ? ceil.to_f : nil ),
+                  :circles   => RCAP.xpath_match( area_xml_element, Circle::XPATH, Alert::XMLNS ).map{ |circle_element| Circle.from_xml_element( circle_element )},
+                  :geocodes  => RCAP.xpath_match( area_xml_element, Geocode::XPATH, Alert::XMLNS ).map{ |geocode_element| Geocode.from_xml_element( geocode_element )},
+                  :polygons  => RCAP.xpath_match( area_xml_element, Polygon::XPATH, Alert::XMLNS ).map{ |polygon_element| Polygon.from_xml_element( polygon_element )})
       end
 
       AREA_DESC_YAML = 'Area Description' # :nodoc:
@@ -130,12 +130,12 @@ module RCAP
         def circles_yaml.to_yaml_style; :inline; end
 
         RCAP.attribute_values_to_hash(
-          [ AREA_DESC_YAML,  self.area_desc ],
-          [ ALTITUDE_YAML,   self.altitude ],
-          [ CEILING_YAML,    self.ceiling ],
-          [ CIRCLES_YAML,    circles_yaml ],
-          [ GEOCODES_YAML,   self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-          [ POLYGONS_YAML,   self.polygons ]
+          [ AREA_DESC_YAML, self.area_desc ],
+          [ ALTITUDE_YAML,  self.altitude ],
+          [ CEILING_YAML,   self.ceiling ],
+          [ CIRCLES_YAML,   circles_yaml ],
+          [ GEOCODES_YAML,  self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
+          [ POLYGONS_YAML,  self.polygons ]
         ).to_yaml( options )
       end
 

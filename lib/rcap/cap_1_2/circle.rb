@@ -69,12 +69,14 @@ module RCAP
       LONGITUDE_KEY = 'longitude' # :nodoc:
       def to_h # :nodoc:
         RCAP.attribute_values_to_hash( [ RADIUS_KEY, self.radius ],
-                                      [ LATTITUDE_KEY, self.lattitude ],
-                                      [ LONGITUDE_KEY, self.longitude ])
+                                       [ LATTITUDE_KEY, self.lattitude ],
+                                       [ LONGITUDE_KEY, self.longitude ])
       end
 
       def self.from_h( circle_hash ) # :nodoc:
-        self.new( :radius => circle_hash[ RADIUS_KEY ], :lattitude => circle_hash[ LATTITUDE_KEY ], :longitude => circle_hash[ LONGITUDE_KEY ])
+        self.new( :radius => circle_hash[ RADIUS_KEY ],
+                  :lattitude => circle_hash[ LATTITUDE_KEY ],
+                  :longitude => circle_hash[ LONGITUDE_KEY ])
       end
     end
   end

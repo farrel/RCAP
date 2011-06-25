@@ -185,23 +185,23 @@ module RCAP
       end
 
       def inspect # :nodoc:
-        alert_inspect = "CAP Version:  #{ CAP_VERSION }\n"+
-                        "Identifier:   #{ self.identifier }\n"+
-                        "Sender:       #{ self.sender }\n"+
-                        "Sent:         #{ self.sent }\n"+
-                        "Status:       #{ self.status }\n"+
-                        "Message Type: #{ self.msg_type }\n"+
-                        "Source:       #{ self.source }\n"+
-                        "Scope:        #{ self.scope }\n"+
-                        "Restriction:  #{ self.restriction }\n"+
-                        "Addresses:    #{ self.addresses.to_s_for_cap }\n"+
-                        "Codes:\n"+
-                        self.codes.map{ |code| "  " + code }.join("\n")+"\n"+
-                        "Note:         #{ self.note }\n"+
-                        "References:   #{ self.references.join( ' ' )}\n"+
-                        "Incidents:    #{ self.incidents.join( ' ')}\n"+
-                        "Information:\n"+
-                        self.infos.map{ |info| "  " + info.to_s }.join( "\n" )
+        alert_inspect = [ "CAP Version:  #{ CAP_VERSION }",
+                          "Identifier:   #{ self.identifier }",
+                          "Sender:       #{ self.sender }",
+                          "Sent:         #{ self.sent }",
+                          "Status:       #{ self.status }",
+                          "Message Type: #{ self.msg_type }",
+                          "Source:       #{ self.source }",
+                          "Scope:        #{ self.scope }",
+                          "Restriction:  #{ self.restriction }",
+                          "Addresses:    #{ self.addresses.to_s_for_cap }",
+                          "Codes:",
+                          self.codes.map{ |code| "  " + code }.join("\n")+"",
+                          "Note:         #{ self.note }",
+                          "References:   #{ self.references.join( ' ' )}",
+                          "Incidents:    #{ self.incidents.join( ' ')}",
+                          "Information:",
+                          self.infos.map{ |info| "  " + info.to_s }.join( "\n" )].join( "\n" )
         RCAP.format_lines_for_inspect( 'ALERT', alert_inspect )
       end
 
@@ -214,19 +214,19 @@ module RCAP
 
       def self.from_xml_element( alert_xml_element ) # :nodoc:
         self.new( :identifier  => RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, Alert::XMLNS ),
-                 :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS ),
-                 :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil ),
-                 :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS ),
-                 :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS ),
-                 :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS ),
-                 :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS ),
-                 :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS ),
-                 :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : nil ),
-                 :codes       => RCAP.xpath_match( alert_xml_element, CODE_XPATH, Alert::XMLNS ).map{ |element| element.text },
-                 :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS ),
-                 :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : nil ),
-                 :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : nil ),
-                 :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).map{ |element| Info.from_xml_element( element )})
+                  :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS ),
+                  :sent        => (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil ),
+                  :status      => RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS ),
+                  :msg_type    => RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS ),
+                  :source      => RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS ),
+                  :scope       => RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS ),
+                  :restriction => RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS ),
+                  :addresses   => (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : nil ),
+                  :codes       => RCAP.xpath_match( alert_xml_element, CODE_XPATH, Alert::XMLNS ).map{ |element| element.text },
+                  :note        => RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS ),
+                  :references  => (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : nil ),
+                  :incidents   => (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : nil ),
+                  :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).map{ |element| Info.from_xml_element( element )})
       end
 
       def self.from_xml_document( xml_document ) # :nodoc:
@@ -238,21 +238,21 @@ module RCAP
         self.from_xml_document( REXML::Document.new( xml ))
       end
 
-      CAP_VERSION_YAML = "CAP Version"        # :nodoc:
-      IDENTIFIER_YAML  = "Identifier"         # :nodoc:
-      SENDER_YAML      = "Sender"             # :nodoc:
-      SENT_YAML        = "Sent"               # :nodoc:
-      STATUS_YAML      = "Status"             # :nodoc:
-      MSG_TYPE_YAML    = "Message Type"       # :nodoc:
-      SOURCE_YAML      = "Source"             # :nodoc:
-      SCOPE_YAML       = "Scope"              # :nodoc:
-      RESTRICTION_YAML = "Restriction"        # :nodoc:
-      ADDRESSES_YAML   = "Addresses"          # :nodoc:
-      CODES_YAML       = "Codes"              # :nodoc:
-      NOTE_YAML        = "Note"               # :nodoc:
-      REFERENCES_YAML  = "References"         # :nodoc:
-      INCIDENTS_YAML   = "Incidents"          # :nodoc:
-      INFOS_YAML       = "Information"        # :nodoc:
+      CAP_VERSION_YAML = "CAP Version"  # :nodoc:
+      IDENTIFIER_YAML  = "Identifier"   # :nodoc:
+      SENDER_YAML      = "Sender"       # :nodoc:
+      SENT_YAML        = "Sent"         # :nodoc:
+      STATUS_YAML      = "Status"       # :nodoc:
+      MSG_TYPE_YAML    = "Message Type" # :nodoc:
+      SOURCE_YAML      = "Source"       # :nodoc:
+      SCOPE_YAML       = "Scope"        # :nodoc:
+      RESTRICTION_YAML = "Restriction"  # :nodoc:
+      ADDRESSES_YAML   = "Addresses"    # :nodoc:
+      CODES_YAML       = "Codes"        # :nodoc:
+      NOTE_YAML        = "Note"         # :nodoc:
+      REFERENCES_YAML  = "References"   # :nodoc:
+      INCIDENTS_YAML   = "Incidents"    # :nodoc:
+      INFOS_YAML       = "Information"  # :nodoc:
 
       # Returns a string containing the YAML representation of the alert.
       def to_yaml( options = {} )
@@ -318,20 +318,20 @@ module RCAP
       # Returns a Hash representation of an Alert object
       def to_h
         RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, CAP_VERSION ],
-                                      [ IDENTIFIER_KEY,   self.identifier ],
-                                      [ SENDER_KEY,       self.sender ],
-                                      [ SENT_KEY,         RCAP.to_s_for_cap( self.sent )],
-                                      [ STATUS_KEY,       self.status ],
-                                      [ MSG_TYPE_KEY,     self.msg_type ],
-                                      [ SOURCE_KEY,       self.source ],
-                                      [ SCOPE_KEY,        self.scope ],
-                                      [ RESTRICTION_KEY,  self.restriction ],
-                                      [ ADDRESSES_KEY,    self.addresses ],
-                                      [ CODES_KEY,        self.codes ],
-                                      [ NOTE_KEY,         self.note ],
-                                      [ REFERENCES_KEY,   self.references ],
-                                      [ INCIDENTS_KEY,    self.incidents ],
-                                      [ INFOS_KEY,        self.infos.map{ |info| info.to_h  }])
+                                       [ IDENTIFIER_KEY,  self.identifier ],
+                                       [ SENDER_KEY,      self.sender ],
+                                       [ SENT_KEY,        RCAP.to_s_for_cap( self.sent )],
+                                       [ STATUS_KEY,      self.status ],
+                                       [ MSG_TYPE_KEY,    self.msg_type ],
+                                       [ SOURCE_KEY,      self.source ],
+                                       [ SCOPE_KEY,       self.scope ],
+                                       [ RESTRICTION_KEY, self.restriction ],
+                                       [ ADDRESSES_KEY,   self.addresses ],
+                                       [ CODES_KEY,       self.codes ],
+                                       [ NOTE_KEY,        self.note ],
+                                       [ REFERENCES_KEY,  self.references ],
+                                       [ INCIDENTS_KEY,   self.incidents ],
+                                       [ INFOS_KEY,       self.infos.map{ |info| info.to_h  }])
       end
 
       # Initialises an Alert object from a Hash produced by Alert#to_h

@@ -9,7 +9,7 @@ module RCAP
       MAX_LONGITUDE = 180
       MIN_LONGITUDE = -180
       MAX_LATTITUDE = 90
-      MIN_LATTITUDE= -90
+      MIN_LATTITUDE = -90
 
       attr_accessor( :lattitude )
       attr_accessor( :longitude )

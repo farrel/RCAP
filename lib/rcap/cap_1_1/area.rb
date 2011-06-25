@@ -130,12 +130,12 @@ module RCAP
         def circles_yaml.to_yaml_style; :inline; end
 
         RCAP.attribute_values_to_hash(
-          [ AREA_DESC_YAML,  self.area_desc ],
-          [ ALTITUDE_YAML,   self.altitude ],
-          [ CEILING_YAML,    self.ceiling ],
-          [ CIRCLES_YAML,    circles_yaml ],
-          [ GEOCODES_YAML,   self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-          [ POLYGONS_YAML,   self.polygons ]
+          [ AREA_DESC_YAML, self.area_desc ],
+          [ ALTITUDE_YAML,  self.altitude ],
+          [ CEILING_YAML,   self.ceiling ],
+          [ CIRCLES_YAML,   circles_yaml ],
+          [ GEOCODES_YAML,  self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
+          [ POLYGONS_YAML,  self.polygons ]
         ).to_yaml( options )
       end
 

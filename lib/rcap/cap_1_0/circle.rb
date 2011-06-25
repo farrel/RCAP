@@ -50,8 +50,8 @@ module RCAP
       def self.from_xml_element( circle_xml_element ) # :nodoc:
         lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
         circle = self.new( :lattitude => lattitude,
-                          :longitude => longitude,
-                          :radius => radius )
+                           :longitude => longitude,
+                           :radius    => radius )
       end
 
       # Two circles are equivalent if their lattitude, longitude and radius are equal.
@@ -64,17 +64,19 @@ module RCAP
         self.new( :lattitude => lattitude, :longitude => longitude, :radius => radius )
       end
 
-      RADIUS_KEY    = 'radius' # :nodoc:
+      RADIUS_KEY    = 'radius'    # :nodoc:
       LATTITUDE_KEY = 'lattitude' # :nodoc:
       LONGITUDE_KEY = 'longitude' # :nodoc:
       def to_h # :nodoc:
-        RCAP.attribute_values_to_hash( [ RADIUS_KEY, self.radius ],
-                                      [ LATTITUDE_KEY, self.lattitude ],
-                                      [ LONGITUDE_KEY, self.longitude ])
+        RCAP.attribute_values_to_hash( [ RADIUS_KEY,    self.radius ],
+                                       [ LATTITUDE_KEY, self.lattitude ],
+                                       [ LONGITUDE_KEY, self.longitude ])
       end
 
       def self.from_h( circle_hash ) # :nodoc:
-        self.new( :radius => circle_hash[ RADIUS_KEY ], :lattitude => circle_hash[ LATTITUDE_KEY ], :longitude => circle_hash[ LONGITUDE_KEY ])
+        self.new( :radius    => circle_hash[ RADIUS_KEY ], 
+                  :lattitude => circle_hash[ LATTITUDE_KEY ],
+                  :longitude => circle_hash[ LONGITUDE_KEY ])
       end
     end
   end

@@ -61,12 +61,12 @@ module RCAP # :nodoc:
   end
 
   def self.format_lines_for_inspect( header, inspect_string )
-    max_line_length = inspect_string.lines.inject( 0 ){ |max_length, line| line.chomp.length > max_length ? line.chomp.length : max_length }
-    "\n." + '-' * max_line_length + ".\n"+
-      '|' + header.ljust( max_line_length ) + "|\n"+
-      '|' + '-' * max_line_length + "|\n"+
-      inspect_string.lines.map{ |line| '|' + line.chomp.ljust( max_line_length ) +'|'}.join( "\n" ) + "\n" +
-      "'" + '-' * max_line_length + "'\n"
+    max_line_length = inspect_string.lines.map{ |line| line.chomp.length }.max
+    "\n." + '-' * (max_line_length + 2) + ".\n"+
+      '| ' + header.ljust( max_line_length ) + " |\n"+
+      '|' + '-' * ( max_line_length + 2 ) + "|\n"+
+      inspect_string.lines.map{ |line| '| ' + line.chomp.ljust( max_line_length ) +' |'}.join( "\n" ) + "\n" +
+      "'" + '-' * ( max_line_length + 2 ) + "'\n"
   end
 
   def self.attribute_values_to_hash( *attribute_values )

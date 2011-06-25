@@ -78,11 +78,11 @@ module RCAP
 
       def self.from_xml_element( resource_xml_element ) # :nodoc:
         resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
-                            :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),
-                            :mime_type     => RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH, Alert::XMLNS ),
-                            :deref_uri     => RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH, Alert::XMLNS ),
-                            :size          => RCAP.xpath_text( resource_xml_element, SIZE_XPATH, Alert::XMLNS ),
-                            :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, Alert::XMLNS ))
+                             :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),
+                             :mime_type     => RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH, Alert::XMLNS ),
+                             :deref_uri     => RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH, Alert::XMLNS ),
+                             :size          => RCAP.xpath_text( resource_xml_element, SIZE_XPATH, Alert::XMLNS ),
+                             :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, Alert::XMLNS ))
       end
 
       RESOURCE_DESC_YAML = "Resource Description" # :nodoc:
@@ -99,8 +99,7 @@ module RCAP
           [ MIME_TYPE_YAML,     self.mime_type ],
           [ DEREF_URI_YAML,     self.deref_uri ],
           [ SIZE_YAML,          self.size ],
-          [ DIGEST_YAML,        self.digest ]
-        ).to_yaml( options )
+          [ DIGEST_YAML,        self.digest ]).to_yaml( options )
       end
 
       def self.from_yaml_data( resource_yaml_data ) # :nodoc:
