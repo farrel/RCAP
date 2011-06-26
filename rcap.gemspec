@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency('json', '>= 1.5.1')
   s.add_dependency('uuidtools', '>= 2.1.2')
 
-  s.add_development_dependency('rspec', '>= 2.5.0')
-  s.add_development_dependency('hanna', '>= 0.1.12')
+  s.add_development_dependency( 'rspec', '>= 2.5.0' )
+  s.add_development_dependency( 'hanna', '>= 0.1.12' )
+  s.add_development_dependency( 'webmock' )
 end
