@@ -1,5 +1,5 @@
-require 'yaml'
 require 'rcap'
+require 'webmock/rspec'
 
 def random_circle_hash
   { :lattitude => rand( 360 ) - 180,

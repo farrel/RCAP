@@ -158,4 +158,19 @@ describe( RCAP::CAP_1_2::Resource ) do
       end
     end
   end
+
+  context( 'with a non-rereferenced URI' ) do
+    before( :each ) do
+      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv' )
+      @content = "1,2\n3,4"
+      @encoded_content = Base64.encode64( @content )
+      stub_request( :get, @resource.uri ).to_return( :status => 200, :body => @content )
+    end
+
+    describe( '#dereference_uri!' ) do
+      it( 'should fetch the content and store it in deref_uri as Base64 encoded content' ) do
+        lambda{ @resource.dereference_uri! }.should( change( @resource, :deref_uri ).to( @encoded_content ))
+      end
+    end
+  end
 end

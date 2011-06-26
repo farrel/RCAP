@@ -76,6 +76,14 @@ module RCAP
         self.resource_desc
       end
 
+      # Retrieves the content at uri and stores it in deref_uri as Base64 encoded txt. 
+      # This uses the open-uri[http://ruby-doc.org/stdlib/libdoc/open-uri/rdoc/index.html] Ruby API
+      # to open and read the content.
+      def dereference_uri!
+        content = URI.parse( self.uri ).read
+        self.deref_uri = Base64.encode64( content )
+      end
+
       def self.from_xml_element( resource_xml_element ) # :nodoc:
         resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
                              :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),

@@ -1,3 +1,4 @@
+# System and require libs
 require 'date'
 require 'assistance'
 require 'uuidtools'
@@ -5,6 +6,9 @@ require 'yaml'
 require 'json'
 require 'rexml/document'
 require 'rexml/formatters/pretty'
+require 'open-uri'
+require 'base64'
+# RCAP
 require 'rcap/version'
 require 'rcap/utilities'
 require 'rcap/validations'
@@ -39,4 +43,5 @@ require 'rcap/cap_1_2/circle'
 require 'rcap/cap_1_2/polygon'
 require 'rcap/cap_1_2/geocode'
 require 'rcap/cap_1_2/area'
+# Configuration
 require 'config'
