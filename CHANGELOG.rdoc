@@ -1,5 +1,8 @@
 = Change Log
 
+* CAP 1.1 and CAP 1.2 - Resource#dereference_uri! fetches data from Resource#uri and sets Resource#deref_uri 
+* Resource#deref_uri= will also set size and calculate SHA1 digest
+
 == 1.1.1 - 25 June 2011
 
 * Documentation and code cleanup 
