@@ -175,6 +175,10 @@ describe( RCAP::CAP_1_2::Resource ) do
       it( 'should generate the correct SHA1 hash' ) do
         lambda{ @resource.dereference_uri! }.should( change( @resource, :digest ).to( Digest::SHA1.hexdigest( @encoded_content )))
       end
+
+      it( 'should set the size in bytes' ) do
+        lambda{ @resource.dereference_uri! }.should( change( @resource, :size ).to( @encoded_content.bytesize ))
+      end
     end
   end
 end

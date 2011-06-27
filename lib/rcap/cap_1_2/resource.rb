@@ -79,7 +79,7 @@ module RCAP
       end
 
       # Retrieves the content at uri and stores it in deref_uri as Base64 encoded text. It will also
-      # calculate the digest on the encoded data using SHA1.
+      # calculate the digest on the encoded data using SHA1 and set the size.
       #
       # This uses the open-uri[http://ruby-doc.org/stdlib/libdoc/open-uri/rdoc/index.html] Ruby API
       # to open and read the content.
@@ -87,6 +87,7 @@ module RCAP
         content = URI.parse( self.uri ).read
         self.deref_uri = Base64.encode64( content )
         self.digest = Digest::SHA1.hexdigest( self.deref_uri )
+        self.size = self.deref_uri.bytesize
       end
 
       def self.from_xml_element( resource_xml_element ) # :nodoc:
