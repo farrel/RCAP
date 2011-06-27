@@ -8,6 +8,7 @@ require 'rexml/document'
 require 'rexml/formatters/pretty'
 require 'open-uri'
 require 'base64'
+require 'digest/sha1'
 # RCAP
 require 'rcap/version'
 require 'rcap/utilities'

@@ -166,6 +166,10 @@ describe( RCAP::CAP_1_1::Resource ) do
       it( 'should fetch the content and store it in deref_uri as Base64 encoded content' ) do
         lambda{ @resource.dereference_uri! }.should( change( @resource, :deref_uri ).to( @encoded_content ))
       end
+
+      it( 'should generate the correct SHA1 hash' ) do
+        lambda{ @resource.dereference_uri! }.should( change( @resource, :digest ).to( Digest::SHA1.hexdigest( @encoded_content )))
+      end
     end
   end
 end
