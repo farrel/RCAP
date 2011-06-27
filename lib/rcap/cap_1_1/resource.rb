@@ -76,7 +76,7 @@ module RCAP
         self.resource_desc
       end
 
-      # Retrieves the content at uri and stores it in deref_uri as Base64 encoded txt. 
+      # Retrieves the content at uri and stores it in deref_uri as Base64 encoded text. 
       # This uses the open-uri[http://ruby-doc.org/stdlib/libdoc/open-uri/rdoc/index.html] Ruby API
       # to open and read the content.
       def dereference_uri!
