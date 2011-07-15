@@ -5,6 +5,9 @@ module RCAP
     YAML_CAP_VERSION_KEY = "CAP Version"
     JSON_CAP_VERSION_KEY = "cap_version"
 
+    # Initialise a RCAP Alert from a XML document. The namespace of the
+    # document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
+    # or CAP_1_2::Alert is instantiated.
     def self.from_xml( xml, namespace_key = XMLNS_KEY )
       xml_document = REXML::Document.new( xml )
 
@@ -19,6 +22,9 @@ module RCAP
 
     end
 
+    # Initialise a RCAP Alert from a YAML document produced by 
+    # CAP_1_2::Alert#to_yaml. The version of the document is inspected and a
+    # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated.
     def self.from_yaml( yaml )
       yaml_data = YAML.load( yaml )
 
@@ -32,11 +38,14 @@ module RCAP
       end
     end
 
+    # Initialise a RCAP Alert from a JSON document produced by 
+    # CAP_1_2::Alert#to_json. The version of the document is inspected and a
+    # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated.
     def self.from_json( json_string )
       json_hash = JSON.parse( json_string )
       self.from_h( json_hash )
     end
-
+     
     def self.from_h( hash ) # :nodoc:
       case hash[ JSON_CAP_VERSION_KEY ]
       when CAP_1_0::Alert::CAP_VERSION

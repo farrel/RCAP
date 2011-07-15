@@ -1,6 +1,7 @@
 module RCAP
   module CAP_1_1
-    # A Resourse object is valid if
+
+    # A Resource object is valid if
     # * it has a resource description
     class Resource
       include Validation
