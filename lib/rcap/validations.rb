@@ -49,7 +49,7 @@ module Validation  # :nodoc:
       }.merge!( attributes.extract_options! )
 
       validates_each( *attributes ) do |object, attribute, value|
-        next if ( value.nil? && options[ :allow_nil ]) 
+        next if ( value.nil? && options[ :allow_nil ])
         unless value && value.valid?
           object.errors[ attribute ] << options[ :message ]
         end

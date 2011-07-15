@@ -367,7 +367,7 @@ module RCAP
 
       # Returns a JSON string representation of an Alert object
       def to_json( pretty_print = false )
-        if pretty_print 
+        if pretty_print
           JSON.pretty_generate( self.to_h )
         else
           self.to_h.to_json

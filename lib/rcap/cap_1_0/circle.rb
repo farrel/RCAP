@@ -74,7 +74,7 @@ module RCAP
       end
 
       def self.from_h( circle_hash ) # :nodoc:
-        self.new( :radius    => circle_hash[ RADIUS_KEY ], 
+        self.new( :radius    => circle_hash[ RADIUS_KEY ],
                   :lattitude => circle_hash[ LATTITUDE_KEY ],
                   :longitude => circle_hash[ LONGITUDE_KEY ])
       end
