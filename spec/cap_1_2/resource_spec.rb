@@ -20,7 +20,7 @@ describe( RCAP::CAP_1_2::Resource ) do
         @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
         @original_resource.mime_type     = 'image/png'
         @original_resource.deref_uri     = "IMAGE DATA"
-        @original_resource.size          = "20480"
+        @original_resource.size          = 20480
         @original_resource.digest        = "2048"
 
         @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :resources => @original_resource ))
@@ -65,7 +65,7 @@ describe( RCAP::CAP_1_2::Resource ) do
         @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
         @original_resource.mime_type     = 'image/png'
         @original_resource.deref_uri     = "IMAGE DATA"
-        @original_resource.size          = "20480"
+        @original_resource.size          = 20480
         @original_resource.digest        = "2048"
 
         @resource = RCAP::CAP_1_2::Resource.from_h( @original_resource.to_h )
@@ -105,7 +105,7 @@ describe( RCAP::CAP_1_2::Resource ) do
       @resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
       @resource.mime_type     = 'image/png'
       @resource.deref_uri     = "IMAGE DATA"
-      @resource.size          = "20480"
+      @resource.size          = 20480
       @resource.digest        = "2048"
     end
 
@@ -136,6 +136,12 @@ describe( RCAP::CAP_1_2::Resource ) do
 
       it( 'should set the digest' ) do
         @resource_hash[ RCAP::CAP_1_2::Resource::DIGEST_KEY ].should == @resource.digest
+      end
+    end
+
+    context( 'to xml' ) do
+      it( 'should be successful' ) do
+        lambda{ @resource_xml = @resource.to_xml }.should_not( raise_exception )
       end
     end
   end
