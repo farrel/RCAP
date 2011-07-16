@@ -112,7 +112,7 @@ module RCAP
       SIZE_YAML          = "Size"                 # :nodoc:
       DIGEST_YAML        = "Digest"               # :nodoc:
 
-      def to_yaml( options ) # :nodoc:
+      def to_yaml( options = {} ) # :nodoc:
         RCAP.attribute_values_to_hash(
           [ RESOURCE_DESC_YAML, self.resource_desc ],
           [ URI_YAML,           self.uri ],
