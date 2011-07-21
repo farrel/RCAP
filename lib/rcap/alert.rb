@@ -5,13 +5,20 @@ module RCAP
     YAML_CAP_VERSION_KEY = "CAP Version"
     JSON_CAP_VERSION_KEY = "cap_version"
 
+    CAP_NAMESPACES = [ RCAP::CAP_1_0::Alert::XMLNS, RCAP::CAP_1_1::Alert::XMLNS, RCAP::CAP_1_2::Alert::XMLNS ]
+
     # Initialise a RCAP Alert from a XML document. The namespace of the
     # document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
     # or CAP_1_2::Alert is instantiated.
-    def self.from_xml( xml, namespace_key = XMLNS_KEY )
+    #
+    # The namespace key ('cap' if the CAP document is stored under 'xmlns:cap')
+    # can be specified explicitly by passing it in as a second parameter.
+    def self.from_xml( xml, namespace_key = nil )
       xml_document = REXML::Document.new( xml )
+      document_namespaces = xml_document.root.namespaces.invert
+      namespace = namespace_key || CAP_NAMESPACES.find{ |namepsace| document_namespaces[ namepsace ]}
 
-      case xml_document.root.namespaces[ namespace_key ]
+      case namespace
       when CAP_1_0::Alert::XMLNS
         CAP_1_0::Alert.from_xml_document( xml_document )
       when CAP_1_1::Alert::XMLNS
@@ -19,7 +26,6 @@ module RCAP
       else
         CAP_1_2::Alert.from_xml_document( xml_document )
       end
-
     end
 
     # Initialise a RCAP Alert from a YAML document produced by

@@ -1,5 +1,8 @@
 = Change Log
 
+* Modifed RCAP::Alert.from_xml to auto-detect the XML namespace and CAP version. Will default to CAP 1.2 if no
+namespace is found.
+
 == 1.2.0 - 17 July 2011
 
 * CAP 1.1 and CAP 1.2 - Resource#dereference_uri! fetches data from Resource#uri and sets Resource#deref_uri 

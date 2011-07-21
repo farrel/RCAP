@@ -17,8 +17,6 @@ describe( RCAP::Alert ) do
                                                     :infos => [ RCAP::CAP_1_0::Info.new, RCAP::CAP_1_0::Info.new ])
       end
 
-
-
       shared_examples_for( 'it has parsed a CAP 1.0 alert correctly' ) do
         it( 'should use the correct CAP Version' ){ @alert.class.should       == RCAP::CAP_1_0::Alert }
         it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
@@ -81,8 +79,6 @@ describe( RCAP::Alert ) do
                                                     :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
       end
 
-
-
       shared_examples_for( 'it has parsed a CAP 1.1 alert correctly' ) do
         it( 'should use the correct CAP Version' ){ @alert.class.should       == RCAP::CAP_1_1::Alert }
         it( 'should parse identifier correctly' ) { @alert.identifier.should  == @original_alert.identifier }
@@ -144,8 +140,6 @@ describe( RCAP::Alert ) do
                                                     :incidents => [ 'Incident1', 'Incident2' ],
                                                     :infos => [ RCAP::CAP_1_2::Info.new, RCAP::CAP_1_2::Info.new ])
       end
-
-
 
       shared_examples_for( 'it has parsed a CAP 1.2 alert correctly' ) do
         it( 'should use the correct CAP Version' ){ @alert.class.should       == RCAP::CAP_1_2::Alert }
