@@ -1,47 +1,5 @@
 ALLOWED_CHARACTERS = /[^\s&<]+/ # :nodoc:
 
-  class Array # :nodoc:
-    def to_s_for_cap
-      self.map{ |element| element.to_s.for_cap_list }.join( ' ' )
-    end
-  end
-
-class String # :nodoc:
-  CAP_LIST_REGEX = Regexp.new( '"([\w\s]+)"|(\S+)' )
-  WHITESPACE_REGEX = Regexp.new('^\s+$')
-
-  def for_cap_list
-    if self =~ /\s/
-      '"'+self+'"'
-    else
-      self
-    end
-  end
-
-  def unpack_cap_list
-    self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }
-  end
-end
-
-class DateTime # :nodoc:
-  alias inspect to_s
-  alias to_s_for_cap to_s
-end
-
-class Time # :nodoc:
-  RCAP_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
-  RCAP_ZONE_FORMAT = "%+03i:00"
-
-  def to_s_for_cap
-    t = self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , self.utc_hours_offset )
-    t.sub(/\+(00:\d\d)$/, '-\1')
-  end
-
-  def utc_hours_offset
-    self.utc_offset/3600
-  end
-end
-
 module RCAP # :nodoc:
   def self.generate_identifier
     UUIDTools::UUID.random_create.to_s

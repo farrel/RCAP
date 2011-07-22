@@ -9,6 +9,11 @@ require 'rexml/formatters/pretty'
 require 'open-uri'
 require 'base64'
 require 'digest/sha1'
+# Extensions
+require 'extensions/array'
+require 'extensions/string'
+require 'extensions/date_time'
+require 'extensions/time'
 # RCAP
 require 'rcap/version'
 require 'rcap/utilities'
