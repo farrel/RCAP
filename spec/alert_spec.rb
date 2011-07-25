@@ -187,4 +187,25 @@ describe( RCAP::Alert ) do
       end
     end
   end
+
+  describe( 'external file' ) do
+    def load_file( file_name ) 
+      File.open( File.join( File.dirname( __FILE__ ), 'assets', file_name )){|f| f.read }
+    end
+
+    describe( "'invalid.cap'" ) do
+      before( :each ) do
+        @alert = RCAP::Alert.from_xml( load_file( 'invalid.cap' ))
+      end
+
+      it( 'should not be valid' ) do
+        @alert.should_not( be_valid )
+      end
+
+      it( 'should be invalid because scope is missing' ) do
+        @alert.valid?
+        @alert.errors.on( :scope ).should_not( be_empty )
+      end
+    end
+  end
 end
