@@ -237,5 +237,24 @@ describe( RCAP::Alert ) do
         circle.radius.should == 0
       end
     end
+
+    describe( "'canada.cap'" ) do
+      before( :each ) do
+        @alert = RCAP::Alert.from_xml( load_file( 'canada.cap' ))
+      end
+
+      it( 'should be valid' ) do
+        @alert.should( be_valid )
+      end
+
+      it( 'should parse the alert correctly' ) do
+        @alert.class.should == RCAP::CAP_1_1::Alert
+        @alert.status.should == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
+        @alert.msg_type.should == RCAP::CAP_1_1::Alert::MSG_TYPE_UPDATE
+        @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+
+        @alert.infos.size.should == 2
+      end
+    end
   end
 end
