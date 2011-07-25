@@ -207,5 +207,35 @@ describe( RCAP::Alert ) do
         @alert.errors.on( :scope ).should_not( be_empty )
       end
     end
+
+    describe( "'earthquake.cap'" ) do
+      before( :each ) do
+        @alert = RCAP::Alert.from_xml( load_file( 'earthquake.cap' ))
+      end
+
+      it( 'should be valid' ) do
+        @alert.should( be_valid )
+      end
+
+      it( 'should parse the alert correctly' ) do
+        @alert.class.should == RCAP::CAP_1_1::Alert
+        @alert.status.should == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
+        @alert.msg_type.should == RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT
+        @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+
+        @alert.infos.size.should == 2
+        info = @alert.infos.first
+        info.categories.include?( RCAP::CAP_1_1::Info::CATEGORY_GEO ).should( be_true )
+
+        info.areas.size.should == 1
+        area = info.areas.first
+
+        area.circles.size.should == 1
+        circle = area.circles.first
+        circle.lattitude.should == -16.053
+        circle.longitude.should == -173.274
+        circle.radius.should == 0
+      end
+    end
   end
 end
