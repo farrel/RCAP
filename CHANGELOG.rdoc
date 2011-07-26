@@ -1,5 +1,6 @@
 = Change Log
 
+* Added CAP/Atom files from Google CAP Library project into specs 
 * Organised extension code into separate file
 * Modifed RCAP::Alert.from_xml to auto-detect the XML namespace and CAP version. Will default to CAP 1.2 if no
 namespace is found.

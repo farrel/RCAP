@@ -254,6 +254,8 @@ describe( RCAP::Alert ) do
         @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
 
         @alert.infos.size.should == 2
+        info = @alert.infos.first
+        info.event_codes.first.value = 'storm'
       end
     end
   end
