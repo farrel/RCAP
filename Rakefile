@@ -1,17 +1,17 @@
 require 'rubygems'
 require 'bundler'
-
-require 'rdoc/task'
 require 'rspec/core/rake_task'
+require 'yard'
 
 Bundler::GemHelper.install_tasks
 
-RDoc::Task.new do |rdoc|
-  rdoc.main = 'README.rdoc'
-  rdoc.rdoc_files.include('README.rdoc', 'CHANGELOG.rdoc', 'lib/**/*.rb')
-  rdoc.rdoc_dir = 'doc'
-  rdoc.title = 'RCAP Ruby API'
+YARD::Rake::YardocTask.new do |t|
+  t.files = ['lib/**/*.rb', 'README.rdoc', 'CHANGELOG.rdoc']
+  t.options += [ '--title', "'RCAP Ruby API'" ]
+  t.options += [ '--main', 'README.rdoc']
+  t.options += [ '--output-dir', 'doc' ]
 end
+
 
 RSpec::Core::RakeTask.new do |spec|
   spec.rspec_opts = ['--options spec/spec.opts']
