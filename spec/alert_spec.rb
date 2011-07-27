@@ -252,6 +252,7 @@ describe( RCAP::Alert ) do
         @alert.status.should == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
         @alert.msg_type.should == RCAP::CAP_1_1::Alert::MSG_TYPE_UPDATE
         @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+        @aliert.identifier.should == "CA-EC-CWTO-2011-138776"
 
         @alert.infos.size.should == 2
         info = @alert.infos.first
