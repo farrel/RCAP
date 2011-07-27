@@ -7,14 +7,17 @@ module RCAP
 
     CAP_NAMESPACES = [ RCAP::CAP_1_0::Alert::XMLNS, RCAP::CAP_1_1::Alert::XMLNS, RCAP::CAP_1_2::Alert::XMLNS ]
 
-    # Initialise a RCAP Alert from a XML document. The namespace of the
-    # document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
-    # or CAP_1_2::Alert is instantiated.
+    # Initialise a RCAP Alert from a XML document.
     #
-    # The namespace key ('cap' if the CAP document is stored under 'xmlns:cap')
-    # can be specified explicitly by passing it in as a second parameter.
+    # @param [#to_s] xml CAP alert in XML format
+    # @param [String] namespace_key The XML namespace that the CAP alert is in. If omitted  
+    #  the namespace of the document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
+    #  or CAP_1_2::Alert is instantiated accordingly. If no namespace can be detected
+    #  a CAP 1.2 message will be assumed.
+    #
+    # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_xml( xml, namespace_key = nil )
-      xml_document = REXML::Document.new( xml )
+      xml_document = REXML::Document.new( xml.to_s )
       document_namespaces = xml_document.root.namespaces.invert
       namespace = namespace_key || CAP_NAMESPACES.find{ |namepsace| document_namespaces[ namepsace ]}
 
@@ -31,8 +34,12 @@ module RCAP
     # Initialise a RCAP Alert from a YAML document produced by
     # CAP_1_2::Alert#to_yaml. The version of the document is inspected and a
     # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated.
+    #
+    # @param [#to_s] yaml CAP  Alert in YAML format
+    #
+    # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_yaml( yaml )
-      yaml_data = YAML.load( yaml )
+      yaml_data = YAML.load( yaml.to_s )
 
       case yaml_data[ YAML_CAP_VERSION_KEY ]
       when CAP_1_0::Alert::CAP_VERSION
@@ -47,12 +54,17 @@ module RCAP
     # Initialise a RCAP Alert from a JSON document produced by
     # CAP_1_2::Alert#to_json. The version of the document is inspected and a
     # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated.
-    def self.from_json( json_string )
-      json_hash = JSON.parse( json_string )
+    #
+    # @param [#to_s] json Alert in JSON format
+    #
+    # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
+    def self.from_json( json )
+      json_hash = JSON.parse( json.to_s )
       self.from_h( json_hash )
     end
 
-    def self.from_h( hash ) # :nodoc:
+    # @private
+    def self.from_h( hash ) 
       case hash[ JSON_CAP_VERSION_KEY ]
       when CAP_1_0::Alert::CAP_VERSION
         CAP_1_0::Alert.from_h( hash )
