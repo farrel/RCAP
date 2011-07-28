@@ -1,10 +1,12 @@
+require 'rubygems'
 require 'bundler'
-require 'hanna/rdoctask'
+
+require 'rdoc/task'
 require 'rspec/core/rake_task'
 
 Bundler::GemHelper.install_tasks
 
-Rake::RDocTask.new do |rdoc|
+RDoc::Task.new do |rdoc|
   rdoc.main = 'README.rdoc'
   rdoc.rdoc_files.include('README.rdoc', 'CHANGELOG.rdoc', 'lib/**/*.rb')
   rdoc.rdoc_dir = 'doc'
