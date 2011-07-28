@@ -126,14 +126,11 @@ module RCAP
       POLYGONS_YAML  = 'Polygons'         # :nodoc:
 
       def to_yaml( options = {} ) # :nodoc:
-        circles_yaml = self.circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]}
-        def circles_yaml.to_yaml_style; :inline; end
-
         RCAP.attribute_values_to_hash(
           [ AREA_DESC_YAML, self.area_desc ],
           [ ALTITUDE_YAML,  self.altitude ],
           [ CEILING_YAML,   self.ceiling ],
-          [ CIRCLES_YAML,   circles_yaml ],
+          [ CIRCLES_YAML,   self.circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]}],
           [ GEOCODES_YAML,  self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
           [ POLYGONS_YAML,  self.polygons ]
         ).to_yaml( options )

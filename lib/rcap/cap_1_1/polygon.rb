@@ -65,10 +65,7 @@ module RCAP
 
 
       def to_yaml( options = {} ) # :nodoc:
-        yaml_points = self.points.map{ |point| [ point.lattitude, point.longitude ]}
-        def yaml_points.to_yaml_style; :inline; end
-
-        yaml_points.to_yaml( options )
+        self.points.map{ |point| [ point.lattitude, point.longitude ]}.to_yaml( options )
       end
 
       def self.from_yaml_data( polygon_yaml_data ) # :nodoc:

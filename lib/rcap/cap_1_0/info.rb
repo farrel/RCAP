@@ -310,13 +310,10 @@ module RCAP
       AREAS_YAML          = 'Areas'          # :nodoc:
 
       def to_yaml( options = {} ) # :nodoc:
-        categories_yaml = self.categories
-        def categories_yaml.to_yaml_style; :inline; end
-
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
         RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       self.language ],
-                                       [ CATEGORIES_YAML,     categories_yaml ],
+                                       [ CATEGORIES_YAML,     self.categories ],
                                        [ EVENT_YAML,          self.event ],
                                        [ URGENCY_YAML,        self.urgency ],
                                        [ SEVERITY_YAML,       self.severity ],
