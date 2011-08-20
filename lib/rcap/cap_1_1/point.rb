@@ -26,28 +26,28 @@ module RCAP
       # Returns a string representation of the point of the form
       #  lattitude,longitude
       def to_s
-        "#{ self.lattitude },#{ self.longitude }"
+        "#{ @lattitude },#{ @longitude }"
       end
 
-      def inspect # :nodoc:
+      def inspect 
         '('+self.to_s+')'
       end
 
       # Two points are equivalent if they have the same lattitude and longitude
       def ==( other )
-        [ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
+        [ @lattitude, @longitude ] == [ other.lattitude, other.longitude ]
       end
 
-      LATTITUDE_KEY = 'lattitude'  # :nodoc:
-      LONGITUDE_KEY = 'longitude'  # :nodoc:
+      LATTITUDE_KEY = 'lattitude'  
+      LONGITUDE_KEY = 'longitude'  
 
-      def to_h # :nodoc:
+      def to_h 
         RCAP.attribute_values_to_hash(
-          [ LATTITUDE_KEY, self.lattitude ],
-          [ LONGITUDE_KEY, self.longitude ])
+          [ LATTITUDE_KEY, @lattitude ],
+          [ LONGITUDE_KEY, @longitude ])
       end
 
-      def self.from_h( point_hash ) # :nodoc:
+      def self.from_h( point_hash ) 
         self.new( :lattitude => point_hash[ LATTITUDE_KEY ], :longitude => point_hash[ LONGITUDE_KEY ])
       end
     end

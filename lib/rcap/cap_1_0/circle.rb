@@ -12,9 +12,9 @@ module RCAP
       validates_presence_of( :radius )
       validates_numericality_of( :radius , greater_than_or_equal: 0 )
 
-      XML_ELEMENT_NAME = 'circle' # :nodoc:
+      XML_ELEMENT_NAME = 'circle' 
 
-      XPATH = 'cap:circle' # :nodoc:
+      XPATH = 'cap:circle' 
 
       def initialize( attributes = {} )
         super( attributes )
@@ -23,31 +23,31 @@ module RCAP
 
       # Returns a string representation of the circle of the form
       #  lattitude,longitude,radius
-      def to_s  # :nodoc:
-        "#{ self.lattitude },#{ self.longitude } #{ self.radius }"
+      def to_s  
+        "#{ @lattitude },#{ @longitude } #{ @radius }"
       end
 
-      def inspect # :nodoc:
+      def inspect 
         "(#{ self.to_s })"
       end
 
-      def to_xml_element # :nodoc:
+      def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_text( self.to_s )
         xml_element
       end
 
-      def to_xml # :nodoc:
+      def to_xml 
         self.to_xml_element.to_s
       end
 
-      def self.parse_circle_string( circle_string ) # :nodoc:
+      def self.parse_circle_string( circle_string ) 
         coordinates, radius = circle_string.split( ' ' )
         lattitude, longitude = coordinates.split( ',' )
         [ lattitude, longitude, radius ].map{ |e| e.to_f }
       end
 
-      def self.from_xml_element( circle_xml_element ) # :nodoc:
+      def self.from_xml_element( circle_xml_element ) 
         lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
         circle = self.new( :lattitude => lattitude,
                            :longitude => longitude,
@@ -56,24 +56,24 @@ module RCAP
 
       # Two circles are equivalent if their lattitude, longitude and radius are equal.
       def ==( other )
-        [ self.lattitude, self.longitude, self.radius ] == [ other.lattitude, other.longitude, other.radius ]
+        [ @lattitude, @longitude, @radius ] == [ other.lattitude, other.longitude, other.radius ]
       end
 
-      def self.from_yaml_data( circle_yaml_data ) # :nodoc:
-        lattitude, longitude,radius = circle_yaml_data
+      def self.from_yaml_data( circle_yaml_data ) 
+        lattitude, longitude, radius = circle_yaml_data
         self.new( :lattitude => lattitude, :longitude => longitude, :radius => radius )
       end
 
-      RADIUS_KEY    = 'radius'    # :nodoc:
-      LATTITUDE_KEY = 'lattitude' # :nodoc:
-      LONGITUDE_KEY = 'longitude' # :nodoc:
-      def to_h # :nodoc:
-        RCAP.attribute_values_to_hash( [ RADIUS_KEY,    self.radius ],
-                                       [ LATTITUDE_KEY, self.lattitude ],
-                                       [ LONGITUDE_KEY, self.longitude ])
+      RADIUS_KEY    = 'radius'    
+      LATTITUDE_KEY = 'lattitude' 
+      LONGITUDE_KEY = 'longitude' 
+      def to_h 
+        RCAP.attribute_values_to_hash( [ RADIUS_KEY,    @radius ],
+                                       [ LATTITUDE_KEY, @lattitude ],
+                                       [ LONGITUDE_KEY, @longitude ])
       end
 
-      def self.from_h( circle_hash ) # :nodoc:
+      def self.from_h( circle_hash ) 
         self.new( :radius    => circle_hash[ RADIUS_KEY ],
                   :lattitude => circle_hash[ LATTITUDE_KEY ],
                   :longitude => circle_hash[ LONGITUDE_KEY ])

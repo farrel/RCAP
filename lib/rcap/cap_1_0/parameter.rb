@@ -10,31 +10,31 @@ module RCAP
 
       attr_accessor( :name, :value )
 
-      XML_ELEMENT_NAME   = "parameter" # :nodoc:
-      NAME_ELEMENT_NAME  = "valueName" # :nodoc:
-      VALUE_ELEMENT_NAME = "value"     # :nodoc:
+      XML_ELEMENT_NAME   = "parameter" 
+      NAME_ELEMENT_NAME  = "valueName" 
+      VALUE_ELEMENT_NAME = "value"     
 
-      XPATH       = "cap:#{ XML_ELEMENT_NAME }"     # :nodoc:
-      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    # :nodoc:
-      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   # :nodoc:
+      XPATH       = "cap:#{ XML_ELEMENT_NAME }"     
+      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    
+      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   
 
       def initialize( attributes = {} )
         @name = attributes[ :name ]
         @value = attributes[ :value ]
       end
 
-      def to_xml_element # :nodoc:
+      def to_xml_element 
         xml_element = REXML::Element.new( self.class::XML_ELEMENT_NAME )
-        xml_element.add_text( "#{ self.name }=#{ self.value }")
+        xml_element.add_text( "#{ @name }=#{ @value }")
         xml_element
       end
 
-      def to_xml # :nodoc:
+      def to_xml 
         self.to_xml_element.to_s
       end
 
-      def inspect # :nodoc:
-        "#{ self.name }: #{ self.value }"
+      def inspect 
+        "#{ @name }: #{ @value }"
       end
 
       # Returns a string representation of the parameter of the form
@@ -43,25 +43,25 @@ module RCAP
         self.inspect
       end
 
-      def self.from_xml_element( parameter_xml_element ) # :nodoc:
+      def self.from_xml_element( parameter_xml_element ) 
         self.new( self.parse_parameter( parameter_xml_element.text ))
       end
 
       # Two parameters are equivalent if they have the same name and value.
       def ==( other )
-        [ self.name, self.value ] == [ other.name, other.value ]
+        [ @name, @value ] == [ other.name, other.value ]
       end
 
-      def to_h # :nodoc:
-        RCAP.attribute_values_to_hash( [ self.name, self.value ])
+      def to_h 
+        RCAP.attribute_values_to_hash( [ @name, @value ])
       end
 
-      def self.from_h( hash ) # :nodoc:
+      def self.from_h( hash ) 
         key = hash.keys.first
         self.new( :name => key, :value => hash[ key ])
       end
 
-      def self.parse_parameter( parameter_string ) # :nodoc:
+      def self.parse_parameter( parameter_string ) 
         name, value = parameter_string.split("=")
         { :name  => name,
           :value => value }

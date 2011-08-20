@@ -11,102 +11,102 @@ module RCAP
     class Info
       include Validation
 
-      CATEGORY_GEO       = "Geo"       # :nodoc:
-      CATEGORY_MET       = "Met"       # :nodoc:
-      CATEGORY_SAFETY    = "Safety"    # :nodoc:
-      CATEGORY_SECURITY  = "Security"  # :nodoc:
-      CATEGORY_RESCUE    = "Rescue"    # :nodoc:
-      CATEGORY_FIRE      = "Fire"      # :nodoc:
-      CATEGORY_HEALTH    = "Health"    # :nodoc:
-      CATEGORY_ENV       = "Env"       # :nodoc:
-      CATEGORY_TRANSPORT = "Transport" # :nodoc:
-      CATEGORY_INFRA     = "Infra"     # :nodoc:
-      CATEGORY_CBRNE     = "CBRNE"     # :nodoc:
-      CATEGORY_OTHER     = "Other"     # :nodoc:
+      CATEGORY_GEO       = "Geo"       
+      CATEGORY_MET       = "Met"       
+      CATEGORY_SAFETY    = "Safety"    
+      CATEGORY_SECURITY  = "Security"  
+      CATEGORY_RESCUE    = "Rescue"    
+      CATEGORY_FIRE      = "Fire"      
+      CATEGORY_HEALTH    = "Health"    
+      CATEGORY_ENV       = "Env"       
+      CATEGORY_TRANSPORT = "Transport" 
+      CATEGORY_INFRA     = "Infra"     
+      CATEGORY_CBRNE     = "CBRNE"     
+      CATEGORY_OTHER     = "Other"     
       # Valid values for categories
       VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,
         CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
         CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
         CATEGORY_OTHER ]
 
-      RESPONSE_TYPE_SHELTER  = "Shelter"  # :nodoc:
-      RESPONSE_TYPE_EVACUATE = "Evacuate" # :nodoc:
-      RESPONSE_TYPE_PREPARE  = "Prepare"  # :nodoc:
-      RESPONSE_TYPE_EXECUTE  = "Execute"  # :nodoc:
-      RESPONSE_TYPE_MONITOR  = "Monitor"  # :nodoc:
-      RESPONSE_TYPE_ASSESS   = "Assess"   # :nodoc:
-      RESPONSE_TYPE_NONE     = "None"     # :nodoc:
+      RESPONSE_TYPE_SHELTER  = "Shelter"  
+      RESPONSE_TYPE_EVACUATE = "Evacuate" 
+      RESPONSE_TYPE_PREPARE  = "Prepare"  
+      RESPONSE_TYPE_EXECUTE  = "Execute"  
+      RESPONSE_TYPE_MONITOR  = "Monitor"  
+      RESPONSE_TYPE_ASSESS   = "Assess"   
+      RESPONSE_TYPE_NONE     = "None"     
       # Valid values for response_type
       VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE,
         RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR,
         RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
-      URGENCY_IMMEDIATE = "Immediate" # :nodoc:
-      URGENCY_EXPECTED  = "Expected"  # :nodoc:
-      URGENCY_FUTURE    = "Future"    # :nodoc:
-      URGENCY_PAST      = "Past"      # :nodoc:
-      URGENCY_UNKNOWN   = "Unknown"   # :nodoc:
+      URGENCY_IMMEDIATE = "Immediate" 
+      URGENCY_EXPECTED  = "Expected"  
+      URGENCY_FUTURE    = "Future"    
+      URGENCY_PAST      = "Past"      
+      URGENCY_UNKNOWN   = "Unknown"   
       # Valid values for urgency
       VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,
         URGENCY_PAST, URGENCY_UNKNOWN ]
 
-      SEVERITY_EXTREME  = "Extreme"  # :nodoc:
-      SEVERITY_SEVERE   = "Severe"   # :nodoc:
-      SEVERITY_MODERATE = "Moderate" # :nodoc:
-      SEVERITY_MINOR    = "Minor"    # :nodoc:
-      SEVERITY_UNKNOWN  = "Unknown"  # :nodoc:
+      SEVERITY_EXTREME  = "Extreme"  
+      SEVERITY_SEVERE   = "Severe"   
+      SEVERITY_MODERATE = "Moderate" 
+      SEVERITY_MINOR    = "Minor"    
+      SEVERITY_UNKNOWN  = "Unknown"  
       # Valid values for severity
       VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
         SEVERITY_MINOR, SEVERITY_UNKNOWN ]
 
-      CERTAINTY_OBSERVED = "Observed" # :nodoc:
-      CERTAINTY_LIKELY   = "Likely"   # :nodoc:
-      CERTAINTY_POSSIBLE = "Possible" # :nodoc:
-      CERTAINTY_UNLIKELY = "Unlikely" # :nodoc:
-      CERTAINTY_UNKNOWN  = "Unknown"  # :nodoc:
+      CERTAINTY_OBSERVED = "Observed" 
+      CERTAINTY_LIKELY   = "Likely"   
+      CERTAINTY_POSSIBLE = "Possible" 
+      CERTAINTY_UNLIKELY = "Unlikely" 
+      CERTAINTY_UNKNOWN  = "Unknown"  
       # Valid valies for certainty
       VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
-      XML_ELEMENT_NAME           = 'info'         # :nodoc:
-      LANGUAGE_ELEMENT_NAME      = 'language'     # :nodoc:
-      CATEGORY_ELEMENT_NAME      = 'category'     # :nodoc:
-      EVENT_ELEMENT_NAME         = 'event'        # :nodoc:
-      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' # :nodoc:
-      URGENCY_ELEMENT_NAME       = 'urgency'      # :nodoc:
-      SEVERITY_ELEMENT_NAME      = 'severity'     # :nodoc:
-      CERTAINTY_ELEMENT_NAME     = 'certainty'    # :nodoc:
-      AUDIENCE_ELEMENT_NAME      = 'audience'     # :nodoc:
-      EVENT_CODE_ELEMENT_NAME    = 'eventCode'    # :nodoc:
-      EFFECTIVE_ELEMENT_NAME     = 'effective'    # :nodoc:
-      ONSET_ELEMENT_NAME         = 'onset'        # :nodoc:
-      EXPIRES_ELEMENT_NAME       = 'expires'      # :nodoc:
-      SENDER_NAME_ELEMENT_NAME   = 'senderName'   # :nodoc:
-      HEADLINE_ELEMENT_NAME      = 'headline'     # :nodoc:
-      DESCRIPTION_ELEMENT_NAME   = 'description'  # :nodoc:
-      INSTRUCTION_ELEMENT_NAME   = 'instruction'  # :nodoc:
-      WEB_ELEMENT_NAME           = 'web'          # :nodoc:
-      CONTACT_ELEMENT_NAME       = 'contact'      # :nodoc:
+      XML_ELEMENT_NAME           = 'info'         
+      LANGUAGE_ELEMENT_NAME      = 'language'     
+      CATEGORY_ELEMENT_NAME      = 'category'     
+      EVENT_ELEMENT_NAME         = 'event'        
+      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' 
+      URGENCY_ELEMENT_NAME       = 'urgency'      
+      SEVERITY_ELEMENT_NAME      = 'severity'     
+      CERTAINTY_ELEMENT_NAME     = 'certainty'    
+      AUDIENCE_ELEMENT_NAME      = 'audience'     
+      EVENT_CODE_ELEMENT_NAME    = 'eventCode'    
+      EFFECTIVE_ELEMENT_NAME     = 'effective'    
+      ONSET_ELEMENT_NAME         = 'onset'        
+      EXPIRES_ELEMENT_NAME       = 'expires'      
+      SENDER_NAME_ELEMENT_NAME   = 'senderName'   
+      HEADLINE_ELEMENT_NAME      = 'headline'     
+      DESCRIPTION_ELEMENT_NAME   = 'description'  
+      INSTRUCTION_ELEMENT_NAME   = 'instruction'  
+      WEB_ELEMENT_NAME           = 'web'          
+      CONTACT_ELEMENT_NAME       = 'contact'      
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           # :nodoc:
-      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      # :nodoc:
-      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         # :nodoc:
-      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       # :nodoc:
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" # :nodoc:
-      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      # :nodoc:
-      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      # :nodoc:
-      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     # :nodoc:
-      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      # :nodoc:
-      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    # :nodoc:
-      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     # :nodoc:
-      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         # :nodoc:
-      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       # :nodoc:
-      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   # :nodoc:
-      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      # :nodoc:
-      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   # :nodoc:
-      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   # :nodoc:
-      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           # :nodoc:
-      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       # :nodoc:
+      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           
+      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      
+      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         
+      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       
+      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" 
+      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      
+      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      
+      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     
+      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      
+      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    
+      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     
+      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         
+      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       
+      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   
+      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      
+      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   
+      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   
+      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           
+      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       
 
       DEFAULT_LANGUAGE = 'en-US'
 
@@ -182,7 +182,7 @@ module RCAP
       # event_code_attributes are passed as a parameter to EventCode.new.
       def add_event_code( event_code_attributes = {})
         event_code = EventCode.new( event_code_attributes )
-        self.event_codes << event_code
+        @event_codes << event_code
         event_code
       end
 
@@ -190,7 +190,7 @@ module RCAP
       # parameter_attributes are passed as a parameter to Parameter.new.
       def add_parameter( parameter_attributes = {})
         parameter = Parameter.new( parameter_attributes )
-        self.parameters << parameter
+        @parameters << parameter
         parameter
       end
 
@@ -198,7 +198,7 @@ module RCAP
       # resource_attributes are passed as a parameter to Resource.new.
       def add_resource( resource_attributes = {})
         resource = Resource.new( resource_attributes )
-        self.resources << resource
+        @resources << resource
         resource
       end
 
@@ -206,36 +206,36 @@ module RCAP
       # area_attributes are passed as a parameter to Area.new.
       def add_area( area_attributes = {})
         area = Area.new( area_attributes )
-        self.areas << area
+        @areas << area
         area
       end
 
-      def to_xml_element # :nodoc:
+      def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
-        xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( self.language ) if self.language
+        xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
         @categories.each do |category|
           xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( category )
         end
-        xml_element.add_element( EVENT_ELEMENT_NAME ).add_text( self.event )
+        xml_element.add_element( EVENT_ELEMENT_NAME ).add_text( @event )
         @response_types.each do |response_type|
           xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( response_type )
         end
-        xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( self.urgency )
-        xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( self.severity )
-        xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( self.certainty )
-        xml_element.add_element( AUDIENCE_ELEMENT_NAME ).add_text( self.audience ) if self.audience
+        xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( @urgency )
+        xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( @severity )
+        xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( @certainty )
+        xml_element.add_element( AUDIENCE_ELEMENT_NAME ).add_text( @audience ) if @audience
         @event_codes.each do |event_code|
           xml_element.add_element( event_code.to_xml_element )
         end
-        xml_element.add_element( EFFECTIVE_ELEMENT_NAME ).add_text( self.effective.to_s_for_cap ) if self.effective
-        xml_element.add_element( ONSET_ELEMENT_NAME ).add_text( self.onset.to_s_for_cap )         if self.onset
-        xml_element.add_element( EXPIRES_ELEMENT_NAME ).add_text( self.expires.to_s_for_cap )     if self.expires
-        xml_element.add_element( SENDER_NAME_ELEMENT_NAME ).add_text( self.sender_name )          if self.sender_name
-        xml_element.add_element( HEADLINE_ELEMENT_NAME ).add_text( self.headline )                if self.headline
-        xml_element.add_element( DESCRIPTION_ELEMENT_NAME ).add_text( self.description )          if self.description
-        xml_element.add_element( INSTRUCTION_ELEMENT_NAME ).add_text( self.instruction )          if self.instruction
-        xml_element.add_element( WEB_ELEMENT_NAME ).add_text( self.web )                          if self.web
-        xml_element.add_element( CONTACT_ELEMENT_NAME ).add_text( self.contact )                  if self.contact
+        xml_element.add_element( EFFECTIVE_ELEMENT_NAME ).add_text( @effective.to_s_for_cap ) if @effective
+        xml_element.add_element( ONSET_ELEMENT_NAME ).add_text( @onset.to_s_for_cap )         if @onset
+        xml_element.add_element( EXPIRES_ELEMENT_NAME ).add_text( @expires.to_s_for_cap )     if @expires
+        xml_element.add_element( SENDER_NAME_ELEMENT_NAME ).add_text( @sender_name )          if @sender_name
+        xml_element.add_element( HEADLINE_ELEMENT_NAME ).add_text( @headline )                if @headline
+        xml_element.add_element( DESCRIPTION_ELEMENT_NAME ).add_text( @description )          if @description
+        xml_element.add_element( INSTRUCTION_ELEMENT_NAME ).add_text( @instruction )          if @instruction
+        xml_element.add_element( WEB_ELEMENT_NAME ).add_text( @web )                          if @web
+        xml_element.add_element( CONTACT_ELEMENT_NAME ).add_text( @contact )                  if @contact
         @parameters.each do |parameter|
           xml_element.add_element( parameter.to_xml_element )
         end
@@ -248,46 +248,46 @@ module RCAP
         xml_element
       end
 
-      def to_xml # :nodoc:
+      def to_xml 
         self.to_xml_element.to_s
       end
 
-      def inspect # :nodoc:
-        info_inspect = "Language:       #{ self.language }\n"+
-                       "Categories:     #{ self.categories.to_s_for_cap }\n"+
-                       "Event:          #{ self.event }\n"+
-                       "Response Types: #{ self.response_types.to_s_for_cap }\n"+
-                       "Urgency:        #{ self.urgency }\n"+
-                       "Severity:       #{ self.severity }\n"+
-                       "Certainty:      #{ self.certainty }\n"+
-                       "Audience:       #{ self.audience }\n"+
-                       "Event Codes:    #{ self.event_codes.inspect }\n"+
-                       "Effective:      #{ self.effective }\n"+
-                       "Onset:          #{ self.onset }\n"+
-                       "Expires:        #{ self.expires }\n"+
-                       "Sender Name:    #{ self.sender_name }\n"+
-                       "Headline:       #{ self.headline }\n"+
+      def inspect 
+        info_inspect = "Language:       #{ @language }\n"+
+                       "Categories:     #{ @categories.to_s_for_cap }\n"+
+                       "Event:          #{ @event }\n"+
+                       "Response Types: #{ @response_types.to_s_for_cap }\n"+
+                       "Urgency:        #{ @urgency }\n"+
+                       "Severity:       #{ @severity }\n"+
+                       "Certainty:      #{ @certainty }\n"+
+                       "Audience:       #{ @audience }\n"+
+                       "Event Codes:    #{ @event_codes.inspect }\n"+
+                       "Effective:      #{ @effective }\n"+
+                       "Onset:          #{ @onset }\n"+
+                       "Expires:        #{ @expires }\n"+
+                       "Sender Name:    #{ @sender_name }\n"+
+                       "Headline:       #{ @headline }\n"+
                        "Description:\n"+
-                       self.description.to_s.lines.map{ |line| "  " + line }.join( "\n")+"\n"+
-                       "Instruction:    #{ self.instruction }\n"+
-                       "Web:            #{ self.web }\n"+
-                       "Contact:        #{ self.contact }\n"+
+                       @description.to_s.lines.map{ |line| "  " + line }.join( "\n")+"\n"+
+                       "Instruction:    #{ @instruction }\n"+
+                       "Web:            #{ @web }\n"+
+                       "Contact:        #{ @contact }\n"+
                        "Parameters:\n"+
-                       self.parameters.map{ |parameter| parameter.inspect }.join( "\n" )+"\n"+
+                       @parameters.map{ |parameter| parameter.inspect }.join( "\n" )+"\n"+
                        "Resources:\n"+
-                       self.resources.map{ |resource| "  " + resource.inspect }.join( "\n" )+"\n"+
+                       @resources.map{ |resource| "  " + resource.inspect }.join( "\n" )+"\n"+
                        "Area:\n"+
-                       self.areas.map{ |area| "  #{ area }" }.join( "\n" )+"\n"
+                       @areas.map{ |area| "  #{ area }" }.join( "\n" )+"\n"
         RCAP.format_lines_for_inspect( 'INFO', info_inspect )
       end
 
       # Returns a string representation of the event of the form
       #  event(urgency/severity/certainty)
       def to_s
-        "#{ self.event }(#{ self.urgency }/#{ self.severity }/#{ self.certainty })"
+        "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
       end
 
-      def self.from_xml_element( info_xml_element ) # :nodoc:
+      def self.from_xml_element( info_xml_element ) 
         self.new(
           :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
           :categories     => RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, Alert::XMLNS ).map{ |element| element.text },
@@ -313,56 +313,56 @@ module RCAP
         )
       end
 
-      LANGUAGE_YAML       = 'Language'       # :nodoc:
-      CATEGORIES_YAML     = 'Categories'     # :nodoc:
-      EVENT_YAML          = 'Event'          # :nodoc:
-      RESPONSE_TYPES_YAML = 'Response Types' # :nodoc:
-      URGENCY_YAML        = 'Urgency'        # :nodoc:
-      SEVERITY_YAML       = 'Severity'       # :nodoc:
-      CERTAINTY_YAML      = 'Certainty'      # :nodoc:
-      AUDIENCE_YAML       = 'Audience'       # :nodoc:
-      EFFECTIVE_YAML      = 'Effective'      # :nodoc:
-      ONSET_YAML          = 'Onset'          # :nodoc:
-      EXPIRES_YAML        = 'Expires'        # :nodoc:
-      SENDER_NAME_YAML    = 'Sender Name'    # :nodoc:
-      HEADLINE_YAML       = 'Headline'       # :nodoc:
-      DESCRIPTION_YAML    = 'Description'    # :nodoc:
-      INSTRUCTION_YAML    = 'Instruction'    # :nodoc:
-      WEB_YAML            = 'Web'            # :nodoc:
-      CONTACT_YAML        = 'Contact'        # :nodoc:
-      EVENT_CODES_YAML    = 'Event Codes'    # :nodoc:
-      PARAMETERS_YAML     = 'Parameters'     # :nodoc:
-      RESOURCES_YAML      = 'Resources'      # :nodoc:
-      AREAS_YAML          = 'Areas'          # :nodoc:
+      LANGUAGE_YAML       = 'Language'       
+      CATEGORIES_YAML     = 'Categories'     
+      EVENT_YAML          = 'Event'          
+      RESPONSE_TYPES_YAML = 'Response Types' 
+      URGENCY_YAML        = 'Urgency'        
+      SEVERITY_YAML       = 'Severity'       
+      CERTAINTY_YAML      = 'Certainty'      
+      AUDIENCE_YAML       = 'Audience'       
+      EFFECTIVE_YAML      = 'Effective'      
+      ONSET_YAML          = 'Onset'          
+      EXPIRES_YAML        = 'Expires'        
+      SENDER_NAME_YAML    = 'Sender Name'    
+      HEADLINE_YAML       = 'Headline'       
+      DESCRIPTION_YAML    = 'Description'    
+      INSTRUCTION_YAML    = 'Instruction'    
+      WEB_YAML            = 'Web'            
+      CONTACT_YAML        = 'Contact'        
+      EVENT_CODES_YAML    = 'Event Codes'    
+      PARAMETERS_YAML     = 'Parameters'     
+      RESOURCES_YAML      = 'Resources'      
+      AREAS_YAML          = 'Areas'          
 
-      def to_yaml( options = {} ) # :nodoc:
+      def to_yaml( options = {} ) 
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
         RCAP.attribute_values_to_hash(
-          [ LANGUAGE_YAML,       self.language ],
-          [ CATEGORIES_YAML,     self.categories ],
-          [ EVENT_YAML,          self.event ],
-          [ RESPONSE_TYPES_YAML, self.response_types ],
-          [ URGENCY_YAML,        self.urgency ],
-          [ SEVERITY_YAML,       self.severity ],
-          [ CERTAINTY_YAML,      self.certainty ],
-          [ AUDIENCE_YAML,       self.audience ],
-          [ EFFECTIVE_YAML,      self.effective ],
-          [ ONSET_YAML,          self.onset ],
-          [ EXPIRES_YAML,        self.expires ],
-          [ SENDER_NAME_YAML,    self.sender_name ],
-          [ HEADLINE_YAML,       self.headline ],
-          [ DESCRIPTION_YAML,    self.description ],
-          [ INSTRUCTION_YAML,    self.instruction ],
-          [ WEB_YAML,            self.web ],
-          [ CONTACT_YAML,        self.contact ],
-          [ EVENT_CODES_YAML,    self.event_codes.inject({}, &parameter_to_hash )],
-          [ PARAMETERS_YAML,     self.parameters.inject({}, &parameter_to_hash )],
-          [ RESOURCES_YAML,      self.resources ],
-          [ AREAS_YAML,          self.areas ]).to_yaml( options )
+          [ LANGUAGE_YAML,       @language ],
+          [ CATEGORIES_YAML,     @categories ],
+          [ EVENT_YAML,          @event ],
+          [ RESPONSE_TYPES_YAML, @response_types ],
+          [ URGENCY_YAML,        @urgency ],
+          [ SEVERITY_YAML,       @severity ],
+          [ CERTAINTY_YAML,      @certainty ],
+          [ AUDIENCE_YAML,       @audience ],
+          [ EFFECTIVE_YAML,      @effective ],
+          [ ONSET_YAML,          @onset ],
+          [ EXPIRES_YAML,        @expires ],
+          [ SENDER_NAME_YAML,    @sender_name ],
+          [ HEADLINE_YAML,       @headline ],
+          [ DESCRIPTION_YAML,    @description ],
+          [ INSTRUCTION_YAML,    @instruction ],
+          [ WEB_YAML,            @web ],
+          [ CONTACT_YAML,        @contact ],
+          [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
+          [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
+          [ RESOURCES_YAML,      @resources ],
+          [ AREAS_YAML,          @areas ]).to_yaml( options )
       end
 
-      def self.from_yaml_data( info_yaml_data ) # :nodoc:
+      def self.from_yaml_data( info_yaml_data ) 
         self.new(
           :language       => info_yaml_data [ LANGUAGE_YAML ],
           :categories     => info_yaml_data [ CATEGORIES_YAML ],
@@ -388,54 +388,54 @@ module RCAP
         )
       end
 
-      LANGUAGE_KEY       = 'language'       # :nodoc:
-      CATEGORIES_KEY     = 'categories'     # :nodoc:
-      EVENT_KEY          = 'event'          # :nodoc:
-      RESPONSE_TYPES_KEY = 'response_types' # :nodoc:
-      URGENCY_KEY        = 'urgency'        # :nodoc:
-      SEVERITY_KEY       = 'severity'       # :nodoc:
-      CERTAINTY_KEY      = 'certainty'      # :nodoc:
-      AUDIENCE_KEY       = 'audience'       # :nodoc:
-      EFFECTIVE_KEY      = 'effective'      # :nodoc:
-      ONSET_KEY          = 'onset'          # :nodoc:
-      EXPIRES_KEY        = 'expires'        # :nodoc:
-      SENDER_NAME_KEY    = 'sender_name'    # :nodoc:
-      HEADLINE_KEY       = 'headline'       # :nodoc:
-      DESCRIPTION_KEY    = 'description'    # :nodoc:
-      INSTRUCTION_KEY    = 'instruction'    # :nodoc:
-      WEB_KEY            = 'web'            # :nodoc:
-      CONTACT_KEY        = 'contact'        # :nodoc:
-      RESOURCES_KEY      = 'resources'      # :nodoc:
-      EVENT_CODES_KEY    = 'event_codes'    # :nodoc:
-      PARAMETERS_KEY     = 'parameters'     # :nodoc:
-      AREAS_KEY          = 'areas'          # :nodoc:
+      LANGUAGE_KEY       = 'language'       
+      CATEGORIES_KEY     = 'categories'     
+      EVENT_KEY          = 'event'          
+      RESPONSE_TYPES_KEY = 'response_types' 
+      URGENCY_KEY        = 'urgency'        
+      SEVERITY_KEY       = 'severity'       
+      CERTAINTY_KEY      = 'certainty'      
+      AUDIENCE_KEY       = 'audience'       
+      EFFECTIVE_KEY      = 'effective'      
+      ONSET_KEY          = 'onset'          
+      EXPIRES_KEY        = 'expires'        
+      SENDER_NAME_KEY    = 'sender_name'    
+      HEADLINE_KEY       = 'headline'       
+      DESCRIPTION_KEY    = 'description'    
+      INSTRUCTION_KEY    = 'instruction'    
+      WEB_KEY            = 'web'            
+      CONTACT_KEY        = 'contact'        
+      RESOURCES_KEY      = 'resources'      
+      EVENT_CODES_KEY    = 'event_codes'    
+      PARAMETERS_KEY     = 'parameters'     
+      AREAS_KEY          = 'areas'          
 
-      def to_h # :nodoc:
+      def to_h 
         RCAP.attribute_values_to_hash(
-          [ LANGUAGE_KEY,       self.language ],
-          [ CATEGORIES_KEY,     self.categories ],
-          [ EVENT_KEY,          self.event ],
-          [ RESPONSE_TYPES_KEY, self.response_types ],
-          [ URGENCY_KEY,        self.urgency ],
-          [ SEVERITY_KEY,       self.severity ],
-          [ CERTAINTY_KEY,      self.certainty ],
-          [ AUDIENCE_KEY,       self.audience ],
-          [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( self.effective )],
-          [ ONSET_KEY,          RCAP.to_s_for_cap( self.onset )],
-          [ EXPIRES_KEY,        RCAP.to_s_for_cap( self.expires )],
-          [ SENDER_NAME_KEY,    self.sender_name ],
-          [ HEADLINE_KEY,       self.headline ],
-          [ DESCRIPTION_KEY,    self.description ],
-          [ INSTRUCTION_KEY,    self.instruction ],
-          [ WEB_KEY,            self.web ],
-          [ CONTACT_KEY,        self.contact ],
-          [ RESOURCES_KEY,      self.resources.map{ |resource| resource.to_h } ],
-          [ EVENT_CODES_KEY,    self.event_codes.map{ |event_code| event_code.to_h } ],
-          [ PARAMETERS_KEY,     self.parameters.map{ |parameter| parameter.to_h } ],
-          [ AREAS_KEY,          self.areas.map{ |area| area.to_h }])
+          [ LANGUAGE_KEY,       @language ],
+          [ CATEGORIES_KEY,     @categories ],
+          [ EVENT_KEY,          @event ],
+          [ RESPONSE_TYPES_KEY, @response_types ],
+          [ URGENCY_KEY,        @urgency ],
+          [ SEVERITY_KEY,       @severity ],
+          [ CERTAINTY_KEY,      @certainty ],
+          [ AUDIENCE_KEY,       @audience ],
+          [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( @effective )],
+          [ ONSET_KEY,          RCAP.to_s_for_cap( @onset )],
+          [ EXPIRES_KEY,        RCAP.to_s_for_cap( @expires )],
+          [ SENDER_NAME_KEY,    @sender_name ],
+          [ HEADLINE_KEY,       @headline ],
+          [ DESCRIPTION_KEY,    @description ],
+          [ INSTRUCTION_KEY,    @instruction ],
+          [ WEB_KEY,            @web ],
+          [ CONTACT_KEY,        @contact ],
+          [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
+          [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
+          [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
+          [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
       end
 
-      def self.from_h( info_hash ) # :nodoc:
+      def self.from_h( info_hash ) 
         self.new( :language       => info_hash[ LANGUAGE_KEY ],
                   :categories     => info_hash[ CATEGORIES_KEY ],
                   :event          => info_hash[ EVENT_KEY ],

@@ -10,32 +10,32 @@ module RCAP
 
       attr_accessor( :name, :value )
 
-      XML_ELEMENT_NAME   = "parameter" # :nodoc:
-      NAME_ELEMENT_NAME  = "valueName" # :nodoc:
-      VALUE_ELEMENT_NAME = "value"     # :nodoc:
+      XML_ELEMENT_NAME   = "parameter" 
+      NAME_ELEMENT_NAME  = "valueName" 
+      VALUE_ELEMENT_NAME = "value"     
 
-      XPATH       = "cap:#{ XML_ELEMENT_NAME }"     # :nodoc:
-      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    # :nodoc:
-      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   # :nodoc:
+      XPATH       = "cap:#{ XML_ELEMENT_NAME }"     
+      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    
+      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   
 
       def initialize( attributes = {} )
         @name = attributes[ :name ]
         @value = attributes[ :value ]
       end
 
-      def to_xml_element # :nodoc:
+      def to_xml_element 
         xml_element = REXML::Element.new( self.class::XML_ELEMENT_NAME )
-        xml_element.add_element( self.class::NAME_ELEMENT_NAME ).add_text( self.name )
-        xml_element.add_element( self.class::VALUE_ELEMENT_NAME ).add_text( self.value )
+        xml_element.add_element( self.class::NAME_ELEMENT_NAME ).add_text( @name )
+        xml_element.add_element( self.class::VALUE_ELEMENT_NAME ).add_text( @value )
         xml_element
       end
 
-      def to_xml # :nodoc:
+      def to_xml 
         self.to_xml_element.to_s
       end
 
-      def inspect # :nodoc:
-        "#{ self.name }: #{ self.value }"
+      def inspect 
+        "#{ @name }: #{ @value }"
       end
 
       # Returns a string representation of the parameter of the form
@@ -51,15 +51,15 @@ module RCAP
 
       # Two parameters are equivalent if they have the same name and value.
       def ==( other )
-        [ self.name, self.value ] == [ other.name, other.value ]
+        [ @name, @value ] == [ other.name, other.value ]
       end
 
-      def to_h # :nodoc:
+      def to_h 
         RCAP.attribute_values_to_hash(
           [ @name, @value ])
       end
 
-      def self.from_h( hash ) # :nodoc:
+      def self.from_h( hash ) 
         key = hash.keys.first
         self.new( :name => key, :value => hash[ key ])
       end

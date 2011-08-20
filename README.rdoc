@@ -106,8 +106,8 @@ The RCAP API aims to codify as many of the rules of the CAP XML format into vali
                   language:   'en-ZA',
                   categories: [ Info::CATEGORY_TRANSPORT, Info::CATEGORY_FIRE ],
                   urgency:    Info::URGENCY_IMMEDIATE,
-                  severity:   nil,                   # Severity is not assigned
-                  certainty:  'Unknown Certainty' )  # Certainty is assigned in incorrect value
+                  severity:   nil,                     # Severity is not assigned
+                  certainty:  'Incorrect Certainty' )  # Certainty is assigned an incorrect value
 
  puts "Is info valid: #{ info.valid? }"
  info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
@@ -132,6 +132,7 @@ Using the alert message created above
 
 Will print the following CAP XML
 
+  !!!xml
   <?xml version='1.0'?>
   <alert xmlns='urn:oasis:names:tc:emergency:cap:1.2'>
     <identifier>494207a7-f86b-4060-8318-a4b2a3ce565e</identifier>
@@ -166,6 +167,7 @@ YAML is a plain text serialization format designed to be easily readable and edi
 
 will produce the following YAML document
 
+ !!!yaml
  ---
  CAP Version: 1.2
  Identifier: 2a1ba96d-16e4-4f52-85ea-0258c1440bd5
@@ -198,6 +200,7 @@ JSON(JavaScript Object Notation) is a text serialization format that can be easi
 
 will produce the following JSON string
 
+ !!!json
  {"cap_version":"1.2",
   "identifier":"0eb97e40-195b-437b-9a01-55fe89691def",
   "sender":"cape_town_disaster_relief@capetown.municipal.za",

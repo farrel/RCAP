@@ -1,4 +1,4 @@
-ALLOWED_CHARACTERS = /[^\s&<]+/ # :nodoc:
+ALLOWED_CHARACTERS = /[^\s&<]+/ 
 
 module RCAP  
   # Returns a randomly generated UUID string

@@ -173,7 +173,7 @@ describe( RCAP::CAP_1_2::Resource ) do
       stub_request( :get, @resource.uri ).to_return( :status => 200, :body => @content )
     end
 
-    describe( '#dereference_uri!' ) do
+    describe( 'calling dereference_uri!' ) do
       it( 'should fetch the content and store it in deref_uri as Base64 encoded content' ) do
         lambda{ @resource.dereference_uri! }.should( change( @resource, :deref_uri ).to( @encoded_content ))
       end

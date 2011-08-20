@@ -26,15 +26,15 @@ module RCAP
       validates_collection_of( :circles, :geocodes, :polygons, allow_empty: true )
       validates_dependency_of( :ceiling, on: :altitude )
 
-      XML_ELEMENT_NAME       = 'area'     # :nodoc:
-      AREA_DESC_ELEMENT_NAME = 'areaDesc' # :nodoc:
-      ALTITUDE_ELEMENT_NAME  = 'altitude' # :nodoc:
-      CEILING_ELEMENT_NAME   = 'ceiling'  # :nodoc:
+      XML_ELEMENT_NAME       = 'area'     
+      AREA_DESC_ELEMENT_NAME = 'areaDesc' 
+      ALTITUDE_ELEMENT_NAME  = 'altitude' 
+      CEILING_ELEMENT_NAME   = 'ceiling'  
 
-      XPATH           = "cap:#{ XML_ELEMENT_NAME }"       # :nodoc:
-      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }" # :nodoc:
-      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  # :nodoc:
-      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   # :nodoc:
+      XPATH           = "cap:#{ XML_ELEMENT_NAME }"       
+      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }" 
+      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  
+      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   
 
       def initialize( attributes = {})
         @area_desc = attributes[ :area_desc ]
@@ -49,7 +49,7 @@ module RCAP
       # polygon_attributes are passed as a parameter to Polygon.new.
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
-        self.polygons << polygon
+        @polygons << polygon
         polygon
       end
 
@@ -57,7 +57,7 @@ module RCAP
       # circle_attributes are passed as a parameter to Circle.new.
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
-        self.circles << circle
+        @circles << circle
         circle
       end
 
@@ -65,11 +65,11 @@ module RCAP
       # geocode_attributes are passed as a parameter to Geocode.new.
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )
-        self.geocodes << geocode
+        @geocodes << geocode
         geocode
       end
 
-      def to_xml_element # :nodoc:
+      def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( AREA_DESC_ELEMENT_NAME ).add_text( @area_desc.to_s )
         add_to_xml_element = lambda do |element, object|
@@ -79,12 +79,12 @@ module RCAP
         @polygons.inject( xml_element, &add_to_xml_element )
         @circles.inject( xml_element, &add_to_xml_element )
         @geocodes.inject( xml_element, &add_to_xml_element )
-        xml_element.add_element( ALTITUDE_ELEMENT_NAME ).add_text( @altitude.to_s ) unless self.altitude.blank?
-        xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s )   unless self.altitude.blank?
+        xml_element.add_element( ALTITUDE_ELEMENT_NAME ).add_text( @altitude.to_s ) unless @altitude.blank?
+        xml_element.add_element( CEILING_ELEMENT_NAME ).add_text( @ceiling.to_s )   unless @altitude.blank?
         xml_element
       end
 
-      def to_xml # :nodoc:
+      def to_xml 
         self.to_xml_element.to_s
       end
 
@@ -94,22 +94,22 @@ module RCAP
         comparison_attributes.call( self ) == comparison_attributes.call( other )
       end
 
-      def inspect # :nodoc:
-        area_inspect = "Area Description: #{ self.area_desc }\n"+
+      def inspect 
+        area_inspect = "Area Description: #{ @area_desc }\n"+
                        "Polygons:\n"+
-                       self.polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )+"\n"+
-                       "Circles:          #{ self.circles.inspect }\n"+
-                       "Geocodes:         #{ self.geocodes.inspect }\n"
+                       @polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )+"\n"+
+                       "Circles:          #{ @circles.inspect }\n"+
+                       "Geocodes:         #{ @geocodes.inspect }\n"
         RCAP.format_lines_for_inspect( 'AREA', area_inspect )
       end
 
       # Returns a string representation of the area of the form
       #  area_desc
       def to_s
-        self.area_desc
+        @area_desc
       end
 
-      def self.from_xml_element( area_xml_element ) # :nodoc:
+      def self.from_xml_element( area_xml_element ) 
         self.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, Alert::XMLNS ),
                  :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, Alert::XMLNS )) ? alt.to_f : nil ),
                  :ceiling   => (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH, Alert::XMLNS )) ? ceil.to_f : nil ),
@@ -118,25 +118,25 @@ module RCAP
                  :polygons  => RCAP.xpath_match( area_xml_element, Polygon::XPATH, Alert::XMLNS ).map{ |polygon_element| Polygon.from_xml_element( polygon_element )})
       end
 
-      AREA_DESC_YAML = 'Area Description' # :nodoc:
-      ALTITUDE_YAML  = 'Altitude'         # :nodoc:
-      CEILING_YAML   = 'Ceiling'          # :nodoc:
-      CIRCLES_YAML   = 'Circles'          # :nodoc:
-      GEOCODES_YAML  = 'Geocodes'         # :nodoc:
-      POLYGONS_YAML  = 'Polygons'         # :nodoc:
+      AREA_DESC_YAML = 'Area Description' 
+      ALTITUDE_YAML  = 'Altitude'         
+      CEILING_YAML   = 'Ceiling'          
+      CIRCLES_YAML   = 'Circles'          
+      GEOCODES_YAML  = 'Geocodes'         
+      POLYGONS_YAML  = 'Polygons'         
 
-      def to_yaml( options = {} ) # :nodoc:
+      def to_yaml( options = {} ) 
         RCAP.attribute_values_to_hash(
-          [ AREA_DESC_YAML, self.area_desc ],
-          [ ALTITUDE_YAML,  self.altitude ],
-          [ CEILING_YAML,   self.ceiling ],
-          [ CIRCLES_YAML,   self.circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]}],
-          [ GEOCODES_YAML,  self.geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-          [ POLYGONS_YAML,  self.polygons ]
+          [ AREA_DESC_YAML, @area_desc ],
+          [ ALTITUDE_YAML,  @altitude ],
+          [ CEILING_YAML,   @ceiling ],
+          [ CIRCLES_YAML,   @circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]}],
+          [ GEOCODES_YAML,  @geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
+          [ POLYGONS_YAML,  @polygons ]
         ).to_yaml( options )
       end
 
-      def self.from_yaml_data( area_yaml_data )  # :nodoc:
+      def self.from_yaml_data( area_yaml_data )  
         self.new( :area_desc => area_yaml_data[ AREA_DESC_YAML ],
                   :altitude  => area_yaml_data[ ALTITUDE_YAML ],
                   :ceiling   => area_yaml_data[ CEILING_YAML ],
@@ -145,23 +145,23 @@ module RCAP
                   :polygons  => Array( area_yaml_data[ POLYGONS_YAML ]).map{ |polyon_yaml_data| Polygon.from_yaml_data( polyon_yaml_data )})
       end
 
-      AREA_DESC_KEY = 'area_desc'  # :nodoc:
-      ALTITUDE_KEY  = 'altitude'   # :nodoc:
-      CEILING_KEY   = 'ceiling'    # :nodoc:
-      CIRCLES_KEY   = 'circles'    # :nodoc:
-      GEOCODES_KEY  = 'geocodes'   # :nodoc:
-      POLYGONS_KEY  = 'polygons'   # :nodoc:
+      AREA_DESC_KEY = 'area_desc'  
+      ALTITUDE_KEY  = 'altitude'   
+      CEILING_KEY   = 'ceiling'    
+      CIRCLES_KEY   = 'circles'    
+      GEOCODES_KEY  = 'geocodes'   
+      POLYGONS_KEY  = 'polygons'   
 
-      def to_h # :nodoc:
-        RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, self.area_desc ],
-                                       [ ALTITUDE_KEY, self.altitude ],
-                                       [ CEILING_KEY, self.ceiling ],
-                                       [ CIRCLES_KEY, self.circles.map{ |circle| circle.to_h } ],
-                                       [ GEOCODES_KEY, self.geocodes.map{ |geocode| geocode.to_h } ],
-                                       [ POLYGONS_KEY, self.polygons.map{ |polygon| polygon.to_h } ])
+      def to_h 
+        RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, @area_desc ],
+                                       [ ALTITUDE_KEY, @altitude ],
+                                       [ CEILING_KEY, @ceiling ],
+                                       [ CIRCLES_KEY, @circles.map{ |circle| circle.to_h } ],
+                                       [ GEOCODES_KEY, @geocodes.map{ |geocode| geocode.to_h } ],
+                                       [ POLYGONS_KEY, @polygons.map{ |polygon| polygon.to_h } ])
       end
 
-      def self.from_h( area_hash ) # :nodoc:
+      def self.from_h( area_hash ) 
         self.new(
           :area_desc => area_hash[ AREA_DESC_KEY ],
           :altitude  => area_hash[ ALTITUDE_KEY ],
