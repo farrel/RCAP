@@ -33,8 +33,7 @@ module RCAP
 
     # Initialise a RCAP Alert from a YAML document produced by
     # CAP_1_2::Alert#to_yaml. The version of the document is inspected and a
-    # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated
-    # accordingly.
+    # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
     # @param [#to_s] yaml CAP  Alert in YAML format
     #
@@ -54,8 +53,7 @@ module RCAP
 
     # Initialise a RCAP Alert from a JSON document produced by
     # CAP_1_2::Alert#to_json. The version of the document is inspected and a
-    # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated 
-    # accordingly.
+    # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
     # @param [#to_s] json Alert in JSON format
     #
@@ -67,8 +65,7 @@ module RCAP
 
     # Initialise a RCAP Alert from a Ruby hash produced by
     # CAP_1_2::Alert#to_h. The cap_version key  is inspected and a
-    # CAP_1_0::Alert, CAP_1_1::Alert or CAP_1_2::Alert is instantiated 
-    # accordingly.
+    # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
     # @param [Hash] hash Alert as a Ruby hash.
     #

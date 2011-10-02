@@ -36,31 +36,36 @@ module RCAP
       VALID_SCOPES = [ SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED ]
 
 
-      # If not set a UUID will be set by default
+      # @return [String] If not set a UUID will be set by default
       attr_accessor( :identifier)
+      # @return [String]
       attr_accessor( :sender )
-      # Sent Time - If not set will value will be time of creation.
+      # @return [DateTime] If not set will value will be time of creation.
       attr_accessor( :sent )
-      # Value can only be one of VALID_STATUSES
+      # @return [String] Can only be one of VALID_STATUSES
       attr_accessor( :status )
-      # Value can only be one of VALID_MSG_TYPES
+      # @return [String] Can only be one of VALID_MSG_TYPES
       attr_accessor( :msg_type )
+      # @return [String]
       attr_accessor( :password )
-      # Value can only be one of VALID_SCOPES
+      # @return [String] Can only be one of VALID_SCOPES
       attr_accessor( :scope )
+      # @return [String]
       attr_accessor( :source )
-      # Depends on scope being SCOPE_RESTRICTED.
+      # @return [String ] Depends on scope being SCOPE_RESTRICTED.
       attr_accessor( :restriction )
+      # @return [String]
       attr_accessor( :note )
 
-      # Collection of address strings. Depends on scope being SCOPE_PRIVATE.
+      # @return [Array<String>] Collection of address strings. Depends on scope being SCOPE_PRIVATE.
       attr_reader( :addresses )
+      # @return [Array<String>]
       attr_reader( :codes )
-      # Collection of reference strings - see Alert#to_reference
+      # @return [Array<String>] Collection of reference strings - see Alert#to_reference
       attr_reader( :references)
-      # Collection of incident strings
+      # @return [Array<String>] Collection of incident strings
       attr_reader( :incidents )
-      # Collection of Info objects
+      # @return [Array<RCAP::CAP_1_0::Info>] Collection of Info objects
       attr_reader( :infos )
 
       validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )
@@ -96,6 +101,9 @@ module RCAP
 
       # Creates a new Info object and adds it to the infos array. The
       # info_attributes are passed as a parameter to Info.new.
+      # 
+      # @param [Hash] info_attributes Info attributes
+      # @return [RCAP::CAP_1_0::Info]
       def add_info( info_attributes  = {})
         info = Info.new( info_attributes )
         @infos << info
@@ -118,6 +126,7 @@ module RCAP
       REFERENCES_ELEMENT_NAME  = 'references'  
       INCIDENTS_ELEMENT_NAME   = 'incidents'   
 
+      # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_namespace( XMLNS )
@@ -149,6 +158,7 @@ module RCAP
         xml_element
       end
 
+      # @return [REXML::Document]
       def to_xml_document 
         xml_document = REXML::Document.new
         xml_document.add( REXML::XMLDecl.new )
@@ -157,6 +167,9 @@ module RCAP
       end
 
       # Returns a string containing the XML representation of the alert.
+      #
+      # @param [true,false] pretty_print Pretty print output
+      # @return [String]
       def to_xml( pretty_print = false )
         if pretty_print
           xml_document = ""
@@ -169,10 +182,13 @@ module RCAP
 
       # Returns a string representation of the alert suitable for usage as a reference in a CAP message of the form
       #  sender,identifier,sent
+      #
+      # @return [String]
       def to_reference
         "#{ @sender },#{ @identifier },#{ @sent }"
       end
 
+      # @return [String]
       def inspect 
         alert_inspect = [ "CAP Version:  #{ CAP_VERSION }",
                           "Identifier:   #{ @identifier }",
@@ -198,6 +214,8 @@ module RCAP
       # Returns a string representation of the alert of the form
       #  sender/identifier/sent
       # See Alert#to_reference for another string representation suitable as a CAP reference.
+      #
+      # @return [String]
       def to_s
         "#{ @sender }/#{ @identifier }/#{ @sent }"
       end
@@ -218,6 +236,8 @@ module RCAP
       REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"  
       INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"   
 
+      # @param [REXML::Element] alert_xml_element
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_xml_element( alert_xml_element ) 
         self.new( :identifier  => RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, Alert::XMLNS ),
                   :sender      => RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS ),
@@ -236,11 +256,16 @@ module RCAP
                   :infos       => RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).map{ |element| Info.from_xml_element( element )})
       end
 
+      # @param [REXML::Document] xml_document
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_xml_document( xml_document ) 
         self.from_xml_element( xml_document.root )
       end
 
       # Initialise an Alert object from an XML string. Any object that is a subclass of IO (e.g. File) can be passed in.
+      #
+      # @param [String] xml
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_xml( xml )
         self.from_xml_document( REXML::Document.new( xml ))
       end
@@ -263,6 +288,8 @@ module RCAP
       INFOS_YAML       = "Information"        
 
       # Returns a string containing the YAML representation of the alert.
+      #
+      # @return [String]
       def to_yaml( options = {} )
         RCAP.attribute_values_to_hash(
           [ CAP_VERSION_YAML, CAP_VERSION ],
@@ -285,10 +312,15 @@ module RCAP
       end
 
       # Initialise an Alert object from a YAML string. Any object that is a subclass of IO (e.g. File) can be passed in.
+      #
+      # @param [String] yaml
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml( yaml )
         self.from_yaml_data( YAML.load( yaml ))
       end
 
+      # @param [Hash] yaml_data
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml_data( alert_yaml_data ) 
         Alert.new(
           :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
@@ -327,6 +359,8 @@ module RCAP
       INFOS_KEY       = 'infos'       
 
       # Returns a Hash representation of an Alert object
+      #
+      # @return [Hash]
       def to_h
         RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, CAP_VERSION ],
                                       [ IDENTIFIER_KEY,   @identifier ],
@@ -347,6 +381,9 @@ module RCAP
       end
 
       # Initialises an Alert object from a Hash produced by Alert#to_h
+      #
+      # @param [Hash] alert_hash
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
         self.new(
           :identifier  => alert_hash[ IDENTIFIER_KEY ],
@@ -367,6 +404,9 @@ module RCAP
       end
 
       # Returns a JSON string representation of an Alert object
+      #
+      # @param [true,false] pretty_print
+      # @return [String]
       def to_json( pretty_print = false )
         if pretty_print
           JSON.pretty_generate( self.to_h )
@@ -376,6 +416,9 @@ module RCAP
       end
 
       # Initiialises an Alert object from a JSON string produced by Alert#to_json
+      # 
+      # @param [String] json_string
+      # @return [RCAP::CAP_1_0::Alert]
       def self.from_json( json_string )
         self.from_h( JSON.parse( json_string ))
       end
