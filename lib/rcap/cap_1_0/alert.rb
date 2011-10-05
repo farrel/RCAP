@@ -42,30 +42,30 @@ module RCAP
       attr_accessor( :sender )
       # @return [DateTime] If not set will value will be time of creation.
       attr_accessor( :sent )
-      # @return [String] Can only be one of VALID_STATUSES
+      # @return [String] Can only be one of {VALID_STATUSES}
       attr_accessor( :status )
-      # @return [String] Can only be one of VALID_MSG_TYPES
+      # @return [String] Can only be one of {VALID_MSG_TYPES}
       attr_accessor( :msg_type )
       # @return [String]
       attr_accessor( :password )
-      # @return [String] Can only be one of VALID_SCOPES
+      # @return [String] Can only be one of {VALID_SCOPES}
       attr_accessor( :scope )
       # @return [String]
       attr_accessor( :source )
-      # @return [String ] Depends on scope being SCOPE_RESTRICTED.
+      # @return [String ] Depends on scope being {SCOPE_RESTRICTED}
       attr_accessor( :restriction )
       # @return [String]
       attr_accessor( :note )
 
-      # @return [Array<String>] Collection of address strings. Depends on scope being SCOPE_PRIVATE.
+      # @return [Array<String>] Collection of address strings. Depends on scope being {SCOPE_PRIVATE}
       attr_reader( :addresses )
       # @return [Array<String>]
       attr_reader( :codes )
-      # @return [Array<String>] Collection of reference strings - see Alert#to_reference
+      # @return [Array<String>] See {#to_reference}
       attr_reader( :references)
       # @return [Array<String>] Collection of incident strings
       attr_reader( :incidents )
-      # @return [Array<RCAP::CAP_1_0::Info>] Collection of Info objects
+      # @return [Array<Info>] 
       attr_reader( :infos )
 
       validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )
@@ -82,6 +82,14 @@ module RCAP
 
       validates_collection_of( :infos )
 
+      # @example
+      #    Alert.new( sender: 'disaster_management@cape_town.municipal.za',
+      #               sent: Date.today,
+      #               status: Alert::STATUS_ACTUAL,
+      #               msg_type: Alert::MSG_TYPE_ALERT,
+      #               scope: Alert::SCOPE_PUBLIC )
+      #
+      # @param [Hash] attributes
       def initialize( attributes = {})
         @identifier  = attributes[ :identifier ] || RCAP.generate_identifier
         @sender      = attributes[ :sender ]
@@ -99,11 +107,11 @@ module RCAP
         @infos       = Array( attributes[ :infos ])
       end
 
-      # Creates a new Info object and adds it to the infos array. The
-      # info_attributes are passed as a parameter to Info.new.
+      # Creates a new {Info} object and adds it to the {#infos array}. The
+      # info_attributes are passed as a parameter to {Info.new}.
       # 
       # @param [Hash] info_attributes Info attributes
-      # @return [RCAP::CAP_1_0::Info]
+      # @return [Info]
       def add_info( info_attributes  = {})
         info = Info.new( info_attributes )
         @infos << info
@@ -213,7 +221,7 @@ module RCAP
 
       # Returns a string representation of the alert of the form
       #  sender/identifier/sent
-      # See Alert#to_reference for another string representation suitable as a CAP reference.
+      # See {#to_reference} for another string representation suitable as a CAP reference.
       #
       # @return [String]
       def to_s
@@ -422,6 +430,9 @@ module RCAP
       def self.from_json( json_string )
         self.from_h( JSON.parse( json_string ))
       end
+
+      private
+
     end
   end
 end
