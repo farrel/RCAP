@@ -42,6 +42,12 @@ module RCAP
       # @example
       #   Area.new( area_desc: 'Cape Town CBD' )
       # @param [Hash] attributes Area attributes
+      # @option attributes [String] :area_desc Area description
+      # @option attributes [Numeric] :altitude Altitude above sea level (in feet)
+      # @option attributes [Numeric] :ceiling Ceiling above sea level (in feet)
+      # @option attributes [Array<Circle>] :circles Collection of {Circle} 
+      # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode} 
+      # @option attributes [Array<Polygon>] :polygons Collection of {Polygon}
       def initialize( attributes = {})
         @area_desc = attributes[ :area_desc ]
         @altitude  = attributes[ :altitude ]
@@ -51,10 +57,9 @@ module RCAP
         @polygons  = Array( attributes[ :polygons ])
       end
 
-      # Creates a new {Polygon} object and adds it to the {#polygons} array. The
-      # polygon_attributes are passed as a parameter to Polygon.new.
+      # Creates a new {Polygon} object and adds it to the {#polygons} array.
       #
-      # @param [Hash] polygon_attributes {Polygon} attributes
+      # @param [Hash] polygon_attributes see {Polygon#initialize}
       # @return [Polygon]
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
@@ -62,10 +67,9 @@ module RCAP
         polygon
       end
 
-      # Creates a new {Circle} object and adds it to the {#circles} array. The
-      # circle_attributes are passed as a parameter to Circle.new.
+      # Creates a new {Circle} object and adds it to the {#circles} array.
       #
-      # @param [Hash] circle_attributes {Circle} attributes
+      # @param [Hash] circle_attributes see {Circle#initialize}
       # @return [Circle]
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
@@ -73,10 +77,9 @@ module RCAP
         circle
       end
 
-      # Creates a new {Geocode} object and adds it to the {#geocodes} array. The
-      # geocode_attributes are passed as a parameter to Geocode.new.
+      # Creates a new {Geocode} object and adds it to the {#geocodes} array.
       #
-      # @param [Hash] geocode_attributes {Geocode} attributes
+      # @param [Hash] geocode_attributes see {Geocode#initialize}
       # @return [Geocode]
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )
@@ -100,7 +103,7 @@ module RCAP
         xml_element
       end
 
-      # @return [String]
+      # @return [String] XML representation of the Area
       def to_xml 
         self.to_xml_element.to_s
       end
