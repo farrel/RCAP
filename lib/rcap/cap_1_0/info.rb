@@ -103,39 +103,60 @@ module RCAP
       validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
       validates_collection_of( :resources, :areas, :event_codes, :parameters )
 
+      # @return [String]
       attr_accessor( :event )
-      # Value can only be one of VALID_URGENCIES
+      # Value can only be one of {VALID_URGENCIES}
+      # @return [String]
       attr_accessor( :urgency )
       # Value can only be one of VALID_SEVERITIES
+      # @return [String]
       attr_accessor( :severity )
       # Value can only be one of VALID_CERTAINTIES
+      # @return [String]
       attr_accessor( :certainty )
+      # @return [String]
       attr_accessor( :language )
+      # @return [String]
       attr_accessor( :audience )
       # Effective start time of information
+      # @return [DateTime]
       attr_accessor( :effective )
       # Expected start of event
+      # @return [DateTime]
       attr_accessor( :onset )
       # Effective expiry time of information
+      # @return [DateTime]
       attr_accessor( :expires )
+      # @return [String]
       attr_accessor( :sender_name )
+      # @return [String]
       attr_accessor( :headline )
+      # @return [String]
       attr_accessor( :description )
+      # @return [String]
       attr_accessor( :instruction )
+      # @return [String]
       attr_accessor( :web )
+      # @return [String]
       attr_accessor( :contact )
 
       # Collection of textual categories; elements can be one of VALID_CATEGORIES
+      # @return [Array<String>]
       attr_reader( :categories )
       # Collectoin of EventCode objects
+      # @return [Array<EventCode>]
       attr_reader( :event_codes )
       # Collection of Parameter objects
+      # @return [Array<Parameter>]
       attr_reader( :parameters )
       # Collection of Resource objects
+      # @return [Array<Resource>
       attr_reader( :resources )
       # Collection of Area objects
+      # @return [Array<Area>]
       attr_reader( :areas )
 
+      # @param [Hash] attributes
       def initialize( attributes = {} )
         @language       = attributes[ :language ] || DEFAULT_LANGUAGE
         @categories     = Array( attributes[ :categories ])
@@ -161,6 +182,9 @@ module RCAP
 
       # Creates a new EventCode object and adds it to the event_codes array. The
       # event_code_attributes are passed as a parameter to EventCode.new.
+      #
+      # @param [Hash] event_code_attributes (see EventCode#initialize)
+      # @return [EventCode]
       def add_event_code( event_code_attributes = {})
         event_code = EventCode.new( event_code_attributes )
         @event_codes << event_code
@@ -169,6 +193,9 @@ module RCAP
 
       # Creates a new Parameter object and adds it to the parameters array. The
       # parameter_attributes are passed as a parameter to Parameter.new.
+      #
+      # @param [Hash] parameter_attributes (see Parameter#initialize)
+      # @return [Parameter]
       def add_parameter( parameter_attributes = {})
         parameter = Parameter.new( parameter_attributes )
         @parameters << parameter
@@ -177,6 +204,9 @@ module RCAP
 
       # Creates a new Resource object and adds it to the resources array. The
       # resource_attributes are passed as a parameter to Resource.new.
+      #
+      # @param [Hash] resource_attributes (See Resource#initialize)
+      # @return [Resource]
       def add_resource( resource_attributes = {})
         resource = Resource.new( resource_attributes )
         @resources << resource
@@ -185,12 +215,16 @@ module RCAP
 
       # Creates a new Area object and adds it to the areas array. The
       # area_attributes are passed as a parameter to Area.new.
+      #
+      # @param [Hash] area_attributes (see Area#initialize)
+      # @return [Area]
       def add_area( area_attributes = {})
         area = Area.new( area_attributes )
         @areas << area
         area
       end
 
+      # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
@@ -226,10 +260,12 @@ module RCAP
         xml_element
       end
 
+      # @return [String]
       def to_xml 
         self.to_xml_element.to_s
       end
 
+      # @return [String]
       def inspect 
         info_inspect = "Language:       #{ @language }\n"+
                        "Categories:     #{ @categories.to_s_for_cap }\n"+
@@ -260,10 +296,14 @@ module RCAP
 
       # Returns a string representation of the event of the form
       #  event(urgency/severity/certainty)
+      #
+      # @return [String]
       def to_s
         "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
       end
 
+      # @param [REXML::Element] info_xml_element
+      # @return [Info]
       def self.from_xml_element( info_xml_element ) 
         self.new(
           :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
@@ -310,6 +350,7 @@ module RCAP
       RESOURCES_YAML      = 'Resources'      
       AREAS_YAML          = 'Areas'          
 
+      # @return [String]
       def to_yaml( options = {} ) 
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
@@ -335,6 +376,8 @@ module RCAP
                                        [ AREAS_YAML,          @areas ]).to_yaml( options )
       end
 
+      # @param [Hash] info_yaml_data
+      # @return [Info]
       def self.from_yaml_data( info_yaml_data ) 
         self.new(
           :language       => info_yaml_data [ LANGUAGE_YAML ],
@@ -381,6 +424,7 @@ module RCAP
       PARAMETERS_KEY     = 'parameters'     
       AREAS_KEY          = 'areas'          
 
+      # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,      @language ],
                                       [ CATEGORIES_KEY,     @categories ],
@@ -404,6 +448,8 @@ module RCAP
                                       [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
       end
 
+      # @param [Hash] info_hash
+      # @return [Info]
       def self.from_h( info_hash ) 
         self.new( :language       => info_hash[ LANGUAGE_KEY ],
                  :categories     => info_hash[ CATEGORIES_KEY ],
