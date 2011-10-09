@@ -7,13 +7,18 @@ module RCAP
       include Validation
 
       # Resource Description
+      # @return [String]
       attr_accessor( :resource_desc )
+      # @return [String]
       attr_accessor( :mime_type )
       # Expressed in bytes
+      # @return [Integer]
       attr_accessor( :size )
       # Resource location
+      # @return [String]
       attr_accessor( :uri )
       # SHA-1 hash of contents of resource
+      # @return [String]
       attr_accessor( :digest )
 
       validates_presence_of( :resource_desc )
@@ -32,6 +37,7 @@ module RCAP
       DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        
       RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" 
 
+      # @return [Hash] attributes
       def initialize( attributes = {} )
         @mime_type     = attributes[ :mime_type ]
         @size          = attributes[ :size ]
@@ -40,6 +46,7 @@ module RCAP
         @resource_desc = attributes[ :resource_desc ]
       end
 
+      # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( @resource_desc )
@@ -51,26 +58,33 @@ module RCAP
       end
 
       # If size is defined returns the size in kilobytes
+      # @return [Float]
       def size_in_kb
         if @size
           @size.to_f/1024
         end
       end
 
+      # @return [String]
       def to_xml 
         self.to_xml_element.to_s
       end
 
+      # @return [String]
       def inspect 
         [ @resource_desc, @uri, @mime_type, @size ? format( "%.1fKB", @size_in_kb ) : nil ].compact.join(' - ')
       end
 
       # Returns a string representation of the resource of the form
       #  resource_desc
+      #
+      # @return [String]
       def to_s
         @resource_desc
       end
 
+      # @param [REXML::Element] resource_xml_element
+      # @return [Resource]
       def self.from_xml_element( resource_xml_element ) 
         resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
                              :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),
@@ -85,6 +99,8 @@ module RCAP
       SIZE_YAML          = "Size"                 
       DIGEST_YAML        = "Digest"               
 
+      # @param [Hash] options
+      # @return [String]
       def to_yaml( options = {} ) 
         RCAP.attribute_values_to_hash(
           [ RESOURCE_DESC_YAML, @resource_desc ],
@@ -95,6 +111,8 @@ module RCAP
         ).to_yaml( options )
       end
 
+      # @param [Hash] resource_yaml_data
+      # @return [Resource]
       def self.from_yaml_data( resource_yaml_data ) 
         self.new(
           :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
@@ -111,6 +129,7 @@ module RCAP
       SIZE_KEY          = 'size'          
       DIGEST_KEY        = 'digest'        
 
+      # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash(
           [ RESOURCE_DESC_KEY, @resource_desc ],
@@ -120,6 +139,8 @@ module RCAP
           [ DIGEST_KEY,        @digest ])
       end
 
+      # @param [Hash] resource_hash
+      # @return [Resource]
       def self.from_h( resource_hash ) 
         self.new(
           :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],

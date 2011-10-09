@@ -7,6 +7,7 @@ module RCAP
       include Validation
 
       # Collection of Point objects.
+      # @return [Array<Point>]
       attr_reader( :points )
 
       validates_collection_of( :points )
