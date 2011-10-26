@@ -1,4 +1,4 @@
-class DateTime # :nodoc:
+class DateTime
   RCAP_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
   RCAP_ZONE_FORMAT = "%+03i:00"
 
