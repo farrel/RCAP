@@ -27,26 +27,26 @@ describe( RCAP::CAP_1_2::Info ) do
     it( 'should have no parameters' )               { @info.parameters.should( be_empty )}
 
     shared_examples_for( 'it can parse into a CAP 1.2 Info object' ) do
-      it( 'should parse categories correctly' ){     @info .categories.should     ==    @original_info.categories }
-      it( 'should parse event correctly' ){          @info .event.should          ==    @original_info.event }
-      it( 'should parse response_types correctly' ){ @info .response_types.should ==    @original_info.response_types }
-      it( 'should parse urgency correctly' ){        @info .urgency.should        ==    @original_info.urgency }
-      it( 'should parse severity correctly' ){       @info .severity.should       ==    @original_info.severity }
-      it( 'should parse certainty correctly' ){      @info .certainty.should      ==    @original_info.certainty }
-      it( 'should parse audience correctly' ){       @info .audience.should       ==    @original_info.audience }
-      it( 'should parse effective correctly' ){      @info .effective.should( be_within(Rational( 1, 86400 )).of( @original_info.effective ))}
-      it( 'should parse onset correctly' ){          @info .onset.should( be_within( Rational( 1, 86400 )).of( @original_info.onset ))}
-      it( 'should parse expires correctly' ){        @info .expires.should( be_within( Rational( 1, 86400 )).of( @original_info.expires ))}
-      it( 'should parse sender_name correctly' ){    @info .sender_name.should    ==    @original_info.sender_name }
-      it( 'should parse headline correctly' ){       @info .headline.should       ==    @original_info.headline }
-      it( 'should parse description correctly' ){    @info .description.should    ==    @original_info.description }
-      it( 'should parse instruction correctly' ){    @info .instruction.should    ==    @original_info.instruction }
-      it( 'should parse web correctly' ){            @info .web.should            ==    @original_info.web }
-      it( 'should parse contact correctly' ){        @info .contact.should        ==    @original_info.contact }
-      it( 'should parse event_codes correctly' ){    @info .event_codes.should    ==    @original_info.event_codes }
-      it( 'should parse parameters correctly' ){     @info .parameters.should     ==    @original_info.parameters }
-      it( 'should parse resources correctly' ){      @info .resources.should      ==    @original_info.resources }
-      it( 'should parse areas correctly' ){          @info .areas.should          ==    @original_info.areas }
+      it( 'should parse categories correctly' ){     @info.categories.should_not( be_nil )    ; @info.categories.should     ==    @original_info.categories }
+      it( 'should parse event correctly' ){          @info.event.should_not( be_nil )         ; @info.event.should          ==    @original_info.event }
+      it( 'should parse response_types correctly' ){ @info.response_types.should_not( be_nil ); @info.response_types.should ==    @original_info.response_types }
+      it( 'should parse urgency correctly' ){        @info.urgency.should_not( be_nil )       ; @info.urgency.should        ==    @original_info.urgency }
+      it( 'should parse severity correctly' ){       @info.severity.should_not( be_nil )      ; @info.severity.should       ==    @original_info.severity }
+      it( 'should parse certainty correctly' ){      @info.certainty.should_not( be_nil )     ; @info.certainty.should      ==    @original_info.certainty }
+      it( 'should parse audience correctly' ){       @info.audience.should_not( be_nil )      ; @info.audience.should       ==    @original_info.audience }
+      it( 'should parse effective correctly' ){      @info.effective.should_not( be_nil )     ; @info.effective.should( be_within(Rational( 1, 86400 )).of( @original_info.effective ))}
+      it( 'should parse onset correctly' ){          @info.onset.should_not( be_nil )         ; @info.onset.should( be_within( Rational( 1, 86400 )).of( @original_info.onset ))}
+      it( 'should parse expires correctly' ){        @info.expires.should_not( be_nil )       ; @info.expires.should( be_within( Rational( 1, 86400 )).of( @original_info.expires ))}
+      it( 'should parse sender_name correctly' ){    @info.sender_name.should_not( be_nil )   ; @info.sender_name.should    ==    @original_info.sender_name }
+      it( 'should parse headline correctly' ){       @info.headline.should_not( be_nil )      ; @info.headline.should       ==    @original_info.headline }
+      it( 'should parse description correctly' ){    @info.description.should_not( be_nil )   ; @info.description.should    ==    @original_info.description }
+      it( 'should parse instruction correctly' ){    @info.instruction.should_not( be_nil )   ; @info.instruction.should    ==    @original_info.instruction }
+      it( 'should parse web correctly' ){            @info.web.should_not( be_nil )           ; @info.web.should            ==    @original_info.web }
+      it( 'should parse contact correctly' ){        @info.contact.should_not( be_nil )       ; @info.contact.should        ==    @original_info.contact }
+      it( 'should parse event_codes correctly' ){    @info.event_codes.should_not( be_nil )   ; @info.event_codes.should    ==    @original_info.event_codes }
+      it( 'should parse parameters correctly' ){     @info.parameters.should_not( be_nil )    ; @info.parameters.should     ==    @original_info.parameters }
+      it( 'should parse resources correctly' ){      @info.resources.should_not( be_nil )     ; @info.resources.should      ==    @original_info.resources }
+      it( 'should parse areas correctly' ){          @info.areas.should_not( be_nil )         ; @info.areas.should          ==    @original_info.areas }
     end
 
     context( 'from XML' ) do

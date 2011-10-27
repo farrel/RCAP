@@ -139,6 +139,7 @@ module RCAP
       def initialize( attributes = {} )
         @language       = attributes[ :language ] || DEFAULT_LANGUAGE
         @categories     = Array( attributes[ :categories ])
+        @audience       = attributes [ :audience ]
         @event          = attributes [ :event ]
         @urgency        = attributes[ :urgency ]
         @severity       = attributes[ :severity ]
