@@ -159,6 +159,7 @@ module RCAP
       # @param [Hash] attributes
       # @option attributes [String] :language Defaults to {DEFAULT_LANGUAGE}
       # @option attributes [Array<String>] :categories Collection of categories in {VALID_CATEGORIES}
+      # @option attributes [String] :audience
       # @option attributes [String] :event
       # @option attributes [String] :urgency A member of {VALID_URGENCIES}
       # @option attributes [String] :severity A member of {VALID_SEVERITIES}
