@@ -37,7 +37,7 @@ module RCAP
       DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        
       RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" 
 
-      # @return [Hash] attributes
+      # @return [Hash] 
       def initialize( attributes = {} )
         @mime_type     = attributes[ :mime_type ]
         @size          = attributes[ :size ]
