@@ -21,6 +21,8 @@ module RCAP
       validates_inclusion_of( :longitude, :in => MIN_LONGITUDE..MAX_LONGITUDE)
 
       # @param [Hash] attributes
+      # @option attributes [Numeric] :lattitude
+      # @option attributes [Numeric] :longitude
       def initialize( attributes = {} )
         @lattitude = attributes[ :lattitude ]
         @longitude = attributes[ :longitude ]

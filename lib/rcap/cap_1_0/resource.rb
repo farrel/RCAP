@@ -37,7 +37,12 @@ module RCAP
       DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        
       RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" 
 
-      # @return [Hash] 
+      # @param [Hash{Symbol => Object}] attributes
+      # @option attributes [String] :mime_type
+      # @option attributes [Numeric] :size Size in bytes
+      # @option attributes [String] :uri
+      # @option attributes [String] :digest
+      # @option attributes [String] :resource_desc
       def initialize( attributes = {} )
         @mime_type     = attributes[ :mime_type ]
         @size          = attributes[ :size ]
