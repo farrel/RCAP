@@ -1,5 +1,9 @@
 = Change Log
 
+== 1.2.1 - 29 October 2011
+
+* Fixed polygon parsing and made it consitent across versions
+
 == 1.2.1 - 27 October 2011
 
 * Fixed bug initialising 'audience' attribute in Info class 
