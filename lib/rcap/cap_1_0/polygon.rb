@@ -9,8 +9,9 @@ module RCAP
       # Collection of Point objects.
       attr_reader( :points )
 
-      validates_length_of( :points, :minimum => 3 )
       validates_collection_of( :points )
+      validates_length_of( :points, :minimum => 3 )
+      validates_equality_of_first_and_last( :points )
 
       XML_ELEMENT_NAME = 'polygon'                   # :nodoc:
       XPATH            = "cap:#{ XML_ELEMENT_NAME }" # :nodoc:
@@ -28,10 +29,10 @@ module RCAP
       end
 
       # Returns a string representation of the polygon of the form
-      #  points[0] points[1] points[2] ... points[n-1] points[0]
+      #  points[0] points[1] points[2] ...
       # where each point is formatted with Point#to_s
       def to_s
-        (@points + [ @points.first ]).join( ' ' )
+        @points.join( ' ' )
       end
 
       def inspect # :nodoc:
@@ -56,7 +57,7 @@ module RCAP
       def self.from_xml_element( polygon_xml_element ) # :nodoc:
         if !polygon_xml_element.text.nil? && !polygon_xml_element.text.empty?
           coordinates = self.parse_polygon_string( polygon_xml_element.text )
-          points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}[0..-2]
+          points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
           polygon = self.new( :points => points )
         else
           self.new

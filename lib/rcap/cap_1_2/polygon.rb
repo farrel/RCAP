@@ -29,7 +29,7 @@ module RCAP
       end
 
       # Returns a string representation of the polygon of the form
-      #  points[0] points[1] points[2] ... points[n-1] points[0]
+      #  points[0] points[1] points[2] ...
       # where each point is formatted with Point#to_s
       def to_s
         @points.join( ' ' )

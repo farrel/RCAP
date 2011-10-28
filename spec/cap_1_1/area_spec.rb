@@ -167,7 +167,7 @@ describe( RCAP::CAP_1_1::Area ) do
         @polygon = RCAP::CAP_1_1::Polygon.new
         @polygon.points.push( RCAP::CAP_1_1::Point.new( :lattitude => 0, :longitude => 0 ),
                              RCAP::CAP_1_1::Point.new( :lattitude => 0, :longitude => 1 ),
-                             RCAP::CAP_1_1::Point.new( :lattitude => 1, :longitude => 0 ))
+                             RCAP::CAP_1_1::Point.new( :lattitude => 0, :longitude => 0 ))
         @area.polygons << @polygon
         @area.should( be_valid )
       end
