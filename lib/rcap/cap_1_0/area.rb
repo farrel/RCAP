@@ -59,6 +59,7 @@ module RCAP
 
       # Creates a new {Polygon} object and adds it to the {#polygons} array.
       #
+      # @see Polygon#initialize
       # @param [Hash] polygon_attributes see {Polygon#initialize}
       # @return [Polygon]
       def add_polygon( polygon_attributes = {})
@@ -69,6 +70,7 @@ module RCAP
 
       # Creates a new {Circle} object and adds it to the {#circles} array.
       #
+      # @see Circle#initialize
       # @param [Hash] circle_attributes see {Circle#initialize}
       # @return [Circle]
       def add_circle( circle_attributes = {})
@@ -79,6 +81,7 @@ module RCAP
 
       # Creates a new {Geocode} object and adds it to the {#geocodes} array.
       #
+      # @see Geocode#initialize
       # @param [Hash] geocode_attributes see {Geocode#initialize}
       # @return [Geocode]
       def add_geocode( geocode_attributes = {})

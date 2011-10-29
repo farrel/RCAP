@@ -123,6 +123,7 @@ module RCAP
 
       # Creates a new {Info} object and adds it to the {#infos array}. 
       # 
+      # @see Info#initialize
       # @param [Hash] info_attributes Info attributes - see {Info#initialize}
       # @return [Info]
       def add_info( info_attributes  = {})

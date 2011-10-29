@@ -27,7 +27,7 @@ module RCAP
       end
 
       # Returns a string representation of the circle of the form
-      #  lattitude,longitude,radius
+      #  lattitude,longitude radius
       #
       # @return [String]
       def to_s  
