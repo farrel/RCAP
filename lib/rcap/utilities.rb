@@ -70,7 +70,7 @@ module RCAP
 
   # Converts an array of key value pairs into a hash, excluding any value that is nil or empty
   #
-  # @param [Array<Array>] attribte_values An array of arrays of key/values.
+  # @param [Array<Array(Object,Object)>] attribte_values An array of arrays of key/value pairs
   # @return [Hash] Hash of attributes
   #
   # @example
@@ -95,7 +95,7 @@ module RCAP
 
   # If the parameter is a string the datetime is parsed out of it, otherwise returns nil.
   #
-  # @param date_string Object to parse datetime out
+  # @param [String] date_string String to parse 
   # @return [String,nil]
   def self.parse_datetime( date_string )
     if date_string.is_a?( String )
