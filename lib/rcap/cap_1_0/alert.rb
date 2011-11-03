@@ -437,7 +437,7 @@ module RCAP
         end
       end
 
-      # Initiialises an Alert object from a JSON string produced by Alert#to_json
+      # Initialises an Alert object from a JSON string produced by Alert#to_json
       # 
       # @param [String] json_string
       # @return [RCAP::CAP_1_0::Alert]
