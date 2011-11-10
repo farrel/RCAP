@@ -9,6 +9,6 @@ class Time # :nodoc:
 
   private
   def utc_hours_offset
-    self.utc_offset/3600
+    self.localtime.utc_offset/3600
   end
 end
