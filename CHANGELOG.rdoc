@@ -1,6 +1,10 @@
 = Change Log
 
-== 1.2.1 - 29 October 2011
+== 1.2.3 - 10 November 2011
+
+* Fixed Time#utc_hours_offset to use localtime to preserve TZ info (Earle Clubb)
+
+== 1.2.2 - 29 October 2011
 
 * Fixed polygon parsing and made it consitent across versions
 
