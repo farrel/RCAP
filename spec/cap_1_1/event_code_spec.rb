@@ -13,6 +13,10 @@ describe( RCAP::CAP_1_1::EventCode ) do
         @event_code = RCAP::CAP_1_1::EventCode.from_xml_element( @event_code_xml_element )
       end
 
+      it( 'should parse into the correct class' ) do
+        @event_code.class.should == RCAP::CAP_1_1::EventCode
+      end
+
       it( 'should parse the name correctly' ) do
         @event_code.name.should == @original_event_code.name
       end

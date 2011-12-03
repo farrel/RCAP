@@ -45,8 +45,8 @@ module RCAP
       end
 
       def self.from_xml_element( parameter_xml_element ) # :nodoc:
-        Parameter.new( :name  => RCAP.xpath_text( parameter_xml_element, self::NAME_XPATH, Alert::XMLNS ),
-                       :value => RCAP.xpath_text( parameter_xml_element, self::VALUE_XPATH, Alert::XMLNS ))
+        self.new( :name  => RCAP.xpath_text( parameter_xml_element, self::NAME_XPATH, Alert::XMLNS ),
+                  :value => RCAP.xpath_text( parameter_xml_element, self::VALUE_XPATH, Alert::XMLNS ))
       end
 
       # Two parameters are equivalent if they have the same name and value.

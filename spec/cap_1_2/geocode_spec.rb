@@ -14,6 +14,10 @@ describe( RCAP::CAP_1_2::Geocode ) do
         @geocode = RCAP::CAP_1_2::Geocode.from_xml_element( @geocode_xml_element )
       end
 
+      it( 'should parse into the correct class' ) do
+        @geocode.class.should == RCAP::CAP_1_2::Geocode
+      end
+
       it( 'should parse the name correctly' ) do
         @geocode.name.should == @original_geocode.name
       end

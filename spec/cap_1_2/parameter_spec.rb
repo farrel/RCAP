@@ -13,6 +13,10 @@ describe( RCAP::CAP_1_2::Parameter ) do
         @parameter = RCAP::CAP_1_2::Parameter.from_xml_element( @parameter_xml_element )
       end
 
+      it( 'should parse into the correct class' ) do
+        @parameter.class.should == RCAP::CAP_1_2::Parameter
+      end
+
       it( 'should parse the name correctly' ) do
         @parameter.name.should == @original_parameter.name
       end
