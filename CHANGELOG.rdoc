@@ -1,5 +1,9 @@
 = Change Log
 
+=== 1.2.4 - 4 December 2011
+
+* Fixed parsing bug when creating Parameter and subclasses from XML
+
 == 1.2.3 - 10 November 2011
 
 * Fixed Time#utc_hours_offset to use localtime to preserve TZ info (Earle Clubb)
