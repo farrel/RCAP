@@ -14,7 +14,7 @@ module RCAP
       # Resource location
       attr_accessor( :uri )
       # Dereferenced URI - contents of URI Base64 encoded
-      attr_reader( :deref_uri )
+      attr_accessor( :deref_uri )
       # SHA-1 hash of contents of resource
       attr_accessor( :digest )
 
@@ -77,13 +77,6 @@ module RCAP
         self.resource_desc
       end
 
-      # Sets the deref_uri. The SHA digest and size are also calculated and set.
-      def deref_uri=( value )
-        @deref_uri = value
-        self.digest = Digest::SHA1.hexdigest( @deref_uri )
-        self.size = @deref_uri.bytesize
-      end
-
       # Retrieves the content at uri and stores it in deref_uri as Base64 encoded text. It will also
       # calculate the digest on the encoded data using SHA1 and set the size.
       #
@@ -91,7 +84,9 @@ module RCAP
       # to open and read the content.
       def dereference_uri!
         content = URI.parse( self.uri ).read
-        self.deref_uri = Base64.encode64( content )
+        @deref_uri = Base64.encode64( content )
+        @digest = Digest::SHA1.hexdigest( @deref_uri )
+        @size = @deref_uri.bytesize
       end
 
       def self.from_xml_element( resource_xml_element ) # :nodoc:

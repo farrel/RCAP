@@ -1,5 +1,8 @@
 = Change Log
 
+* Removed Resource#deref_uri= in 1.1 and 1.2 API. 
+* Hash and size of referenced URI are only calculated on an explicit call to Resource#dereference_uri!
+
 === 1.2.4 - 4 December 2011
 
 * Fixed parsing bug when creating Parameter and subclasses from XML
