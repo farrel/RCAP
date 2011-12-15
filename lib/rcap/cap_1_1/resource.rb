@@ -85,8 +85,14 @@ module RCAP
       def dereference_uri!
         content = URI.parse( self.uri ).read
         @deref_uri = Base64.encode64( content )
-        @digest = Digest::SHA1.hexdigest( @deref_uri )
-        @size = @deref_uri.bytesize
+        self.calculate_hash_and_size
+      end
+
+      def calculate_hash_and_size
+        if @deref_uri
+          @digest = Digest::SHA1.hexdigest( @deref_uri )
+          @size = @deref_uri.bytesize
+        end
       end
 
       def self.from_xml_element( resource_xml_element ) # :nodoc:

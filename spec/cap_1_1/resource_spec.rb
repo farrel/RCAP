@@ -182,4 +182,22 @@ describe( RCAP::CAP_1_1::Resource ) do
       end
     end
   end
+
+  context( 'with a dereferenced URI' ) do
+    before( :each ) do 
+      @content = "1,2\n3,4"
+      @encoded_content = Base64.encode64( @content )
+      @resource = RCAP::CAP_1_1::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv', :deref_uri => @encoded_content )
+    end
+
+    describe( '#calculate_hash_and_size' ) do
+      it( 'should generate the correct SHA1 hash' ) do
+        lambda{ @resource.calculate_hash_and_size }.should( change( @resource, :digest ).to( Digest::SHA1.hexdigest( @encoded_content )))
+      end
+
+      it( 'should set the size in bytes' ) do
+        lambda{ @resource.calculate_hash_and_size }.should( change( @resource, :size ).to( @encoded_content.bytesize ))
+      end
+    end
+  end
 end
