@@ -3,8 +3,8 @@
 === 1.3.0 - 15 December 2011
 
 * Removed Resource#deref_uri= in 1.1 and 1.2 API. 
-* Added Resource#calculate_size_and_hash to calculate size and SHA1 hash of deref_uri if present
-* Hash and size of referenced URI are also calculated on an explicit call to Resource#dereference_uri!
+* Added Resource#calculate_hash_and_size to calculate size and SHA1 hash of deref_uri if present
+* Hash and size of dereferenced URI are also calculated on an explicit call to Resource#dereference_uri!
 
 === 1.2.4 - 4 December 2011
 
