@@ -95,6 +95,10 @@ module RCAP
         end
       end
 
+      def decoded_deref_uri
+        Base64.decode64( @deref_uri ) if @deref_uri
+      end
+
       def self.from_xml_element( resource_xml_element ) # :nodoc:
         resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
                              :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),

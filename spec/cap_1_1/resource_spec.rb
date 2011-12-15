@@ -199,5 +199,11 @@ describe( RCAP::CAP_1_1::Resource ) do
         lambda{ @resource.calculate_hash_and_size }.should( change( @resource, :size ).to( @encoded_content.bytesize ))
       end
     end
+
+    describe( '#decoded_deref_uri' ) do
+      it( 'should return the original content' ) do
+        @resource.decoded_deref_uri.should == @content
+      end
+    end
   end
 end

@@ -1,5 +1,7 @@
 = Change Log
 
+* Added Resource#decoded_deref_uri
+
 === 1.3.0 - 15 December 2011
 
 * Removed Resource#deref_uri= in 1.1 and 1.2 API. 

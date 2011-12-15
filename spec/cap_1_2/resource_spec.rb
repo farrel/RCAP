@@ -192,7 +192,7 @@ describe( RCAP::CAP_1_2::Resource ) do
     before( :each ) do 
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64( @content )
-      @resource = RCAP::CAP_1_1::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv', :deref_uri => @encoded_content )
+      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv', :deref_uri => @encoded_content )
     end
 
     describe( '#calculate_hash_and_size' ) do
@@ -202,6 +202,12 @@ describe( RCAP::CAP_1_2::Resource ) do
 
       it( 'should set the size in bytes' ) do
         lambda{ @resource.calculate_hash_and_size }.should( change( @resource, :size ).to( @encoded_content.bytesize ))
+      end
+    end
+
+    describe( '#decoded_deref_uri' ) do
+      it( 'should return the original content' ) do
+        @resource.decoded_deref_uri.should == @content
       end
     end
   end
