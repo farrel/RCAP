@@ -9,17 +9,20 @@ module RCAP
     class Area
       include Validation
 
-      # Area Description - Textual description of area.
+      # Textual description of area.
+      # @return [String]
       attr_accessor( :area_desc )
       # Expressed in feet above sea level
+      # @return [Numeric]
       attr_accessor( :altitude )
       # Expressed in feet above sea level.
+      # @return [Numeric]
       attr_accessor( :ceiling )
-      # Collection of Circle objects
+      # @return [Array<Circle>]
       attr_reader( :circles )
-      # Collection of Geocode objects
+      # @return [Array<Geocode>]
       attr_reader( :geocodes )
-      # Collection of Polygon objects
+      # @return [Array<Polygon>]
       attr_reader( :polygons )
 
       validates_presence_of( :area_desc )
@@ -36,6 +39,15 @@ module RCAP
       ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  
       CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   
 
+      # @example
+      #   Area.new( area_desc: 'Cape Town CBD' )
+      # @param [Hash] attributes Area attributes
+      # @option attributes [String] :area_desc Area description
+      # @option attributes [Numeric] :altitude Altitude above sea level (in feet)
+      # @option attributes [Numeric] :ceiling Ceiling above sea level (in feet)
+      # @option attributes [Array<Circle>] :circles Collection of {Circle} 
+      # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode} 
+      # @option attributes [Array<Polygon>] :polygons Collection of {Polygon}
       def initialize( attributes = {})
         @area_desc = attributes[ :area_desc ]
         @altitude  = attributes[ :altitude ]
@@ -45,30 +57,40 @@ module RCAP
         @polygons  = Array( attributes[ :polygons ])
       end
 
-      # Creates a new Polygon object and adds it to the polygons array. The
-      # polygon_attributes are passed as a parameter to Polygon.new.
+      # Creates a new {Polygon} object and adds it to the {#polygons} array.
+      #
+      # @see Polygon#initialize
+      # @param [Hash] polygon_attributes see {Polygon#initialize}
+      # @return [Polygon]
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
         @polygons << polygon
         polygon
       end
 
-      # Creates a new Circle object and adds it to the circles array. The
-      # circle_attributes are passed as a parameter to Circle.new.
+      # Creates a new {Circle} object and adds it to the {#circles} array.
+      #
+      # @see Circle#initialize
+      # @param [Hash] circle_attributes see {Circle#initialize}
+      # @return [Circle]
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
         @circles << circle
         circle
       end
 
-      # Creates a new Geocode object and adds it to the geocodes array. The
-      # geocode_attributes are passed as a parameter to Geocode.new.
+      # Creates a new {Geocode} object and adds it to the {#geocodes} array.
+      #
+      # @see Geocode#initialize
+      # @param [Hash] geocode_attributes see {Geocode#initialize}
+      # @return [Geocode]
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )
         @geocodes << geocode
         geocode
       end
 
+      # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( AREA_DESC_ELEMENT_NAME ).add_text( @area_desc.to_s )
@@ -84,16 +106,21 @@ module RCAP
         xml_element
       end
 
+      # @return [String] XML representation of the Area
       def to_xml 
         self.to_xml_element.to_s
       end
 
       # Implements an equality operator for the Area object. Two Area objects are equal if all their attributes are equal.
+      #
+      # @param [Area] other Area object to compare
+      # @return [true,false]
       def ==( other )
         comparison_attributes = lambda{ |area| [ area.area_desc, area.altitude, area.ceiling, area.circles, area.geocodes, area.polygons ]}
         comparison_attributes.call( self ) == comparison_attributes.call( other )
       end
 
+      # @return [String]
       def inspect 
         area_inspect = "Area Description: #{ @area_desc }\n"+
                        "Polygons:\n"+
@@ -103,12 +130,15 @@ module RCAP
         RCAP.format_lines_for_inspect( 'AREA', area_inspect )
       end
 
-      # Returns a string representation of the area of the form
-      #  area_desc
+      # Returns the area description
+      #
+      # @return [String]
       def to_s
         @area_desc
       end
 
+      # @param [REXML::Element] area_xml_element
+      # @return [Area]
       def self.from_xml_element( area_xml_element ) 
         self.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, Alert::XMLNS ),
                  :altitude  => (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, Alert::XMLNS )) ? alt.to_f : nil ),
@@ -125,6 +155,7 @@ module RCAP
       GEOCODES_YAML  = 'Geocodes'         
       POLYGONS_YAML  = 'Polygons'         
 
+      # @return [String] YAML representation of object
       def to_yaml( options = {} ) 
         RCAP.attribute_values_to_hash(
           [ AREA_DESC_YAML, @area_desc ],
@@ -136,6 +167,8 @@ module RCAP
         ).to_yaml( options )
       end
 
+      # @param [Hash] area_yaml_data
+      # @return [Area]
       def self.from_yaml_data( area_yaml_data )  
         self.new( :area_desc => area_yaml_data[ AREA_DESC_YAML ],
                   :altitude  => area_yaml_data[ ALTITUDE_YAML ],
@@ -152,6 +185,7 @@ module RCAP
       GEOCODES_KEY  = 'geocodes'   
       POLYGONS_KEY  = 'polygons'   
 
+      # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, @area_desc ],
                                        [ ALTITUDE_KEY, @altitude ],
@@ -161,6 +195,8 @@ module RCAP
                                        [ POLYGONS_KEY, @polygons.map{ |polygon| polygon.to_h } ])
       end
 
+      # @param [Hash] area_hash
+      # @return [Area]
       def self.from_h( area_hash ) 
         self.new(
           :area_desc => area_hash[ AREA_DESC_KEY ],

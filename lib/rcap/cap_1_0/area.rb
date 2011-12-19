@@ -9,7 +9,7 @@ module RCAP
     class Area
       include Validation
 
-      # Area Description - Textual description of area.
+      # Textual description of area.
       # @return [String]
       attr_accessor( :area_desc )
       # Expressed in feet above sea level
@@ -137,6 +137,7 @@ module RCAP
         @area_desc
       end
 
+      # @param [REXML::Element] area_xml_element
       # @return [Area]
       def self.from_xml_element( area_xml_element ) 
         self.new( :area_desc => RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, Alert::XMLNS ),
@@ -166,6 +167,7 @@ module RCAP
         ).to_yaml( options )
       end
 
+      # @param [Hash] area_yaml_data
       # @return [Area]
       def self.from_yaml_data( area_yaml_data )  
         self.new( :area_desc => area_yaml_data[ AREA_DESC_YAML ],
@@ -193,6 +195,7 @@ module RCAP
                                        [ POLYGONS_KEY,  @polygons.map{ |polygon| polygon.to_h }])
       end
 
+      # @param [Hash] area_hash
       # @return [Area]
       def self.from_h( area_hash ) 
         self.new(
