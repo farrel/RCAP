@@ -3,14 +3,15 @@ module RCAP
 
     # A Resource object is valid if
     # * it has a resource description
+    # * it has a mime_type
     class Resource
       include Validation
 
       # Resource Description
       # @return [String]
       attr_accessor( :resource_desc )
-      # @return [String]
       # MIME type as described in RFC 2046
+      # @return [String]
       attr_accessor( :mime_type )
       # Expressed in bytes
       # @return [Integer]
