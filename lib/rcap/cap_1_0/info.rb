@@ -108,10 +108,10 @@ module RCAP
       # Value can only be one of {VALID_URGENCIES}
       # @return [String]
       attr_accessor( :urgency )
-      # Value can only be one of VALID_SEVERITIES
+      # Value can only be one of {VALID_SEVERITIES}
       # @return [String]
       attr_accessor( :severity )
-      # Value can only be one of VALID_CERTAINTIES
+      # Value can only be one of {VALID_CERTAINTIES}
       # @return [String]
       attr_accessor( :certainty )
       # @return [String]
@@ -140,19 +140,19 @@ module RCAP
       # @return [String]
       attr_accessor( :contact )
 
-      # Collection of textual categories; elements can be one of VALID_CATEGORIES
+      # Collection of textual categories; elements can be one of {VALID_CATEGORIES}
       # @return [Array<String>]
       attr_reader( :categories )
-      # Collectoin of EventCode objects
+      # Collection of {EventCode}
       # @return [Array<EventCode>]
       attr_reader( :event_codes )
-      # Collection of Parameter objects
+      # Collection of {Parameter}
       # @return [Array<Parameter>]
       attr_reader( :parameters )
-      # Collection of Resource objects
+      # Collection of {Resource}
       # @return [Array<Resource>
       attr_reader( :resources )
-      # Collection of Area objects
+      # Collection of {Area}
       # @return [Array<Area>]
       attr_reader( :areas )
 
