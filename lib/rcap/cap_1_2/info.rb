@@ -121,41 +121,84 @@ module RCAP
       validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
       validates_collection_of( :resources, :areas, :event_codes, :parameters )
 
+      # @return [String]
       attr_accessor( :event )
-      # Value can only be one of VALID_URGENCIES
+      # Value can only be one of {VALID_URGENCIES}
+      # @return [String]
       attr_accessor( :urgency )
-      # Value can only be one of VALID_SEVERITIES
+      # Value can only be one of {VALID_SEVERITIES}
+      # @return [String]
       attr_accessor( :severity )
-      # Value can only be one of VALID_CERTAINTIES
+      # Value can only be one of {VALID_CERTAINTIES}
+      # @return [String]
       attr_accessor( :certainty )
+      # @return [String]
       attr_accessor( :language )
+      # @return [String]
       attr_accessor( :audience )
       # Effective start time of information
+      # @return [DateTime]
       attr_accessor( :effective )
       # Expected start of event
+      # @return [DateTime]
       attr_accessor( :onset )
       # Effective expiry time of information
+      # @return [DateTime]
       attr_accessor( :expires )
+      # @return [String]
       attr_accessor( :sender_name )
+      # @return [String]
       attr_accessor( :headline )
+      # @return [String]
       attr_accessor( :description )
+      # @return [String]
       attr_accessor( :instruction )
+      # @return [String]
       attr_accessor( :web )
+      # @return [String]
       attr_accessor( :contact )
 
-      # Collection of textual categories; elements can be one of VALID_CATEGORIES
+      # Collection of textual categories; elements can be one of {VALID_CATEGORIES}
+      # @return [Array<String>]
       attr_reader( :categories )
-      #  Collection of textual response types
+      # Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES}
+      # @return [Array<String>]
       attr_reader( :response_types )
-      # Collectoin of EventCode objects
+      # Collection of {EventCode}
+      # @return [Array<EventCode>]
       attr_reader( :event_codes )
-      # Collection of Parameter objects
+      # Collection of {Parameter}
+      # @return [Array<Parameter>]
       attr_reader( :parameters )
-      # Collection of Resource objects
+      # Collection of {Resource}
+      # @return [Array<Resource>
       attr_reader( :resources )
-      # Collection of Area objects
+      # Collection of {Area}
+      # @return [Array<Area>]
       attr_reader( :areas )
 
+      # @param [Hash] attributes
+      # @option attributes [String] :language Defaults to {DEFAULT_LANGUAGE}
+      # @option attributes [Array<String>] :categories Collection of categories in {VALID_CATEGORIES}
+      # @option attributes [String] :audience
+      # @option attributes [String] :event
+      # @option attributes [Array<String>] :response_types Collection of textual response types from {VALID_RESPONSE_TYPES}
+      # @option attributes [String] :urgency A member of {VALID_URGENCIES}
+      # @option attributes [String] :severity A member of {VALID_SEVERITIES}
+      # @option attributes [String] :certainty A member of {VALID_CERTAINTIES}
+      # @option attributes [DateTime] :effective 
+      # @option attributes [DateTime] :onset
+      # @option attributes [DateTime] :expires
+      # @option attributes [Array<EventCode>] :event_codes Collection of {EventCode} objects
+      # @option attributes [String] :sender_name
+      # @option attributes [String] :headline
+      # @option attributes [String] :description
+      # @option attributes [String] :instruction
+      # @option attributes [String] :web URL
+      # @option attributes [String] :contact
+      # @option attributes [Array<Parameter>] :parameters Collection of {Parameter} objects
+      # @option attributes [Array<Resource>] :resources Collection of {Resource} objects 
+      # @option attributes [Array<Area>] :areas Collection of {Area} objects
       def initialize( attributes = {} )
         @language       = attributes[ :language ] || DEFAULT_LANGUAGE
         @categories     = Array( attributes[ :categories ])
@@ -182,6 +225,11 @@ module RCAP
 
       # Creates a new EventCode object and adds it to the event_codes array. The
       # event_code_attributes are passed as a parameter to EventCode.new.
+      #
+      # @see EventCode#initialize
+      #
+      # @param [Hash] event_code_attributes (see EventCode#initialize)
+      # @return [EventCode]
       def add_event_code( event_code_attributes = {})
         event_code = EventCode.new( event_code_attributes )
         @event_codes << event_code
@@ -190,6 +238,11 @@ module RCAP
 
       # Creates a new Parameter object and adds it to the parameters array. The
       # parameter_attributes are passed as a parameter to Parameter.new.
+      #
+      # @see Parameter#initialize
+      #
+      # @param [Hash] parameter_attributes (see Parameter#initialize)
+      # @return [Parameter]
       def add_parameter( parameter_attributes = {})
         parameter = Parameter.new( parameter_attributes )
         @parameters << parameter
@@ -198,6 +251,11 @@ module RCAP
 
       # Creates a new Resource object and adds it to the resources array. The
       # resource_attributes are passed as a parameter to Resource.new.
+      #
+      # @see Resource#initialize
+      #
+      # @param [Hash] resource_attributes (See Resource#initialize)
+      # @return [Resource]
       def add_resource( resource_attributes = {})
         resource = Resource.new( resource_attributes )
         @resources << resource
@@ -206,12 +264,18 @@ module RCAP
 
       # Creates a new Area object and adds it to the areas array. The
       # area_attributes are passed as a parameter to Area.new.
+      #
+      # @see Area#initialize
+      #
+      # @param [Hash] area_attributes (see Area#initialize)
+      # @return [Area]
       def add_area( area_attributes = {})
         area = Area.new( area_attributes )
         @areas << area
         area
       end
 
+      # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
@@ -250,10 +314,12 @@ module RCAP
         xml_element
       end
 
+      # @return [String]
       def to_xml 
         self.to_xml_element.to_s
       end
 
+      # @return [String]
       def inspect 
         info_inspect = "Language:       #{ @language }\n"+
                        "Categories:     #{ @categories.to_s_for_cap }\n"+
@@ -270,7 +336,7 @@ module RCAP
                        "Sender Name:    #{ @sender_name }\n"+
                        "Headline:       #{ @headline }\n"+
                        "Description:\n"+
-                       @description.to_s.lines.map{ |line| "  " + line }.join( "\n" )+"\n"+
+                       @description.to_s.lines.map{ |line| "  " + line }.join( "\n")+"\n"+
                        "Instruction:    #{ @instruction }\n"+
                        "Web:            #{ @web }\n"+
                        "Contact:        #{ @contact }\n"+
@@ -285,10 +351,14 @@ module RCAP
 
       # Returns a string representation of the event of the form
       #  event(urgency/severity/certainty)
+      #
+      # @return [String]
       def to_s
         "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
       end
 
+      # @param [REXML::Element] info_xml_element
+      # @return [Info]
       def self.from_xml_element( info_xml_element ) 
         self.new(
           :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
@@ -337,32 +407,36 @@ module RCAP
       RESOURCES_YAML      = 'Resources'      
       AREAS_YAML          = 'Areas'          
 
+      # @return [String]
       def to_yaml( options = {} ) 
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
-        RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       @language ],
-                                       [ CATEGORIES_YAML,     @categories ],
-                                       [ EVENT_YAML,          @event ],
-                                       [ RESPONSE_TYPES_YAML, @response_types ],
-                                       [ URGENCY_YAML,        @urgency ],
-                                       [ SEVERITY_YAML,       @severity ],
-                                       [ CERTAINTY_YAML,      @certainty ],
-                                       [ AUDIENCE_YAML,       @audience ],
-                                       [ EFFECTIVE_YAML,      @effective ],
-                                       [ ONSET_YAML,          @onset ],
-                                       [ EXPIRES_YAML,        @expires ],
-                                       [ SENDER_NAME_YAML,    @sender_name ],
-                                       [ HEADLINE_YAML,       @headline ],
-                                       [ DESCRIPTION_YAML,    @description ],
-                                       [ INSTRUCTION_YAML,    @instruction ],
-                                       [ WEB_YAML,            @web ],
-                                       [ CONTACT_YAML,        @contact ],
-                                       [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
-                                       [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
-                                       [ RESOURCES_YAML,      @resources ],
-                                       [ AREAS_YAML,          @areas ]).to_yaml( options )
+        RCAP.attribute_values_to_hash(
+          [ LANGUAGE_YAML,       @language ],
+          [ CATEGORIES_YAML,     @categories ],
+          [ EVENT_YAML,          @event ],
+          [ RESPONSE_TYPES_YAML, @response_types ],
+          [ URGENCY_YAML,        @urgency ],
+          [ SEVERITY_YAML,       @severity ],
+          [ CERTAINTY_YAML,      @certainty ],
+          [ AUDIENCE_YAML,       @audience ],
+          [ EFFECTIVE_YAML,      @effective ],
+          [ ONSET_YAML,          @onset ],
+          [ EXPIRES_YAML,        @expires ],
+          [ SENDER_NAME_YAML,    @sender_name ],
+          [ HEADLINE_YAML,       @headline ],
+          [ DESCRIPTION_YAML,    @description ],
+          [ INSTRUCTION_YAML,    @instruction ],
+          [ WEB_YAML,            @web ],
+          [ CONTACT_YAML,        @contact ],
+          [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
+          [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
+          [ RESOURCES_YAML,      @resources ],
+          [ AREAS_YAML,          @areas ]).to_yaml( options )
       end
 
+      # @param [Hash] info_yaml_data
+      # @return [Info]
       def self.from_yaml_data( info_yaml_data ) 
         self.new(
           :language       => info_yaml_data [ LANGUAGE_YAML ],
@@ -411,30 +485,34 @@ module RCAP
       PARAMETERS_KEY     = 'parameters'     
       AREAS_KEY          = 'areas'          
 
+      # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,       @language ],
-                                       [ CATEGORIES_KEY,     @categories ],
-                                       [ EVENT_KEY,          @event ],
-                                       [ RESPONSE_TYPES_KEY, @response_types ],
-                                       [ URGENCY_KEY,        @urgency ],
-                                       [ SEVERITY_KEY,       @severity ],
-                                       [ CERTAINTY_KEY,      @certainty ],
-                                       [ AUDIENCE_KEY,       @audience ],
-                                       [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( @effective )],
-                                       [ ONSET_KEY,          RCAP.to_s_for_cap( @onset )],
-                                       [ EXPIRES_KEY,        RCAP.to_s_for_cap( @expires )],
-                                       [ SENDER_NAME_KEY,    @sender_name ],
-                                       [ HEADLINE_KEY,       @headline ],
-                                       [ DESCRIPTION_KEY,    @description ],
-                                       [ INSTRUCTION_KEY,    @instruction ],
-                                       [ WEB_KEY,            @web ],
-                                       [ CONTACT_KEY,        @contact ],
-                                       [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
-                                       [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
-                                       [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
-                                       [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
+        RCAP.attribute_values_to_hash(
+          [ LANGUAGE_KEY,       @language ],
+          [ CATEGORIES_KEY,     @categories ],
+          [ EVENT_KEY,          @event ],
+          [ RESPONSE_TYPES_KEY, @response_types ],
+          [ URGENCY_KEY,        @urgency ],
+          [ SEVERITY_KEY,       @severity ],
+          [ CERTAINTY_KEY,      @certainty ],
+          [ AUDIENCE_KEY,       @audience ],
+          [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( @effective )],
+          [ ONSET_KEY,          RCAP.to_s_for_cap( @onset )],
+          [ EXPIRES_KEY,        RCAP.to_s_for_cap( @expires )],
+          [ SENDER_NAME_KEY,    @sender_name ],
+          [ HEADLINE_KEY,       @headline ],
+          [ DESCRIPTION_KEY,    @description ],
+          [ INSTRUCTION_KEY,    @instruction ],
+          [ WEB_KEY,            @web ],
+          [ CONTACT_KEY,        @contact ],
+          [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
+          [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
+          [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
+          [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
       end
 
+      # @param [Hash] info_hash
+      # @return [Info]
       def self.from_h( info_hash ) 
         self.new( :language       => info_hash[ LANGUAGE_KEY ],
                   :categories     => info_hash[ CATEGORIES_KEY ],
