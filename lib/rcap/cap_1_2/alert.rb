@@ -65,7 +65,7 @@ module RCAP
       attr_reader( :references)
       # @return [Array<String>] Collection of incident strings
       attr_reader( :incidents )
-      # @return [Array<Info>] 
+      # @return [Array<Info>] Collection of {Info} objects
       attr_reader( :infos )
 
       validates_presence_of( :identifier, :sender, :sent, :status, :msg_type, :scope )

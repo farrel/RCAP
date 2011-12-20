@@ -6,8 +6,7 @@ module RCAP
     class Polygon
       include Validation
 
-      # Collection of {Point} objects.
-      # @return [Array<Point>]
+      # @return [Array<Point>] Collection of {Point} objects 
       attr_reader( :points )
 
       validates_collection_of( :points )

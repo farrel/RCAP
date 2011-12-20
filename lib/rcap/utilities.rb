@@ -14,7 +14,6 @@ module RCAP
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
   # @param [String] namepsace Namespace in which to do the matching
-  #
   # @return [String,nil] Text content of element matching XPath query or nil 
   def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
@@ -26,7 +25,6 @@ module RCAP
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
   # @param [String] namepsace Namespace in which to do the matching
-  #
   # @return [REXML::Element,nil] Element matching XPath query or nil
   def self.xpath_first( xml_element, xpath, namespace )
     REXML::XPath.first( xml_element, xpath, { 'cap' => namespace })
@@ -37,7 +35,6 @@ module RCAP
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
   # @param [String] namepsace Namespace in which to do the matching
-  #
   # @return [Array<REXML::Element>] Collection of elements matching XPath query 
   def self.xpath_match( xml_element, xpath, namespace )
     REXML::XPath.match( xml_element, xpath, { 'cap' => namespace })

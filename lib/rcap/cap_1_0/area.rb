@@ -9,14 +9,11 @@ module RCAP
     class Area
       include Validation
 
-      # Textual description of area.
-      # @return [String]
+      # @return [String] Textual description of area.
       attr_accessor( :area_desc )
-      # Expressed in feet above sea level
-      # @return [Numeric]
+      # @return [Numeric] Expressed in feet above sea level
       attr_accessor( :altitude )
-      # Expressed in feet above sea level.
-      # @return [Numeric]
+      # @return [Numeric] Expressed in feet above sea level. 
       attr_accessor( :ceiling )
       # @return [Array<Circle>]
       attr_reader( :circles )

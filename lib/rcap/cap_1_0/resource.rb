@@ -6,19 +6,15 @@ module RCAP
     class Resource
       include Validation
 
-      # Resource Description
-      # @return [String]
+      # @return [String] Resource Description 
       attr_accessor( :resource_desc )
       # @return [String]
       attr_accessor( :mime_type )
-      # Expressed in bytes
-      # @return [Integer]
+      # @return [Integer] Expressed in bytes 
       attr_accessor( :size )
-      # Resource location
-      # @return [String]
+      # @return [String] Resource location 
       attr_accessor( :uri )
-      # SHA-1 hash of contents of resource
-      # @return [String]
+      # @return [String] SHA-1 hash of contents of resource 
       attr_accessor( :digest )
 
       validates_presence_of( :resource_desc )

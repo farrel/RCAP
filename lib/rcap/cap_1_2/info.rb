@@ -123,27 +123,21 @@ module RCAP
 
       # @return [String]
       attr_accessor( :event )
-      # Value can only be one of {VALID_URGENCIES}
-      # @return [String]
+      # @return [String] Value can only be one of {VALID_URGENCIES} 
       attr_accessor( :urgency )
-      # Value can only be one of {VALID_SEVERITIES}
-      # @return [String]
+      # @return [String] Value can only be one of {VALID_SEVERITIES} 
       attr_accessor( :severity )
-      # Value can only be one of {VALID_CERTAINTIES}
-      # @return [String]
+      # @return [String] Value can only be one of {VALID_CERTAINTIES} 
       attr_accessor( :certainty )
       # @return [String]
       attr_accessor( :language )
       # @return [String]
       attr_accessor( :audience )
-      # Effective start time of information
-      # @return [DateTime]
+      # @return [DateTime] Effective start time of information 
       attr_accessor( :effective )
-      # Expected start of event
-      # @return [DateTime]
+      # @return [DateTime] Expected start of event 
       attr_accessor( :onset )
-      # Effective expiry time of information
-      # @return [DateTime]
+      # @return [DateTime] Effective expiry time of information 
       attr_accessor( :expires )
       # @return [String]
       attr_accessor( :sender_name )
@@ -158,23 +152,17 @@ module RCAP
       # @return [String]
       attr_accessor( :contact )
 
-      # Collection of textual categories; elements can be one of {VALID_CATEGORIES}
-      # @return [Array<String>]
+      # @return [Array<String>] Collection of textual categories; elements can be one of {VALID_CATEGORIES} 
       attr_reader( :categories )
-      # Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES}
-      # @return [Array<String>]
+      # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES} 
       attr_reader( :response_types )
-      # Collection of {EventCode}
-      # @return [Array<EventCode>]
+      # @return [Array<EventCode>] Collection of {EventCode} objects
       attr_reader( :event_codes )
-      # Collection of {Parameter}
-      # @return [Array<Parameter>]
+      # @return [Array<Parameter>] Collection of {Parameter} objects
       attr_reader( :parameters )
-      # Collection of {Resource}
-      # @return [Array<Resource>
+      # @return [Array<Resource> Collection of {Resource} objects
       attr_reader( :resources )
-      # Collection of {Area}
-      # @return [Array<Area>]
+      # @return [Array<Area>] Collection of {Area} objects
       attr_reader( :areas )
 
       # @param [Hash] attributes

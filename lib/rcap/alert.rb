@@ -9,12 +9,11 @@ module RCAP
 
     # Initialise a RCAP Alert from a XML document.
     #
-    # @param [#to_s] xml CAP alert in XML format
+    # @param [IO,String] xml CAP alert in XML format. Can be a String or any IO object.
     # @param [String] namespace_key The XML namespace that the CAP alert is in. If omitted  
     #  the namespace of the document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
     #  or CAP_1_2::Alert is instantiated accordingly. If no namespace can be detected
     #  a CAP 1.2 message will be assumed.
-    #
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_xml( xml, namespace_key = nil )
       xml_document = REXML::Document.new( xml.to_s )
@@ -35,11 +34,10 @@ module RCAP
     # CAP_1_2::Alert#to_yaml. The version of the document is inspected and a
     # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
-    # @param [#to_s] yaml CAP  Alert in YAML format
-    #
+    # @param [IO, String] yaml CAP Alert in YAML format. Can be a String or any IO object.
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_yaml( yaml )
-      yaml_data = YAML.load( yaml.to_s )
+      yaml_data = YAML.load( yaml )
 
       case yaml_data[ YAML_CAP_VERSION_KEY ]
       when CAP_1_0::Alert::CAP_VERSION
@@ -56,7 +54,6 @@ module RCAP
     # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
     # @param [#to_s] json Alert in JSON format
-    #
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_json( json )
       json_hash = JSON.parse( json.to_s )
@@ -68,7 +65,6 @@ module RCAP
     # CAP 1.0, 1.1 or 1.2 Alert is instantiated accordingly.
     #
     # @param [Hash] hash Alert as a Ruby hash.
-    #
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_h( hash ) 
       case hash[ JSON_CAP_VERSION_KEY ]

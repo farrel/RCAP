@@ -6,8 +6,7 @@ module RCAP
     class Circle < Point
       include Validation
 
-      # Expresed in kilometers
-      # @return [Numeric]
+      # @return [Numeric] Expresed in kilometers 
       attr_accessor( :radius )
 
       validates_presence_of( :radius )

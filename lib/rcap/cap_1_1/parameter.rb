@@ -8,7 +8,10 @@ module RCAP
 
       validates_presence_of( :name, :value )
 
-      attr_accessor( :name, :value )
+      # @return [String]
+      attr_accessor( :name )
+      # @return [String]
+      attr_accessor( :value )
 
       XML_ELEMENT_NAME   = "parameter" 
       NAME_ELEMENT_NAME  = "valueName" 
