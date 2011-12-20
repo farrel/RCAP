@@ -6,9 +6,9 @@ require 'yard'
 Bundler::GemHelper.install_tasks
 
 YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb', 'README.rdoc', 'CHANGELOG.rdoc']
+  t.files = ['lib/**/*.rb', 'README.md', 'CHANGELOG.md']
   t.options += [ '--title', "RCAP Ruby API" ]
-  t.options += [ '--main', 'README.rdoc']
+  t.options += [ '--main', 'README.md']
   t.options += [ '--output-dir', 'doc' ]
 end
 
