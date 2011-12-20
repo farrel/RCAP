@@ -29,7 +29,6 @@ Installation
 
 RCAP is distributed as a Ruby gem and is available from [Rubygems.org](http://rubygems.org). From the command line you can install it with the gem command:
 
-    !!!plain
     $ gem install rcap
 
 The gem is also available for download and manual installation at [www.aimred.com/gems](http://www.aimred.com/gems).
@@ -50,7 +49,6 @@ To include RCAP into your application add the following require
 
 All RCAP classes reside in the RCAP namespace but including the RCAP module makes the classes available at the top level without the RCAP prefix.
 
-    !!!plain
     include RCAP:CAP_1_2 # Include RCAP:CAP_1_2 module into namespace
     alert = Alert.new
 
@@ -139,7 +137,6 @@ Using the alert message created above
 
 Will print the following CAP XML
 
-    !!!xml
     <?xml version='1.0'?>
     <alert xmlns='urn:oasis:names:tc:emergency:cap:1.2'>
       <identifier>494207a7-f86b-4060-8318-a4b2a3ce565e</identifier>
@@ -174,7 +171,6 @@ YAML is a plain text serialization format designed to be easily readable and edi
 
 will produce the following YAML document
 
-    !!!yaml
     ---
     CAP Version: 1.2
     Identifier: 2a1ba96d-16e4-4f52-85ea-0258c1440bd5
@@ -207,7 +203,6 @@ JSON is a text serialization format that can be easily loaded in a JavaScript en
 
 will produce the following JSON string
 
-    !!!json
     {"cap_version":"1.2",
      "identifier":"0eb97e40-195b-437b-9a01-55fe89691def",
      "sender":"cape_town_disaster_relief@capetown.municipal.za",
