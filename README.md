@@ -239,7 +239,7 @@ Authors
 Change Log
 ----------
 
-[CHANGELOG](CHANGELOG.md)
+[CHANGELOG](file.CHANGELOG.html)
 
 License
 -------
