@@ -2,6 +2,7 @@ Change Log
 ==========
 
 * Added Resource#decoded_deref_uri
+* RCAP::Alert.from_xml can load from a String or IO object
 
 ## 1.3.0 - 15 December 2011
 

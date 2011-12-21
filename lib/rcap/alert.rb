@@ -16,7 +16,7 @@ module RCAP
     #  a CAP 1.2 message will be assumed.
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_xml( xml, namespace_key = nil )
-      xml_document = REXML::Document.new( xml.to_s )
+      xml_document = REXML::Document.new( xml )
       document_namespaces = xml_document.root.namespaces.invert
       namespace = namespace_key || CAP_NAMESPACES.find{ |namepsace| document_namespaces[ namepsace ]}
 
