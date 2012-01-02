@@ -125,7 +125,7 @@ Will produce the following output:
 
 All RCAP classes include the Validation module.
 
-A full spec suite using [RSpec}](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
+A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
 
 ### Exporting an Alert
 
