@@ -158,17 +158,17 @@ module RCAP
         xml_element.add_element( SOURCE_ELEMENT_NAME ).add_text( @source )           if @source
         xml_element.add_element( SCOPE_ELEMENT_NAME ).add_text( @scope )             if @scope
         xml_element.add_element( RESTRICTION_ELEMENT_NAME ).add_text( @restriction ) if @restriction
-        unless @addresses.empty?
+        if @addresses.any?
           xml_element.add_element( ADDRESSES_ELEMENT_NAME ).add_text( @addresses.to_s_for_cap )
         end
         @codes.each do |code|
           xml_element.add_element( CODE_ELEMENT_NAME ).add_text( code )
         end
         xml_element.add_element( NOTE_ELEMENT_NAME ).add_text( @note ) if @note
-        unless @references.empty?
+        if @references.any?
           xml_element.add_element( REFERENCES_ELEMENT_NAME ).add_text( @references.join( ' ' ))
         end
-        unless @incidents.empty?
+        if @incidents.any?
           xml_element.add_element( INCIDENTS_ELEMENT_NAME ).add_text( @incidents.join( ' ' ))
         end
         @infos.each do |info|
