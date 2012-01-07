@@ -50,6 +50,11 @@ module RCAP
         xml_element
       end
 
+      # @return [String]
+      def to_xml
+        self.to_xml_element.to_s
+      end
+
       # Two polygons are equivalent if their collection of points is equivalent.
       # 
       # @return [true,false]
