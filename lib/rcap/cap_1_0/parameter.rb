@@ -84,8 +84,10 @@ module RCAP
       # @return [Hash]
       def self.parse_parameter( parameter_string ) 
         name, value = parameter_string.split("=")
-        { :name  => name,
-          :value => value }
+        if name && value
+          { :name  => name,
+            :value => value }
+        end
       end
     end
   end

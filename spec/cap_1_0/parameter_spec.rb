@@ -40,8 +40,12 @@ describe( RCAP::CAP_1_0::Parameter ) do
   end
 
   describe( '.parse_parameter' ) do
-    it( 'should parse the content correctly' ) do
+    it( 'should parse valid content correctly' ) do
       RCAP::CAP_1_0::Parameter.parse_parameter( "name=value" ).should == { :name => 'name', :value => 'value' }
+    end
+
+    it( 'should parse invalid content correctly' ) do
+      RCAP::CAP_1_0::Parameter.parse_parameter( 'name' ).should == nil
     end
   end
 
