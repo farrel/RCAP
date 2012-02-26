@@ -229,5 +229,13 @@ describe( RCAP::CAP_1_2::Alert ) do
         @alert.infos.size.should == 1
       end
     end
+
+    describe( '#to_xml' ) do
+      context( 'with pretty_print = true' ) do
+        it( 'should not raise an exception' ) do
+          lambda{ @alert.to_xml( true ) }.should_not( raise_exception )
+        end
+      end
+    end
   end
 end

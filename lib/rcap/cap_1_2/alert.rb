@@ -192,7 +192,7 @@ module RCAP
       def to_xml( pretty_print = false )
         if pretty_print
           xml_document = ""
-          XML_PRETTY_PRINTER.write( self.to_xml_document, xml_document )
+          RCAP::XML_PRETTY_PRINTER.write( self.to_xml_document, xml_document )
           xml_document
         else
           self.to_xml_document.to_s

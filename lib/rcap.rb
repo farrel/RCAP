@@ -50,4 +50,4 @@ require 'rcap/cap_1_2/geocode'
 require 'rcap/cap_1_2/area'
 require 'rcap/alert'
 # Configuration
-require 'config'
+require 'rcap/config'
