@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+## 1.3.1 - 25 February 2012
+
+* Moved XML_PRETTY_PRINTER into RCAP namespace to avoid namespace issues
 * Added Resource#decoded_deref_uri
 * RCAP::Alert.from_xml can load from a String or IO object
 
