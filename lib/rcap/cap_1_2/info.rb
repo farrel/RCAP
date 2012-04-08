@@ -493,9 +493,9 @@ module RCAP
           [ INSTRUCTION_KEY,    @instruction ],
           [ WEB_KEY,            @web ],
           [ CONTACT_KEY,        @contact ],
-          [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
-          [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
-          [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
+          [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h }],
+          [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h }],
+          [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h }],
           [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
       end
 
