@@ -329,7 +329,7 @@ module RCAP
                        "Web:            #{ @web }\n"+
                        "Contact:        #{ @contact }\n"+
                        "Parameters:\n"+
-                       @parameters.map{ |parameter| parameter.inspect }.join( "\n" )+"\n"+
+                       @parameters.map{ |parameter| "  " + parameter.inspect }.join( "\n" )+"\n"+
                        "Resources:\n"+
                        @resources.map{ |resource| "  " + resource.inspect }.join( "\n" )+"\n"+
                        "Area:\n"+
