@@ -96,7 +96,7 @@ module RCAP
                                        [ LONGITUDE_KEY, @longitude ])
       end
 
-      # @param [Hash]
+      # @param [Hash] circle_hash
       # @return [Circle]
       def self.from_h( circle_hash ) 
         self.new( :radius    => circle_hash[ RADIUS_KEY ],

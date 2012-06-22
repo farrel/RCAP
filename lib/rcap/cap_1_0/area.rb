@@ -78,8 +78,7 @@ module RCAP
 
       # Creates a new {Geocode} object and adds it to the {#geocodes} array.
       #
-      # @see Geocode#initialize
-      # @param [Hash] geocode_attributes see {Geocode#initialize}
+      # @param [Hash] geocode_attributes
       # @return [Geocode]
       def add_geocode( geocode_attributes = {})
         geocode = Geocode.new( geocode_attributes )

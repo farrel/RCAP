@@ -341,7 +341,7 @@ module RCAP
         self.from_yaml_data( YAML.load( yaml ))
       end
 
-      # @param [Hash] yaml_data
+      # @param [Hash] alert_yaml_data
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml_data( alert_yaml_data ) 
         Alert.new(

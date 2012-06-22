@@ -13,7 +13,7 @@ module RCAP
   #
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
-  # @param [String] namepsace Namespace in which to do the matching
+  # @param [String] namespace Namespace in which to do the matching
   # @return [String,nil] Text content of element matching XPath query or nil 
   def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
@@ -24,7 +24,7 @@ module RCAP
   #
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
-  # @param [String] namepsace Namespace in which to do the matching
+  # @param [String] namespace Namespace in which to do the matching
   # @return [REXML::Element,nil] Element matching XPath query or nil
   def self.xpath_first( xml_element, xpath, namespace )
     REXML::XPath.first( xml_element, xpath, { 'cap' => namespace })
@@ -34,7 +34,7 @@ module RCAP
   #
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
-  # @param [String] namepsace Namespace in which to do the matching
+  # @param [String] namespace Namespace in which to do the matching
   # @return [Array<REXML::Element>] Collection of elements matching XPath query 
   def self.xpath_match( xml_element, xpath, namespace )
     REXML::XPath.match( xml_element, xpath, { 'cap' => namespace })
@@ -67,7 +67,7 @@ module RCAP
 
   # Converts an array of key value pairs into a hash, excluding any value that is nil or empty
   #
-  # @param [Array<Array(Object,Object)>] attribte_values An array of arrays of key/value pairs
+  # @param [Array<Array(Object,Object)>] attribute_values An array of arrays of key/value pairs
   # @return [Hash] Hash of attributes
   #
   # @example
@@ -78,7 +78,7 @@ module RCAP
 
   # Calls #to_s_for_cap on the object it it responds to that otherwise just calls #to_s
   #
-  # @param [#to_s, #to_s_for_cap] 
+  # @param [#to_s, #to_s_for_cap] object 
   # @return [String]
   def self.to_s_for_cap( object )
     if object
