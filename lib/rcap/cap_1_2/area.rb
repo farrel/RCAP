@@ -67,8 +67,7 @@ module RCAP
 
       # Creates a new {Circle} object and adds it to the {#circles} array.
       #
-      # @see Circle#initialize
-      # @param [Hash] circle_attributes see {Circle#initialize}
+      # @param [Hash] circle_attributes
       # @return [Circle]
       def add_circle( circle_attributes = {})
         circle = Circle.new( circle_attributes )
