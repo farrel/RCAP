@@ -20,6 +20,7 @@ require 'rcap/utilities'
 require 'rcap/validations'
 # Base
 require 'rcap/base/parameter'
+require 'rcap/base/point'
 # 1.0
 require 'rcap/cap_1_0/alert'
 require 'rcap/cap_1_0/parameter'
