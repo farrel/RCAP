@@ -18,9 +18,9 @@ require 'rcap/extensions/time'
 require 'rcap/version'
 require 'rcap/utilities'
 require 'rcap/validations'
-
+# Base
 require 'rcap/base/parameter'
-
+# 1.0
 require 'rcap/cap_1_0/alert'
 require 'rcap/cap_1_0/parameter'
 require 'rcap/cap_1_0/event_code'
@@ -31,7 +31,7 @@ require 'rcap/cap_1_0/circle'
 require 'rcap/cap_1_0/polygon'
 require 'rcap/cap_1_0/geocode'
 require 'rcap/cap_1_0/area'
-
+# 1.1
 require 'rcap/cap_1_1/alert'
 require 'rcap/cap_1_1/parameter'
 require 'rcap/cap_1_1/event_code'
@@ -42,7 +42,7 @@ require 'rcap/cap_1_1/circle'
 require 'rcap/cap_1_1/polygon'
 require 'rcap/cap_1_1/geocode'
 require 'rcap/cap_1_1/area'
-
+# 1.2
 require 'rcap/cap_1_2/alert'
 require 'rcap/cap_1_2/parameter'
 require 'rcap/cap_1_2/event_code'
