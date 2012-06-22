@@ -21,6 +21,7 @@ require 'rcap/validations'
 # Base
 require 'rcap/base/parameter'
 require 'rcap/base/point'
+require 'rcap/base/circle'
 # 1.0
 require 'rcap/cap_1_0/alert'
 require 'rcap/cap_1_0/parameter'
