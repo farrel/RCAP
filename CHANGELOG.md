@@ -1,6 +1,8 @@
 Change Log
 ==========
 
+* Refactored RCAP so protocol versions are subclassed from RCAP::Base
+
 ## 1.3.1 - 25 February 2012
 
 * Moved XML_PRETTY_PRINTER into RCAP namespace to avoid namespace issues
