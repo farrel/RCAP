@@ -77,8 +77,8 @@ module RCAP
       validates_format_of( :identifier, :with => ALLOWED_CHARACTERS )
       validates_format_of( :sender ,    :with => ALLOWED_CHARACTERS )
 
-      validates_dependency_of( :addresses,   :on => :scope, :with_value => SCOPE_PRIVATE )
-      validates_dependency_of( :restriction, :on => :scope, :with_value => SCOPE_RESTRICTED )
+      validates_conditional_presence_of( :addresses,   :when => :scope, :is => SCOPE_PRIVATE )
+      validates_conditional_presence_of( :restriction, :when => :scope, :is => SCOPE_RESTRICTED )
 
       validates_collection_of( :infos )
 
