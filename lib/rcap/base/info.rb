@@ -1,44 +1,135 @@
 module RCAP
-  module CAP_1_1
+  module Base
+    class Info
+      include Validation
 
-    # In Info object is valid if
-    # * it has an event
-    # * it has an urgency with a valid value
-    # * it has a severity with a valid value
-    # * it has a certainty with a valid value
-    # * all categories are valid and categories has at minimum 1 entry
-    # * all Resource objects in the resources collection are valid
-    # * all Area objects in the areas collection are valid
-    class Info < RCAP::Base::Info
+      CATEGORY_GEO       = "Geo"       
+      CATEGORY_MET       = "Met"       
+      CATEGORY_SAFETY    = "Safety"    
+      CATEGORY_SECURITY  = "Security"  
+      CATEGORY_RESCUE    = "Rescue"    
+      CATEGORY_FIRE      = "Fire"      
+      CATEGORY_HEALTH    = "Health"    
+      CATEGORY_ENV       = "Env"       
+      CATEGORY_TRANSPORT = "Transport" 
+      CATEGORY_INFRA     = "Infra"     
+      CATEGORY_CBRNE     = "CBRNE"     
+      CATEGORY_OTHER     = "Other"     
+      # Valid values for categories
+      VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,
+        CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
+        CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
+        CATEGORY_OTHER ]
 
-      RESPONSE_TYPE_SHELTER  = "Shelter"  
-      RESPONSE_TYPE_EVACUATE = "Evacuate" 
-      RESPONSE_TYPE_PREPARE  = "Prepare"  
-      RESPONSE_TYPE_EXECUTE  = "Execute"  
-      RESPONSE_TYPE_MONITOR  = "Monitor"  
-      RESPONSE_TYPE_ASSESS   = "Assess"   
-      RESPONSE_TYPE_NONE     = "None"     
-      # Valid values for response_type
-      VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE,
-        RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR,
-        RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
+      URGENCY_IMMEDIATE = "Immediate" 
+      URGENCY_EXPECTED  = "Expected"  
+      URGENCY_FUTURE    = "Future"    
+      URGENCY_PAST      = "Past"      
+      URGENCY_UNKNOWN   = "Unknown"   
+      # Valid values for urgency
+      VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,
+        URGENCY_PAST, URGENCY_UNKNOWN ]
 
+      SEVERITY_EXTREME  = "Extreme"  
+      SEVERITY_SEVERE   = "Severe"   
+      SEVERITY_MODERATE = "Moderate" 
+      SEVERITY_MINOR    = "Minor"    
+      SEVERITY_UNKNOWN  = "Unknown"  
+      # Valid values for severity
+      VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
+        SEVERITY_MINOR, SEVERITY_UNKNOWN ]
 
-      CERTAINTY_OBSERVED = "Observed" 
+      CERTAINTY_VERY_LIKELY = "Very Likely" 
+      CERTAINTY_LIKELY      = "Likely"      
+      CERTAINTY_POSSIBLE    = "Possible"    
+      CERTAINTY_UNLIKELY    = "Unlikely"    
+      CERTAINTY_UNKNOWN     = "Unknown"     
       # Valid valies for certainty
-      VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
+      VALID_CERTAINTIES = [ CERTAINTY_VERY_LIKELY, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
-      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' 
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" 
+      XML_ELEMENT_NAME           = 'info'         
+      LANGUAGE_ELEMENT_NAME      = 'language'     
+      CATEGORY_ELEMENT_NAME      = 'category'     
+      EVENT_ELEMENT_NAME         = 'event'        
+      URGENCY_ELEMENT_NAME       = 'urgency'      
+      SEVERITY_ELEMENT_NAME      = 'severity'     
+      CERTAINTY_ELEMENT_NAME     = 'certainty'    
+      AUDIENCE_ELEMENT_NAME      = 'audience'     
+      EVENT_CODE_ELEMENT_NAME    = 'eventCode'    
+      EFFECTIVE_ELEMENT_NAME     = 'effective'    
+      ONSET_ELEMENT_NAME         = 'onset'        
+      EXPIRES_ELEMENT_NAME       = 'expires'      
+      SENDER_NAME_ELEMENT_NAME   = 'senderName'   
+      HEADLINE_ELEMENT_NAME      = 'headline'     
+      DESCRIPTION_ELEMENT_NAME   = 'description'  
+      INSTRUCTION_ELEMENT_NAME   = 'instruction'  
+      WEB_ELEMENT_NAME           = 'web'          
+      CONTACT_ELEMENT_NAME       = 'contact'      
 
+      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           
+      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      
+      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         
+      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       
+      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      
+      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      
+      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     
+      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      
+      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    
+      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     
+      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         
+      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       
+      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   
+      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      
+      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   
+      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   
+      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           
+      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       
 
-      validates_length_of( :categories, :minimum => 1 )
-      validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
-      validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
+      DEFAULT_LANGUAGE = 'en-US'
 
-      # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES} 
-      attr_reader( :response_types )
+      validates_presence_of( :event )
+      validates_presence_of( :urgency )
+      validates_presence_of( :severity )
+      validates_presence_of( :certainty )
+      validates_inclusion_of( :severity, :allow_nil  => true, :in => VALID_SEVERITIES,  :message => "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }" )
+      validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES,   :message => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
+      validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
+      validates_collection_of( :resources, :areas, :event_codes, :parameters )
+
+      # @return [String]
+      attr_accessor( :event )
+      # @return [String] Value can only be one of {VALID_URGENCIES} 
+      attr_accessor( :urgency )
+      # @return [String] Value can only be one of {VALID_SEVERITIES} 
+      attr_accessor( :severity )
+      # @return [String] Value can only be one of {VALID_CERTAINTIES} 
+      attr_accessor( :certainty )
+      # @return [String]
+      attr_accessor( :language )
+      # @return [String]
+      attr_accessor( :audience )
+      # @return [DateTime] Effective start time of information 
+      attr_accessor( :effective )
+      # @return [DateTime] Expected start of event 
+      attr_accessor( :onset )
+      # @return [DateTime] Effective expiry time of information 
+      attr_accessor( :expires )
+      # @return [String]
+      attr_accessor( :sender_name )
+      # @return [String]
+      attr_accessor( :headline )
+      # @return [String]
+      attr_accessor( :description )
+      # @return [String]
+      attr_accessor( :instruction )
+      # @return [String]
+      attr_accessor( :web )
+      # @return [String]
+      attr_accessor( :contact )
+
+      # @return [Array<String>] Collection of textual categories; elements can be one of {VALID_CATEGORIES} 
+      attr_reader( :categories )
       # @return [Array<EventCode>] Collection of {EventCode} objects
       attr_reader( :event_codes )
       # @return [Array<Parameter>] Collection of {Parameter} objects
@@ -53,7 +144,6 @@ module RCAP
       # @option attributes [Array<String>] :categories Collection of categories in {VALID_CATEGORIES}
       # @option attributes [String] :audience
       # @option attributes [String] :event
-      # @option attributes [Array<String>] :response_types Collection of textual response types from {VALID_RESPONSE_TYPES}
       # @option attributes [String] :urgency A member of {VALID_URGENCIES}
       # @option attributes [String] :severity A member of {VALID_SEVERITIES}
       # @option attributes [String] :certainty A member of {VALID_CERTAINTIES}
@@ -75,7 +165,6 @@ module RCAP
         @categories     = Array( attributes[ :categories ])
         @audience       = attributes [ :audience ]
         @event          = attributes [ :event ]
-        @response_types = Array( attributes[ :response_types ])
         @urgency        = attributes[ :urgency ]
         @severity       = attributes[ :severity ]
         @certainty      = attributes[ :certainty ]
@@ -154,9 +243,6 @@ module RCAP
           xml_element.add_element( CATEGORY_ELEMENT_NAME ).add_text( category )
         end
         xml_element.add_element( EVENT_ELEMENT_NAME ).add_text( @event )
-        @response_types.each do |response_type|
-          xml_element.add_element( RESPONSE_TYPE_ELEMENT_NAME ).add_text( response_type )
-        end
         xml_element.add_element( URGENCY_ELEMENT_NAME ).add_text( @urgency )
         xml_element.add_element( SEVERITY_ELEMENT_NAME ).add_text( @severity )
         xml_element.add_element( CERTAINTY_ELEMENT_NAME ).add_text( @certainty )
@@ -195,7 +281,6 @@ module RCAP
         info_inspect = "Language:       #{ @language }\n"+
         "Categories:     #{ @categories.to_s_for_cap }\n"+
         "Event:          #{ @event }\n"+
-        "Response Types: #{ @response_types.to_s_for_cap }\n"+
         "Urgency:        #{ @urgency }\n"+
         "Severity:       #{ @severity }\n"+
         "Certainty:      #{ @certainty }\n"+
@@ -235,7 +320,6 @@ module RCAP
           :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
           :categories     => RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, Alert::XMLNS ).map{ |element| element.text },
           :event          => RCAP.xpath_text( info_xml_element, EVENT_XPATH, Alert::XMLNS ),
-          :response_types => RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, Alert::XMLNS ).map{ |element| element.text },
           :urgency        => RCAP.xpath_text( info_xml_element, URGENCY_XPATH, Alert::XMLNS ),
           :severity       => RCAP.xpath_text( info_xml_element, SEVERITY_XPATH, Alert::XMLNS ),
           :certainty      => RCAP.xpath_text( info_xml_element, CERTAINTY_XPATH, Alert::XMLNS ),
@@ -256,34 +340,51 @@ module RCAP
         )
       end
 
-      RESPONSE_TYPES_YAML = 'Response Types' 
+      LANGUAGE_YAML       = 'Language'       
+      CATEGORIES_YAML     = 'Categories'     
+      EVENT_YAML          = 'Event'          
+      URGENCY_YAML        = 'Urgency'        
+      SEVERITY_YAML       = 'Severity'       
+      CERTAINTY_YAML      = 'Certainty'      
+      AUDIENCE_YAML       = 'Audience'       
+      EFFECTIVE_YAML      = 'Effective'      
+      ONSET_YAML          = 'Onset'          
+      EXPIRES_YAML        = 'Expires'        
+      SENDER_NAME_YAML    = 'Sender Name'    
+      HEADLINE_YAML       = 'Headline'       
+      DESCRIPTION_YAML    = 'Description'    
+      INSTRUCTION_YAML    = 'Instruction'    
+      WEB_YAML            = 'Web'            
+      CONTACT_YAML        = 'Contact'        
+      EVENT_CODES_YAML    = 'Event Codes'    
+      PARAMETERS_YAML     = 'Parameters'     
+      RESOURCES_YAML      = 'Resources'      
+      AREAS_YAML          = 'Areas'          
 
       # @return [String]
       def to_yaml( options = {} ) 
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
-        RCAP.attribute_values_to_hash(
-          [ LANGUAGE_YAML,       @language ],
-          [ CATEGORIES_YAML,     @categories ],
-          [ EVENT_YAML,          @event ],
-          [ RESPONSE_TYPES_YAML, @response_types ],
-          [ URGENCY_YAML,        @urgency ],
-          [ SEVERITY_YAML,       @severity ],
-          [ CERTAINTY_YAML,      @certainty ],
-          [ AUDIENCE_YAML,       @audience ],
-          [ EFFECTIVE_YAML,      @effective ],
-          [ ONSET_YAML,          @onset ],
-          [ EXPIRES_YAML,        @expires ],
-          [ SENDER_NAME_YAML,    @sender_name ],
-          [ HEADLINE_YAML,       @headline ],
-          [ DESCRIPTION_YAML,    @description ],
-          [ INSTRUCTION_YAML,    @instruction ],
-          [ WEB_YAML,            @web ],
-          [ CONTACT_YAML,        @contact ],
-          [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
-          [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
-          [ RESOURCES_YAML,      @resources ],
-          [ AREAS_YAML,          @areas ]).to_yaml( options )
+        RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       @language ],
+                                      [ CATEGORIES_YAML,     @categories ],
+                                      [ EVENT_YAML,          @event ],
+                                      [ URGENCY_YAML,        @urgency ],
+                                      [ SEVERITY_YAML,       @severity ],
+                                      [ CERTAINTY_YAML,      @certainty ],
+                                      [ AUDIENCE_YAML,       @audience ],
+                                      [ EFFECTIVE_YAML,      @effective ],
+                                      [ ONSET_YAML,          @onset ],
+                                      [ EXPIRES_YAML,        @expires ],
+                                      [ SENDER_NAME_YAML,    @sender_name ],
+                                      [ HEADLINE_YAML,       @headline ],
+                                      [ DESCRIPTION_YAML,    @description ],
+                                      [ INSTRUCTION_YAML,    @instruction ],
+                                      [ WEB_YAML,            @web ],
+                                      [ CONTACT_YAML,        @contact ],
+                                      [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
+                                      [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
+                                      [ RESOURCES_YAML,      @resources ],
+                                      [ AREAS_YAML,          @areas ]).to_yaml( options )
       end
 
       # @param [Hash] info_yaml_data
@@ -293,7 +394,6 @@ module RCAP
           :language       => info_yaml_data [ LANGUAGE_YAML ],
           :categories     => info_yaml_data [ CATEGORIES_YAML ],
           :event          => info_yaml_data [ EVENT_YAML ],
-          :response_types => info_yaml_data [ RESPONSE_TYPES_YAML ],
           :urgency        => info_yaml_data [ URGENCY_YAML ],
           :severity       => info_yaml_data [ SEVERITY_YAML ],
           :certainty      => info_yaml_data [ CERTAINTY_YAML ],
@@ -314,32 +414,49 @@ module RCAP
         )
       end
 
-      RESPONSE_TYPES_KEY = 'response_types' 
+      LANGUAGE_KEY       = 'language'       
+      CATEGORIES_KEY     = 'categories'     
+      EVENT_KEY          = 'event'          
+      URGENCY_KEY        = 'urgency'        
+      SEVERITY_KEY       = 'severity'       
+      CERTAINTY_KEY      = 'certainty'      
+      AUDIENCE_KEY       = 'audience'       
+      EFFECTIVE_KEY      = 'effective'      
+      ONSET_KEY          = 'onset'          
+      EXPIRES_KEY        = 'expires'        
+      SENDER_NAME_KEY    = 'sender_name'    
+      HEADLINE_KEY       = 'headline'       
+      DESCRIPTION_KEY    = 'description'    
+      INSTRUCTION_KEY    = 'instruction'    
+      WEB_KEY            = 'web'            
+      CONTACT_KEY        = 'contact'        
+      RESOURCES_KEY      = 'resources'      
+      EVENT_CODES_KEY    = 'event_codes'    
+      PARAMETERS_KEY     = 'parameters'     
+      AREAS_KEY          = 'areas'          
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash(
-          [ LANGUAGE_KEY,       @language ],
-          [ CATEGORIES_KEY,     @categories ],
-          [ EVENT_KEY,          @event ],
-          [ RESPONSE_TYPES_KEY, @response_types ],
-          [ URGENCY_KEY,        @urgency ],
-          [ SEVERITY_KEY,       @severity ],
-          [ CERTAINTY_KEY,      @certainty ],
-          [ AUDIENCE_KEY,       @audience ],
-          [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( @effective )],
-          [ ONSET_KEY,          RCAP.to_s_for_cap( @onset )],
-          [ EXPIRES_KEY,        RCAP.to_s_for_cap( @expires )],
-          [ SENDER_NAME_KEY,    @sender_name ],
-          [ HEADLINE_KEY,       @headline ],
-          [ DESCRIPTION_KEY,    @description ],
-          [ INSTRUCTION_KEY,    @instruction ],
-          [ WEB_KEY,            @web ],
-          [ CONTACT_KEY,        @contact ],
-          [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
-          [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
-          [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
-          [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
+        RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,      @language ],
+                                      [ CATEGORIES_KEY,     @categories ],
+                                      [ EVENT_KEY,          @event ],
+                                      [ URGENCY_KEY,        @urgency ],
+                                      [ SEVERITY_KEY,       @severity ],
+                                      [ CERTAINTY_KEY,      @certainty ],
+                                      [ AUDIENCE_KEY,       @audience ],
+                                      [ EFFECTIVE_KEY,      RCAP.to_s_for_cap( @effective )],
+                                      [ ONSET_KEY,          RCAP.to_s_for_cap( @onset )],
+                                      [ EXPIRES_KEY,        RCAP.to_s_for_cap( @expires )],
+                                      [ SENDER_NAME_KEY,    @sender_name ],
+                                      [ HEADLINE_KEY,       @headline ],
+                                      [ DESCRIPTION_KEY,    @description ],
+                                      [ INSTRUCTION_KEY,    @instruction ],
+                                      [ WEB_KEY,            @web ],
+                                      [ CONTACT_KEY,        @contact ],
+                                      [ RESOURCES_KEY,      @resources.map{ |resource| resource.to_h } ],
+                                      [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
+                                      [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
+                                      [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
       end
 
       # @param [Hash] info_hash
@@ -348,7 +465,6 @@ module RCAP
         self.new( :language       => info_hash[ LANGUAGE_KEY ],
                  :categories     => info_hash[ CATEGORIES_KEY ],
                  :event          => info_hash[ EVENT_KEY ],
-                 :response_types => info_hash[ RESPONSE_TYPES_KEY ],
                  :urgency        => info_hash[ URGENCY_KEY ],
                  :severity       => info_hash[ SEVERITY_KEY ],
                  :certainty      => info_hash[ CERTAINTY_KEY ],

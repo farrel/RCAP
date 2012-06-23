@@ -27,6 +27,7 @@ require 'rcap/base/circle'
 require 'rcap/base/polygon'
 require 'rcap/base/area'
 require 'rcap/base/resource'
+require 'rcap/base/info'
 # 1.0
 require 'rcap/cap_1_0/alert'
 require 'rcap/cap_1_0/parameter'
