@@ -4,40 +4,16 @@ module RCAP
     # A Resource object is valid if
     # * it has a resource description
     # * it has a mime_type
-    class Resource
-      include Validation
+    class Resource < RCAP::Base::Resource
 
-      # @return [String] Resource description 
-      attr_accessor( :resource_desc )
-      # @return [String] MIME type as described in RFC 2046 
-      attr_accessor( :mime_type )
-      # @return [Integer] Expressed in bytes 
-      attr_accessor( :size )
-      # @return [String] Resource location 
-      attr_accessor( :uri )
       # @return [String] Dereferenced URI - contents of URI Base64 encoded 
       attr_accessor( :deref_uri )
-      # @return [String] SHA-1 hash of contents of resource 
-      attr_accessor( :digest )
 
-      validates_presence_of( :resource_desc )
       validates_presence_of( :mime_type )
 
-      XML_ELEMENT_NAME           = 'resource'     
-      MIME_TYPE_ELEMENT_NAME     = 'mimeType'     
-      SIZE_ELEMENT_NAME          = 'size'         
-      URI_ELEMENT_NAME           = 'uri'          
       DEREF_URI_ELEMENT_NAME     = 'derefUri'     
-      DIGEST_ELEMENT_NAME        = 'digest'       
-      RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc' 
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           
-      MIME_TYPE_XPATH     = "cap:#{ MIME_TYPE_ELEMENT_NAME }"     
-      SIZE_XPATH          = "cap:#{ SIZE_ELEMENT_NAME }"          
-      URI_XPATH           = "cap:#{ URI_ELEMENT_NAME }"           
       DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     
-      DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"        
-      RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }" 
 
       # @param [Hash{Symbol => Object}] attributes
       # @option attributes [String] :mime_type
@@ -47,16 +23,13 @@ module RCAP
       # @option attributes [String] :digest
       # @option attributes [String] :resource_desc
       def initialize( attributes = {} )
-        @mime_type     = attributes[ :mime_type ]
-        @size          = attributes[ :size ]
-        @uri           = attributes[ :uri ]
+        super
         @deref_uri     = attributes[ :deref_uri ]
-        @digest        = attributes[ :digest ]
-        @resource_desc = attributes[ :resource_desc ]
       end
 
       # @return [REXML::Element]
       def to_xml_element 
+        xml_element = super
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( @resource_desc )
         xml_element.add_element( MIME_TYPE_ELEMENT_NAME ).add_text( @mime_type ) if @mime_type
@@ -65,32 +38,6 @@ module RCAP
         xml_element.add_element( DEREF_URI_ELEMENT_NAME ).add_text( @deref_uri ) if @deref_uri
         xml_element.add_element( DIGEST_ELEMENT_NAME ).add_text( @digest )       if @digest
         xml_element
-      end
-
-      # If size is defined returns the size in kilobytes
-      # @return [Float]
-      def size_in_kb
-        if @size
-          @size.to_f/1024
-        end
-      end
-
-      # @return [String]
-      def to_xml 
-        self.to_xml_element.to_s
-      end
-
-      # @return [String]
-      def inspect 
-        [ @resource_desc, @uri, @mime_type, @size ? format( "%.1fKB", @size_in_kb ) : nil ].compact.join(' - ')
-      end
-
-      # Returns a string representation of the resource of the form
-      #  resource_desc
-      #
-      # @return [String]
-      def to_s
-        @resource_desc
       end
 
       # Retrieves the content at uri and stores it in deref_uri as Base64 encoded text. It will also
@@ -140,12 +87,7 @@ module RCAP
                              :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, Alert::XMLNS ))
       end
 
-      RESOURCE_DESC_YAML = "Resource Description" 
-      URI_YAML           = "URI"                  
-      MIME_TYPE_YAML     = "Mime Type"            
       DEREF_URI_YAML     = "Derefrenced URI Data" 
-      SIZE_YAML          = "Size"                 
-      DIGEST_YAML        = "Digest"               
 
       # @param [Hash] options
       # @return [String]
@@ -172,12 +114,7 @@ module RCAP
         )
       end
 
-      RESOURCE_DESC_KEY = 'resource_desc' 
-      URI_KEY           = 'uri'           
-      MIME_TYPE_KEY     = 'mime_type'     
       DEREF_URI_KEY     = 'deref_uri'     
-      SIZE_KEY          = 'size'          
-      DIGEST_KEY        = 'digest'        
 
       # @return [Hash]
       def to_h 

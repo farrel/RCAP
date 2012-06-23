@@ -9,11 +9,13 @@ require 'rexml/formatters/pretty'
 require 'open-uri'
 require 'base64'
 require 'digest/sha1'
+
 # Extensions
 require 'rcap/extensions/array'
 require 'rcap/extensions/string'
 require 'rcap/extensions/date_time'
 require 'rcap/extensions/time'
+
 # RCAP
 require 'rcap/version'
 require 'rcap/utilities'
@@ -24,6 +26,7 @@ require 'rcap/base/point'
 require 'rcap/base/circle'
 require 'rcap/base/polygon'
 require 'rcap/base/area'
+require 'rcap/base/resource'
 # 1.0
 require 'rcap/cap_1_0/alert'
 require 'rcap/cap_1_0/parameter'
