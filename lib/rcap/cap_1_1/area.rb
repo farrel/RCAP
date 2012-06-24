@@ -11,8 +11,8 @@ module RCAP
       
       # Creates a new {Polygon} object and adds it to the {#polygons} array.
       #
-      # @see Polygon#initialize
-      # @param [Hash] polygon_attributes see {Polygon#initialize}
+      # @see RCAP::Base::Polygon#initialize
+      # @param [Hash] polygon_attributes
       # @return [Polygon]
       def add_polygon( polygon_attributes = {})
         polygon = Polygon.new( polygon_attributes )
