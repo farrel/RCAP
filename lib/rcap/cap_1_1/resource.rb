@@ -53,26 +53,6 @@ module RCAP
         self.calculate_hash_and_size
       end
 
-      # Calculates the SHA-1 hash and size of the contents of {#deref_uri}.
-      # Returns an array containing the size (in bytes) and SHA-1 hash if
-      # {#deref_uri} is present otherwise returns nil.
-      #
-      # @return [nil,Array(Integer,String)]
-      def calculate_hash_and_size
-        if @deref_uri
-          @digest = Digest::SHA1.hexdigest( @deref_uri )
-          @size = @deref_uri.bytesize
-          [ @size, @digest ]
-        end
-      end
-
-      # The decoded contents of {#deref_uri} if present otherwise nil.
-      #
-      # @return [nil,String]
-      def decoded_deref_uri
-        Base64.decode64( @deref_uri ) if @deref_uri
-      end
-
       # @param [REXML::Element] resource_xml_element
       # @return [Resource]
       def self.from_xml_element( resource_xml_element ) 
