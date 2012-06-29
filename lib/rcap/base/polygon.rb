@@ -75,7 +75,6 @@ module RCAP
         end
       end
 
-
       # @return [String]
       def to_yaml( options = {} ) 
         @points.map{ |point| [ point.lattitude, point.longitude ]}.to_yaml( options )
