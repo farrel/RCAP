@@ -41,20 +41,8 @@ module RCAP
       # @option attributes [Array<String>] :incidents
       # @option attributes [Array<Info>] :infos
       def initialize( attributes = {})
-        @identifier  = attributes[ :identifier ] || RCAP.generate_identifier
-        @sender      = attributes[ :sender ]
-        @sent        = attributes[ :sent ]
-        @status      = attributes[ :status ]
-        @msg_type    = attributes[ :msg_type ]
+        super( attributes )
         @password    = attributes[ :password ]
-        @scope       = attributes[ :scope ]
-        @source      = attributes[ :source ]
-        @restriction = attributes[ :restriction ]
-        @addresses   = Array( attributes[ :addresses ])
-        @codes       = Array( attributes[ :codes ])
-        @references  = Array( attributes[ :references ])
-        @incidents   = Array( attributes[ :incidents ])
-        @infos       = Array( attributes[ :infos ])
       end
 
       # Creates a new {Info} object and adds it to the {#infos array}. 
