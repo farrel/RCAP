@@ -42,7 +42,7 @@ module RCAP
       # @option attributes [Array<Info>] :infos
       def initialize( attributes = {})
         super( attributes )
-        @password    = attributes[ :password ]
+        @password = attributes[ :password ]
       end
 
       # Creates a new {Info} object and adds it to the {#infos array}. 
