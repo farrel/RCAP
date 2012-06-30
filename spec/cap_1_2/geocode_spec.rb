@@ -5,7 +5,8 @@ describe( RCAP::CAP_1_2::Geocode ) do
     context( 'from XML' ) do
       before( :each ) do
         @original_geocode = RCAP::CAP_1_2::Geocode.new( :name => 'name', :value => 'value' )
-        @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :geocodes => @original_geocode )))
+        @alert = RCAP::CAP_1_2::Alert.new
+        @alert.add_info.add_area.geocodes << @original_geocode
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )

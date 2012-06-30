@@ -43,9 +43,9 @@ module RCAP
         @area_desc = attributes[ :area_desc ]
         @altitude  = attributes[ :altitude ]
         @ceiling   = attributes[ :ceiling ]
-        @circles   = Array( attributes[ :circles ])
-        @geocodes  = Array( attributes[ :geocodes ])
-        @polygons  = Array( attributes[ :polygons ])
+        @circles   = attributes[ :circles ] || []
+        @geocodes  = attributes[ :geocodes ] || []
+        @polygons  = attributes[ :polygons ] || []
       end
 
       # @return [REXML::Element]
