@@ -23,7 +23,8 @@ describe( RCAP::CAP_1_2::Resource ) do
         @original_resource.size          = 20480
         @original_resource.digest        = "2048"
 
-        @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :resources => @original_resource ))
+        @alert = RCAP::CAP_1_2::Alert.new
+        @alert.add_info.resources << @original_resource 
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )

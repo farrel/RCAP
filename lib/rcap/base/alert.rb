@@ -99,11 +99,11 @@ module RCAP
         @scope       = attributes[ :scope ]
         @source      = attributes[ :source ]
         @restriction = attributes[ :restriction ]
-        @addresses   = Array( attributes[ :addresses ])
-        @codes       = Array( attributes[ :codes ])
-        @references  = Array( attributes[ :references ])
-        @incidents   = Array( attributes[ :incidents ])
-        @infos       = Array( attributes[ :infos ])
+        @addresses   = attributes[ :addresses ] || []
+        @codes       = attributes[ :codes ] || []
+        @references  = attributes[ :references ] || []
+        @incidents   = attributes[ :incidents ] || []
+        @infos       = attributes[ :infos ] || []
       end
 
       # Creates a new {Info} object and adds it to the {#infos array}. 

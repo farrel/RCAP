@@ -71,7 +71,8 @@ describe( RCAP::CAP_1_0::Info ) do
                                         :areas => [ RCAP::CAP_1_0::Area.new( :area_desc => 'Area1' ),
                                           RCAP::CAP_1_0::Area.new( :area_desc => 'Area2' )]
                                       )
-        @alert = RCAP::CAP_1_0::Alert.new( :infos => @original_info )
+        @alert = RCAP::CAP_1_0::Alert.new
+        @alert.infos << @original_info 
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info = RCAP::CAP_1_0::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS ))
