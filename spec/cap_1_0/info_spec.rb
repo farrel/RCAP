@@ -113,7 +113,7 @@ describe( RCAP::CAP_1_0::Info ) do
   context( 'is not valid if it' ) do
     before( :each ) do
       @info = RCAP::CAP_1_0::Info.new( :event => 'Info Event',
-                            :categories => RCAP::CAP_1_0::Info::CATEGORY_GEO,
+                            :categories => [ RCAP::CAP_1_0::Info::CATEGORY_GEO ],
                             :urgency => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
                             :severity => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
                             :certainty => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY )

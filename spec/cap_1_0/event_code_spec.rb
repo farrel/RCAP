@@ -5,7 +5,8 @@ describe( RCAP::CAP_1_0::EventCode ) do
     context( 'from XML' ) do
       before( :each ) do
         @original_event_code = RCAP::CAP_1_0::EventCode.new( :name => 'name', :value => 'value' )
-        @alert = RCAP::CAP_1_0::Alert.new( :infos => RCAP::CAP_1_0::Info.new( :event_codes => @original_event_code ))
+        @alert = RCAP::CAP_1_0::Alert.new
+        @alert.add_info.event_codes <<  @original_event_code 
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS )

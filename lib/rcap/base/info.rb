@@ -162,7 +162,7 @@ module RCAP
       # @option attributes [Array<Area>] :areas Collection of {Area} objects
       def initialize( attributes = {} )
         @language       = attributes[ :language ] || DEFAULT_LANGUAGE
-        @categories     = Array( attributes[ :categories ])
+        @categories     = attributes[ :categories ] || []
         @audience       = attributes [ :audience ]
         @event          = attributes [ :event ]
         @urgency        = attributes[ :urgency ]
@@ -171,16 +171,16 @@ module RCAP
         @effective      = attributes[ :effective ]
         @onset          = attributes[ :onset ]
         @expires        = attributes[ :expires ]
-        @event_codes    = Array( attributes[ :event_codes ])
+        @event_codes    = attributes[ :event_codes ] || []
         @sender_name    = attributes[ :sender_name ]
         @headline       = attributes[ :headline ]
         @description    = attributes[ :description ]
         @instruction    = attributes[ :instruction ]
         @web            = attributes[ :web ]
         @contact        = attributes[ :contact ]
-        @parameters     = Array( attributes[ :parameters ])
-        @resources      = Array( attributes[ :resources ])
-        @areas          = Array( attributes[ :areas ])
+        @parameters     = attributes[ :parameters ] || []
+        @resources      = attributes[ :resources ] || []
+        @areas          = attributes[ :areas ] || []
       end
 
       # Creates a new EventCode object and adds it to the event_codes array. The
