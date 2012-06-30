@@ -16,7 +16,7 @@ module RCAP
       # @param [Hash] attributes
       # @option attributes [Array<Point>] :points Collection of {Point} objects
       def initialize( attributes = {})
-        @points = Array( attributes[ :points ])
+        @points = attributes[ :points ] || []
       end
 
       # Creates a new Point object and adds it to the points array.

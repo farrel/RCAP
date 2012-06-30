@@ -26,7 +26,8 @@ describe( RCAP::CAP_1_0::Polygon ) do
       before( :each ) do
         @original_polygon = RCAP::CAP_1_0::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_0::Point.new( :lattitude => i, :longitude => i )})
         @empty_original_polygon = RCAP::CAP_1_0::Polygon.new()
-        @alert = RCAP::CAP_1_0::Alert.new( :infos => RCAP::CAP_1_0::Info.new( :areas => RCAP::CAP_1_0::Area.new( :polygons => [@original_polygon, @empty_original_polygon] )))
+        @alert = RCAP::CAP_1_0::Alert.new
+        @alert.add_info.add_area( :polygons => [@original_polygon, @empty_original_polygon] )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS )

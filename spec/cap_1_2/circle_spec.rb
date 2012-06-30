@@ -43,9 +43,9 @@ describe( RCAP::CAP_1_2::Circle ) do
   context( 'on initialisation' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5,
-                                             :lattitude => 30, :longitude => 60 )
-        @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => RCAP::CAP_1_2::Area.new( :circles => @original_circle )))
+        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @alert = RCAP::CAP_1_2::Alert.new
+        @alert.add_info.add_area.add_circle( :radius => 10.5, :lattitude => 30, :longitude => 60 )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )

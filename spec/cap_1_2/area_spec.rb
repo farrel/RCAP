@@ -4,6 +4,12 @@ describe( RCAP::CAP_1_2::Area ) do
   context( 'on initialisation' ) do
     before( :each ) do
       @area = RCAP::CAP_1_2::Area.new
+      @original_area = RCAP::CAP_1_2::Area.new( :area_desc => 'Area Description',
+                                               :altitude => 100,
+                                               :ceiling => 200 )
+      @original_area.add_circle( :lattitude => 0, :longitude => 0 , :radius => 100 )
+      @original_area.add_geocode(  :name => 'name', :value => 'value' )
+      @original_area.add_polygon.add_point( :lattitude =>1, :longitude => 1 )
     end
 
     # Atomic
@@ -44,13 +50,6 @@ describe( RCAP::CAP_1_2::Area ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_area = RCAP::CAP_1_2::Area.new( :area_desc => 'Area Description',
-                                       :altitude => 100,
-                                       :ceiling => 200,
-                                       :circles => RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
-                                       :geocodes => RCAP::CAP_1_2::Geocode.new( :name => 'name', :value => 'value' ),
-                                       :polygons => RCAP::CAP_1_2::Polygon.new( :points => RCAP::CAP_1_2::Point.new( :lattitude =>1, :longitude => 1 )))
-
         @alert = RCAP::CAP_1_2::Alert.new( :infos => RCAP::CAP_1_2::Info.new( :areas => @original_area ))
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
@@ -64,13 +63,6 @@ describe( RCAP::CAP_1_2::Area ) do
 
     context( 'from YAML Data' ) do
       before( :each ) do
-        @original_area = RCAP::CAP_1_2::Area.new( :area_desc => 'Area Description',
-                                                  :altitude => 100,
-                                                  :ceiling => 200,
-                                                  :circles => RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
-                                                  :geocodes => RCAP::CAP_1_2::Geocode.new( :name => 'name', :value => 'value' ),
-                                                  :polygons => RCAP::CAP_1_2::Polygon.new( :points => RCAP::CAP_1_2::Point.new( :lattitude =>1, :longitude => 1 )))
-
         @area = RCAP::CAP_1_2::Area.from_yaml_data( YAML.load( @original_area.to_yaml ))
       end
 
@@ -79,13 +71,6 @@ describe( RCAP::CAP_1_2::Area ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_area = RCAP::CAP_1_2::Area.new( :area_desc => 'Area Description',
-                                       :altitude => 100,
-                                       :ceiling => 200,
-                                       :circles => RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 100 ),
-                                       :geocodes => RCAP::CAP_1_2::Geocode.new( :name => 'name', :value => 'value' ),
-                                       :polygons => RCAP::CAP_1_2::Polygon.new( :points => RCAP::CAP_1_2::Point.new( :lattitude =>1, :longitude => 1 )))
-
         @area = RCAP::CAP_1_2::Area.from_h( @original_area.to_h )
       end
 
@@ -96,11 +81,11 @@ describe( RCAP::CAP_1_2::Area ) do
   context( 'when exported' ) do
     before( :each ) do
       @area = RCAP::CAP_1_2::Area.new( :area_desc => 'Area Description',
-                             :altitude => 100,
-                             :ceiling => 200,
-                             :circles => RCAP::CAP_1_2::Circle.new(  :lattitude => 0, :longitude => 0 , :radius => 100 ),
-                             :geocodes => RCAP::CAP_1_2::Geocode.new( :name => 'name', :value => 'value' ),
-                             :polygons => RCAP::CAP_1_2::Polygon.new( :points => RCAP::CAP_1_2::Point.new( :lattitude =>1, :longitude => 1 )))
+                                      :altitude => 100,
+                                      :ceiling => 200 )
+      @area.add_circle( :lattitude => 0, :longitude => 0 , :radius => 100 )
+      @area.add_geocode(  :name => 'name', :value => 'value' )
+      @area.add_polygon.add_point( :lattitude =>1, :longitude => 1 )
     end
     context( 'to a hash' ) do
       before( :each ) do
