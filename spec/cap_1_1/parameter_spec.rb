@@ -5,7 +5,8 @@ describe( RCAP::CAP_1_1::Parameter ) do
     context( 'from XML' ) do
       before( :each ) do
         @original_parameter = RCAP::CAP_1_1::Parameter.new( :name => 'name', :value => 'value' )
-        @alert = RCAP::CAP_1_1::Alert.new( :infos => RCAP::CAP_1_1::Info.new( :parameters => @original_parameter ))
+        @alert = RCAP::CAP_1_1::Alert.new
+        @alert.add_info.parameters <<  @original_parameter 
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
