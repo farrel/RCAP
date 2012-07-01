@@ -273,23 +273,21 @@ module RCAP
       #
       # @return [String]
       def to_yaml( options = {} )
-        RCAP.attribute_values_to_hash(
-          [ CAP_VERSION_YAML, self.class::CAP_VERSION ],
-          [ IDENTIFIER_YAML,  @identifier ],
-          [ SENDER_YAML,      @sender ],
-          [ SENT_YAML,        @sent ],
-          [ STATUS_YAML,      @status ],
-          [ MSG_TYPE_YAML,    @msg_type ],
-          [ SOURCE_YAML,      @source ],
-          [ SCOPE_YAML,       @scope ],
-          [ RESTRICTION_YAML, @restriction ],
-          [ ADDRESSES_YAML,   @addresses ],
-          [ CODES_YAML,       @codes ],
-          [ NOTE_YAML,        @note ],
-          [ REFERENCES_YAML,  @references ],
-          [ INCIDENTS_YAML,   @incidents ],
-          [ INFOS_YAML,       @infos ]
-        ).to_yaml( options )
+        RCAP.attribute_values_to_hash( [ CAP_VERSION_YAML, self.class::CAP_VERSION ],
+                                       [ IDENTIFIER_YAML,  @identifier ],
+                                       [ SENDER_YAML,      @sender ],
+                                       [ SENT_YAML,        @sent ],
+                                       [ STATUS_YAML,      @status ],
+                                       [ MSG_TYPE_YAML,    @msg_type ],
+                                       [ SOURCE_YAML,      @source ],
+                                       [ SCOPE_YAML,       @scope ],
+                                       [ RESTRICTION_YAML, @restriction ],
+                                       [ ADDRESSES_YAML,   @addresses ],
+                                       [ CODES_YAML,       @codes ],
+                                       [ NOTE_YAML,        @note ],
+                                       [ REFERENCES_YAML,  @references ],
+                                       [ INCIDENTS_YAML,   @incidents ],
+                                       [ INFOS_YAML,       @infos ]).to_yaml( options )
       end
 
       # Initialise an Alert object from a YAML string. Any object that is a subclass of IO (e.g. File) can be passed in.

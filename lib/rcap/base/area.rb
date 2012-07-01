@@ -105,14 +105,12 @@ module RCAP
 
       # @return [String] YAML representation of object
       def to_yaml( options = {} ) 
-        RCAP.attribute_values_to_hash(
-          [ AREA_DESC_YAML, @area_desc ],
-          [ ALTITUDE_YAML,  @altitude ],
-          [ CEILING_YAML,   @ceiling ],
-          [ CIRCLES_YAML,   @circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]} ],
-          [ GEOCODES_YAML,  @geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-          [ POLYGONS_YAML,  @polygons ]
-        ).to_yaml( options )
+        RCAP.attribute_values_to_hash( [ AREA_DESC_YAML, @area_desc ],
+                                       [ ALTITUDE_YAML,  @altitude ],
+                                       [ CEILING_YAML,   @ceiling ],
+                                       [ CIRCLES_YAML,   @circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]} ],
+                                       [ GEOCODES_YAML,  @geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
+                                       [ POLYGONS_YAML,  @polygons ]).to_yaml( options )
       end
 
       AREA_DESC_KEY = 'area_desc'  

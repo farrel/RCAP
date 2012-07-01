@@ -84,39 +84,35 @@ module RCAP
       # @param [Hash] resource_yaml_data
       # @return [Resource]
       def self.from_yaml_data( resource_yaml_data ) 
-        self.new(
-          :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
-          :uri           => reource_yaml_data[ URI_YAML ],
-          :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
-          :deref_uri     => reource_yaml_data[ DEREF_URI_YAML ],
-          :size          => reource_yaml_data[ SIZE_YAML ],
-          :digest        => reource_yaml_data[ DIGEST_YAML ]
-        )
+        self.new( :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
+                  :uri           => reource_yaml_data[ URI_YAML ],
+                  :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
+                  :deref_uri     => reource_yaml_data[ DEREF_URI_YAML ],
+                  :size          => reource_yaml_data[ SIZE_YAML ],
+                  :digest        => reource_yaml_data[ DIGEST_YAML ])
       end
 
       DEREF_URI_KEY     = 'deref_uri'     
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash(
-          [ RESOURCE_DESC_KEY, @resource_desc ],
-          [ URI_KEY,           @uri],
-          [ MIME_TYPE_KEY,     @mime_type],
-          [ DEREF_URI_KEY,     @deref_uri],
-          [ SIZE_KEY,          @size ],
-          [ DIGEST_KEY,        @digest ])
+        RCAP.attribute_values_to_hash( [ RESOURCE_DESC_KEY, @resource_desc ],
+                                       [ URI_KEY,           @uri],
+                                       [ MIME_TYPE_KEY,     @mime_type],
+                                       [ DEREF_URI_KEY,     @deref_uri],
+                                       [ SIZE_KEY,          @size ],
+                                       [ DIGEST_KEY,        @digest ])
       end
 
       # @param [Hash] resource_hash
       # @return [Resource]
       def self.from_h( resource_hash ) 
-        self.new(
-          :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
-          :uri           => resource_hash[ URI_KEY ],
-          :mime_type     => resource_hash[ MIME_TYPE_KEY ],
-          :deref_uri     => resource_hash[ DEREF_URI_KEY ],
-          :size          => resource_hash[ SIZE_KEY ],
-          :digest        => resource_hash[ DIGEST_KEY ])
+        self.new( :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
+                  :uri           => resource_hash[ URI_KEY ],
+                  :mime_type     => resource_hash[ MIME_TYPE_KEY ],
+                  :deref_uri     => resource_hash[ DEREF_URI_KEY ],
+                  :size          => resource_hash[ SIZE_KEY ],
+                  :digest        => resource_hash[ DIGEST_KEY ])
       end
     end
   end

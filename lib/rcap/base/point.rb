@@ -51,15 +51,15 @@ module RCAP
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash(
-          [ LATTITUDE_KEY, @lattitude ],
-          [ LONGITUDE_KEY, @longitude ])
+        RCAP.attribute_values_to_hash( [ LATTITUDE_KEY, @lattitude ],
+                                       [ LONGITUDE_KEY, @longitude ])
       end
 
       # @param [Hash] point_hash
       # @return [Point]
       def self.from_h( point_hash ) 
-        self.new( :lattitude => point_hash[ LATTITUDE_KEY ], :longitude => point_hash[ LONGITUDE_KEY ])
+        self.new( :lattitude => point_hash[ LATTITUDE_KEY ],
+                  :longitude => point_hash[ LONGITUDE_KEY ])
       end
     end
   end

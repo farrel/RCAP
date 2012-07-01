@@ -143,45 +143,42 @@ module RCAP
       #
       # @return [String]
       def to_yaml( options = {} )
-        RCAP.attribute_values_to_hash(
-          [ CAP_VERSION_YAML, CAP_VERSION ],
-          [ IDENTIFIER_YAML,  @identifier ],
-          [ SENDER_YAML,      @sender ],
-          [ SENT_YAML,        @sent ],
-          [ STATUS_YAML,      @status ],
-          [ MSG_TYPE_YAML,    @msg_type ],
-          [ PASSWORD_YAML,    @password ],
-          [ SOURCE_YAML,      @source ],
-          [ SCOPE_YAML,       @scope ],
-          [ RESTRICTION_YAML, @restriction ],
-          [ ADDRESSES_YAML,   @addresses ],
-          [ CODES_YAML,       @codes ],
-          [ NOTE_YAML,        @note ],
-          [ REFERENCES_YAML,  @references ],
-          [ INCIDENTS_YAML,   @incidents ],
-          [ INFOS_YAML,       @infos ]
-        ).to_yaml( options )
+        RCAP.attribute_values_to_hash( [ CAP_VERSION_YAML, CAP_VERSION ],
+                                       [ IDENTIFIER_YAML,  @identifier ],
+                                       [ SENDER_YAML,      @sender ],
+                                       [ SENT_YAML,        @sent ],
+                                       [ STATUS_YAML,      @status ],
+                                       [ MSG_TYPE_YAML,    @msg_type ],
+                                       [ PASSWORD_YAML,    @password ],
+                                       [ SOURCE_YAML,      @source ],
+                                       [ SCOPE_YAML,       @scope ],
+                                       [ RESTRICTION_YAML, @restriction ],
+                                       [ ADDRESSES_YAML,   @addresses ],
+                                       [ CODES_YAML,       @codes ],
+                                       [ NOTE_YAML,        @note ],
+                                       [ REFERENCES_YAML,  @references ],
+                                       [ INCIDENTS_YAML,   @incidents ],
+                                       [ INFOS_YAML,       @infos ]).to_yaml( options )
       end
 
       # @param [Hash] alert_yaml_data
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml_data( alert_yaml_data ) 
-        Alert.new(
-          :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
-          :sender      => alert_yaml_data[ SENDER_YAML ],
-          :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
-          :status      => alert_yaml_data[ STATUS_YAML ],
-          :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
-          :password    => alert_yaml_data[ PASSWORD_YAML ],
-          :source      => alert_yaml_data[ SOURCE_YAML ],
-          :scope       => alert_yaml_data[ SCOPE_YAML ],
-          :restriction => alert_yaml_data[ RESTRICTION_YAML ],
-          :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
-          :codes       => alert_yaml_data[ CODES_YAML ],
-          :note        => alert_yaml_data[ NOTE_YAML ],
-          :references  => alert_yaml_data[ REFERENCES_YAML ],
-          :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
-          :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| Info.from_yaml_data( info_yaml_data )}
+        Alert.new( :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
+                   :sender      => alert_yaml_data[ SENDER_YAML ],
+                   :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
+                   :status      => alert_yaml_data[ STATUS_YAML ],
+                   :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
+                   :password    => alert_yaml_data[ PASSWORD_YAML ],
+                   :source      => alert_yaml_data[ SOURCE_YAML ],
+                   :scope       => alert_yaml_data[ SCOPE_YAML ],
+                   :restriction => alert_yaml_data[ RESTRICTION_YAML ],
+                   :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
+                   :codes       => alert_yaml_data[ CODES_YAML ],
+                   :note        => alert_yaml_data[ NOTE_YAML ],
+                   :references  => alert_yaml_data[ REFERENCES_YAML ],
+                   :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
+                   :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| Info.from_yaml_data( info_yaml_data )}
         )
       end
 
@@ -192,21 +189,21 @@ module RCAP
       # @return [Hash]
       def to_h
         RCAP.attribute_values_to_hash( [ CAP_VERSION_KEY, CAP_VERSION ],
-                                      [ IDENTIFIER_KEY,   @identifier ],
-                                      [ SENDER_KEY,       @sender ],
-                                      [ SENT_KEY,         RCAP.to_s_for_cap( @sent )],
-                                      [ STATUS_KEY,       @status ],
-                                      [ MSG_TYPE_KEY,     @msg_type ],
-                                      [ PASSWORD_KEY,     @password ],
-                                      [ SOURCE_KEY,       @source ],
-                                      [ SCOPE_KEY,        @scope ],
-                                      [ RESTRICTION_KEY,  @restriction ],
-                                      [ ADDRESSES_KEY,    @addresses ],
-                                      [ CODES_KEY,        @codes ],
-                                      [ NOTE_KEY,         @note ],
-                                      [ REFERENCES_KEY,   @references ],
-                                      [ INCIDENTS_KEY,    @incidents ],
-                                      [ INFOS_KEY,        @infos.map{ |info| info.to_h  }])
+                                       [ IDENTIFIER_KEY,   @identifier ],
+                                       [ SENDER_KEY,       @sender ],
+                                       [ SENT_KEY,         RCAP.to_s_for_cap( @sent )],
+                                       [ STATUS_KEY,       @status ],
+                                       [ MSG_TYPE_KEY,     @msg_type ],
+                                       [ PASSWORD_KEY,     @password ],
+                                       [ SOURCE_KEY,       @source ],
+                                       [ SCOPE_KEY,        @scope ],
+                                       [ RESTRICTION_KEY,  @restriction ],
+                                       [ ADDRESSES_KEY,    @addresses ],
+                                       [ CODES_KEY,        @codes ],
+                                       [ NOTE_KEY,         @note ],
+                                       [ REFERENCES_KEY,   @references ],
+                                       [ INCIDENTS_KEY,    @incidents ],
+                                       [ INFOS_KEY,        @infos.map{ |info| info.to_h  }])
       end
 
       # Initialises an Alert object from a Hash produced by Alert#to_h
@@ -214,22 +211,21 @@ module RCAP
       # @param [Hash] alert_hash
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
-        self.new(
-          :identifier  => alert_hash[ IDENTIFIER_KEY ],
-          :sender      => alert_hash[ SENDER_KEY ],
-          :sent        => RCAP.parse_datetime( alert_hash[ SENT_KEY ]),
-          :status      => alert_hash[ STATUS_KEY ],
-          :msg_type    => alert_hash[ MSG_TYPE_KEY ],
-          :password    => alert_hash[ PASSWORD_KEY ],
-          :source      => alert_hash[ SOURCE_KEY ],
-          :scope       => alert_hash[ SCOPE_KEY ],
-          :restriction => alert_hash[ RESTRICTION_KEY ],
-          :addresses   => alert_hash[ ADDRESSES_KEY ],
-          :codes       => alert_hash[ CODES_KEY ],
-          :note        => alert_hash[ NOTE_KEY ],
-          :references  => alert_hash[ REFERENCES_KEY ],
-          :incidents   => alert_hash[ INCIDENTS_KEY ],
-          :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| Info.from_h( info_hash )})
+        self.new( :identifier  => alert_hash[ IDENTIFIER_KEY ],
+                  :sender      => alert_hash[ SENDER_KEY ],
+                  :sent        => RCAP.parse_datetime( alert_hash[ SENT_KEY ]),
+                  :status      => alert_hash[ STATUS_KEY ],
+                  :msg_type    => alert_hash[ MSG_TYPE_KEY ],
+                  :password    => alert_hash[ PASSWORD_KEY ],
+                  :source      => alert_hash[ SOURCE_KEY ],
+                  :scope       => alert_hash[ SCOPE_KEY ],
+                  :restriction => alert_hash[ RESTRICTION_KEY ],
+                  :addresses   => alert_hash[ ADDRESSES_KEY ],
+                  :codes       => alert_hash[ CODES_KEY ],
+                  :note        => alert_hash[ NOTE_KEY ],
+                  :references  => alert_hash[ REFERENCES_KEY ],
+                  :incidents   => alert_hash[ INCIDENTS_KEY ],
+                  :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| Info.from_h( info_hash )})
       end
     end
   end

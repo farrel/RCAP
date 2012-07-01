@@ -122,12 +122,11 @@ module RCAP
       # @param [Hash] resource_yaml_data
       # @return [Resource]
       def self.from_yaml_data( resource_yaml_data ) 
-        self.new(
-          :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
-          :uri           => reource_yaml_data[ URI_YAML ],
-          :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
-          :size          => reource_yaml_data[ SIZE_YAML ],
-          :digest        => reource_yaml_data[ DIGEST_YAML ]
+        self.new( :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
+                  :uri           => reource_yaml_data[ URI_YAML ],
+                  :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
+                  :size          => reource_yaml_data[ SIZE_YAML ],
+                  :digest        => reource_yaml_data[ DIGEST_YAML ]
         )
       end
 
@@ -150,12 +149,11 @@ module RCAP
       # @param [Hash] resource_hash
       # @return [Resource]
       def self.from_h( resource_hash ) 
-        self.new(
-          :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
-          :uri           => resource_hash[ URI_KEY ],
-          :mime_type     => resource_hash[ MIME_TYPE_KEY ],
-          :size          => resource_hash[ SIZE_KEY ],
-          :digest        => resource_hash[ DIGEST_KEY ])
+        self.new( :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
+                  :uri           => resource_hash[ URI_KEY ],
+                  :mime_type     => resource_hash[ MIME_TYPE_KEY ],
+                  :size          => resource_hash[ SIZE_KEY ],
+                  :digest        => resource_hash[ DIGEST_KEY ])
       end
     end
   end
