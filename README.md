@@ -59,25 +59,25 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
                        msg_type: Alert::MSG_TYPE_ALERT,
                        scope:    Alert::SCOPE_PUBLIC )
    
-    alert.add_info( event:       'Liquid Petroleoum Tanker Fire',
-                    language:    'en-ZA',
-                    categories:  [ Info::CATEGORY_TRANSPORT, Info::CATEGORY_FIRE ],
-                    urgency:     Info::URGENCY_IMMEDIATE,
-                    severity:    Info::SEVERITY_SEVERE,
-                    certainty:   Info::CERTAINTY_OBSERVED,
-                    headline:    'LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY',
-                    description: 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
-                                 after the R300 interchange.  Municipal fire fighting crews have been dispatched.
-                                 Traffic control officers are on the scene and have diverted traffic onto
-                                 alternate routes.' )
+    info = alert.add_info( event:       'Liquid Petroleoum Tanker Fire',
+                           language:    'en-ZA',
+                           categories:  [ Info::CATEGORY_TRANSPORT, Info::CATEGORY_FIRE ],
+                           urgency:     Info::URGENCY_IMMEDIATE,
+                           severity:    Info::SEVERITY_SEVERE,
+                           certainty:   Info::CERTAINTY_OBSERVED,
+                           headline:    'LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY',
+                           description: 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
+                                        after the R300 interchange.  Municipal fire fighting crews have been dispatched.
+                                        Traffic control officers are on the scene and have diverted traffic onto
+                                        alternate routes.' )
    
-    alert.infos.first.add_area( area_desc: 'N2 Highway/R300 Interchange' ).add_geocode( name: 'Intersection', value: 'N2-15' )
+    info.add_area( area_desc: 'N2 Highway/R300 Interchange' ).add_geocode( name: 'Intersection', value: 'N2-15' )
    
     # Accessing attributes
-    alert.status                           # "Actual"
-    alert.infos[0].language                # "en-ZA"
-    alert.infos[0].categories.join( ', ' ) # "Transport, Fire"
-    alert.infos[0].areas[0]                # "N2 Highway/R300 Interchange"
+    alert.status                 # "Actual"
+    info.language                # "en-ZA"
+    info.categories.join( ', ' ) # "Transport, Fire"
+    info.areas.first             # "N2 Highway/R300 Interchange"
 
 ### Parsing an Alert From An External Source
 
