@@ -94,7 +94,7 @@ module RCAP
       validates_presence_of( :certainty )
       validates_inclusion_of( :severity, :allow_nil  => true, :in => VALID_SEVERITIES,  :message => "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }" )
       validates_inclusion_of( :urgency, :allow_nil   => true, :in => VALID_URGENCIES,   :message => "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }" )
-      validates_inclusion_of_members_of( :categories,     :in  => VALID_CATEGORIES,     :allow_blank => true )
+      validates_inclusion_of_members_of( :categories, :in  => VALID_CATEGORIES, :allow_blank => true )
       validates_collection_of( :resources, :areas, :event_codes, :parameters )
 
       # @return [String]
