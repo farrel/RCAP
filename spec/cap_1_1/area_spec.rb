@@ -108,7 +108,7 @@ describe( RCAP::CAP_1_1::Area ) do
       end
 
       it( 'should export the circles correctly' ) do
-        @area_hash[ RCAP::CAP_1_1::Area::CIRCLES_KEY ].should == @area.circles.map{ |circle| circle.to_h }
+        @area_hash[ RCAP::CAP_1_1::Area::CIRCLES_KEY ].should == @area.circles.map{ |circle| circle.to_a }
       end
 
       it( 'should export the geocodes correctly' ) do

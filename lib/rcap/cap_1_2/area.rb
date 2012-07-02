@@ -68,7 +68,7 @@ module RCAP
         self.new( :area_desc => area_hash[ AREA_DESC_KEY ],
                   :altitude  => area_hash[ ALTITUDE_KEY ],
                   :ceiling   => area_hash[ CEILING_KEY ],
-                  :circles   => Array( area_hash[ CIRCLES_KEY ]).map{ |circle_hash| Circle.from_h( circle_hash )},
+                  :circles   => Array( area_hash[ CIRCLES_KEY ]).map{ |circle_hash| Circle.from_a( circle_hash )},
                   :geocodes  => Array( area_hash[ GEOCODES_KEY ]).map{ |geocode_hash| Geocode.from_h( geocode_hash )},
                   :polygons  => Array( area_hash[ POLYGONS_KEY ]).map{ |polygon_hash| Polygon.from_h( polygon_hash )})
       end

@@ -69,7 +69,7 @@ describe( RCAP::CAP_1_0::Polygon ) do
 
     context( 'to a hash' ) do
       it( 'should export correctly' ) do
-        @polygon.to_h.should == { RCAP::CAP_1_0::Polygon::POINTS_KEY => @polygon.points.map{ |point| point.to_h }}
+        @polygon.to_h.should == { RCAP::CAP_1_0::Polygon::POINTS_KEY => @polygon.points.map{ |point| point.to_a }}
       end
     end
   end

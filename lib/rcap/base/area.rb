@@ -108,7 +108,7 @@ module RCAP
         RCAP.attribute_values_to_hash( [ AREA_DESC_YAML, @area_desc ],
                                        [ ALTITUDE_YAML,  @altitude ],
                                        [ CEILING_YAML,   @ceiling ],
-                                       [ CIRCLES_YAML,   @circles.map{ |circle| [ circle.lattitude, circle.longitude, circle.radius ]} ],
+                                       [ CIRCLES_YAML,   @circles.map{ |circle| circle.to_a }],
                                        [ GEOCODES_YAML,  @geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
                                        [ POLYGONS_YAML,  @polygons ]).to_yaml( options )
       end
@@ -125,7 +125,7 @@ module RCAP
         RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, @area_desc ],
                                        [ ALTITUDE_KEY,  @altitude ],
                                        [ CEILING_KEY,   @ceiling ],
-                                       [ CIRCLES_KEY,   @circles.map{  |circle|  circle.to_h }],
+                                       [ CIRCLES_KEY,   @circles.map{  |circle|  circle.to_a }],
                                        [ GEOCODES_KEY,  @geocodes.map{ |geocode| geocode.to_h }],
                                        [ POLYGONS_KEY,  @polygons.map{ |polygon| polygon.to_h }])
       end

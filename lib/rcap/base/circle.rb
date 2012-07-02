@@ -83,14 +83,6 @@ module RCAP
       end
 
       RADIUS_KEY    = 'radius'    
-      LATTITUDE_KEY = 'lattitude' 
-      LONGITUDE_KEY = 'longitude' 
-
-      # @return [Array(Numeric,Numeric,Numeric)]
-      def to_a
-        [ @longitude, @lattitude, @radius ]
-      end
-
       # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash( [ RADIUS_KEY,    @radius ],
@@ -104,6 +96,18 @@ module RCAP
         self.new( :radius    => circle_hash[ RADIUS_KEY ],
                   :lattitude => circle_hash[ LATTITUDE_KEY ],
                   :longitude => circle_hash[ LONGITUDE_KEY ])
+      end
+
+      # @return [Array(Numeric,Numeric,Numeric)]
+      def to_a
+        [ @lattitude, @longitude, @radius ]
+      end
+
+      RADIUS_INDEX = 2
+      def self.from_a( circle_array )
+        self.new( :longitude => circle_array[ LONGITUDE_INDEX ],
+                  :lattitude => circle_array[ LATTITUDE_INDEX ],
+                  :radius    => circle_array[ RADIUS_INDEX ])
       end
     end
   end

@@ -64,37 +64,16 @@ module RCAP
         polygon_string.split( ' ' ).map{ |coordinate_string| coordinate_string.split( ',' ).map{|coordinate| coordinate.to_f }}
       end
 
-      # @return [Polygon]
-      def self.from_xml_element( polygon_xml_element ) 
-        if polygon_xml_element.text && !polygon_xml_element.text.empty?
-          coordinates = self.parse_polygon_string( polygon_xml_element.text )
-          points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
-          polygon = self.new( :points => points )
-        else
-          self.new
-        end
-      end
-
       # @return [String]
       def to_yaml( options = {} ) 
         @points.map{ |point| [ point.lattitude, point.longitude ]}.to_yaml( options )
-      end
-
-      # @return [Polygon]
-      def self.from_yaml_data( polygon_yaml_data ) 
-        self.new( :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )})
       end
 
       POINTS_KEY  = 'points' 
 
       # @return [Hash]
       def to_h 
-        { POINTS_KEY => @points.map{ |point| point.to_h }}
-      end
-
-      # @return [Polygon]
-      def self.from_h( polygon_hash ) 
-        self.new( :points => polygon_hash[ POINTS_KEY ].map{ |point_hash| Point.from_h( point_hash )})
+        { POINTS_KEY => @points.map{ |point| point.to_a }}
       end
     end
   end
