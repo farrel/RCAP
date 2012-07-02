@@ -110,13 +110,11 @@ module RCAP
       # @param [Hash] options
       # @return [String]
       def to_yaml( options = {} ) 
-        RCAP.attribute_values_to_hash(
-          [ RESOURCE_DESC_YAML, @resource_desc ],
-          [ URI_YAML,           @uri ],
-          [ MIME_TYPE_YAML,     @mime_type ],
-          [ SIZE_YAML,          @size ],
-          [ DIGEST_YAML,        @digest ]
-        ).to_yaml( options )
+        RCAP.attribute_values_to_hash( [ RESOURCE_DESC_YAML, @resource_desc ],
+                                       [ URI_YAML,           @uri ],
+                                       [ MIME_TYPE_YAML,     @mime_type ],
+                                       [ SIZE_YAML,          @size ],
+                                       [ DIGEST_YAML,        @digest ]).to_yaml( options )
       end
 
       # @param [Hash] resource_yaml_data
@@ -126,8 +124,7 @@ module RCAP
                   :uri           => reource_yaml_data[ URI_YAML ],
                   :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
                   :size          => reource_yaml_data[ SIZE_YAML ],
-                  :digest        => reource_yaml_data[ DIGEST_YAML ]
-        )
+                  :digest        => reource_yaml_data[ DIGEST_YAML ])
       end
 
       RESOURCE_DESC_KEY = 'resource_desc' 
@@ -138,12 +135,11 @@ module RCAP
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash(
-          [ RESOURCE_DESC_KEY, @resource_desc ],
-          [ URI_KEY,           @uri],
-          [ MIME_TYPE_KEY,     @mime_type],
-          [ SIZE_KEY,          @size ],
-          [ DIGEST_KEY,        @digest ])
+        RCAP.attribute_values_to_hash( [ RESOURCE_DESC_KEY, @resource_desc ],
+                                       [ URI_KEY,           @uri],
+                                       [ MIME_TYPE_KEY,     @mime_type],
+                                       [ SIZE_KEY,          @size ],
+                                       [ DIGEST_KEY,        @digest ])
       end
 
       # @param [Hash] resource_hash
