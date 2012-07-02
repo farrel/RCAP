@@ -86,6 +86,11 @@ module RCAP
       LATTITUDE_KEY = 'lattitude' 
       LONGITUDE_KEY = 'longitude' 
 
+      # @return [Array(Numeric,Numeric,Numeric)]
+      def to_a
+        [ @longitude, @lattitude, @radius ]
+      end
+
       # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash( [ RADIUS_KEY,    @radius ],

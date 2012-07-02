@@ -55,6 +55,11 @@ module RCAP
                                        [ LONGITUDE_KEY, @longitude ])
       end
 
+      # @return [Array(Numeric, Numeric)]
+      def to_a
+        [ self.longitude, self.lattitude ]
+      end
+
       # @param [Hash] point_hash
       # @return [Point]
       def self.from_h( point_hash ) 
