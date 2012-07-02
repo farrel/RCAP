@@ -10,30 +10,9 @@ module RCAP
       #
       # @see Point#initialize
       def add_point( point_attributes = {})
-        point = Point.new( point_attributes )
-        @points << point
-        point
-      end
-
-      # @return [Polygon]
-      def self.from_xml_element( polygon_xml_element ) 
-        if !polygon_xml_element.text.nil? && !polygon_xml_element.text.empty?
-          coordinates = self.parse_polygon_string( polygon_xml_element.text )
-          points = coordinates.map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )}
-          polygon = self.new( :points => points )
-        else
-          self.new
+        Point.new( point_attributes ).tap do |point|
+          @points << point
         end
-      end
-
-      # @return [Polygon]
-      def self.from_yaml_data( polygon_yaml_data ) 
-        self.new( :points => Array( polygon_yaml_data ).map{ |lattitude, longitude| Point.new( :lattitude => lattitude, :longitude => longitude )})
-      end
-
-      # @return [Polygon]
-      def self.from_h( polygon_hash ) 
-        self.new( :points => polygon_hash[ POINTS_KEY ].map{ |point_array| Point.from_a( point_array )})
       end
     end
   end

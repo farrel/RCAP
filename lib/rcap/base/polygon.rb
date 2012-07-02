@@ -19,15 +19,6 @@ module RCAP
         @points = attributes[ :points ] || []
       end
 
-      # Creates a new Point object and adds it to the points array.
-      #
-      # @see Point#initialize
-      def add_point( point_attributes = {})
-        point = Point.new( point_attributes )
-        @points << point
-        point
-      end
-
       # Returns a string representation of the polygon of the form
       #  points[0] points[1] points[2] ...
       # where each point is formatted with Point#to_s
@@ -47,6 +38,18 @@ module RCAP
         xml_element
       end
 
+      # @return [Polygon]
+      def self.from_xml_element( polygon_xml_element ) 
+        if !polygon_xml_element.text.nil? && !polygon_xml_element.text.empty?
+          coordinates = self.parse_polygon_string( polygon_xml_element.text )
+          self.new.tap do |polygon|
+            coordinates.each{ |lattitude, longitude| polygon.add_point( :lattitude => lattitude, :longitude => longitude )}
+          end
+        else
+          self.new
+        end
+      end
+
       # @return [String]
       def to_xml
         self.to_xml_element.to_s
@@ -64,12 +67,26 @@ module RCAP
         polygon_string.split( ' ' ).map{ |coordinate_string| coordinate_string.split( ',' ).map{|coordinate| coordinate.to_f }}
       end
 
+      # @return [Polygon]
+      def self.from_yaml_data( polygon_yaml_data ) 
+        self.new.tap do |polygon|
+          Array( polygon_yaml_data ).each{ |lattitude, longitude| polygon.add_point( :lattitude => lattitude, :longitude => longitude )}
+        end
+      end
+
       # @return [String]
       def to_yaml( options = {} ) 
         @points.map{ |point| [ point.lattitude, point.longitude ]}.to_yaml( options )
       end
 
       POINTS_KEY  = 'points' 
+
+      # @return [Polygon]
+      def self.from_h( polygon_hash ) 
+        self.new.tap do |polygon|
+          Array( polygon_hash[ POINTS_KEY ]).each{ |point_array| polygon.add_point( :lattitude => point_array[ Point::LATTITUDE_INDEX ], :longitude => point_array[ Point::LONGITUDE_INDEX ])}
+        end
+      end
 
       # @return [Hash]
       def to_h 
