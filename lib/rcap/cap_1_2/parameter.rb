@@ -8,7 +8,7 @@ module RCAP
 
       # @param [REXML::Element] parameter_xml_element
       # @return [Parameter] 
-      def self.from_xml_element( parameter_xml_element ) # :nodoc:
+      def self.from_xml_element( parameter_xml_element )
         self.new( :name  => RCAP.xpath_text( parameter_xml_element, self::NAME_XPATH, Alert::XMLNS ),
                   :value => RCAP.xpath_text( parameter_xml_element, self::VALUE_XPATH, Alert::XMLNS ))
       end
