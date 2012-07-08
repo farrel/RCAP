@@ -17,7 +17,6 @@ module RCAP
       # @return [String]
       attr_accessor( :password )
 
-
       # @example
       #    Alert.new( sender: 'disaster_management@cape_town.municipal.za',
       #               sent: Date.today,
@@ -45,7 +44,7 @@ module RCAP
         @password = attributes[ :password ]
       end
 
-      # Creates a new {Info} object and adds it to the {#infos array}. 
+      # Creates a new {Info} object and adds it to the {#infos} array. 
       # 
       # @see Info#initialize
       # @param [Hash] info_attributes Info attributes - see {RCAP::Base::Info#initialize}
@@ -104,7 +103,7 @@ module RCAP
                           "Restriction:  #{ @restriction }",
                           "Addresses:    #{ @addresses.to_s_for_cap }",
                           "Codes:",
-                          @codes.map{ |code| "  " + code }.join("\n")+"",
+                          @codes.map{ |code| "  " + code }.join("\n"),
                           "Note:         #{ @note }",
                           "References:   #{ @references.join( ' ' )}",
                           "Incidents:    #{ @incidents.join( ' ')}",
