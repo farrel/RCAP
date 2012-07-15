@@ -20,9 +20,8 @@ module RCAP
       # @param [Hash] attributes
       # @option attributes [Numeric] :lattitude
       # @option attributes [Numeric] :longitude
-      def initialize( attributes = {} )
-        @lattitude = attributes[ :lattitude ]
-        @longitude = attributes[ :longitude ]
+      def initialize( &block )
+        self.tap( &block ) if block
       end
 
       # Returns a string representation of the point of the form
@@ -30,7 +29,7 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @lattitude },#{ @longitude }"
+        "#{ self.lattitude },#{ self.longitude }"
       end
 
       # @return [String]
@@ -43,7 +42,7 @@ module RCAP
       # @param [Point] other
       # @return [true, false]
       def ==( other )
-        [ @lattitude, @longitude ] == [ other.lattitude, other.longitude ]
+        [ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
       end
 
       LATTITUDE_KEY = 'lattitude'  
@@ -51,20 +50,22 @@ module RCAP
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash( [ LATTITUDE_KEY, @lattitude ],
-                                       [ LONGITUDE_KEY, @longitude ])
+        RCAP.attribute_values_to_hash( [ LATTITUDE_KEY, self.lattitude ],
+                                       [ LONGITUDE_KEY, self.longitude ])
       end
 
       # @param [Hash] point_hash
       # @return [Point]
       def self.from_h( point_hash ) 
-        self.new( :lattitude => point_hash[ LATTITUDE_KEY ],
-                  :longitude => point_hash[ LONGITUDE_KEY ])
+        self.new do |point|
+          point.lattitude = point_hash[ LATTITUDE_KEY ]
+          point.longitude = point_hash[ LONGITUDE_KEY ]
+        end
       end
 
       # @return [Array(Numeric, Numeric)]
       def to_a
-        [ @lattitude, @longitude ]
+        [ self.lattitude, self.longitude ]
       end
 
       LATTITUDE_INDEX = 1
@@ -72,8 +73,10 @@ module RCAP
       # @param [Array(Numeric, Numeric)]
       # @return [Point]
       def self.from_a( point_array )
-        self.new( :lattitude => point_array[ LATTITUDE_INDEX ],
-                  :longitude => point_array[ LONGITUDE_INDEX ])
+        self.new do |point|
+          point.lattitude = point_array[ LATTITUDE_INDEX ]
+          point.longitude = point_array[ LONGITUDE_INDEX ]
+        end
       end
     end
   end

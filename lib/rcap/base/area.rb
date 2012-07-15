@@ -39,13 +39,62 @@ module RCAP
       # @option attributes [Array<Circle>] :circles Collection of {Circle} 
       # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode} 
       # @option attributes [Array<Polygon>] :polygons Collection of {Polygon}
-      def initialize( attributes = {})
-        @area_desc = attributes[ :area_desc ]
-        @altitude  = attributes[ :altitude ]
-        @ceiling   = attributes[ :ceiling ]
-        @circles   = attributes[ :circles ] || []
-        @geocodes  = attributes[ :geocodes ] || []
-        @polygons  = attributes[ :polygons ] || []
+      def initialize
+        @area_desc = nil
+        @altitude = nil
+        @ceiling = nil
+        
+        @circles  = []
+        @geocodes = []
+        @polygons = []
+        yield( self ) if block_given?
+      end
+
+      # Creates a new {Polygon} object and adds it to the {#polygons} array.
+      #
+      # @return [Polygon]
+      def add_polygon( &block )
+        polygon = self.polygon_class.new( &block )
+        @polygons << polygon
+        polygon
+      end
+
+      # Creates a new {Circle} object and adds it to the {#circles} array.
+      #
+      # @return [Circle]
+      def add_circle( &block )
+        circle = self.circle_class.new( &block )
+        @circles << circle
+        circle
+      end
+
+      # Creates a new {Geocode} object and adds it to the {#geocodes} array.
+      #
+      # @return [Geocode]
+      def add_geocode( &block )
+        geocode = self.geocode_class.new( &block )
+        @geocodes << geocode
+        geocode
+      end
+
+      def self.from_xml_element( area_xml_element )
+        self.new do |area|
+          area.area_desc = RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, area.xmlns )
+          area.altitude  = (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, area.xmlns )) ? alt.to_f : nil )
+          area.ceiling   = (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH, area.xmlns )) ? ceil.to_f : nil )
+
+          RCAP.xpath_match( area_xml_element, area.circle_class::XPATH, area.xmlns ).each do |circle_element|
+            area.circles << area.circle_class.from_xml_element( circle_element )
+          end
+
+          RCAP.xpath_match( area_xml_element, area.geocode_class::XPATH, area.xmlns ).each do |geocode_element|
+            area.geocodes  << area.geocode_class.from_xml_element( geocode_element )
+          end
+
+          RCAP.xpath_match( area_xml_element, area.polygon_class::XPATH, area.xmlns ).each do |polygon_element|
+            area.polygons  << area.polygon_class.from_xml_element( polygon_element )
+          end
+        end
       end
 
       # @return [REXML::Element]
@@ -113,12 +162,48 @@ module RCAP
                                        [ POLYGONS_YAML,  @polygons ]).to_yaml( options )
       end
 
+      # @param [Hash] area_yaml_data
+      # @return [Area]
+      def self.from_yaml_data( area_yaml_data )  
+        self.new do |area|
+          area.area_desc = area_yaml_data[ AREA_DESC_YAML ]
+          area.altitude  = area_yaml_data[ ALTITUDE_YAML ]
+          area.ceiling   = area_yaml_data[ CEILING_YAML ]
+
+          Array( area_yaml_data[ CIRCLES_YAML ]).each do |circle_yaml_data|
+            area.circles << area.circle_class.from_yaml_data( circle_yaml_data )
+          end
+          
+          Array( area_yaml_data[ GEOCODES_YAML ]).each do |name, value|
+            area.geocodes << area.geocode_class.new do |geocode|
+              geocode.name = name
+              geocode.value = value 
+            end
+          end
+
+          Array( area_yaml_data[ POLYGONS_YAML ]).each do |polyon_yaml_data|
+            area.polygons << area.polygon_class.from_yaml_data( polyon_yaml_data )
+          end
+        end
+      end
+
       AREA_DESC_KEY = 'area_desc'  
       ALTITUDE_KEY  = 'altitude'   
       CEILING_KEY   = 'ceiling'    
       CIRCLES_KEY   = 'circles'    
       GEOCODES_KEY  = 'geocodes'   
       POLYGONS_KEY  = 'polygons'   
+      
+      # @param [Hash] area_hash
+      # @return [Area]
+      def self.from_h( area_hash ) 
+        self.new( :area_desc => area_hash[ AREA_DESC_KEY ],
+                  :altitude  => area_hash[ ALTITUDE_KEY ],
+                  :ceiling   => area_hash[ CEILING_KEY ],
+                  :circles   => Array( area_hash[ CIRCLES_KEY ]).map{ |circle_array| Circle.from_a( circle_array )},
+                  :geocodes  => Array( area_hash[ GEOCODES_KEY ]).map{ |geocode_hash| Geocode.from_h( geocode_hash )},
+                  :polygons  => Array( area_hash[ POLYGONS_KEY ]).map{ |polygon_hash| Polygon.from_h( polygon_hash )})
+      end
 
       # @return [Hash]
       def to_h 
