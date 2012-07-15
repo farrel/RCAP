@@ -4,7 +4,10 @@ describe( RCAP::CAP_1_0::Geocode ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_geocode = RCAP::CAP_1_0::Geocode.new( :name => 'name', :value => 'value' )
+        @original_geocode = RCAP::CAP_1_0::Geocode.new do |gecode|
+          geocode.name = 'name'
+          geocode.value = 'value' 
+        end
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info.add_area.geocodes <<  @original_geocode 
         @xml_string = @alert.to_xml
