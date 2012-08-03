@@ -21,9 +21,8 @@ module RCAP
       # @param [Hash] attributes
       # @option attributes [Symbol] :name Parameter name
       # @option attributes [Symbol] :value Parameter value
-      def initialize( attributes = {} )
-        @name = attributes[ :name ]
-        @value = attributes[ :value ]
+      def initialize
+        yield( self ) if block_given?
       end
 
       # @return [REXML::Element]
@@ -62,8 +61,7 @@ module RCAP
 
       # @return [Hash]
       def to_h 
-        RCAP.attribute_values_to_hash(
-          [ @name, @value ])
+        RCAP.attribute_values_to_hash( [ @name, @value ])
       end
 
       # @param [Hash] hash

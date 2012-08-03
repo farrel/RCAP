@@ -15,7 +15,11 @@ module RCAP
       # @param [REXML::Element] parameter_xml_element
       # @return [Parameter] 
       def self.from_xml_element( parameter_xml_element ) 
-        self.new( self.parse_parameter( parameter_xml_element.text ))
+        parameter_hash = self.parse_parameter( parameter_xml_element.text )
+        self.new do |parameter|
+          parameter.name = parameter_hash[ :name ]
+          parameter.value  = parameter_hash[ :value ]
+        end
       end
 
       # @param [String] parameter_string

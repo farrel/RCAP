@@ -4,7 +4,7 @@ describe( RCAP::CAP_1_0::Geocode ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_geocode = RCAP::CAP_1_0::Geocode.new do |gecode|
+        @original_geocode = RCAP::CAP_1_0::Geocode.new do |geocode|
           geocode.name = 'name'
           geocode.value = 'value' 
         end
@@ -34,7 +34,10 @@ describe( RCAP::CAP_1_0::Geocode ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @geocode = RCAP::CAP_1_0::Geocode.new( :name => 'name', :value => 'value' )
+      @geocode = RCAP::CAP_1_0::Geocode.new do |geocode|
+        geocode.name = 'name'
+        geocode.value = 'value' 
+      end
     end
 
     context( 'to a hash' ) do
