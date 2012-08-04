@@ -4,7 +4,10 @@ describe( RCAP::CAP_1_0::EventCode ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_event_code = RCAP::CAP_1_0::EventCode.new( :name => 'name', :value => 'value' )
+        @original_event_code = RCAP::CAP_1_0::EventCode.new do |event_code|
+          event_code.name = 'name'
+          event_code.value = 'value' 
+        end            
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info.event_codes <<  @original_event_code 
         @xml_string = @alert.to_xml
@@ -30,7 +33,10 @@ describe( RCAP::CAP_1_0::EventCode ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @event_code = RCAP::CAP_1_0::EventCode.new( :name => 'name', :value => 'value' )
+      @event_code = RCAP::CAP_1_0::EventCode.new do |event_code|
+        event_code.name = 'name'
+        event_code.value = 'value' 
+      end
     end
 
     context( 'to a hash' ) do
