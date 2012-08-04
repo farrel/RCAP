@@ -8,13 +8,8 @@ module RCAP
 
       validates_length_of( :points, :minimum => 4 )
 
-      # Creates a new Point object and adds it to the points array.
-      #
-      # @see Point#initialize
-      def add_point( point_attributes = {})
-        Point.new( point_attributes ).tap do |point|
-          @points << point
-        end
+      def point_class
+        Point
       end
     end
   end

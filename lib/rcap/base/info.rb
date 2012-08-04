@@ -188,10 +188,10 @@ module RCAP
       #
       # @see EventCode#initialize
       #
-      # @param [Hash] event_code_attributes (see EventCode#initialize)
       # @return [EventCode]
-      def add_event_code( event_code_attributes = {})
-        event_code = EventCode.new( event_code_attributes )
+      def add_event_code
+        event_code = self.event_code_class.new
+        yield( event_code ) if block_given?
         @event_codes << event_code
         event_code
       end
@@ -201,10 +201,10 @@ module RCAP
       #
       # @see Parameter#initialize
       #
-      # @param [Hash] parameter_attributes (see Parameter#initialize)
       # @return [Parameter]
-      def add_parameter( parameter_attributes = {})
-        parameter = Parameter.new( parameter_attributes )
+      def add_parameter
+        parameter = self.parameter_class.new
+        yield( parameter ) if block_given?
         @parameters << parameter
         parameter
       end
@@ -214,10 +214,10 @@ module RCAP
       #
       # @see Resource#initialize
       #
-      # @param [Hash] resource_attributes (See Resource#initialize)
       # @return [Resource]
       def add_resource( resource_attributes = {})
-        resource = Resource.new( resource_attributes )
+        resource = self.resource_class.new
+        yield( resource ) if block_given?
         @resources << resource
         resource
       end
@@ -227,9 +227,8 @@ module RCAP
       #
       # @see Area#initialize
       #
-      # @param [Hash] area_attributes (see Area#initialize)
       # @return [Area]
-      def add_area( area_attributes = {})
+      def add_area
         area = Area.new( area_attributes )
         @areas << area
         area

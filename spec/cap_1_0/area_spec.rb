@@ -5,12 +5,27 @@ describe( RCAP::CAP_1_0::Area ) do
     before( :each ) do
       @area = RCAP::CAP_1_0::Area.new
 
-      @original_area = RCAP::CAP_1_0::Area.new( :area_desc => 'Area Description',
-                                                :altitude  => 100,
-                                                :ceiling   => 200 )
-      @original_area.add_circle( :lattitude => 0, :longitude => 0 , :radius => 100 )
-      @original_area.add_geocode( :name => 'name', :value => 'value' )
-      @original_area.add_polygon.add_point( :lattitude =>1, :longitude => 1 )
+      @original_area = RCAP::CAP_1_0::Area.new do |area|
+        area.area_desc = 'Area Description'
+        area.altitude  = 100
+        area.ceiling   = 200 
+
+        area.add_circle do |circle|
+          circle.lattitude = 0 
+          circle.longitude = 0 
+          circle.radius    = 100 
+        end
+
+        area.add_geocode do |geocode|
+          geocode.name  = 'name'
+          geocode.value = 'value' 
+        end
+
+        area.add_polygon.add_point do |point|
+          point.lattitude = 1
+          point.longitude = 1 
+        end
+      end
     end
 
     # Atomic
@@ -45,6 +60,9 @@ describe( RCAP::CAP_1_0::Area ) do
       end
 
       it( 'should parse the polygons correctly' ) do
+        puts @original_area.to_yaml
+        puts "========="
+        puts @area.to_yaml
         @area.polygons.should == @original_area.polygons
       end
     end
@@ -85,13 +103,29 @@ describe( RCAP::CAP_1_0::Area ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @area = RCAP::CAP_1_0::Area.new( :area_desc => 'Area Description',
-                                      :altitude  => 100,
-                                      :ceiling   => 200 )
-      @area.add_circle( :lattitude => 0, :longitude => 0 , :radius => 100 )
-      @area.add_geocode( :name => 'name', :value => 'value' )
-      @area.add_polygon.add_point( :lattitude =>1, :longitude => 1 ) 
+      @area = RCAP::CAP_1_0::Area.new do |area|
+        area.area_desc = 'Area Description'
+        area.altitude  = 100
+        area.ceiling   = 200 
+
+        area.add_circle do |circle|
+          circle.lattitude = 0
+          circle.longitude = 0
+          circle.radius    = 100 
+        end
+
+        area.add_geocode do |geocode|
+          geocode.name  = 'name'
+          geocode.value = 'value' 
+        end
+
+        area.add_polygon.add_point do |point|
+          point.lattitude = 1 
+          point.longitude = 1 
+        end
+      end
     end
+
     context( 'to a hash' ) do
       before( :each ) do
         @area_hash = @area.to_h
@@ -125,7 +159,9 @@ describe( RCAP::CAP_1_0::Area ) do
 
   context( 'is not valid if' ) do
     before( :each ) do
-      @area = RCAP::CAP_1_0::Area.new( :area_desc => "Cape Town Metropole" )
+      @area = RCAP::CAP_1_0::Area.new do |area|
+        area.area_desc = "Cape Town Metropole" 
+      end
       @area.should( be_valid )
     end
 
@@ -142,7 +178,11 @@ describe( RCAP::CAP_1_0::Area ) do
 
     context( 'it contains circles and it' ) do
       before( :each ) do
-        @area.circles << RCAP::CAP_1_0::Circle.new( :lattitude => 0, :longitude => 0, :radius => 1)
+        @area.add_circle do |circle|
+          circle.lattitude = 0
+          circle.longitude = 0
+          circle.radius = 1
+        end
         @area.should( be_valid )
       end
 
@@ -155,9 +195,13 @@ describe( RCAP::CAP_1_0::Area ) do
     context( 'it contains polygons and it' ) do
       before( :each ) do
         @polygon = RCAP::CAP_1_0::Polygon.new
-        @polygon.points.push( RCAP::CAP_1_0::Point.new( :lattitude => 0, :longitude => 0 ),
-                             RCAP::CAP_1_0::Point.new( :lattitude => 0, :longitude => 1 ),
-                             RCAP::CAP_1_0::Point.new( :lattitude => 0, :longitude => 0 ))
+        [[ 0, 0], [ 0, 1 ], [ 0, 0 ]].each do |lattitude, longitude|
+          @polygon.add_point do |point|
+            point.lattitude = lattitude
+            point.longitude = longitude
+          end
+        end
+
         @area.polygons << @polygon
         @area.should( be_valid )
       end
@@ -203,7 +247,11 @@ describe( RCAP::CAP_1_0::Area ) do
 
     describe( '#add_circle' ) do
       before( :each ) do
-        @circle = @area.add_circle( lattitude: 1, longitude: 1, radius: 1 )
+        @circle = @area.add_circle do |circle|
+          circle.lattitude = 1
+          circle.longitude = 1
+          circle.radius = 1 
+        end
       end
 
       it( 'should return a CAP 1.0 Circle' ) do
@@ -220,7 +268,10 @@ describe( RCAP::CAP_1_0::Area ) do
 
     describe( '#add_geocode' ) do
       before( :each ) do
-        @geocode = @area.add_geocode( name: 'Geocode', value: '123' )
+        @geocode = @area.add_geocode do |geocode|
+          geocode.name = 'Geocode'
+          geocode.value = '123' 
+        end
       end
 
       it( 'should return a CAP 1.0 Geocode' ) do

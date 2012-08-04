@@ -53,8 +53,9 @@ module RCAP
       # Creates a new {Polygon} object and adds it to the {#polygons} array.
       #
       # @return [Polygon]
-      def add_polygon( &block )
-        polygon = self.polygon_class.new( &block )
+      def add_polygon
+        polygon = self.polygon_class.new
+        yield( polygon ) if block_given?
         @polygons << polygon
         polygon
       end
@@ -62,8 +63,9 @@ module RCAP
       # Creates a new {Circle} object and adds it to the {#circles} array.
       #
       # @return [Circle]
-      def add_circle( &block )
-        circle = self.circle_class.new( &block )
+      def add_circle
+        circle = self.circle_class.new
+        yield( circle ) if block_given?
         @circles << circle
         circle
       end
@@ -71,8 +73,9 @@ module RCAP
       # Creates a new {Geocode} object and adds it to the {#geocodes} array.
       #
       # @return [Geocode]
-      def add_geocode( &block )
-        geocode = self.geocode_class.new( &block )
+      def add_geocode
+        geocode = self.geocode_class.new
+        yield( geocode ) if block_given?
         @geocodes << geocode
         geocode
       end
@@ -175,7 +178,7 @@ module RCAP
           end
           
           Array( area_yaml_data[ GEOCODES_YAML ]).each do |name, value|
-            area.geocodes << area.geocode_class.new do |geocode|
+            area.add_geocode do |geocode|
               geocode.name = name
               geocode.value = value 
             end
@@ -197,12 +200,23 @@ module RCAP
       # @param [Hash] area_hash
       # @return [Area]
       def self.from_h( area_hash ) 
-        self.new( :area_desc => area_hash[ AREA_DESC_KEY ],
-                  :altitude  => area_hash[ ALTITUDE_KEY ],
-                  :ceiling   => area_hash[ CEILING_KEY ],
-                  :circles   => Array( area_hash[ CIRCLES_KEY ]).map{ |circle_array| Circle.from_a( circle_array )},
-                  :geocodes  => Array( area_hash[ GEOCODES_KEY ]).map{ |geocode_hash| Geocode.from_h( geocode_hash )},
-                  :polygons  => Array( area_hash[ POLYGONS_KEY ]).map{ |polygon_hash| Polygon.from_h( polygon_hash )})
+        self.new do |area|
+          area.area_desc = area_hash[ AREA_DESC_KEY ]
+          area.altitude  = area_hash[ ALTITUDE_KEY ]
+          area.ceiling   = area_hash[ CEILING_KEY ]
+
+          Array( area_hash[ CIRCLES_KEY ]).each do |circle_array|
+            area.circles << area.circle_class.from_a( circle_array )
+          end
+
+          Array( area_hash[ GEOCODES_KEY ]).each do |geocode_hash|
+            area.geocodes << area.geocode_class.from_h( geocode_hash )
+          end
+
+          Array( area_hash[ POLYGONS_KEY ]).each do |polygon_hash| 
+            area.polygons << area.polygon_class.from_h( polygon_hash )
+          end
+        end
       end
 
       # @return [Hash]
@@ -210,7 +224,7 @@ module RCAP
         RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, @area_desc ],
                                        [ ALTITUDE_KEY,  @altitude ],
                                        [ CEILING_KEY,   @ceiling ],
-                                       [ CIRCLES_KEY,   @circles.map{  |circle|  circle.to_a }],
+                                       [ CIRCLES_KEY,   @circles.map{ |circle| circle.to_a }],
                                        [ GEOCODES_KEY,  @geocodes.map{ |geocode| geocode.to_h }],
                                        [ POLYGONS_KEY,  @polygons.map{ |polygon| polygon.to_h }])
       end

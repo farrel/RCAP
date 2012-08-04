@@ -19,6 +19,12 @@ module RCAP
         @points = attributes[ :points ] || []
       end
 
+      def add_point
+        point = self.point_class.new
+        yield( point ) if block_given?
+        self.points << point
+      end
+
       # Returns a string representation of the polygon of the form
       #  points[0] points[1] points[2] ...
       # where each point is formatted with Point#to_s
@@ -42,8 +48,13 @@ module RCAP
       def self.from_xml_element( polygon_xml_element ) 
         if !polygon_xml_element.text.nil? && !polygon_xml_element.text.empty?
           coordinates = self.parse_polygon_string( polygon_xml_element.text )
-          self.new.tap do |polygon|
-            coordinates.each{ |lattitude, longitude| polygon.add_point( :lattitude => lattitude, :longitude => longitude )}
+          self.new do |polygon|
+            coordinates.each do |lattitude, longitude| 
+              polygon.add_point do |point|
+                point.lattitude = lattitude 
+                point.longitude = longitude 
+              end
+            end
           end
         else
           self.new
@@ -69,8 +80,13 @@ module RCAP
 
       # @return [Polygon]
       def self.from_yaml_data( polygon_yaml_data ) 
-        self.new.tap do |polygon|
-          Array( polygon_yaml_data ).each{ |lattitude, longitude| polygon.add_point( :lattitude => lattitude, :longitude => longitude )}
+        self.new do |polygon|
+          Array( polygon_yaml_data ).each do |lattitude, longitude|
+            polygon.add_point do |point|
+              point.lattitude = lattitude 
+              point.longitude = longitude 
+            end
+          end
         end
       end
 
@@ -83,8 +99,13 @@ module RCAP
 
       # @return [Polygon]
       def self.from_h( polygon_hash ) 
-        self.new.tap do |polygon|
-          Array( polygon_hash[ POINTS_KEY ]).each{ |point_array| polygon.add_point( :lattitude => point_array[ Point::LATTITUDE_INDEX ], :longitude => point_array[ Point::LONGITUDE_INDEX ])}
+        self.new do |polygon|
+          Array( polygon_hash[ POINTS_KEY ]).each do |point_array| 
+            polygon.add_point do |point|
+              point.lattitude = point_array[ Point::LATTITUDE_INDEX ]
+              point.longitude = point_array[ Point::LONGITUDE_INDEX ]
+            end
+          end
         end
       end
 

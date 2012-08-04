@@ -59,8 +59,9 @@ module RCAP
       #
       # @param [Hash] area_attributes (see Area#initialize)
       # @return [Area]
-      def add_area( area_attributes = {})
-        area = Area.new( area_attributes )
+      def add_area
+        area = Area.new
+        yield( area ) if block_given?
         @areas << area
         area
       end

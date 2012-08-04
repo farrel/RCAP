@@ -17,9 +17,8 @@ module RCAP
       # @option attributes [Numeric] :lattitude
       # @option attributes [Numeric] :longitude
       # @option attributes [Numeric] :radius
-      def initialize( attributes = {} )
-        super( attributes )
-        @radius = attributes[ :radius ]
+      def initialize
+        yield( self ) if block_given?
       end
 
       # Returns a string representation of the circle of the form
@@ -62,9 +61,11 @@ module RCAP
       # @return [Circle]
       def self.from_xml_element( circle_xml_element ) 
         lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
-        circle = self.new( :lattitude => lattitude,
-                           :longitude => longitude,
-                           :radius    => radius )
+        circle = self.new do |circle|
+          circle.lattitude = lattitude 
+          circle.longitude = longitude 
+          circle.radius    = radius 
+        end
       end
 
       # Two circles are equivalent if their lattitude, longitude and radius are equal.
@@ -79,7 +80,11 @@ module RCAP
       # @return [Circle]
       def self.from_yaml_data( circle_yaml_data ) 
         lattitude, longitude, radius = circle_yaml_data
-        self.new( :lattitude => lattitude, :longitude => longitude, :radius => radius )
+        self.new do |circle|
+          circle.lattitude = lattitude 
+          circle.longitude = longitude 
+          circle.radius    = radius 
+        end
       end
 
       RADIUS_KEY    = 'radius'    
@@ -105,9 +110,11 @@ module RCAP
 
       RADIUS_INDEX = 2
       def self.from_a( circle_array )
-        self.new( :longitude => circle_array[ LONGITUDE_INDEX ],
-                  :lattitude => circle_array[ LATTITUDE_INDEX ],
-                  :radius    => circle_array[ RADIUS_INDEX ])
+        self.new do |circle|
+          circle.longitude = circle_array[ LONGITUDE_INDEX ]
+          circle.lattitude = circle_array[ LATTITUDE_INDEX ]
+          circle.radius    = circle_array[ RADIUS_INDEX ]
+        end
       end
     end
   end

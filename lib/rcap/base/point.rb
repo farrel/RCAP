@@ -20,8 +20,8 @@ module RCAP
       # @param [Hash] attributes
       # @option attributes [Numeric] :lattitude
       # @option attributes [Numeric] :longitude
-      def initialize( &block )
-        self.tap( &block ) if block
+      def initialize
+        yield( self ) if block_given?
       end
 
       # Returns a string representation of the point of the form
