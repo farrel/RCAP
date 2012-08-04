@@ -98,9 +98,11 @@ module RCAP
       # @param [Hash] circle_hash
       # @return [Circle]
       def self.from_h( circle_hash ) 
-        self.new( :radius    => circle_hash[ RADIUS_KEY ],
-                  :lattitude => circle_hash[ LATTITUDE_KEY ],
-                  :longitude => circle_hash[ LONGITUDE_KEY ])
+        self.new do |circle|
+          circle.radius    = circle_hash[ RADIUS_KEY ]
+          circle.lattitude = circle_hash[ LATTITUDE_KEY ]
+          circle.longitude = circle_hash[ LONGITUDE_KEY ]
+        end
       end
 
       # @return [Array(Numeric,Numeric,Numeric)]
