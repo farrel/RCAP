@@ -4,7 +4,10 @@ describe( RCAP::CAP_1_0::Parameter ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_parameter = RCAP::CAP_1_0::Parameter.new( :name => 'name', :value => 'value' )
+        @original_parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
+          parameter.name = 'name'
+          parameter.value = 'value' 
+        end
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info.parameters << @original_parameter 
         @xml_string = @alert.to_xml
@@ -30,7 +33,10 @@ describe( RCAP::CAP_1_0::Parameter ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @parameter = RCAP::CAP_1_0::Parameter.new( :name => 'name', :value => 'value' )
+      @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
+        parameter.name = 'name'
+        parameter.value = 'value' 
+      end
     end
 
     context( 'to a hash' ) do
@@ -52,7 +58,10 @@ describe( RCAP::CAP_1_0::Parameter ) do
 
   describe( '.to_xml_element' ) do
     before( :each ) do
-      @parameter = RCAP::CAP_1_0::Parameter.new( :name => 'name', :value => 'value' )
+      @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
+        parameter.name = 'name'
+        parameter.value = 'value' 
+      end
     end
 
     it( 'should generate an XML element correctly' ) do
@@ -62,7 +71,10 @@ describe( RCAP::CAP_1_0::Parameter ) do
 
   describe( '.from_xml_element' ) do
     before( :each ) do
-      @parameter = RCAP::CAP_1_0::Parameter.new( :name => 'name', :value => 'value' )
+      @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
+        parameter.name = 'name'
+        parameter.value = 'value' 
+      end
     end
 
     it( 'should initialise correctly' ) do
