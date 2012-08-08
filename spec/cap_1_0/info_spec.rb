@@ -278,7 +278,10 @@ describe( RCAP::CAP_1_0::Info ) do
 
     describe( '#add_parameter' ) do
       before( :each ) do
-        @parameter = @info.add_parameter( name: 'Parameter', value: '1234' )
+        @parameter = @info.add_parameter do |parameter|
+           parameter.name = 'Parameter'
+           parameter.value = '1234' 
+        end
       end
 
       it( 'should return a 1.0 Parameter' ) do
@@ -309,7 +312,9 @@ describe( RCAP::CAP_1_0::Info ) do
 
     describe( '#add_area' ) do
       before( :each ) do
-        @area = @info.add_area( area_desc: 'Area' )
+        @area = @info.add_area do |area|
+          area.area_desc = 'Area' 
+        end
       end
 
       it( 'should return a 1.0 area' ) do

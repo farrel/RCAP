@@ -229,7 +229,8 @@ module RCAP
       #
       # @return [Area]
       def add_area
-        area = Area.new( area_attributes )
+        area = self.area_class.new
+        yield( area ) if block_given?
         @areas << area
         area
       end

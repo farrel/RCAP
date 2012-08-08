@@ -13,57 +13,21 @@ module RCAP
 
       validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
 
-      # Creates a new EventCode object and adds it to the event_codes array. The
-      # event_code_attributes are passed as a parameter to EventCode.new.
-      #
-      # @see EventCode#initialize
-      #
-      # @param [Hash] event_code_attributes (see EventCode#initialize)
-      # @return [EventCode]
-      def add_event_code( event_code_attributes = {})
-        event_code = EventCode.new( event_code_attributes )
-        @event_codes << event_code
-        event_code
+
+      def event_code_class
+        EventCode
       end
 
-      # Creates a new Parameter object and adds it to the parameters array. The
-      # parameter_attributes are passed as a parameter to Parameter.new.
-      #
-      # @see Parameter#initialize
-      #
-      # @param [Hash] parameter_attributes (see Parameter#initialize)
-      # @return [Parameter]
-      def add_parameter( parameter_attributes = {})
-        parameter = Parameter.new( parameter_attributes )
-        @parameters << parameter
-        parameter
+      def parameter_class
+        Parameter
       end
 
-      # Creates a new Resource object and adds it to the resources array. The
-      # resource_attributes are passed as a parameter to Resource.new.
-      #
-      # @see Resource#initialize
-      #
-      # @param [Hash] resource_attributes (See Resource#initialize)
-      # @return [Resource]
-      def add_resource( resource_attributes = {})
-        resource = Resource.new( resource_attributes )
-        @resources << resource
-        resource
+      def resource_class
+        Resource
       end
 
-      # Creates a new Area object and adds it to the areas array. The
-      # area_attributes are passed as a parameter to Area.new.
-      #
-      # @see Area#initialize
-      #
-      # @param [Hash] area_attributes (see Area#initialize)
-      # @return [Area]
-      def add_area
-        area = Area.new
-        yield( area ) if block_given?
-        @areas << area
-        area
+      def area_class
+        Area
       end
 
       # @param [REXML::Element] info_xml_element
