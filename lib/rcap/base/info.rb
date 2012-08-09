@@ -326,6 +326,31 @@ module RCAP
                                        [ AREAS_YAML,          @areas ]).to_yaml( options )
       end
 
+      # @param [Hash] info_yaml_data
+      # @return [Info]
+      def self.from_yaml_data( info_yaml_data ) 
+        self.new( :language       => info_yaml_data [ LANGUAGE_YAML ],
+                  :categories     => info_yaml_data [ CATEGORIES_YAML ],
+                  :event          => info_yaml_data [ EVENT_YAML ],
+                  :urgency        => info_yaml_data [ URGENCY_YAML ],
+                  :severity       => info_yaml_data [ SEVERITY_YAML ],
+                  :certainty      => info_yaml_data [ CERTAINTY_YAML ],
+                  :audience       => info_yaml_data [ AUDIENCE_YAML ],
+                  :effective      => ( effective = info_yaml_data[ EFFECTIVE_YAML ]).blank? ? nil : DateTime.parse( effective.to_s ),
+                  :onset          => ( onset = info_yaml_data[ ONSET_YAML ]).blank? ? nil : DateTime.parse( onset.to_s ),
+                  :expires        => ( expires = info_yaml_data[ EXPIRES_YAML ]).blank? ? nil : DateTime.parse( expires.to_s ),
+                  :sender_name    => info_yaml_data [ SENDER_NAME_YAML ],
+                  :headline       => info_yaml_data [ HEADLINE_YAML ],
+                  :description    => info_yaml_data [ DESCRIPTION_YAML ],
+                  :instruction    => info_yaml_data [ INSTRUCTION_YAML ],
+                  :web            => info_yaml_data [ WEB_YAML ],
+                  :contact        => info_yaml_data [ CONTACT_YAML ],
+                  :event_codes    => Array( info_yaml_data [ EVENT_CODES_YAML ]).map{ |name,value| EventCode.new( :name => name, :value => value )},
+                  :parameters     => Array( info_yaml_data [ PARAMETERS_YAML ]).map{ |parameter_yaml_data| Parameter.new( :name => name, :value => value )},
+                  :resources      => Array( info_yaml_data [ RESOURCES_YAML ]).map{ |resource_yaml_data| Resource.from_yaml_data( resource_yaml_data )},
+                  :areas          => Array( info_yaml_data [ AREAS_YAML ]).map{ |area_yaml_data| Area.from_yaml_data( area_yaml_data )})
+      end
+
       LANGUAGE_KEY       = 'language'       
       CATEGORIES_KEY     = 'categories'     
       EVENT_KEY          = 'event'          
