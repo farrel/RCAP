@@ -139,48 +139,14 @@ module RCAP
       # @return [Array<Area>] Collection of {Area} objects
       attr_reader( :areas )
 
-      # @param [Hash] attributes
-      # @option attributes [String] :language Defaults to {DEFAULT_LANGUAGE}
-      # @option attributes [Array<String>] :categories Collection of categories in {VALID_CATEGORIES}
-      # @option attributes [String] :audience
-      # @option attributes [String] :event
-      # @option attributes [String] :urgency A member of {VALID_URGENCIES}
-      # @option attributes [String] :severity A member of {VALID_SEVERITIES}
-      # @option attributes [String] :certainty A member of {VALID_CERTAINTIES}
-      # @option attributes [DateTime] :effective 
-      # @option attributes [DateTime] :onset
-      # @option attributes [DateTime] :expires
-      # @option attributes [Array<EventCode>] :event_codes Collection of {EventCode} objects
-      # @option attributes [String] :sender_name
-      # @option attributes [String] :headline
-      # @option attributes [String] :description
-      # @option attributes [String] :instruction
-      # @option attributes [String] :web URL
-      # @option attributes [String] :contact
-      # @option attributes [Array<Parameter>] :parameters Collection of {Parameter} objects
-      # @option attributes [Array<Resource>] :resources Collection of {Resource} objects 
-      # @option attributes [Array<Area>] :areas Collection of {Area} objects
-      def initialize( attributes = {} )
-        @language       = attributes[ :language ] || DEFAULT_LANGUAGE
-        @categories     = attributes[ :categories ] || []
-        @audience       = attributes[ :audience ]
-        @event          = attributes[ :event ]
-        @urgency        = attributes[ :urgency ]
-        @severity       = attributes[ :severity ]
-        @certainty      = attributes[ :certainty ]
-        @effective      = attributes[ :effective ]
-        @onset          = attributes[ :onset ]
-        @expires        = attributes[ :expires ]
-        @event_codes    = attributes[ :event_codes ] || []
-        @sender_name    = attributes[ :sender_name ]
-        @headline       = attributes[ :headline ]
-        @description    = attributes[ :description ]
-        @instruction    = attributes[ :instruction ]
-        @web            = attributes[ :web ]
-        @contact        = attributes[ :contact ]
-        @parameters     = attributes[ :parameters ] || []
-        @resources      = attributes[ :resources ] || []
-        @areas          = attributes[ :areas ] || []
+      def initialize
+        @language       = DEFAULT_LANGUAGE
+        @categories     = []
+        @event_codes    = []
+        @parameters     = []
+        @resources      = []
+        @areas          = []
+        yield( self ) if block_given?
       end
 
       # Creates a new EventCode object and adds it to the event_codes array. The
@@ -215,7 +181,7 @@ module RCAP
       # @see Resource#initialize
       #
       # @return [Resource]
-      def add_resource( resource_attributes = {})
+      def add_resource
         resource = self.resource_class.new
         yield( resource ) if block_given?
         @resources << resource
@@ -403,6 +369,47 @@ module RCAP
                                        [ EVENT_CODES_KEY,    @event_codes.map{ |event_code| event_code.to_h } ],
                                        [ PARAMETERS_KEY,     @parameters.map{ |parameter| parameter.to_h } ],
                                        [ AREAS_KEY,          @areas.map{ |area| area.to_h }])
+      end
+
+      # @param [Hash] info_hash
+      # @return [Info]
+      def self.from_h( info_hash ) 
+        self.new do |info|
+          info.language       = info_hash[ LANGUAGE_KEY ]
+          Array( info_hash[ CATEGORIES_KEY ]).each do |category|
+            info.categories << category
+          end
+          info.event          = info_hash[ EVENT_KEY ]
+          info.urgency        = info_hash[ URGENCY_KEY ]
+          info.severity       = info_hash[ SEVERITY_KEY ]
+          info.certainty      = info_hash[ CERTAINTY_KEY ]
+          info.audience       = info_hash[ AUDIENCE_KEY ]
+          info.effective      = RCAP.parse_datetime( info_hash[ EFFECTIVE_KEY ])
+          info.onset          = RCAP.parse_datetime( info_hash[ ONSET_KEY ])
+          info.expires        = RCAP.parse_datetime( info_hash[ EXPIRES_KEY ])
+          info.sender_name    = info_hash[ SENDER_NAME_KEY ]
+          info.headline       = info_hash[ HEADLINE_KEY ]
+          info.description    = info_hash[ DESCRIPTION_KEY ]
+          info.instruction    = info_hash[ INSTRUCTION_KEY ]
+          info.web            = info_hash[ WEB_KEY ]
+          info.contact        = info_hash[ CONTACT_KEY ]
+
+          Array( info_hash[ RESOURCES_KEY ]).each do |resource_hash|
+            info.resources << info.resource_class.from_h( resource_hash ) 
+          end
+
+          Array( info_hash[ EVENT_CODES_KEY ]).each do |event_code_hash|
+            info.event_codes << info.event_code_class.from_h( event_code_hash ) 
+          end
+
+          Array( info_hash[ PARAMETERS_KEY ]).each do |parameter_hash|
+            info.parameters << info.parameter_class.from_h( parameter_hash ) 
+          end
+
+          Array( info_hash[ AREAS_KEY ]).each do |area_hash|
+           info.areas <<  info.area_class.from_h( area_hash )
+          end
+        end
       end
     end
   end

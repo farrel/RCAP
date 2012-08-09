@@ -1,6 +1,52 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_0::Info ) do
+    def create_info
+      RCAP::CAP_1_0::Info.new do |info|
+        [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ].each do |category|
+          info.categories << category
+        end
+        info.event       = 'Event Description'
+        info.urgency     = RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE
+        info.severity    = RCAP::CAP_1_0::Info::SEVERITY_EXTREME
+        info.certainty   = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY
+        info.audience    = 'Audience'
+        info.effective   = DateTime.now
+        info.onset       = DateTime.now + 1
+        info.expires     = DateTime.now + 2
+        info.sender_name = 'Sender Name'
+        info.headline    = 'Headline'
+        info.description = 'Description'
+        info.instruction = 'Instruction'
+        info.web         = 'http://website'
+        info.contact     = 'contact@address'
+
+        info.add_resource do |resource|
+          resource.resource_desc = 'Resource Description'
+          resource.uri = 'http://tempuri.org/resource' 
+        end
+
+        [ [ 'name1', 'value1' ], [ 'name2', 'value2' ]].each do |name, value|
+          info.add_event_code do |event_code|
+            event_code.name = name
+            event_code.value = value
+          end
+        end
+
+        [ [ 'name1', 'value1' ], [ 'name2', 'value2' ]].each do |name, value|
+          info.add_parameter do |parameter|
+            parameter.name = name
+            parameter.value = value
+          end
+        end
+
+        [ 'Area1', 'Area2' ].each do |area_desc|
+          info.add_area do |area|
+            area.area_desc = area_desc
+          end
+        end
+      end      
+    end
   context( 'on initialisation' ) do
     before( :each ) do
       @info = RCAP::CAP_1_0::Info.new
@@ -47,30 +93,10 @@ describe( RCAP::CAP_1_0::Info ) do
       it( 'should parse areas correctly' ){          @info.areas.should_not( be_nil )      ; @info.areas.should          ==    @original_info.areas }
     end
 
+
     context( 'from XML' ) do
       before( :each ) do
-        @original_info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
-                                        :event          => 'Event Description',
-                                        :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
-                                        :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
-                                        :audience       => 'Audience',
-                                        :effective      => DateTime.now,
-                                        :onset          => DateTime.now + 1,
-                                        :expires        => DateTime.now + 2,
-                                        :sender_name    => 'Sender Name',
-                                        :headline       => 'Headline',
-                                        :description    => 'Description',
-                                        :instruction    => 'Instruction',
-                                        :web            => 'http://website',
-                                        :contact        => 'contact@address',
-                                        :event_codes => [ RCAP::CAP_1_0::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                          RCAP::CAP_1_0::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                        :parameters => [ RCAP::CAP_1_0::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                         RCAP::CAP_1_0::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                        :areas => [ RCAP::CAP_1_0::Area.new( :area_desc => 'Area1' ),
-                                          RCAP::CAP_1_0::Area.new( :area_desc => 'Area2' )]
-                                      )
+        @original_info = create_info 
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.infos << @original_info 
         @xml_string = @alert.to_xml
@@ -83,28 +109,7 @@ describe( RCAP::CAP_1_0::Info ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
-                                        :event          => 'Event Description',
-                                        :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
-                                        :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
-                                        :audience       => 'Audience',
-                                        :effective      => DateTime.now,
-                                        :onset          => DateTime.now + 1,
-                                        :expires        => DateTime.now + 2,
-                                        :sender_name    => 'Sender Name',
-                                        :headline       => 'Headline',
-                                        :description    => 'Description',
-                                        :instruction    => 'Instruction',
-                                        :web            => 'http://website',
-                                        :contact        => 'contact@address',
-                                        :event_codes => [ RCAP::CAP_1_0::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                          RCAP::CAP_1_0::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                        :parameters => [ RCAP::CAP_1_0::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                         RCAP::CAP_1_0::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                        :areas => [ RCAP::CAP_1_0::Area.new( :area_desc => 'Area1' ),
-                                          RCAP::CAP_1_0::Area.new( :area_desc => 'Area2' )]
-                                      )
+        @original_info = create_info 
         @info = RCAP::CAP_1_0::Info.from_h( @original_info.to_h )
       end
       it_should_behave_like( "it can parse into a CAP 1.0 Info object" )
@@ -113,11 +118,13 @@ describe( RCAP::CAP_1_0::Info ) do
 
   context( 'is not valid if it' ) do
     before( :each ) do
-      @info = RCAP::CAP_1_0::Info.new( :event => 'Info Event',
-                            :categories => [ RCAP::CAP_1_0::Info::CATEGORY_GEO ],
-                            :urgency => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
-                            :severity => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                            :certainty => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY )
+      @info = RCAP::CAP_1_0::Info.new do |info|
+        info.event = 'Info Event'
+        info.categories <<  RCAP::CAP_1_0::Info::CATEGORY_GEO 
+        info.urgency = RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE
+        info.severity = RCAP::CAP_1_0::Info::SEVERITY_EXTREME
+        info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY 
+      end
       @info.valid?
       puts @info.errors.full_messages
       @info.should( be_valid )
@@ -148,28 +155,7 @@ describe( RCAP::CAP_1_0::Info ) do
   describe( 'when exported' ) do
     context( 'to hash' ) do
       before( :each ) do
-        @info = RCAP::CAP_1_0::Info.new( :categories     => [ RCAP::CAP_1_0::Info::CATEGORY_GEO, RCAP::CAP_1_0::Info::CATEGORY_FIRE ],
-                                :event          => 'Event Description',
-                                :urgency        => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
-                                :severity       => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                :certainty      => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY,
-                                :audience       => 'Audience',
-                                :effective      => DateTime.now,
-                                :onset          => DateTime.now + 1,
-                                :expires        => DateTime.now + 2,
-                                :sender_name    => 'Sender Name',
-                                :headline       => 'Headline',
-                                :description    => 'Description',
-                                :instruction    => 'Instruction',
-                                :web            => 'http://website',
-                                :contact        => 'contact@address',
-                                :resources      => [ RCAP::CAP_1_0::Resource.new( :resource_desc => 'Resource Description', :uri => 'http://tempuri.org/resource' )],
-                                :event_codes    => [ RCAP::CAP_1_0::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                     RCAP::CAP_1_0::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                :parameters     => [ RCAP::CAP_1_0::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                     RCAP::CAP_1_0::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                :areas          => [ RCAP::CAP_1_0::Area.new( :area_desc => 'Area1' ),
-                                                     RCAP::CAP_1_0::Area.new( :area_desc => 'Area2' )])
+        @info = create_info
         @info_hash = @info.to_h
       end
 
@@ -262,7 +248,10 @@ describe( RCAP::CAP_1_0::Info ) do
 
     describe( '#add_event_code' ) do
       before( :each ) do
-        @event_code = @info.add_event_code( name: 'Event Code', value: '1234' )
+        @event_code = @info.add_event_code do |event_code|
+           event_code.name = 'Event Code'
+           event_code.value = '1234' 
+        end
       end
 
       it( 'should return a 1.0 EventCode' ) do
@@ -297,7 +286,9 @@ describe( RCAP::CAP_1_0::Info ) do
 
     describe( '#add_resource' ) do
       before( :each ) do
-        @resource = @info.add_resource( resource_desc: 'Resource' )
+        @resource = @info.add_resource do |resource|
+          resource.resource_desc = 'Resource' 
+        end
       end
 
       it( 'should return a 1.0 Resource' ) do
