@@ -329,26 +329,48 @@ module RCAP
       # @param [Hash] info_yaml_data
       # @return [Info]
       def self.from_yaml_data( info_yaml_data ) 
-        self.new( :language       => info_yaml_data [ LANGUAGE_YAML ],
-                  :categories     => info_yaml_data [ CATEGORIES_YAML ],
-                  :event          => info_yaml_data [ EVENT_YAML ],
-                  :urgency        => info_yaml_data [ URGENCY_YAML ],
-                  :severity       => info_yaml_data [ SEVERITY_YAML ],
-                  :certainty      => info_yaml_data [ CERTAINTY_YAML ],
-                  :audience       => info_yaml_data [ AUDIENCE_YAML ],
-                  :effective      => ( effective = info_yaml_data[ EFFECTIVE_YAML ]).blank? ? nil : DateTime.parse( effective.to_s ),
-                  :onset          => ( onset = info_yaml_data[ ONSET_YAML ]).blank? ? nil : DateTime.parse( onset.to_s ),
-                  :expires        => ( expires = info_yaml_data[ EXPIRES_YAML ]).blank? ? nil : DateTime.parse( expires.to_s ),
-                  :sender_name    => info_yaml_data [ SENDER_NAME_YAML ],
-                  :headline       => info_yaml_data [ HEADLINE_YAML ],
-                  :description    => info_yaml_data [ DESCRIPTION_YAML ],
-                  :instruction    => info_yaml_data [ INSTRUCTION_YAML ],
-                  :web            => info_yaml_data [ WEB_YAML ],
-                  :contact        => info_yaml_data [ CONTACT_YAML ],
-                  :event_codes    => Array( info_yaml_data [ EVENT_CODES_YAML ]).map{ |name,value| EventCode.new( :name => name, :value => value )},
-                  :parameters     => Array( info_yaml_data [ PARAMETERS_YAML ]).map{ |parameter_yaml_data| Parameter.new( :name => name, :value => value )},
-                  :resources      => Array( info_yaml_data [ RESOURCES_YAML ]).map{ |resource_yaml_data| Resource.from_yaml_data( resource_yaml_data )},
-                  :areas          => Array( info_yaml_data [ AREAS_YAML ]).map{ |area_yaml_data| Area.from_yaml_data( area_yaml_data )})
+        self.new do |info|
+          info.language    = info_yaml_data [ LANGUAGE_YAML ]
+          Array( info_yaml_data [ CATEGORIES_YAML ] ) do |category|
+            info.categories << category
+          end
+          info.event       = info_yaml_data [ EVENT_YAML ]
+          info.urgency     = info_yaml_data [ URGENCY_YAML ]
+          info.severity    = info_yaml_data [ SEVERITY_YAML ]
+          info.certainty   = info_yaml_data [ CERTAINTY_YAML ]
+          info.audience    = info_yaml_data [ AUDIENCE_YAML ]
+          info.effective   = ( effective = info_yaml_data[ EFFECTIVE_YAML ]).blank? ? nil : DateTime.parse( effective.to_s )
+          info.onset       = ( onset = info_yaml_data[ ONSET_YAML ]).blank? ? nil : DateTime.parse( onset.to_s )
+          info.expires     = ( expires = info_yaml_data[ EXPIRES_YAML ]).blank? ? nil : DateTime.parse( expires.to_s )
+          info.sender_name = info_yaml_data [ SENDER_NAME_YAML ]
+          info.headline    = info_yaml_data [ HEADLINE_YAML ]
+          info.description = info_yaml_data [ DESCRIPTION_YAML ]
+          info.instruction = info_yaml_data [ INSTRUCTION_YAML ]
+          info.web         = info_yaml_data [ WEB_YAML ]
+          info.contact     = info_yaml_data [ CONTACT_YAML ]
+
+          Array( info_yaml_data [ EVENT_CODES_YAML ]).each do  |name,value|
+            EventCode.new do |event_code|
+              event_code.name = name
+              event_code.value = value 
+            end
+          end
+
+          Array( info_yaml_data [ PARAMETERS_YAML ]).each do |parameter_yaml_data|
+            info.parameters << info.parameter_class.new do |parameter|
+              parameter.name = name
+              parameter.value = value
+            end
+          end
+
+          Array( info_yaml_data [ RESOURCES_YAML ]).each do |resource_yaml_data|
+            info.resources << info.resource_class.from_yaml_data( resource_yaml_data )
+          end
+
+          Array( info_yaml_data [ AREAS_YAML ]).each do |area_yaml_data|
+            info.areas << info.area_class.from_yaml_data( area_yaml_data )
+          end
+        end
       end
 
       LANGUAGE_KEY       = 'language'       

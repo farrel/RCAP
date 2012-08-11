@@ -90,20 +90,14 @@ module RCAP
       # @option attributes [Array<String>] :references see {#to_reference}
       # @option attributes [Array<String>] :incidents
       # @option attributes [Array<Info>] :infos
-      def initialize( attributes = {})
-        @identifier  = attributes[ :identifier ] || RCAP.generate_identifier
-        @sender      = attributes[ :sender ]
-        @sent        = attributes[ :sent ]
-        @status      = attributes[ :status ]
-        @msg_type    = attributes[ :msg_type ]
-        @scope       = attributes[ :scope ]
-        @source      = attributes[ :source ]
-        @restriction = attributes[ :restriction ]
-        @addresses   = attributes[ :addresses ] || []
-        @codes       = attributes[ :codes ] || []
-        @references  = attributes[ :references ] || []
-        @incidents   = attributes[ :incidents ] || []
-        @infos       = attributes[ :infos ] || []
+      def initialize
+        @identifier  = RCAP.generate_identifier
+        @addresses   = []
+        @codes       = []
+        @references  = []
+        @incidents   = []
+        @infos       = []
+        yield ( self ) if block_given?
       end
 
       # Creates a new {Info} object and adds it to the {#infos array}. 
@@ -238,6 +232,40 @@ module RCAP
       NOTE_XPATH        = "cap:#{ NOTE_ELEMENT_NAME }"        
       REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"  
       INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"   
+
+      # @param [REXML::Element] alert_xml_element
+      # @return [RCAP::CAP_1_0::Alert]
+      def self.from_xml_element( alert_xml_element ) 
+        self.new do |alert|
+          alert.identifier  = RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, Alert::XMLNS )
+          alert.sender      = RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS )
+          alert.sent        = (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil )
+          alert.status      = RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS )
+          alert.msg_type    = RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS )
+          alert.source      = RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS )
+          alert.scope       = RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS )
+          alert.restriction = RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS )
+
+          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : [] ).each do |address|
+            alert.addresses << address
+          end
+          RCAP.xpath_match( alert_xml_element, CODE_XPATH, Alert::XMLNS ).each do |element| 
+            alert.codes << element.text 
+          end
+          alert.note        = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS )
+          (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : []).each do |reference|
+            alert.references << reference
+          end
+
+          (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : []).each do |incident|
+            alert.incidents << incident
+          end
+
+          RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).each do |element|
+            alert.info_class.from_xml_element( element )
+          end
+        end
+      end
 
       # @param [REXML::Document] xml_document
       # @return [Alert]

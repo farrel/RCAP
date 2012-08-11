@@ -151,13 +151,15 @@ describe( RCAP::CAP_1_0::Alert ) do
 
     context( 'has an info element and it' ) do
       it( 'is not valid' ) do
-        @info = RCAP::CAP_1_0::Info.new( :event => 'Info Event',
-                                        :urgency => RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE,
-                                        :severity => RCAP::CAP_1_0::Info::SEVERITY_EXTREME,
-                                        :certainty => RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY )
+        @info = @alert.add_info do |info|
+          info.event     = 'Info Event'
+          info.urgency   = RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE
+          info.severity  = RCAP::CAP_1_0::Info::SEVERITY_EXTREME
+          info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY 
+        end
         @info.categories << RCAP::CAP_1_0::Info::CATEGORY_GEO
         @info.event = nil
-        @alert.infos << @info
+
         @info.should_not( be_valid )
         @alert.should_not( be_valid )
       end
@@ -171,7 +173,10 @@ describe( RCAP::CAP_1_0::Alert ) do
 
     describe( '#add_info' ) do
       before( :each ) do
-        @info = @alert.add_info( :urgency => 'urgent' )
+        @info = @alert.add_info do |info|
+          info.urgency = 'urgent' 
+        end
+
         @info.urgency.should == 'urgent'
       end
 
