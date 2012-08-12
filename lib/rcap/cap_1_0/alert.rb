@@ -17,6 +17,10 @@ module RCAP
       # @return [String]
       attr_accessor( :password )
 
+      def info_class
+        Info
+      end
+
       # Creates a new {Info} object and adds it to the {#infos} array. 
       # 
       # @see Info#initialize
@@ -171,21 +175,9 @@ module RCAP
       # @param [Hash] alert_hash
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
-        self.new( :identifier  => alert_hash[ IDENTIFIER_KEY ],
-                  :sender      => alert_hash[ SENDER_KEY ],
-                  :sent        => RCAP.parse_datetime( alert_hash[ SENT_KEY ]),
-                  :status      => alert_hash[ STATUS_KEY ],
-                  :msg_type    => alert_hash[ MSG_TYPE_KEY ],
-                  :password    => alert_hash[ PASSWORD_KEY ],
-                  :source      => alert_hash[ SOURCE_KEY ],
-                  :scope       => alert_hash[ SCOPE_KEY ],
-                  :restriction => alert_hash[ RESTRICTION_KEY ],
-                  :addresses   => alert_hash[ ADDRESSES_KEY ],
-                  :codes       => alert_hash[ CODES_KEY ],
-                  :note        => alert_hash[ NOTE_KEY ],
-                  :references  => alert_hash[ REFERENCES_KEY ],
-                  :incidents   => alert_hash[ INCIDENTS_KEY ],
-                  :infos       => Array( alert_hash[ INFOS_KEY ]).map{ |info_hash| Info.from_h( info_hash )})
+        alert = super
+        alert.password = alert_hash[ PASSWORD_KEY ]
+        alert
       end
     end
   end

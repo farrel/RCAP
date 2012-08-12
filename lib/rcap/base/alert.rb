@@ -363,6 +363,41 @@ module RCAP
                                        [ INFOS_KEY,       @infos.map{ |info| info.to_h  }])
       end
 
+      # Initialises an Alert object from a Hash produced by Alert#to_h
+      #
+      # @param [Hash] alert_hash
+      # @return [RCAP::CAP_1_0::Alert]
+      def self.from_h( alert_hash )
+        self.new do |alert|
+          alert.identifier  = alert_hash[ IDENTIFIER_KEY ]
+          alert.sender      = alert_hash[ SENDER_KEY ]
+          alert.sent        = RCAP.parse_datetime( alert_hash[ SENT_KEY ])
+          alert.status      = alert_hash[ STATUS_KEY ]
+          alert.msg_type    = alert_hash[ MSG_TYPE_KEY ]
+          alert.source      = alert_hash[ SOURCE_KEY ]
+          alert.scope       = alert_hash[ SCOPE_KEY ]
+          alert.restriction = alert_hash[ RESTRICTION_KEY ]
+          Array( alert_hash[ ADDRESSES_KEY ]).each do |address|
+            alert.addresses << address
+          end
+          Array( alert_hash[ CODES_KEY ]).each do |code|
+            alert.codes << code
+          end
+          alert.note = alert_hash[ NOTE_KEY ]
+          Array( alert_hash[ REFERENCES_KEY ]).each do |reference|
+            alert.references << reference
+          end
+
+          Array( alert_hash[ INCIDENTS_KEY ]).each do |incident|
+            alert.incidents << incident
+          end
+
+          Array( alert_hash[ INFOS_KEY ]).each do |info_hash|
+            alert.info_class.from_h( info_hash )
+          end
+        end
+      end
+
       # Returns a JSON string representation of an Alert object
       #
       # @param [true,false] pretty_print

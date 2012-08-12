@@ -5,18 +5,31 @@ describe( RCAP::CAP_1_0::Alert ) do
     before( :each )  do
       @alert = RCAP::CAP_1_0::Alert.new
 
-      @original_alert = RCAP::CAP_1_0::Alert.new( :sender      => 'Sender',
-                                                 :sent        => DateTime.now,
-                                                 :status      => RCAP::CAP_1_0::Alert::STATUS_TEST,
-                                                 :scope       => RCAP::CAP_1_0::Alert::SCOPE_PUBLIC,
-                                                 :source      => 'Source',
-                                                 :restriction => 'No Restriction',
-                                                 :addresses   => [ 'Address 1', 'Address 2'],
-                                                 :codes       => [ 'Code1', 'Code2' ],
-                                                 :note        => 'Note',
-                                                 :references  => [ RCAP::CAP_1_0::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_0::Alert.new( :sender => 'Sender2' ).to_reference ],
-                                                 :incidents   => [ 'Incident1', 'Incident2' ],
-                                                 :infos       => [ RCAP::CAP_1_0::Info.new, RCAP::CAP_1_0::Info.new ])
+      @original_alert = RCAP::CAP_1_0::Alert.new do |alert|
+        alert.sender      = 'Sender'
+        alert.sent        = DateTime.now
+        alert.status      = RCAP::CAP_1_0::Alert::STATUS_TEST
+        alert.scope       = RCAP::CAP_1_0::Alert::SCOPE_PUBLIC
+        alert.source      = 'Source'
+        alert.restriction = 'No Restriction'
+        [ 'Address 1', 'Address 2'].each do |address|
+          alert.addresses << address
+        end
+        [ 'Code1', 'Code2' ].each do |code|
+          alert.codes << code
+        end
+        alert.note = 'Note'
+        [ 'Sender1','Sender2' ].each do |sender|
+          a = RCAP::CAP_1_0::Alert.new do |a|
+            a.sender = sender
+          end
+          alert.references << a.to_reference
+        end
+        [ 'Incident1', 'Incident2' ].each do |incident|
+          alert.incidents << incident
+        end
+        2.times{ alert.add_info }
+      end
     end
 
     it( 'should have a identifier' ){ @alert.identifier.should_not( be_nil )}
@@ -93,12 +106,14 @@ describe( RCAP::CAP_1_0::Alert ) do
 
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @alert = RCAP::CAP_1_0::Alert.new( :identifier => 'Identifier',
-                                         :sender     => "cap@tempuri.org",
-                                         :sent       => DateTime.now,
-                                         :status     => RCAP::CAP_1_0::Alert::STATUS_TEST,
-                                         :msg_type   => RCAP::CAP_1_0::Alert::MSG_TYPE_ALERT,
-                                         :scope      => RCAP::CAP_1_0::Alert::SCOPE_PUBLIC )
+      @alert = RCAP::CAP_1_0::Alert.new do |alert|
+         alert.identifier = 'Identifier'
+         alert.sender     = "cap@tempuri.org"
+         alert.sent       = DateTime.now
+         alert.status     = RCAP::CAP_1_0::Alert::STATUS_TEST
+         alert.msg_type   = RCAP::CAP_1_0::Alert::MSG_TYPE_ALERT
+         alert.scope      = RCAP::CAP_1_0::Alert::SCOPE_PUBLIC 
+      end
       @alert.should( be_valid )
     end
 
