@@ -17,19 +17,12 @@ module RCAP
       # @return [String]
       attr_accessor( :password )
 
-      def info_class
-        Info
+      def xmlns
+        XMLNS
       end
 
-      # Creates a new {Info} object and adds it to the {#infos} array. 
-      # 
-      # @see Info#initialize
-      # @return [Info]
-      def add_info
-        info = Info.new
-        yield( info ) if block_given?
-        @infos << info
-        info
+      def info_class
+        Info
       end
 
       PASSWORD_ELEMENT_NAME    = 'password'    

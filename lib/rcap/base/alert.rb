@@ -100,13 +100,13 @@ module RCAP
         yield ( self ) if block_given?
       end
 
-      # Creates a new {Info} object and adds it to the {#infos array}. 
+      # Creates a new {Info} object and adds it to the {#infos} array. 
       # 
       # @see Info#initialize
-      # @param [Hash] info_attributes Info attributes - see {Info#initialize}
       # @return [Info]
-      def add_info( info_attributes  = {})
-        info = Info.new( info_attributes )
+      def add_info
+        info = self.info_class.new
+        yield( info ) if block_given?
         @infos << info
         info
       end
@@ -237,31 +237,31 @@ module RCAP
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_xml_element( alert_xml_element ) 
         self.new do |alert|
-          alert.identifier  = RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, Alert::XMLNS )
-          alert.sender      = RCAP.xpath_text( alert_xml_element, SENDER_XPATH, Alert::XMLNS )
-          alert.sent        = (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, Alert::XMLNS )) ? DateTime.parse( sent.text ) : nil )
-          alert.status      = RCAP.xpath_text( alert_xml_element, STATUS_XPATH, Alert::XMLNS )
-          alert.msg_type    = RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, Alert::XMLNS )
-          alert.source      = RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, Alert::XMLNS )
-          alert.scope       = RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, Alert::XMLNS )
-          alert.restriction = RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, Alert::XMLNS )
+          alert.identifier  = RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, alert.xmlns )
+          alert.sender      = RCAP.xpath_text( alert_xml_element, SENDER_XPATH, alert.xmlns )
+          alert.sent        = (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, alert.xmlns )) ? DateTime.parse( sent.text ) : nil )
+          alert.status      = RCAP.xpath_text( alert_xml_element, STATUS_XPATH, alert.xmlns )
+          alert.msg_type    = RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, alert.xmlns )
+          alert.source      = RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, alert.xmlns )
+          alert.scope       = RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, alert.xmlns )
+          alert.restriction = RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, alert.xmlns )
 
-          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, Alert::XMLNS )) ? address.unpack_cap_list : [] ).each do |address|
+          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, alert.xmlns )) ? address.unpack_cap_list : [] ).each do |address|
             alert.addresses << address
           end
-          RCAP.xpath_match( alert_xml_element, CODE_XPATH, Alert::XMLNS ).each do |element| 
+          RCAP.xpath_match( alert_xml_element, CODE_XPATH, alert.xmlns ).each do |element| 
             alert.codes << element.text 
           end
-          alert.note        = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, Alert::XMLNS )
-          (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, Alert::XMLNS )) ? references.split( ' ' ) : []).each do |reference|
+          alert.note        = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, alert.xmlns )
+          (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, alert.xmlns )) ? references.split( ' ' ) : []).each do |reference|
             alert.references << reference
           end
 
-          (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, Alert::XMLNS )) ? incidents.split( ' ' ) : []).each do |incident|
+          (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, alert.xmlns )) ? incidents.split( ' ' ) : []).each do |incident|
             alert.incidents << incident
           end
 
-          RCAP.xpath_match( alert_xml_element, Info::XPATH, Alert::XMLNS ).each do |element|
+          RCAP.xpath_match( alert_xml_element, Info::XPATH, alert.xmlns ).each do |element|
             alert.info_class.from_xml_element( element )
           end
         end
