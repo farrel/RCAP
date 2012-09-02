@@ -89,7 +89,7 @@ describe( RCAP::CAP_1_0::Info ) do
       it( 'should parse contact correctly' ){        @info.contact.should_not( be_nil )    ; @info.contact.should        ==    @original_info.contact }
       it( 'should parse event_codes correctly' ){    @info.event_codes.should_not( be_nil ); @info.event_codes.should    ==    @original_info.event_codes }
       it( 'should parse parameters correctly' ){     @info.parameters.should_not( be_nil ) ; @info.parameters.should     ==    @original_info.parameters }
-      it( 'should parse resources correctly' ){      @info.resources.should_not( be_nil )  ; @info.resources.should      ==    @original_info.resources }
+      it( 'should parse resources correctly' ){      @info.resources.should_not( be_nil )  ; @info.resources.map( &:to_s ).should      ==    @original_info.resources.map( &:to_s )}
       it( 'should parse areas correctly' ){          @info.areas.should_not( be_nil )      ; @info.areas.should          ==    @original_info.areas }
     end
 

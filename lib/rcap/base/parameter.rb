@@ -68,7 +68,10 @@ module RCAP
       # @return [Parameter]
       def self.from_h( hash ) 
         key = hash.keys.first
-        self.new( :name => key, :value => hash[ key ])
+        self.new do |parameter|
+          parameter.name = key
+          parameter.value = hash[ key ]
+        end
       end
     end
   end
