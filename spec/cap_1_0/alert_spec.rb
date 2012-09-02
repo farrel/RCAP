@@ -60,7 +60,7 @@ describe( RCAP::CAP_1_0::Alert ) do
       it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
       it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
       it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
-      it( 'should parse infos correctly' ) do
+      it( 'should parse infos correctly' ) do           
         @alert.infos.size.should == @original_alert.infos.size
         @alert.infos.each{ |info| info.class.should == RCAP::CAP_1_0::Info }
       end

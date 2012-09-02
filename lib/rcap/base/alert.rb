@@ -262,7 +262,7 @@ module RCAP
           end
 
           RCAP.xpath_match( alert_xml_element, Info::XPATH, alert.xmlns ).each do |element|
-            alert.info_class.from_xml_element( element )
+            alert.infos << alert.info_class.from_xml_element( element )
           end
         end
       end
@@ -324,6 +324,35 @@ module RCAP
       # @return [Alert]
       def self.from_yaml( yaml )
         self.from_yaml_data( YAML.load( yaml ))
+      end
+
+      def self.from_yaml_data( alert_yaml_data )
+        self.new do |alert|
+          alert.identifier  = alert_yaml_data[ IDENTIFIER_YAML ]
+          alert.sender      = alert_yaml_data[ SENDER_YAML ]
+          alert.sent        = ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s )
+          alert.status      = alert_yaml_data[ STATUS_YAML ]
+          alert.msg_type    = alert_yaml_data[ MSG_TYPE_YAML ]
+          alert.source      = alert_yaml_data[ SOURCE_YAML ]
+          alert.scope       = alert_yaml_data[ SCOPE_YAML ]
+          alert.restriction = alert_yaml_data[ RESTRICTION_YAML ]
+          Array( alert_yaml_data[ ADDRESSES_YAML ]).each do |address|
+            alert.addresses << address
+          end
+          Array( alert_yaml_data[ CODES_YAML ]).each do |code|
+            alert.codes << code
+          end
+          alert.note        = alert_yaml_data[ NOTE_YAML ]
+          Array( alert_yaml_data[ REFERENCES_YAML ]).each do |reference|
+            alert.references << reference
+          end
+          Array( alert_yaml_data[ INCIDENTS_YAML ]).each do |incident|
+            alert.incidents << incident
+          end
+          Array( alert_yaml_data[ INFOS_YAML ]).each do |info_yaml_data|
+            alert.infos <<  alert.info_class.from_yaml_data( info_yaml_data )
+          end
+        end
       end
 
       CAP_VERSION_KEY = 'cap_version' 
@@ -393,7 +422,7 @@ module RCAP
           end
 
           Array( alert_hash[ INFOS_KEY ]).each do |info_hash|
-            alert.info_class.from_h( info_hash )
+            alert.infos << alert.info_class.from_h( info_hash )
           end
         end
       end

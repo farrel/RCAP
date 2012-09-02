@@ -88,9 +88,9 @@ module RCAP
       # @param [REXML::Element] alert_xml_element
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_xml_element( alert_xml_element ) 
-        alert = super( alert_xml_element )
-        alert.password = RCAP.xpath_text( alert_xml_element, PASSWORD_XPATH, Alert::XMLNS )
-        alert
+        super.tap do |alert|
+          alert.password = RCAP.xpath_text( alert_xml_element, PASSWORD_XPATH, Alert::XMLNS )
+        end
       end
 
 
@@ -121,22 +121,9 @@ module RCAP
       # @param [Hash] alert_yaml_data
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml_data( alert_yaml_data ) 
-        Alert.new( :identifier  => alert_yaml_data[ IDENTIFIER_YAML ],
-                   :sender      => alert_yaml_data[ SENDER_YAML ],
-                   :sent        => ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s ),
-                   :status      => alert_yaml_data[ STATUS_YAML ],
-                   :msg_type    => alert_yaml_data[ MSG_TYPE_YAML ],
-                   :password    => alert_yaml_data[ PASSWORD_YAML ],
-                   :source      => alert_yaml_data[ SOURCE_YAML ],
-                   :scope       => alert_yaml_data[ SCOPE_YAML ],
-                   :restriction => alert_yaml_data[ RESTRICTION_YAML ],
-                   :addresses   => alert_yaml_data[ ADDRESSES_YAML ],
-                   :codes       => alert_yaml_data[ CODES_YAML ],
-                   :note        => alert_yaml_data[ NOTE_YAML ],
-                   :references  => alert_yaml_data[ REFERENCES_YAML ],
-                   :incidents   => alert_yaml_data[ INCIDENTS_YAML ],
-                   :infos       => Array( alert_yaml_data[ INFOS_YAML ]).map{ |info_yaml_data| Info.from_yaml_data( info_yaml_data )}
-        )
+        super.tap do |alert|
+          alert.password    = alert_yaml_data[ PASSWORD_YAML ]
+        end
       end
 
       PASSWORD_KEY    = 'password'    
@@ -168,9 +155,9 @@ module RCAP
       # @param [Hash] alert_hash
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
-        alert = super
-        alert.password = alert_hash[ PASSWORD_KEY ]
-        alert
+        super.tap do |alert|
+          alert.password = alert_hash[ PASSWORD_KEY ]
+        end
       end
     end
   end
