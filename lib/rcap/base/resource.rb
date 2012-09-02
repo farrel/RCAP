@@ -36,12 +36,8 @@ module RCAP
       # @option attributes [String] :uri
       # @option attributes [String] :digest
       # @option attributes [String] :resource_desc
-      def initialize( attributes = {} )
-        @mime_type     = attributes[ :mime_type ]
-        @size          = attributes[ :size ]
-        @uri           = attributes[ :uri ]
-        @digest        = attributes[ :digest ]
-        @resource_desc = attributes[ :resource_desc ]
+      def initialize
+        yield( self ) if block_given?
       end
 
       # @return [REXML::Element]
@@ -54,15 +50,17 @@ module RCAP
         xml_element.add_element( DIGEST_ELEMENT_NAME ).add_text( @digest )       if @digest
         xml_element
       end
-      
+
       # @param [REXML::Element] resource_xml_element
       # @return [Resource]
       def self.from_xml_element( resource_xml_element ) 
-        resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
-                             :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),
-                             :mime_type     => RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH, Alert::XMLNS ),
-                             :size          => RCAP.xpath_text( resource_xml_element, SIZE_XPATH, Alert::XMLNS ).to_i,
-                             :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, Alert::XMLNS ))
+        resource = self.new do |resource|
+          resource.resource_desc = RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, resource.xmlns )
+          resource.uri           = RCAP.xpath_text( resource_xml_element, URI_XPATH, resource.xmlns )
+          resource.mime_type     = RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH, resource.xmlns )
+          resource.size          = RCAP.xpath_text( resource_xml_element, SIZE_XPATH, resource.xmlns ).to_i
+          resource.digest        = RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, resource.xmlns )
+        end
       end
       
       # Calculates the SHA-1 hash and size of the contents of {#deref_uri}.
@@ -130,11 +128,13 @@ module RCAP
       # @param [Hash] resource_yaml_data
       # @return [Resource]
       def self.from_yaml_data( resource_yaml_data ) 
-        self.new( :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
-                  :uri           => reource_yaml_data[ URI_YAML ],
-                  :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
-                  :size          => reource_yaml_data[ SIZE_YAML ],
-                  :digest        => reource_yaml_data[ DIGEST_YAML ])
+        self.new do |resource|
+          resource.resource_desc = resource_yaml_data[ RESOURCE_DESC_YAML ]
+          resource.uri           = resource_yaml_data[ URI_YAML ]
+          resource.mime_type     = resource_yaml_data[ MIME_TYPE_YAML ]
+          resource.size          = resource_yaml_data[ SIZE_YAML ]
+          resource.digest        = resource_yaml_data[ DIGEST_YAML ]
+        end
       end
 
       RESOURCE_DESC_KEY = 'resource_desc' 
@@ -155,11 +155,13 @@ module RCAP
       # @param [Hash] resource_hash
       # @return [Resource]
       def self.from_h( resource_hash ) 
-        self.new( :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
-                  :uri           => resource_hash[ URI_KEY ],
-                  :mime_type     => resource_hash[ MIME_TYPE_KEY ],
-                  :size          => resource_hash[ SIZE_KEY ],
-                  :digest        => resource_hash[ DIGEST_KEY ])
+        self.new do |resource|
+          resource.resource_desc = resource_hash[ RESOURCE_DESC_KEY ]
+          resource.uri           = resource_hash[ URI_KEY ]
+          resource.mime_type     = resource_hash[ MIME_TYPE_KEY ]
+          resource.size          = resource_hash[ SIZE_KEY ]
+          resource.digest        = resource_hash[ DIGEST_KEY ]
+        end
       end
     end
   end

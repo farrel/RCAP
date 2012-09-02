@@ -14,12 +14,13 @@ describe( RCAP::CAP_1_0::Resource ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_resource = RCAP::CAP_1_0::Resource.new
-        @original_resource.resource_desc = "Image of incident"
-        @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-        @original_resource.mime_type     = 'image/png'
-        @original_resource.size          = 20480
-        @original_resource.digest        = "2048"
+        @original_resource = RCAP::CAP_1_0::Resource.new do |resource|
+          resource.resource_desc = "Image of incident"
+          resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+          resource.mime_type     = 'image/png'
+          resource.size          = 20480
+          resource.digest        = "2048"
+        end
 
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info.resources << @original_resource 
@@ -55,12 +56,13 @@ describe( RCAP::CAP_1_0::Resource ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_resource = RCAP::CAP_1_0::Resource.new
-        @original_resource.resource_desc = "Image of incident"
-        @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-        @original_resource.mime_type     = 'image/png'
-        @original_resource.size          = 20480
-        @original_resource.digest        = "2048"
+        @original_resource = RCAP::CAP_1_0::Resource.new do |resource|
+          resource.resource_desc = "Image of incident"
+          resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+          resource.mime_type     = 'image/png'
+          resource.size          = 20480
+          resource.digest        = "2048"
+        end
 
         @resource = RCAP::CAP_1_0::Resource.from_h( @original_resource.to_h )
       end
@@ -90,12 +92,13 @@ describe( RCAP::CAP_1_0::Resource ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_0::Resource.new
-      @resource.resource_desc = "Image of incident"
-      @resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-      @resource.mime_type     = 'image/png'
-      @resource.size          = 20480
-      @resource.digest        = "2048"
+      @resource = RCAP::CAP_1_0::Resource.new do |resource|
+        resource.resource_desc = "Image of incident"
+        resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+        resource.mime_type     = 'image/png'
+        resource.size          = 20480
+        resource.digest        = "2048"
+      end
     end
 
     context( 'to a hash' ) do
@@ -133,7 +136,10 @@ describe( RCAP::CAP_1_0::Resource ) do
 
   context( 'which is valid' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_0::Resource.new( :resource_desc => 'Resource Description' )
+      @resource = RCAP::CAP_1_0::Resource.new do |resource|
+        resource.resource_desc = 'Resource Description' 
+      end
+
       @resource.should( be_valid )
     end
 
