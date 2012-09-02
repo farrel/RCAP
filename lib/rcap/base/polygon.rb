@@ -15,14 +15,16 @@ module RCAP
       
       # @param [Hash] attributes
       # @option attributes [Array<Point>] :points Collection of {Point} objects
-      def initialize( attributes = {})
-        @points = attributes[ :points ] || []
+      def initialize
+        @points =  []
+        yield( self ) if block_given?
       end
 
       def add_point
         point = self.point_class.new
         yield( point ) if block_given?
         self.points << point
+        point
       end
 
       # Returns a string representation of the polygon of the form

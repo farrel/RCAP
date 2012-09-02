@@ -60,9 +60,6 @@ describe( RCAP::CAP_1_0::Area ) do
       end
 
       it( 'should parse the polygons correctly' ) do
-        puts @original_area.to_yaml
-        puts "========="
-        puts @area.to_yaml
         @area.polygons.should == @original_area.polygons
       end
     end
@@ -214,13 +211,15 @@ describe( RCAP::CAP_1_0::Area ) do
 
     context( 'it contains geocodes and it' ) do
       before( :each ) do
-        @geocode = RCAP::CAP_1_0::Geocode.new( :name => 'foo', :value => 'bar' )
-        @area.geocodes << @geocode
+        @area.add_geocode do |geocode|
+          geocode.name = 'foo'
+          geocode.value = 'bar' 
+        end
         @area.should( be_valid )
       end
 
       it( 'has an invalid geocode' ) do
-        @geocode.value = nil
+        @area.geocodes.first.value = nil
         @area.should_not( be_valid )
       end
     end
