@@ -18,15 +18,8 @@ module RCAP
       # Valid values for status
       VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
 
-      # Creates a new {Info} object and adds it to the {#infos} array. 
-      # 
-      # @see Info#initialize
-      # @param [Hash] info_attributes Info attributes - see {Info#initialize}
-      # @return [Info]
-      def add_info( info_attributes  = {})
-        info = Info.new( info_attributes )
-        @infos << info
-        info
+      def info_class
+        Info
       end
 
       # @param [REXML::Element] alert_xml_element

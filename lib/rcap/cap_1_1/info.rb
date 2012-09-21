@@ -70,9 +70,10 @@ module RCAP
       # @option attributes [Array<Parameter>] :parameters Collection of {Parameter} objects
       # @option attributes [Array<Resource>] :resources Collection of {Resource} objects 
       # @option attributes [Array<Area>] :areas Collection of {Area} objects
-      def initialize( attributes = {} )
-        super( attributes )
-        @response_types = attributes[ :response_types ] || []
+      def initialize
+        @response_types =  []
+
+        super
       end
 
       # Creates a new EventCode object and adds it to the event_codes array. The
@@ -114,17 +115,8 @@ module RCAP
         resource
       end
 
-      # Creates a new Area object and adds it to the areas array. The
-      # area_attributes are passed as a parameter to Area.new.
-      #
-      # @see Area#initialize
-      #
-      # @param [Hash] area_attributes (see Area#initialize)
-      # @return [Area]
-      def add_area( area_attributes = {})
-        area = Area.new( area_attributes )
-        @areas << area
-        area
+      def area_class
+        Area
       end
 
       # @return [REXML::Element]
