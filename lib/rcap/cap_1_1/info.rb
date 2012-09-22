@@ -76,30 +76,12 @@ module RCAP
         super
       end
 
-      # Creates a new EventCode object and adds it to the event_codes array. The
-      # event_code_attributes are passed as a parameter to EventCode.new.
-      #
-      # @see EventCode#initialize
-      #
-      # @param [Hash] event_code_attributes (see EventCode#initialize)
-      # @return [EventCode]
-      def add_event_code( event_code_attributes = {})
-        event_code = EventCode.new( event_code_attributes )
-        @event_codes << event_code
-        event_code
+      def event_code_class
+        EventCode
       end
 
-      # Creates a new Parameter object and adds it to the parameters array. The
-      # parameter_attributes are passed as a parameter to Parameter.new.
-      #
-      # @see Parameter#initialize
-      #
-      # @param [Hash] parameter_attributes (see Parameter#initialize)
-      # @return [Parameter]
-      def add_parameter( parameter_attributes = {})
-        parameter = Parameter.new( parameter_attributes )
-        @parameters << parameter
-        parameter
+      def parameter_class
+        Parameter
       end
 
       # Creates a new Resource object and adds it to the resources array. The

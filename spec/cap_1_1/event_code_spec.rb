@@ -4,9 +4,13 @@ describe( RCAP::CAP_1_1::EventCode ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_event_code = RCAP::CAP_1_1::EventCode.new( :name => 'name', :value => 'value' )
-        @alert = RCAP::CAP_1_1::Alert.new
-        @alert.add_info.event_codes <<  @original_event_code 
+        @alert = RCAP::CAP_1_1::Alert.new do |alert|
+          alert.add_info.add_event_code do |event_code|
+            event_code.name = 'name'
+            event_code.value = 'value'
+          end
+        end
+        @original_event_code = @alert.infos.first.event_codes.first
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
@@ -30,7 +34,10 @@ describe( RCAP::CAP_1_1::EventCode ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @event_code = RCAP::CAP_1_1::EventCode.new( :name => 'name', :value => 'value' )
+      @event_code = RCAP::CAP_1_1::EventCode.new do |event_code|
+        event_code.name = 'name'
+        event_code.value = 'value'
+      end                           
     end
 
     context( 'to a hash' ) do
