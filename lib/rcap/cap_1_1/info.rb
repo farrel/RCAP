@@ -72,7 +72,6 @@ module RCAP
       # @option attributes [Array<Area>] :areas Collection of {Area} objects
       def initialize
         @response_types =  []
-
         super
       end
 
@@ -84,17 +83,8 @@ module RCAP
         Parameter
       end
 
-      # Creates a new Resource object and adds it to the resources array. The
-      # resource_attributes are passed as a parameter to Resource.new.
-      #
-      # @see Resource#initialize
-      #
-      # @param [Hash] resource_attributes (See Resource#initialize)
-      # @return [Resource]
-      def add_resource( resource_attributes = {})
-        resource = Resource.new( resource_attributes )
-        @resources << resource
-        resource
+      def resource_class
+        Resource
       end
 
       def area_class
