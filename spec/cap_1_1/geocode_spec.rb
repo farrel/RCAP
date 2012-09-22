@@ -4,9 +4,13 @@ describe( RCAP::CAP_1_1::Geocode ) do
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_geocode = RCAP::CAP_1_1::Geocode.new( :name => 'name', :value => 'value' )
-        @alert = RCAP::CAP_1_1::Alert.new
-        @alert.add_info.add_area.geocodes <<  @original_geocode 
+        @alert = RCAP::CAP_1_1::Alert.new do |alert|
+          alert.add_info.add_area.add_geocode do |geocode|
+            geocode.name = 'name'
+            geocode.value = 'value'
+          end
+        end
+        @original_geocode = @alert.infos.first.areas.first.geocodes.first
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_1::Info::XPATH, RCAP::CAP_1_1::Alert::XMLNS )
@@ -31,7 +35,10 @@ describe( RCAP::CAP_1_1::Geocode ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @geocode = RCAP::CAP_1_1::Geocode.new( :name => 'name', :value => 'value' )
+      @geocode = RCAP::CAP_1_1::Geocode.new do |geocode|
+        geocode.name = 'name'
+        geocode.value = 'value'
+      end                                 
     end
 
     context( 'to a hash' ) do
