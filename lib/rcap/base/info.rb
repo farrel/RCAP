@@ -242,6 +242,49 @@ module RCAP
         self.to_xml_element.to_s
       end
 
+      # @param [REXML::Element] info_xml_element
+      # @return [Info]
+      def self.from_xml_element( info_xml_element ) 
+        self.new do |info|
+          info.language       = RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, info.xmlns ) || DEFAULT_LANGUAGE
+
+          RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, info.xmlns ).each do |element|
+            info.categories << element.text 
+          end
+
+          info.event          = RCAP.xpath_text( info_xml_element, EVENT_XPATH, info.xmlns )
+          info.urgency        = RCAP.xpath_text( info_xml_element, URGENCY_XPATH, info.xmlns )
+          info.severity       = RCAP.xpath_text( info_xml_element, SEVERITY_XPATH, info.xmlns )
+          info.certainty      = RCAP.xpath_text( info_xml_element, CERTAINTY_XPATH, info.xmlns )
+          info.audience       = RCAP.xpath_text( info_xml_element, AUDIENCE_XPATH, info.xmlns )
+          info.effective      = (( effective = RCAP.xpath_first( info_xml_element, EFFECTIVE_XPATH, info.xmlns )) ? DateTime.parse( effective.text ) : nil )
+          info.onset          = (( onset = RCAP.xpath_first( info_xml_element, ONSET_XPATH, info.xmlns )) ? DateTime.parse( onset.text ) : nil )
+          info.expires        = (( expires = RCAP.xpath_first( info_xml_element, EXPIRES_XPATH, info.xmlns )) ? DateTime.parse( expires.text ) : nil )
+          info.sender_name    = RCAP.xpath_text( info_xml_element, SENDER_NAME_XPATH, info.xmlns )
+          info.headline       = RCAP.xpath_text( info_xml_element, HEADLINE_XPATH, info.xmlns )
+          info.description    = RCAP.xpath_text( info_xml_element, DESCRIPTION_XPATH, info.xmlns )
+          info.instruction    = RCAP.xpath_text( info_xml_element, INSTRUCTION_XPATH, info.xmlns )
+          info.web            = RCAP.xpath_text( info_xml_element, WEB_XPATH, info.xmlns )
+          info.contact        = RCAP.xpath_text( info_xml_element, CONTACT_XPATH, info.xmlns )
+
+          RCAP.xpath_match( info_xml_element, info.event_code_class::XPATH, info.xmlns ).each do |element|
+            info.event_codes << info.event_code_class.from_xml_element( element )
+          end
+
+          RCAP.xpath_match( info_xml_element, info.parameter_class::XPATH, info.xmlns ).each do |element|
+            info.parameters <<  info.parameter_class.from_xml_element( element )
+          end
+
+          RCAP.xpath_match( info_xml_element, info.resource_class::XPATH, info.xmlns ).each do  |element|
+           info.resources <<  info.resource_class.from_xml_element( element )
+          end
+
+          RCAP.xpath_match( info_xml_element, info.area_class::XPATH, info.xmlns ).each do |element|
+            info.areas << info.area_class.from_xml_element( element )
+          end
+        end
+      end
+
       # @return [String]
       def inspect 
         info_inspect = "Language:       #{ @language }\n"+

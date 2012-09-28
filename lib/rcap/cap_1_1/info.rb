@@ -29,9 +29,6 @@ module RCAP
       VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
-      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' 
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" 
-
 
       validates_length_of( :categories, :minimum => 1 )
       validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
@@ -91,6 +88,13 @@ module RCAP
         Area
       end
 
+      def xmlns
+        Alert::XMLNS
+      end
+
+      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' 
+      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" 
+
       # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
@@ -135,6 +139,16 @@ module RCAP
         self.to_xml_element.to_s
       end
 
+      # @param [REXML::Element] info_xml_element
+      # @return [Info]
+      def self.from_xml_element( info_xml_element ) 
+        super.tap do |info|
+          RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, info.xmlns ).each do |element|
+            info.response_types << element.text 
+          end
+        end
+      end
+
       # @return [String]
       def inspect 
         info_inspect = "Language:       #{ @language }\n"+
@@ -173,31 +187,6 @@ module RCAP
         "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
       end
 
-      # @param [REXML::Element] info_xml_element
-      # @return [Info]
-      def self.from_xml_element( info_xml_element ) 
-        self.new( :language       => RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, Alert::XMLNS ) || DEFAULT_LANGUAGE,
-                  :categories     => RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, Alert::XMLNS ).map{ |element| element.text },
-                  :event          => RCAP.xpath_text( info_xml_element, EVENT_XPATH, Alert::XMLNS ),
-                  :response_types => RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, Alert::XMLNS ).map{ |element| element.text },
-                  :urgency        => RCAP.xpath_text( info_xml_element, URGENCY_XPATH, Alert::XMLNS ),
-                  :severity       => RCAP.xpath_text( info_xml_element, SEVERITY_XPATH, Alert::XMLNS ),
-                  :certainty      => RCAP.xpath_text( info_xml_element, CERTAINTY_XPATH, Alert::XMLNS ),
-                  :audience       => RCAP.xpath_text( info_xml_element, AUDIENCE_XPATH, Alert::XMLNS ),
-                  :effective      => (( effective = RCAP.xpath_first( info_xml_element, EFFECTIVE_XPATH, Alert::XMLNS )) ? DateTime.parse( effective.text ) : nil ),
-                  :onset          => (( onset = RCAP.xpath_first( info_xml_element, ONSET_XPATH, Alert::XMLNS )) ? DateTime.parse( onset.text ) : nil ),
-                  :expires        => (( expires = RCAP.xpath_first( info_xml_element, EXPIRES_XPATH, Alert::XMLNS )) ? DateTime.parse( expires.text ) : nil ),
-                  :sender_name    => RCAP.xpath_text( info_xml_element, SENDER_NAME_XPATH, Alert::XMLNS ),
-                  :headline       => RCAP.xpath_text( info_xml_element, HEADLINE_XPATH, Alert::XMLNS ),
-                  :description    => RCAP.xpath_text( info_xml_element, DESCRIPTION_XPATH, Alert::XMLNS ),
-                  :instruction    => RCAP.xpath_text( info_xml_element, INSTRUCTION_XPATH, Alert::XMLNS ),
-                  :web            => RCAP.xpath_text( info_xml_element, WEB_XPATH, Alert::XMLNS ),
-                  :contact        => RCAP.xpath_text( info_xml_element, CONTACT_XPATH, Alert::XMLNS ),
-                  :event_codes    => RCAP.xpath_match( info_xml_element, EventCode::XPATH, Alert::XMLNS ).map{ |element| EventCode.from_xml_element( element )},
-                  :parameters     => RCAP.xpath_match( info_xml_element, Parameter::XPATH, Alert::XMLNS ).map{ |element| Parameter.from_xml_element( element )},
-                  :resources      => RCAP.xpath_match( info_xml_element, Resource::XPATH, Alert::XMLNS ).map{ |element| Resource.from_xml_element( element )},
-                  :areas          => RCAP.xpath_match( info_xml_element, Area::XPATH, Alert::XMLNS ).map{ |element| Area.from_xml_element( element )})
-      end
 
       RESPONSE_TYPES_YAML = 'Response Types' 
 
@@ -284,27 +273,11 @@ module RCAP
       # @param [Hash] info_hash
       # @return [Info]
       def self.from_h( info_hash ) 
-        self.new( :language       => info_hash[ LANGUAGE_KEY ],
-                  :categories     => info_hash[ CATEGORIES_KEY ],
-                  :event          => info_hash[ EVENT_KEY ],
-                  :response_types => info_hash[ RESPONSE_TYPES_KEY ],
-                  :urgency        => info_hash[ URGENCY_KEY ],
-                  :severity       => info_hash[ SEVERITY_KEY ],
-                  :certainty      => info_hash[ CERTAINTY_KEY ],
-                  :audience       => info_hash[ AUDIENCE_KEY ],
-                  :effective      => RCAP.parse_datetime( info_hash[ EFFECTIVE_KEY ]),
-                  :onset          => RCAP.parse_datetime( info_hash[ ONSET_KEY ]),
-                  :expires        => RCAP.parse_datetime( info_hash[ EXPIRES_KEY ]),
-                  :sender_name    => info_hash[ SENDER_NAME_KEY ],
-                  :headline       => info_hash[ HEADLINE_KEY ],
-                  :description    => info_hash[ DESCRIPTION_KEY ],
-                  :instruction    => info_hash[ INSTRUCTION_KEY ],
-                  :web            => info_hash[ WEB_KEY ],
-                  :contact        => info_hash[ CONTACT_KEY ],
-                  :resources      => Array( info_hash[ RESOURCES_KEY ]).map{ |resource_hash| Resource.from_h( resource_hash ) },
-                  :event_codes    => Array( info_hash[ EVENT_CODES_KEY ]).map{ |event_code_hash| EventCode.from_h( event_code_hash )},
-                  :parameters     => Array( info_hash[ PARAMETERS_KEY ]).map{ |parameter_hash| Parameter.from_h( parameter_hash )},
-                  :areas          => Array( info_hash[ AREAS_KEY ]).map{ |area_hash| Area.from_h( area_hash )})
+        super.tap do |info|
+          info_hash[ RESPONSE_TYPES_KEY ].each do |response_type|
+            info.response_types << response_type
+          end
+        end
       end
     end
   end
