@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Point ) do
+  before( :each ) do
+    @point_constructor = lambda do |point|
+      point.lattitude = 0
+      point.longitude = 0
+    end
+  end
+
   describe( 'is not valid if' ) do
     before( :each ) do
-      @point = RCAP::CAP_1_2::Point.new( :lattitude => 0, :longitude => 0 )
+      @point = RCAP::CAP_1_2::Point.new( &@point_constructor )
       @point.should( be_valid )
     end
 
@@ -34,12 +41,12 @@ describe( RCAP::CAP_1_2::Point ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @point = RCAP::CAP_1_2::Point.new( :lattitude => 1, :longitude => 1 )
+      @point = RCAP::CAP_1_2::Point.new( &@point_constructor )
     end
 
     context( 'to hash' ) do
       it( 'should export correctly' ) do
-        @point.to_h.should == { RCAP::CAP_1_2::Point::LATTITUDE_KEY => 1, RCAP::CAP_1_2::Point::LONGITUDE_KEY => 1 }
+        @point.to_h.should == { RCAP::CAP_1_2::Point::LATTITUDE_KEY => 0, RCAP::CAP_1_2::Point::LONGITUDE_KEY => 0 }
       end
     end
   end
