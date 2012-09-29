@@ -1,16 +1,23 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Circle ) do
+  before( :each ) do
+    @circle_builder = lambda do |circle|
+      circle.lattitude = 0
+      circle.longitude = 0
+      circle.radius = 1
+    end
+  end
   describe( '#to_s' ) do
     it( 'should return a correct string' ) do
-      @circle = RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 1 )
+      @circle = RCAP::CAP_1_2::Circle.new( &@circle_builder )
       @circle.to_s.should == '0,0 1'
     end
   end
 
   context( 'should not be valid if' ) do
     before( :each ) do
-      @circle = RCAP::CAP_1_2::Circle.new( :lattitude => 0, :longitude => 0 , :radius => 1 )
+      @circle = RCAP::CAP_1_2::Circle.new( &@circle_builder )
       @circle.should( be_valid )
     end
 
@@ -43,9 +50,9 @@ describe( RCAP::CAP_1_2::Circle ) do
   context( 'on initialisation' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @original_circle = RCAP::CAP_1_2::Circle.new( &@circle_builder )
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.add_area.add_circle( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @alert.add_info.add_area.add_circle( &@circle_builder )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -66,7 +73,7 @@ describe( RCAP::CAP_1_2::Circle ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @original_circle = RCAP::CAP_1_2::Circle.new( &@circle_builder )
         @circle = RCAP::CAP_1_2::Circle.from_h( @original_circle.to_h )
       end
 
@@ -83,12 +90,12 @@ describe( RCAP::CAP_1_2::Circle ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @circle = RCAP::CAP_1_2::Circle.new( :radius => 10.5, :lattitude => 30, :longitude => 60 )
+        @circle = RCAP::CAP_1_2::Circle.new( &@circle_builder )
     end
 
     context( 'to hash' ) do
       it( 'should be correct' ) do
-        @circle.to_h.should == { 'radius' => 10.5, 'lattitude' => 30, 'longitude' => 60 }
+        @circle.to_h.should == { 'radius' => 1, 'lattitude' => 0, 'longitude' => 0 }
       end
     end
   end
