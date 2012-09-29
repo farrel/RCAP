@@ -4,6 +4,10 @@ module RCAP
     class Geocode < Parameter
       XML_ELEMENT_NAME = 'geocode' 
       XPATH = "cap:#{ XML_ELEMENT_NAME }" 
+
+      def xmlns
+        Alert::XMLNS
+      end
     end
   end
 end

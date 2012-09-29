@@ -81,6 +81,10 @@ module RCAP
         Parameter
       end
 
+      def area_class
+        Area
+      end
+
       # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )

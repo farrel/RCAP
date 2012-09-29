@@ -1,12 +1,20 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Polygon ) do
+  before( :each ) do
+    @polygon_builder = lambda do |polygon|
+      [0,1,2,0].each do |coordinate|
+        polygon.add_point do |point|
+          point.lattitude = coordinate
+          point.longitude = coordinate
+        end
+      end
+    end
+  end
+
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @polygon = RCAP::CAP_1_2::Polygon.new
-      4.times do
-        @polygon.points << RCAP::CAP_1_2::Point.new( :lattitude => 0, :longitude => 0 )
-      end
+      @polygon = RCAP::CAP_1_2::Polygon.new( &@polygon_builder )
       @polygon.should( be_valid )
     end
 
@@ -29,10 +37,13 @@ describe( RCAP::CAP_1_2::Polygon ) do
   context( 'on initialization' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(4){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})
+        @original_polygon = RCAP::CAP_1_2::Polygon.new( &@polygon_builder )
         @empty_original_polygon = RCAP::CAP_1_2::Polygon.new()
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.add_area( :polygons => [@original_polygon, @empty_original_polygon] )
+        @alert.add_info.add_area do |area|
+          area.add_polygon( &@polygon_builder )
+          area.add_polygon
+        end
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -57,7 +68,7 @@ describe( RCAP::CAP_1_2::Polygon ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})
+        @polygon = RCAP::CAP_1_2::Polygon.new( &@polygon_builder )
       end
 
       it( 'should load all the points' ) do
@@ -69,7 +80,7 @@ describe( RCAP::CAP_1_2::Polygon ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @polygon = RCAP::CAP_1_2::Polygon.new( :points => Array.new(3){|i| RCAP::CAP_1_2::Point.new( :lattitude => i, :longitude => i )})
+      @polygon = RCAP::CAP_1_2::Polygon.new( &@polygon_builder )
     end
 
     context( 'to a hash' ) do
@@ -86,7 +97,10 @@ describe( RCAP::CAP_1_2::Polygon ) do
 
     describe( '#add_point' ) do
       before( :each ) do
-        @point = @polygon.add_point( lattitude: 1, longitude: 1 )
+        @point = @polygon.add_point do |point|
+           point.lattitude = 1 
+           point.longitude = 1 
+        end
       end
 
       it( 'should return a 1.2 Point' ) do
