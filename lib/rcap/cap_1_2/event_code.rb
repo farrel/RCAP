@@ -4,6 +4,10 @@ module RCAP
     class EventCode < Parameter
       XML_ELEMENT_NAME = 'eventCode' 
       XPATH = "cap:#{ XML_ELEMENT_NAME }" 
+
+      def xmlns
+        Alert::XMLNS
+      end
     end
   end
 end

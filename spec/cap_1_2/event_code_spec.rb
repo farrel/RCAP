@@ -1,12 +1,19 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::EventCode ) do
+  before( :each ) do
+    @event_code_builder = lambda do |event_code|
+      event_code.name = 'name'
+      event_code.value = 'value'
+    end
+  end
+
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_event_code = RCAP::CAP_1_2::EventCode.new( :name => 'name', :value => 'value' )
+        @original_event_code = RCAP::CAP_1_2::EventCode.new( &@event_code_builder )
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.event_codes <<  @original_event_code 
+        @alert.add_info.add_event_code( &@event_code_builder )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -30,7 +37,7 @@ describe( RCAP::CAP_1_2::EventCode ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @event_code = RCAP::CAP_1_2::EventCode.new( :name => 'name', :value => 'value' )
+      @event_code = RCAP::CAP_1_2::EventCode.new( &@event_code_builder )
     end
 
     context( 'to a hash' ) do
