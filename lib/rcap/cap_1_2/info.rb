@@ -77,6 +77,10 @@ module RCAP
         EventCode
       end
 
+      def parameter_class
+        Parameter
+      end
+
       # @return [REXML::Element]
       def to_xml_element 
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )

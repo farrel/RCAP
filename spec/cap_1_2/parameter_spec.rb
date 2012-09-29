@@ -1,12 +1,19 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Parameter ) do
+  before( :each ) do
+    @parameter_builder = lambda do |parameter|
+      parameter.name = 'name'
+      parameter.value = 'value'
+    end
+  end
+
   context( 'when initialised' ) do
     context( 'from XML' ) do
       before( :each ) do
-        @original_parameter = RCAP::CAP_1_2::Parameter.new( :name => 'name', :value => 'value' )
+        @original_parameter = RCAP::CAP_1_2::Parameter.new( &@parameter_builder )
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.parameters << @original_parameter
+        @alert.add_info.add_parameter( &@parameter_builder )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -30,7 +37,7 @@ describe( RCAP::CAP_1_2::Parameter ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @parameter = RCAP::CAP_1_2::Parameter.new( :name => 'name', :value => 'value' )
+      @parameter = RCAP::CAP_1_2::Parameter.new( &@parameter_builder )
     end
 
     context( 'to a hash' ) do

@@ -59,6 +59,15 @@ module RCAP
         [ @name, @value ] == [ other.name, other.value ]
       end
 
+      # @param [REXML::Element] parameter_xml_element
+      # @return [Parameter] 
+      def self.from_xml_element( parameter_xml_element )
+        self.new do |parameter|
+           parameter.name  = RCAP.xpath_text( parameter_xml_element, self::NAME_XPATH, parameter.xmlns )
+           parameter.value = RCAP.xpath_text( parameter_xml_element, self::VALUE_XPATH, parameter.xmlns )
+        end
+      end
+
       # @return [Hash]
       def to_h 
         RCAP.attribute_values_to_hash( [ @name, @value ])
