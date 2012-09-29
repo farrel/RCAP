@@ -1,6 +1,31 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_1::Alert ) do
+  before( :each ) do
+    @alert_builder = lambda do |alert|
+       alert.sender      = 'Sender'                                                                                                                         
+       alert.sent        = DateTime.now                                                                                                                     
+       alert.status      = RCAP::CAP_1_1::Alert::STATUS_TEST                                                                                                
+       alert.scope       = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC                                                                                               
+       alert.source      = 'Source'                                                                                                                         
+       alert.restriction = 'No Restriction'                                                                                                                 
+       [ 'Address 1', 'Address 2'].each do |address|
+         alert.addresses << address
+       end
+       [ 'Code1', 'Code2' ].each do |code|
+         alert.codes << code
+       end
+       alert.note        = 'Note'                                                                                                                           
+       [ 'Reference1', 'Reference2' ].each do |reference|
+         alert.references << reference
+       end
+       [ 'Incident1', 'Incident2' ].each do |incident|
+       end
+       alert.add_info
+       alert.add_info
+    end
+  end
+
   context( 'on initialisation' ) do
     before( :each )  do
       @alert = RCAP::CAP_1_1::Alert.new
@@ -42,18 +67,7 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
-                                                    :sent        => DateTime.now,
-                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                                                    :source      => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses   => [ 'Address 1', 'Address 2'],
-                                                    :codes       => [ 'Code1', 'Code2' ],
-                                                    :note        => 'Note',
-                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                                                    :incidents   => [ 'Incident1', 'Incident2' ],
-                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( &@alert_builder )
         @xml_string = @original_alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @alert_element = @xml_document.root
@@ -66,18 +80,7 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from YAML' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
-                                                    :sent        => DateTime.now,
-                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                                                    :source      => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses   => [ 'Address 1', 'Address 2'],
-                                                    :codes       => [ 'Code1', 'Code2' ],
-                                                    :note        => 'Note',
-                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                                                    :incidents   => [ 'Incident1', 'Incident2' ],
-                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( &@alert_builder )
         @yaml_string = @original_alert.to_yaml
         @alert = RCAP::CAP_1_1::Alert.from_yaml( @yaml_string )
       end
@@ -87,18 +90,7 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
-                                                    :sent        => DateTime.now,
-                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                                                    :source      => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses   => [ 'Address 1', 'Address 2'],
-                                                    :codes       => [ 'Code1', 'Code2' ],
-                                                    :note        => 'Note',
-                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                                                    :incidents   => [ 'Incident1', 'Incident2' ],
-                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( &@alert_builder )
         @alert = RCAP::CAP_1_1::Alert.from_h( @original_alert.to_h )
       end
 
@@ -107,18 +99,7 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'from JSON' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender      => 'Sender',
-                                                    :sent        => DateTime.now,
-                                                    :status      => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                                    :scope       => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                                                    :source      => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses   => [ 'Address 1', 'Address 2'],
-                                                    :codes       => [ 'Code1', 'Code2' ],
-                                                    :note        => 'Note',
-                                                    :references  => [ RCAP::CAP_1_1::Alert.new( :sender => 'Sender1' ).to_reference, RCAP::CAP_1_1::Alert.new( :sender => 'Sender2' ).to_reference ],
-                                                    :incidents   => [ 'Incident1', 'Incident2' ],
-                                                    :infos       => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new( &@alert_builder )
         @alert = RCAP::CAP_1_1::Alert.from_json( @original_alert.to_json )
       end
 
@@ -128,12 +109,14 @@ describe( RCAP::CAP_1_1::Alert ) do
 
   describe( 'is not valid if it' ) do
     before( :each ) do
-      @alert = RCAP::CAP_1_1::Alert.new( :identifier => 'Identifier',
-                                         :sender     => "cap@tempuri.org",
-                                         :sent       => DateTime.now,
-                                         :status     => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                         :msg_type   => RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT,
-                                         :scope      => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC )
+      @alert = RCAP::CAP_1_1::Alert.new do |alert|
+        alert.identifier = 'Identifier'
+        alert.sender     = "cap@tempuri.org"
+        alert.sent       = DateTime.now
+        alert.status     = RCAP::CAP_1_1::Alert::STATUS_TEST
+        alert.msg_type   = RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT
+        alert.scope      = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC 
+      end
       @alert.should( be_valid )
     end
 
@@ -186,11 +169,13 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     context( 'has an info element and it' ) do
       it( 'is not valid' ) do
-        @info = RCAP::CAP_1_1::Info.new( :event => 'Info Event',
-                              :categories => [ RCAP::CAP_1_1::Info::CATEGORY_GEO ],
-                              :urgency => RCAP::CAP_1_1::Info::URGENCY_IMMEDIATE,
-                              :severity => RCAP::CAP_1_1::Info::SEVERITY_EXTREME,
-                              :certainty => RCAP::CAP_1_1::Info::CERTAINTY_OBSERVED )
+        @info = @alert.add_info do |info|
+          info.event      = 'Info Event'
+          info.categories << RCAP::CAP_1_1::Info::CATEGORY_GEO 
+          info.urgency    = RCAP::CAP_1_1::Info::URGENCY_IMMEDIATE
+          info.severity   = RCAP::CAP_1_1::Info::SEVERITY_EXTREME
+          info.certainty  = RCAP::CAP_1_1::Info::CERTAINTY_OBSERVED 
+        end
         @info.event = nil
         @alert.infos << @info
         @info.should_not( be_valid )
@@ -206,7 +191,9 @@ describe( RCAP::CAP_1_1::Alert ) do
 
     describe( '#add_info' ) do
       before( :each ) do
-        @info = @alert.add_info( :urgency => 'urgent' )
+        @info = @alert.add_info do |info|
+          info.urgency = 'urgent' 
+        end
         @info.urgency.should == 'urgent'
       end
 
