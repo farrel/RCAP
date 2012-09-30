@@ -15,18 +15,6 @@ module RCAP
 
       DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     
 
-      # @param [Hash{Symbol => Object}] attributes
-      # @option attributes [String] :mime_type
-      # @option attributes [Numeric] :size Size in bytes
-      # @option attributes [String] :uri
-      # @option attributes [String] :deref_uri
-      # @option attributes [String] :digest
-      # @option attributes [String] :resource_desc
-      def initialize( attributes = {} )
-        super
-        @deref_uri     = attributes[ :deref_uri ]
-      end
-
       # @return [REXML::Element]
       def to_xml_element 
         xml_element = super
@@ -56,15 +44,16 @@ module RCAP
         self.calculate_hash_and_size
       end
 
+      def xmlns
+        Alert::XMLNS
+      end
+
       # @param [REXML::Element] resource_xml_element
       # @return [Resource]
       def self.from_xml_element( resource_xml_element ) 
-        resource = self.new( :resource_desc => RCAP.xpath_text( resource_xml_element, RESOURCE_DESC_XPATH, Alert::XMLNS ),
-                             :uri           => RCAP.xpath_text( resource_xml_element, URI_XPATH, Alert::XMLNS ),
-                             :mime_type     => RCAP.xpath_text( resource_xml_element, MIME_TYPE_XPATH, Alert::XMLNS ),
-                             :deref_uri     => RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH, Alert::XMLNS ),
-                             :size          => RCAP.xpath_text( resource_xml_element, SIZE_XPATH, Alert::XMLNS ).to_i,
-                             :digest        => RCAP.xpath_text( resource_xml_element, DIGEST_XPATH, Alert::XMLNS ))
+        super.tap do |resource|
+          resource.deref_uri = RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH, resource.xmlns )
+        end
       end
 
       DEREF_URI_YAML     = "Derefrenced URI Data" 
@@ -107,12 +96,9 @@ module RCAP
       # @param [Hash] resource_hash
       # @return [Resource]
       def self.from_h( resource_hash ) 
-        self.new( :resource_desc => resource_hash[ RESOURCE_DESC_KEY ],
-                  :uri           => resource_hash[ URI_KEY ],
-                  :mime_type     => resource_hash[ MIME_TYPE_KEY ],
-                  :deref_uri     => resource_hash[ DEREF_URI_KEY ],
-                  :size          => resource_hash[ SIZE_KEY ],
-                  :digest        => resource_hash[ DIGEST_KEY ])
+        super.tap do |resource|
+          resource.deref_uri = resource_hash[ DEREF_URI_KEY ]
+        end
       end
     end
   end

@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Resource ) do
+  before( :each ) do
+    @resource_builder = lambda do |resource|
+      resource.resource_desc = "Image of incident"
+      resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
+      resource.mime_type     = 'image/png'
+      resource.deref_uri     = "IMAGE DATA"
+      resource.size          = 20480
+      resource.digest        = "2048"
+    end
+  end
+
   context( 'on initialisation' ) do
     before( :each ) do
       @resource = RCAP::CAP_1_2::Resource.new
@@ -15,16 +26,10 @@ describe( RCAP::CAP_1_2::Resource ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_resource = RCAP::CAP_1_2::Resource.new
-        @original_resource.resource_desc = "Image of incident"
-        @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-        @original_resource.mime_type     = 'image/png'
-        @original_resource.deref_uri     = "IMAGE DATA"
-        @original_resource.size          = 20480
-        @original_resource.digest        = "2048"
+        @original_resource = RCAP::CAP_1_2::Resource.new( &@resource_builder )
 
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.resources << @original_resource 
+        @alert.add_info.add_resource( &@resource_builder ) 
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -61,13 +66,7 @@ describe( RCAP::CAP_1_2::Resource ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_resource = RCAP::CAP_1_2::Resource.new
-        @original_resource.resource_desc = "Image of incident"
-        @original_resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-        @original_resource.mime_type     = 'image/png'
-        @original_resource.deref_uri     = "IMAGE DATA"
-        @original_resource.size          = 20480
-        @original_resource.digest        = "2048"
+        @original_resource = RCAP::CAP_1_2::Resource.new( &@resource_builder )
 
         @resource = RCAP::CAP_1_2::Resource.from_h( @original_resource.to_h )
       end
@@ -96,18 +95,11 @@ describe( RCAP::CAP_1_2::Resource ) do
         @resource.digest.should == @original_resource.digest
       end
     end
-
   end
 
   context( 'when exported' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_2::Resource.new
-      @resource.resource_desc = "Image of incident"
-      @resource.uri           = "http://capetown.gov.za/cap/resources/image.png"
-      @resource.mime_type     = 'image/png'
-      @resource.deref_uri     = "IMAGE DATA"
-      @resource.size          = 20480
-      @resource.digest        = "2048"
+      @resource = RCAP::CAP_1_2::Resource.new( &@resource_builder )
     end
 
     context( 'to a hash' ) do
@@ -149,7 +141,10 @@ describe( RCAP::CAP_1_2::Resource ) do
 
   context( 'which is valid' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv' )
+      @resource = RCAP::CAP_1_2::Resource.new do |resource|
+        resource.resource_desc = 'Resource Description'
+        resource.mime_type = 'text/csv' 
+      end
       @resource.should( be_valid )
     end
 
@@ -168,7 +163,11 @@ describe( RCAP::CAP_1_2::Resource ) do
 
   context( 'with a non-rereferenced URI' ) do
     before( :each ) do
-      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv' )
+      @resource = RCAP::CAP_1_2::Resource.new do |resource|
+         resource.resource_desc = 'Resource Description'
+         resource.mime_type     = 'text/csv'
+         resource.uri           = 'http://tempuri.org/resource.csv'
+      end
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64( @content )
       stub_request( :get, @resource.uri ).to_return( :status => 200, :body => @content )
@@ -193,7 +192,12 @@ describe( RCAP::CAP_1_2::Resource ) do
     before( :each ) do 
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64( @content )
-      @resource = RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :mime_type => 'text/csv', :uri => 'http://tempuri.org/resource.csv', :deref_uri => @encoded_content )
+      @resource = RCAP::CAP_1_2::Resource.new do |resource|
+         resource.resource_desc = 'Resource Description'
+         resource.mime_type     = 'text/csv'
+         resource.uri           = 'http://tempuri.org/resource.csv'
+         resource.deref_uri     = @encoded_content 
+      end
     end
 
     describe( '#calculate_hash_and_size' ) do
