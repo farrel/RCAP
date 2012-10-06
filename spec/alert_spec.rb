@@ -5,18 +5,28 @@ describe( RCAP::Alert ) do
 
     context( 'a CAP 1.0 alert' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_0::Alert.new( :sender => 'Sender',
-                                                    :sent => DateTime.now,
-                                                    :status => RCAP::CAP_1_0::Alert::STATUS_TEST,
-                                                    :scope => RCAP::CAP_1_0::Alert::SCOPE_PUBLIC,
-                                                    :source => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses => [ 'Address 1', 'Address 2'],
-                                                    :code => ['Code1', 'Code2'],
-                                                    :note => 'Note',
-                                                    :references => [ "1.0,1", "1.0,2" ],
-                                                    :incidents => [ 'Incident1', 'Incident2' ],
-                                                    :infos => [ RCAP::CAP_1_0::Info.new, RCAP::CAP_1_0::Info.new ])
+        @original_alert = RCAP::CAP_1_0::Alert.new do |alert|
+          alert.sender      = 'Sender'
+          alert.sent        = DateTime.now
+          alert.status      = RCAP::CAP_1_0::Alert::STATUS_TEST
+          alert.scope       = RCAP::CAP_1_0::Alert::SCOPE_PUBLIC
+          alert.source      = 'Source'
+          alert.restriction = 'No Restriction'
+          [ 'Address 1', 'Address 2'].each do |address|
+            alert.addresses << address
+          end
+          ['Code1', 'Code2'].each do |code|
+            alert.codes << code
+          end
+          alert.note = 'Note'
+          [ "1.0,1", "1.0,2" ].each do |reference|
+            alert.references << reference
+          end
+          [ 'Incident1', 'Incident2' ].each do |incident|
+            alert.incidents << incident
+          end
+          2.times{ alert.add_info }
+        end
       end
 
       shared_examples_for( 'it has parsed a CAP 1.0 alert correctly' ) do
@@ -67,18 +77,28 @@ describe( RCAP::Alert ) do
 
     context( 'a CAP 1.1 alert' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_1::Alert.new( :sender => 'Sender',
-                                                    :sent => DateTime.now,
-                                                    :status => RCAP::CAP_1_1::Alert::STATUS_TEST,
-                                                    :scope => RCAP::CAP_1_1::Alert::SCOPE_PUBLIC,
-                                                    :source => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses => [ 'Address 1', 'Address 2'],
-                                                    :code => ['Code1', 'Code2'],
-                                                    :note => 'Note',
-                                                    :references => [ "1,1,1", "1,1,2" ],
-                                                    :incidents => [ 'Incident1', 'Incident2' ],
-                                                    :infos => [ RCAP::CAP_1_1::Info.new, RCAP::CAP_1_1::Info.new ])
+        @original_alert = RCAP::CAP_1_1::Alert.new do |alert|
+          alert.sender      = 'Sender'
+          alert.sent        = DateTime.now
+          alert.status      = RCAP::CAP_1_1::Alert::STATUS_TEST
+          alert.scope       = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+          alert.source      = 'Source'
+          alert.restriction = 'No Restriction'
+          [ 'Address 1', 'Address 2'].each do |address|
+            alert.addresses << address
+          end
+          ['Code1', 'Code2'].each do |code|
+            alert.codes << code
+          end
+          alert.note = 'Note'
+          [ "1,1,1", "1,1,2" ].each do |reference|
+            alert.references << reference
+          end
+          [ 'Incident1', 'Incident2' ].each do |incident|
+            alert.incidents << incident
+          end
+          2.times{ alert.add_info }
+        end
       end
 
       shared_examples_for( 'it has parsed a CAP 1.1 alert correctly' ) do
@@ -129,18 +149,28 @@ describe( RCAP::Alert ) do
 
     context( 'a CAP 1.2 alert' ) do
       before( :each ) do
-        @original_alert = RCAP::CAP_1_2::Alert.new( :sender => 'Sender',
-                                                    :sent => DateTime.now,
-                                                    :status => RCAP::CAP_1_2::Alert::STATUS_TEST,
-                                                    :scope => RCAP::CAP_1_2::Alert::SCOPE_PUBLIC,
-                                                    :source => 'Source',
-                                                    :restriction => 'No Restriction',
-                                                    :addresses => [ 'Address 1', 'Address 2'],
-                                                    :codes => [ 'Code1', 'Code2'],
-                                                    :note => 'Note',
-                                                    :references => [ "1,1,1", "1,1,2" ],
-                                                    :incidents => [ 'Incident1', 'Incident2' ],
-                                                    :infos => [ RCAP::CAP_1_2::Info.new, RCAP::CAP_1_2::Info.new ])
+        @original_alert = RCAP::CAP_1_2::Alert.new do |alert|
+          alert.sender      = 'Sender'
+          alert.sent        = DateTime.now
+          alert.status      = RCAP::CAP_1_2::Alert::STATUS_TEST
+          alert.scope       = RCAP::CAP_1_2::Alert::SCOPE_PUBLIC
+          alert.source      = 'Source'
+          alert.restriction = 'No Restriction'
+          [ 'Address 1', 'Address 2'].each do |address|
+            alert.addresses << address
+          end
+          ['Code1', 'Code2'].each do |code|
+            alert.codes << code
+          end
+          alert.note = 'Note'
+          [ "1,1,1", "1,1,2" ].each do |reference|
+            alert.references << reference
+          end
+          [ 'Incident1', 'Incident2' ].each do |incident|
+            alert.incidents << incident
+          end
+          2.times{ alert.add_info }
+        end
       end
 
       shared_examples_for( 'it has parsed a CAP 1.2 alert correctly' ) do

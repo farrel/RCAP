@@ -117,7 +117,7 @@ describe( RCAP::CAP_1_2::Alert ) do
         alert.sent       = DateTime.now
         alert.status     = RCAP::CAP_1_2::Alert::STATUS_TEST
         alert.msg_type   = RCAP::CAP_1_2::Alert::MSG_TYPE_ALERT
-        alert.scope      = RCAP::CAP_1_2::Alert::SCOPE_PUBLIC 
+        alert.scope      = RCAP::CAP_1_2::Alert::SCOPE_PUBLIC
         @alert.should( be_valid )
       end
 
@@ -182,10 +182,10 @@ describe( RCAP::CAP_1_2::Alert ) do
       it( 'has in invalid info attribute' ) do
         @info = RCAP::CAP_1_2::Info.new do |info|
           info.event      = 'Info Event'
-          info.categories << RCAP::CAP_1_2::Info::CATEGORY_GEO 
+          info.categories << RCAP::CAP_1_2::Info::CATEGORY_GEO
           info.urgency    = RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE
           info.severity   = RCAP::CAP_1_2::Info::SEVERITY_EXTREME
-          info.certainty  = RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED 
+          info.certainty  = RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED
         end
         @info.event = nil
         @alert.infos << @info
@@ -203,7 +203,7 @@ describe( RCAP::CAP_1_2::Alert ) do
     describe( '#add_info' ) do
       before( :each ) do
         @info = @alert.add_info do |info|
-          info.urgency = 'urgent' 
+          info.urgency = 'urgent'
         end
         @info.urgency.should == 'urgent'
       end

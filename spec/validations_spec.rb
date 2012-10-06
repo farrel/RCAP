@@ -51,7 +51,7 @@ describe( Validation::ClassMethods ) do
       @object_with_collection.collection = Array.new(3) do
         RCAP::CAP_1_1::Point.new do |point|
           point.lattitude = 0
-          point.longitude = 0 
+          point.longitude = 0
         end
       end
       @object_with_collection.should( be_valid )
@@ -61,7 +61,7 @@ describe( Validation::ClassMethods ) do
       @object_with_collection.collection = Array.new( 2 ) do
         RCAP::CAP_1_1::Point.new do |point|
           point.lattitude = 0
-          point.longitude = 0 
+          point.longitude = 0
         end
       end
 
