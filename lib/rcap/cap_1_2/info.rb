@@ -191,9 +191,9 @@ module RCAP
                                        [ SEVERITY_YAML,       @severity ],
                                        [ CERTAINTY_YAML,      @certainty ],
                                        [ AUDIENCE_YAML,       @audience ],
-                                       [ EFFECTIVE_YAML,      @effective.to_s_for_cap ],
-                                       [ ONSET_YAML,          @onset.to_s_for_cap ],
-                                       [ EXPIRES_YAML,        @expires.to_s_for_cap ],
+                                       [ EFFECTIVE_YAML,      RCAP.to_s_for_cap( @effective )],
+                                       [ ONSET_YAML,          RCAP.to_s_for_cap( @onset )],
+                                       [ EXPIRES_YAML,        RCAP.to_s_for_cap( @expires )],
                                        [ SENDER_NAME_YAML,    @sender_name ],
                                        [ HEADLINE_YAML,       @headline ],
                                        [ DESCRIPTION_YAML,    @description ],
@@ -247,7 +247,7 @@ module RCAP
       # @return [Info]
       def self.from_h( info_hash )
         super.tap do |info|
-          info_hash[ RESPONSE_TYPES_KEY ].each do |response_type|
+          Array( info_hash[ RESPONSE_TYPES_KEY ]).each do |response_type|
             info.response_types << response_type
           end
         end

@@ -18,6 +18,10 @@ module RCAP
       # Valid values for status
       VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
 
+      def xmlns
+        XMLNS
+      end
+
       def info_class
         Info
       end
