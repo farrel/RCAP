@@ -374,7 +374,7 @@ module RCAP
       def self.from_yaml_data( info_yaml_data ) 
         self.new do |info|
           info.language    = info_yaml_data [ LANGUAGE_YAML ]
-          Array( info_yaml_data [ CATEGORIES_YAML ] ) do |category|
+          Array( info_yaml_data [ CATEGORIES_YAML ]).each do |category|
             info.categories << category
           end
           info.event       = info_yaml_data [ EVENT_YAML ]
@@ -382,9 +382,9 @@ module RCAP
           info.severity    = info_yaml_data [ SEVERITY_YAML ]
           info.certainty   = info_yaml_data [ CERTAINTY_YAML ]
           info.audience    = info_yaml_data [ AUDIENCE_YAML ]
-          info.effective   = ( effective = info_yaml_data[ EFFECTIVE_YAML ]).blank? ? nil : DateTime.parse( effective.to_s )
-          info.onset       = ( onset = info_yaml_data[ ONSET_YAML ]).blank? ? nil : DateTime.parse( onset.to_s )
-          info.expires     = ( expires = info_yaml_data[ EXPIRES_YAML ]).blank? ? nil : DateTime.parse( expires.to_s )
+          info.effective   = RCAP.parse_datetime( info_yaml_data[ EFFECTIVE_YAML ])
+          info.onset       = RCAP.parse_datetime( info_yaml_data[ ONSET_YAML ])
+          info.expires     = RCAP.parse_datetime( info_yaml_data[ EXPIRES_YAML ])
           info.sender_name = info_yaml_data [ SENDER_NAME_YAML ]
           info.headline    = info_yaml_data [ HEADLINE_YAML ]
           info.description = info_yaml_data [ DESCRIPTION_YAML ]
@@ -393,14 +393,14 @@ module RCAP
           info.contact     = info_yaml_data [ CONTACT_YAML ]
 
           Array( info_yaml_data [ EVENT_CODES_YAML ]).each do  |name,value|
-            EventCode.new do |event_code|
+            info.add_event_code do |event_code|
               event_code.name = name
               event_code.value = value 
             end
           end
 
-          Array( info_yaml_data [ PARAMETERS_YAML ]).each do |parameter_yaml_data|
-            info.parameters << info.parameter_class.new do |parameter|
+          Array( info_yaml_data [ PARAMETERS_YAML ]).each do |name,value|
+            info.add_parameter do |parameter|
               parameter.name = name
               parameter.value = value
             end

@@ -1,6 +1,54 @@
 require 'spec_helper'
 
 describe( RCAP::CAP_1_2::Info ) do
+  before( :each ) do
+
+    @info_builder = lambda do |info|
+      info.categories << RCAP::CAP_1_2::Info::CATEGORY_GEO
+      info.categories << RCAP::CAP_1_2::Info::CATEGORY_FIRE 
+      info.event ='Event Description'
+      info.response_types << RCAP::CAP_1_2::Info::RESPONSE_TYPE_MONITOR
+      info.response_types << RCAP::CAP_1_2::Info::RESPONSE_TYPE_ASSESS
+      info.urgency = RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE
+      info.severity = RCAP::CAP_1_2::Info::SEVERITY_EXTREME
+      info.certainty = RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED
+      info.audience = 'Audience'
+      info.effective = DateTime.now
+      info.onset = DateTime.now + 1
+      info.expires = DateTime.now + 2
+      info.sender_name = 'Sender Name'
+      info.headline = 'Headline'
+      info.description = 'Description'
+      info.instruction = 'Instruction'
+      info.web = 'http://website'
+      info.contact = 'contact@address'
+      [[ 'name1', 'value1' ], [ 'name2', 'value2' ]].each do |name, value|
+        info.add_event_code do |event_code|
+          event_code.name = name
+          event_code.value = value
+        end
+      end
+
+      info.add_resource do |resource|
+        resource.resource_desc = "Resource"
+        resource.mime_type = "mime/type"
+      end
+
+      [[ 'name1', 'value1' ], [ 'name2', 'value2' ]].each do |name, value|
+        info.add_parameter do |parameter|
+          parameter.name = name
+          parameter.value = value
+        end
+      end
+
+      [ 'Area1', 'Area2' ].each do |area_desc|
+        info.add_area do |area|
+          area.area_desc = area_desc
+        end
+      end
+    end
+  end
+
   context( 'on initialisation' ) do
     before( :each ) do
       @info = RCAP::CAP_1_2::Info.new
@@ -85,7 +133,7 @@ describe( RCAP::CAP_1_2::Info ) do
 
     shared_examples_for( 'it can parse into a CAP 1.2 Info object' ) do
       it( 'should parse categories correctly' ) do
-        @info.categories.should_not( be_nil )    
+        @info.categories.should_not( be_empty )    
         @info.categories.should == @original_info.categories 
       end
 
@@ -176,7 +224,14 @@ describe( RCAP::CAP_1_2::Info ) do
 
       it( 'should parse resources correctly' ) do
         @info.resources.should_not( be_nil )     
-        @info.resources.should == @original_info.resources 
+        comparison_attributes = lambda do |resource|
+          [
+            resource.resource_desc,
+            resource.mime_type,
+            resource.uri
+          ]
+        end
+        @info.resources.map( &comparison_attributes ).should == @original_info.resources.map( &comparison_attributes ) 
       end
 
       it( 'should parse areas correctly' ) do
@@ -187,31 +242,9 @@ describe( RCAP::CAP_1_2::Info ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_info = RCAP::CAP_1_2::Info.new( :categories     => [ RCAP::CAP_1_2::Info::CATEGORY_GEO, RCAP::CAP_1_2::Info::CATEGORY_FIRE ],
-                                        :event          => 'Event Description',
-                                        :response_types => [ RCAP::CAP_1_2::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_2::Info::RESPONSE_TYPE_ASSESS ],
-                                        :urgency        => RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE,
-                                        :severity       => RCAP::CAP_1_2::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED,
-                                        :audience       => 'Audience',
-                                        :effective      => DateTime.now,
-                                        :onset          => DateTime.now + 1,
-                                        :expires        => DateTime.now + 2,
-                                        :sender_name    => 'Sender Name',
-                                        :headline       => 'Headline',
-                                        :description    => 'Description',
-                                        :instruction    => 'Instruction',
-                                        :web            => 'http://website',
-                                        :contact        => 'contact@address',
-                                        :event_codes => [ RCAP::CAP_1_2::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                          RCAP::CAP_1_2::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                        :parameters => [ RCAP::CAP_1_2::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                         RCAP::CAP_1_2::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                        :areas => [ RCAP::CAP_1_2::Area.new( :area_desc => 'Area1' ),
-                                          RCAP::CAP_1_2::Area.new( :area_desc => 'Area2' )]
-                                      )
+        @original_info = RCAP::CAP_1_2::Info.new( &@info_builder )
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.infos <<  @original_info 
+        @alert.add_info( &@info_builder )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info = RCAP::CAP_1_2::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS ))
@@ -222,44 +255,33 @@ describe( RCAP::CAP_1_2::Info ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_info = RCAP::CAP_1_2::Info.new( :categories     => [ RCAP::CAP_1_2::Info::CATEGORY_GEO, RCAP::CAP_1_2::Info::CATEGORY_FIRE ],
-                                        :event          => 'Event Description',
-                                        :response_types => [ RCAP::CAP_1_2::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_2::Info::RESPONSE_TYPE_ASSESS ],
-                                        :urgency        => RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE,
-                                        :severity       => RCAP::CAP_1_2::Info::SEVERITY_EXTREME,
-                                        :certainty      => RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED,
-                                        :audience       => 'Audience',
-                                        :effective      => DateTime.now,
-                                        :onset          => DateTime.now + 1,
-                                        :expires        => DateTime.now + 2,
-                                        :sender_name    => 'Sender Name',
-                                        :headline       => 'Headline',
-                                        :description    => 'Description',
-                                        :instruction    => 'Instruction',
-                                        :web            => 'http://website',
-                                        :contact        => 'contact@address',
-                                        :event_codes => [ RCAP::CAP_1_2::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                          RCAP::CAP_1_2::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                        :parameters => [ RCAP::CAP_1_2::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                         RCAP::CAP_1_2::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                        :areas => [ RCAP::CAP_1_2::Area.new( :area_desc => 'Area1' ),
-                                          RCAP::CAP_1_2::Area.new( :area_desc => 'Area2' )]
-                                      )
+        @original_info = RCAP::CAP_1_2::Info.new( &@info_builder )
         @info = RCAP::CAP_1_2::Info.from_h( @original_info.to_h )
       end
+      it_should_behave_like( "it can parse into a CAP 1.2 Info object" )
+    end
+
+    context( 'from yaml_data' ) do
+      before( :each ) do
+        @original_info = RCAP::CAP_1_2::Info.new( &@info_builder )
+        @info = RCAP::CAP_1_2::Info.from_yaml_data( YAML.load( @original_info.to_yaml ))
+      end
+
       it_should_behave_like( "it can parse into a CAP 1.2 Info object" )
     end
   end
 
   context( 'is not valid if it' ) do
     before( :each ) do
-      @info = RCAP::CAP_1_2::Info.new( :event => 'Info Event',
-                            :categories => [ RCAP::CAP_1_2::Info::CATEGORY_GEO ],
-                            :urgency => RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE,
-                            :severity => RCAP::CAP_1_2::Info::SEVERITY_EXTREME,
-                            :certainty => RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED )
+      @info = RCAP::CAP_1_2::Info.new do |info|
+        info.event      = 'Info Event'
+        info.categories << RCAP::CAP_1_2::Info::CATEGORY_GEO 
+        info.urgency    = RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE
+        info.severity   = RCAP::CAP_1_2::Info::SEVERITY_EXTREME
+        info.certainty  = RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED 
+      end
+
       @info.valid?
-      puts @info.errors.full_messages
       @info.should( be_valid )
     end
 
@@ -293,29 +315,7 @@ describe( RCAP::CAP_1_2::Info ) do
   describe( 'when exported' ) do
     context( 'to hash' ) do
       before( :each ) do
-        @info = RCAP::CAP_1_2::Info.new( :categories     => [ RCAP::CAP_1_2::Info::CATEGORY_GEO, RCAP::CAP_1_2::Info::CATEGORY_FIRE ],
-                                :event          => 'Event Description',
-                                :response_types => [ RCAP::CAP_1_2::Info::RESPONSE_TYPE_MONITOR, RCAP::CAP_1_2::Info::RESPONSE_TYPE_ASSESS ],
-                                :urgency        => RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE,
-                                :severity       => RCAP::CAP_1_2::Info::SEVERITY_EXTREME,
-                                :certainty      => RCAP::CAP_1_2::Info::CERTAINTY_OBSERVED,
-                                :audience       => 'Audience',
-                                :effective      => DateTime.now,
-                                :onset          => DateTime.now + 1,
-                                :expires        => DateTime.now + 2,
-                                :sender_name    => 'Sender Name',
-                                :headline       => 'Headline',
-                                :description    => 'Description',
-                                :instruction    => 'Instruction',
-                                :web            => 'http://website',
-                                :contact        => 'contact@address',
-                                :resources      => [ RCAP::CAP_1_2::Resource.new( :resource_desc => 'Resource Description', :uri => 'http://tempuri.org/resource' )],
-                                :event_codes    => [ RCAP::CAP_1_2::EventCode.new( :name => 'name1', :value => 'value1' ),
-                                                     RCAP::CAP_1_2::EventCode.new( :name => 'name2', :value => 'value2' )],
-                                :parameters     => [ RCAP::CAP_1_2::Parameter.new( :name => 'name1', :value => 'value1' ),
-                                                     RCAP::CAP_1_2::Parameter.new( :name => 'name2', :value => 'value2' )],
-                                :areas          => [ RCAP::CAP_1_2::Area.new( :area_desc => 'Area1' ),
-                                                     RCAP::CAP_1_2::Area.new( :area_desc => 'Area2' )])
+        @info = RCAP::CAP_1_2::Info.new( &@info_builder )
         @info_hash = @info.to_h
       end
 
@@ -412,7 +412,10 @@ describe( RCAP::CAP_1_2::Info ) do
 
     describe( '#add_event_code' ) do
       before( :each ) do
-        @event_code = @info.add_event_code( name: 'Event Code', value: '1234' )
+        @event_code = @info.add_event_code do |event_code|
+          event_code.name = 'Event Code'
+          event_code.value = '1234' 
+        end
       end
 
       it( 'should return a 1.2 EventCode' ) do
@@ -428,7 +431,10 @@ describe( RCAP::CAP_1_2::Info ) do
 
     describe( '#add_parameter' ) do
       before( :each ) do
-        @parameter = @info.add_parameter( name: 'Parameter', value: '1234' )
+        @parameter = @info.add_parameter do |parameter|
+          parameter.name = 'Parameter'
+          parameter.value = '1234' 
+        end
       end
 
       it( 'should return a 1.2 Parameter' ) do
@@ -444,7 +450,9 @@ describe( RCAP::CAP_1_2::Info ) do
 
     describe( '#add_resource' ) do
       before( :each ) do
-        @resource = @info.add_resource( resource_desc: 'Resource' )
+        @resource = @info.add_resource do |resource|
+          resource.resource_desc = 'Resource' 
+        end
       end
 
       it( 'should return a 1.2 Resource' ) do
@@ -459,7 +467,9 @@ describe( RCAP::CAP_1_2::Info ) do
 
     describe( '#add_area' ) do
       before( :each ) do
-        @area = @info.add_area( area_desc: 'Area' )
+        @area = @info.add_area do |area|
+          area.area_desc = 'Area' 
+        end
       end
 
       it( 'should return a 1.2 area' ) do

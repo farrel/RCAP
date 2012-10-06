@@ -73,12 +73,9 @@ module RCAP
       # @param [Hash] resource_yaml_data
       # @return [Resource]
       def self.from_yaml_data( resource_yaml_data ) 
-        self.new( :resource_desc => reource_yaml_data[ RESOURCE_DESC_YAML ],
-                  :uri           => reource_yaml_data[ URI_YAML ],
-                  :mime_type     => reource_yaml_data[ MIME_TYPE_YAML ],
-                  :deref_uri     => reource_yaml_data[ DEREF_URI_YAML ],
-                  :size          => reource_yaml_data[ SIZE_YAML ],
-                  :digest        => reource_yaml_data[ DIGEST_YAML ])
+        super.tap do |resource|
+          resource.deref_uri = resource_yaml_data[ DEREF_URI_YAML ]
+        end
       end
 
       DEREF_URI_KEY     = 'deref_uri'     
