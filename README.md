@@ -97,8 +97,6 @@ RCAP can parse a CAP alert from a varierty of file formats. Besides the [standar
 
 To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
 
-#### From XML
-
 RCAP allows for the parsing of a CAP XML string
 
     alert = RCAP::Alert.from_xml( xml_string )
@@ -130,8 +128,6 @@ All RCAP classes include the Validation module.
 A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
 
 ### Exporting an Alert
-
-#### To XML
 
 Using the alert message created above
 
