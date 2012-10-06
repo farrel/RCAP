@@ -64,7 +64,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
         info.event       = 'Liquid Petroleoum Tanker Fire'
         info.language    = 'en-ZA'
         info.categories  << Info::CATEGORY_TRANSPORT
-        info.categofies  << Info::CATEGORY_FIRE ]
+        info.categofies  << Info::CATEGORY_FIRE 
         info.urgency     = Info::URGENCY_IMMEDIATE
         info.severity    = Info::SEVERITY_SEVERE
         info.certainty   = Info::CERTAINTY_OBSERVED
