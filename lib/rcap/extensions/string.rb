@@ -2,7 +2,7 @@ class String
   CAP_LIST_REGEX = Regexp.new( '"([\w\s]+)"|(\S+)' )
   WHITESPACE_REGEX = Regexp.new('^\s+$')
 
-  # Reformats string for a CAP list. If the string contains whitespace it will 
+  # Reformats string for a CAP list. If the string contains whitespace it will
   # enclose the contents in quotation marks.
   #
   # @return [String]

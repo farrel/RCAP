@@ -3,19 +3,19 @@ require 'spec_helper'
 describe( RCAP::CAP_1_1::Alert ) do
   before( :each ) do
     @alert_builder = lambda do |alert|
-       alert.sender      = 'Sender'                                                                                                                         
-       alert.sent        = DateTime.now                                                                                                                     
-       alert.status      = RCAP::CAP_1_1::Alert::STATUS_TEST                                                                                                
-       alert.scope       = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC                                                                                               
-       alert.source      = 'Source'                                                                                                                         
-       alert.restriction = 'No Restriction'                                                                                                                 
+       alert.sender      = 'Sender'
+       alert.sent        = DateTime.now
+       alert.status      = RCAP::CAP_1_1::Alert::STATUS_TEST
+       alert.scope       = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+       alert.source      = 'Source'
+       alert.restriction = 'No Restriction'
        [ 'Address 1', 'Address 2'].each do |address|
          alert.addresses << address
        end
        [ 'Code1', 'Code2' ].each do |code|
          alert.codes << code
        end
-       alert.note        = 'Note'                                                                                                                           
+       alert.note        = 'Note'
        [ 'Reference1', 'Reference2' ].each do |reference|
          alert.references << reference
        end
@@ -115,7 +115,7 @@ describe( RCAP::CAP_1_1::Alert ) do
         alert.sent       = DateTime.now
         alert.status     = RCAP::CAP_1_1::Alert::STATUS_TEST
         alert.msg_type   = RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT
-        alert.scope      = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC 
+        alert.scope      = RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
       end
       @alert.should( be_valid )
     end
@@ -171,10 +171,10 @@ describe( RCAP::CAP_1_1::Alert ) do
       it( 'is not valid' ) do
         @info = @alert.add_info do |info|
           info.event      = 'Info Event'
-          info.categories << RCAP::CAP_1_1::Info::CATEGORY_GEO 
+          info.categories << RCAP::CAP_1_1::Info::CATEGORY_GEO
           info.urgency    = RCAP::CAP_1_1::Info::URGENCY_IMMEDIATE
           info.severity   = RCAP::CAP_1_1::Info::SEVERITY_EXTREME
-          info.certainty  = RCAP::CAP_1_1::Info::CERTAINTY_OBSERVED 
+          info.certainty  = RCAP::CAP_1_1::Info::CERTAINTY_OBSERVED
         end
         @info.event = nil
         @alert.infos << @info
@@ -192,7 +192,7 @@ describe( RCAP::CAP_1_1::Alert ) do
     describe( '#add_info' ) do
       before( :each ) do
         @info = @alert.add_info do |info|
-          info.urgency = 'urgent' 
+          info.urgency = 'urgent'
         end
         @info.urgency.should == 'urgent'
       end

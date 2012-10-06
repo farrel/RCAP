@@ -191,7 +191,7 @@ describe( RCAP::Alert ) do
   end
 
   describe( 'external file' ) do
-    def load_file( file_name ) 
+    def load_file( file_name )
       File.open( File.join( File.dirname( __FILE__ ), 'assets', file_name )){|f| f.read }
     end
 

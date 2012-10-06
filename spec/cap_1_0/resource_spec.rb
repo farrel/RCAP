@@ -23,7 +23,7 @@ describe( RCAP::CAP_1_0::Resource ) do
         end
 
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.add_info.resources << @original_resource 
+        @alert.add_info.resources << @original_resource
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS )
@@ -137,7 +137,7 @@ describe( RCAP::CAP_1_0::Resource ) do
   context( 'which is valid' ) do
     before( :each ) do
       @resource = RCAP::CAP_1_0::Resource.new do |resource|
-        resource.resource_desc = 'Resource Description' 
+        resource.resource_desc = 'Resource Description'
       end
 
       @resource.should( be_valid )

@@ -37,7 +37,7 @@ describe( RCAP::CAP_1_1::EventCode ) do
       @event_code = RCAP::CAP_1_1::EventCode.new do |event_code|
         event_code.name = 'name'
         event_code.value = 'value'
-      end                           
+      end
     end
 
     context( 'to a hash' ) do

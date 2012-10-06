@@ -7,7 +7,7 @@ module RCAP
       attr_accessor( :area_desc )
       # @return [Numeric] Expressed in feet above sea level
       attr_accessor( :altitude )
-      # @return [Numeric] Expressed in feet above sea level. 
+      # @return [Numeric] Expressed in feet above sea level.
       attr_accessor( :ceiling )
       # @return [Array<Circle>]
       attr_reader( :circles )
@@ -20,15 +20,15 @@ module RCAP
       validates_collection_of( :circles, :geocodes, :polygons, allow_empty: true )
       validates_dependency_of( :ceiling, on: :altitude )
 
-      XML_ELEMENT_NAME       = 'area'     
-      AREA_DESC_ELEMENT_NAME = 'areaDesc' 
-      ALTITUDE_ELEMENT_NAME  = 'altitude' 
-      CEILING_ELEMENT_NAME   = 'ceiling'  
+      XML_ELEMENT_NAME       = 'area'
+      AREA_DESC_ELEMENT_NAME = 'areaDesc'
+      ALTITUDE_ELEMENT_NAME  = 'altitude'
+      CEILING_ELEMENT_NAME   = 'ceiling'
 
-      XPATH           = "cap:#{ XML_ELEMENT_NAME }"       
-      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }" 
-      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"  
-      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"   
+      XPATH           = "cap:#{ XML_ELEMENT_NAME }"
+      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }"
+      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"
+      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"
 
       # @example
       #   Area.new( area_desc: 'Cape Town CBD' )
@@ -36,14 +36,14 @@ module RCAP
       # @option attributes [String] :area_desc Area description
       # @option attributes [Numeric] :altitude Altitude above sea level (in feet)
       # @option attributes [Numeric] :ceiling Ceiling above sea level (in feet)
-      # @option attributes [Array<Circle>] :circles Collection of {Circle} 
-      # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode} 
+      # @option attributes [Array<Circle>] :circles Collection of {Circle}
+      # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode}
       # @option attributes [Array<Polygon>] :polygons Collection of {Polygon}
       def initialize
         @area_desc = nil
         @altitude = nil
         @ceiling = nil
-        
+
         @circles  = []
         @geocodes = []
         @polygons = []
@@ -101,7 +101,7 @@ module RCAP
       end
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( AREA_DESC_ELEMENT_NAME ).add_text( @area_desc.to_s )
         add_to_xml_element = lambda do |element, object|
@@ -117,7 +117,7 @@ module RCAP
       end
 
       # @return [String] XML representation of the Area
-      def to_xml 
+      def to_xml
         self.to_xml_element.to_s
       end
 
@@ -131,7 +131,7 @@ module RCAP
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         area_inspect = "Area Description: #{ @area_desc }\n"+
                        "Polygons:\n"+
                        @polygons.map{ |polygon| "  " + polygon.inspect }.join("\n" )+"\n"+
@@ -148,15 +148,15 @@ module RCAP
       end
 
 
-      AREA_DESC_YAML = 'Area Description' 
-      ALTITUDE_YAML  = 'Altitude'         
-      CEILING_YAML   = 'Ceiling'          
-      CIRCLES_YAML   = 'Circles'          
-      GEOCODES_YAML  = 'Geocodes'         
-      POLYGONS_YAML  = 'Polygons'         
+      AREA_DESC_YAML = 'Area Description'
+      ALTITUDE_YAML  = 'Altitude'
+      CEILING_YAML   = 'Ceiling'
+      CIRCLES_YAML   = 'Circles'
+      GEOCODES_YAML  = 'Geocodes'
+      POLYGONS_YAML  = 'Polygons'
 
       # @return [String] YAML representation of object
-      def to_yaml( options = {} ) 
+      def to_yaml( options = {} )
         RCAP.attribute_values_to_hash( [ AREA_DESC_YAML, @area_desc ],
                                        [ ALTITUDE_YAML,  @altitude ],
                                        [ CEILING_YAML,   @ceiling ],
@@ -167,7 +167,7 @@ module RCAP
 
       # @param [Hash] area_yaml_data
       # @return [Area]
-      def self.from_yaml_data( area_yaml_data )  
+      def self.from_yaml_data( area_yaml_data )
         self.new do |area|
           area.area_desc = area_yaml_data[ AREA_DESC_YAML ]
           area.altitude  = area_yaml_data[ ALTITUDE_YAML ]
@@ -176,11 +176,11 @@ module RCAP
           Array( area_yaml_data[ CIRCLES_YAML ]).each do |circle_yaml_data|
             area.circles << area.circle_class.from_yaml_data( circle_yaml_data )
           end
-          
+
           Array( area_yaml_data[ GEOCODES_YAML ]).each do |name, value|
             area.add_geocode do |geocode|
               geocode.name = name
-              geocode.value = value 
+              geocode.value = value
             end
           end
 
@@ -190,16 +190,16 @@ module RCAP
         end
       end
 
-      AREA_DESC_KEY = 'area_desc'  
-      ALTITUDE_KEY  = 'altitude'   
-      CEILING_KEY   = 'ceiling'    
-      CIRCLES_KEY   = 'circles'    
-      GEOCODES_KEY  = 'geocodes'   
-      POLYGONS_KEY  = 'polygons'   
-      
+      AREA_DESC_KEY = 'area_desc'
+      ALTITUDE_KEY  = 'altitude'
+      CEILING_KEY   = 'ceiling'
+      CIRCLES_KEY   = 'circles'
+      GEOCODES_KEY  = 'geocodes'
+      POLYGONS_KEY  = 'polygons'
+
       # @param [Hash] area_hash
       # @return [Area]
-      def self.from_h( area_hash ) 
+      def self.from_h( area_hash )
         self.new do |area|
           area.area_desc = area_hash[ AREA_DESC_KEY ]
           area.altitude  = area_hash[ ALTITUDE_KEY ]
@@ -213,14 +213,14 @@ module RCAP
             area.geocodes << area.geocode_class.from_h( geocode_hash )
           end
 
-          Array( area_hash[ POLYGONS_KEY ]).each do |polygon_hash| 
+          Array( area_hash[ POLYGONS_KEY ]).each do |polygon_hash|
             area.polygons << area.polygon_class.from_h( polygon_hash )
           end
         end
       end
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ AREA_DESC_KEY, @area_desc ],
                                        [ ALTITUDE_KEY,  @altitude ],
                                        [ CEILING_KEY,   @ceiling ],

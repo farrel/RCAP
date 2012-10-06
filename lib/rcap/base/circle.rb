@@ -3,15 +3,15 @@ module RCAP
     class Circle < Point
       include Validation
 
-      # @return [Numeric] Expresed in kilometers 
+      # @return [Numeric] Expresed in kilometers
       attr_accessor( :radius )
 
       validates_presence_of( :radius )
       validates_numericality_of( :radius , greater_than_or_equal: 0 )
 
-      XML_ELEMENT_NAME = 'circle' 
+      XML_ELEMENT_NAME = 'circle'
 
-      XPATH = 'cap:circle' 
+      XPATH = 'cap:circle'
 
       # @param [Hash] attributes
       # @option attributes [Numeric] :lattitude
@@ -25,24 +25,24 @@ module RCAP
       #  lattitude,longitude radius
       #
       # @return [String]
-      def to_s  
+      def to_s
         "#{ @lattitude },#{ @longitude } #{ @radius }"
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         "(#{ self.to_s })"
       end
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_text( self.to_s )
         xml_element
       end
 
       # @return [String]
-      def to_xml 
+      def to_xml
         self.to_xml_element.to_s
       end
 
@@ -51,7 +51,7 @@ module RCAP
       #
       # @param [String] circle_string
       # @return [Array(Float,Float,Float)]
-      def self.parse_circle_string( circle_string ) 
+      def self.parse_circle_string( circle_string )
         coordinates, radius = circle_string.split( ' ' )
         lattitude, longitude = coordinates.split( ',' )
         [ lattitude, longitude, radius ].map{ |e| e.to_f }
@@ -59,12 +59,12 @@ module RCAP
 
       # @param [REXML::Element] circle_xml_element
       # @return [Circle]
-      def self.from_xml_element( circle_xml_element ) 
+      def self.from_xml_element( circle_xml_element )
         lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
         circle = self.new do |circle|
-          circle.lattitude = lattitude 
-          circle.longitude = longitude 
-          circle.radius    = radius 
+          circle.lattitude = lattitude
+          circle.longitude = longitude
+          circle.radius    = radius
         end
       end
 
@@ -76,20 +76,20 @@ module RCAP
         [ @lattitude, @longitude, @radius ] == [ other.lattitude, other.longitude, other.radius ]
       end
 
-      # @param [Array(Numeric, Numeric, Numeric)] circle_yaml_data lattitude, longitude, radius 
+      # @param [Array(Numeric, Numeric, Numeric)] circle_yaml_data lattitude, longitude, radius
       # @return [Circle]
-      def self.from_yaml_data( circle_yaml_data ) 
+      def self.from_yaml_data( circle_yaml_data )
         lattitude, longitude, radius = circle_yaml_data
         self.new do |circle|
-          circle.lattitude = lattitude 
-          circle.longitude = longitude 
-          circle.radius    = radius 
+          circle.lattitude = lattitude
+          circle.longitude = longitude
+          circle.radius    = radius
         end
       end
 
-      RADIUS_KEY    = 'radius'    
+      RADIUS_KEY    = 'radius'
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ RADIUS_KEY,    @radius ],
                                        [ LATTITUDE_KEY, @lattitude ],
                                        [ LONGITUDE_KEY, @longitude ])
@@ -97,7 +97,7 @@ module RCAP
 
       # @param [Hash] circle_hash
       # @return [Circle]
-      def self.from_h( circle_hash ) 
+      def self.from_h( circle_hash )
         self.new do |circle|
           circle.radius    = circle_hash[ RADIUS_KEY ]
           circle.lattitude = circle_hash[ LATTITUDE_KEY ]

@@ -98,8 +98,8 @@ describe( RCAP::CAP_1_2::Polygon ) do
     describe( '#add_point' ) do
       before( :each ) do
         @point = @polygon.add_point do |point|
-           point.lattitude = 1 
-           point.longitude = 1 
+           point.lattitude = 1
+           point.longitude = 1
         end
       end
 

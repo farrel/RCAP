@@ -1,6 +1,6 @@
-ALLOWED_CHARACTERS = /[^\s&<]+/ 
+ALLOWED_CHARACTERS = /[^\s&<]+/
 
-module RCAP  
+module RCAP
   # Returns a randomly generated UUID string
   #
   # @return [String] UUID string
@@ -14,7 +14,7 @@ module RCAP
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
   # @param [String] namespace Namespace in which to do the matching
-  # @return [String,nil] Text content of element matching XPath query or nil 
+  # @return [String,nil] Text content of element matching XPath query or nil
   def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
     element.text if element
@@ -35,7 +35,7 @@ module RCAP
   # @param [REXML::Element] xml_element Element to start matching from.
   # @param [String] xpath XPath expression
   # @param [String] namespace Namespace in which to do the matching
-  # @return [Array<REXML::Element>] Collection of elements matching XPath query 
+  # @return [Array<REXML::Element>] Collection of elements matching XPath query
   def self.xpath_match( xml_element, xpath, namespace )
     REXML::XPath.match( xml_element, xpath, { 'cap' => namespace })
   end
@@ -47,7 +47,7 @@ module RCAP
   # @return [String] Formatted output for inspect
   #
   # @example
-  #  RCAP.format_lines_for_inspect( 'Test', 'one\ntwo\nthree' ) 
+  #  RCAP.format_lines_for_inspect( 'Test', 'one\ntwo\nthree' )
   #  # returns
   #  # .-------.
   #  # | Test  |
@@ -78,7 +78,7 @@ module RCAP
 
   # Calls #to_s_for_cap on the object it it responds to that otherwise just calls #to_s
   #
-  # @param [#to_s, #to_s_for_cap] object 
+  # @param [#to_s, #to_s_for_cap] object
   # @return [String]
   def self.to_s_for_cap( object )
     if object
@@ -92,7 +92,7 @@ module RCAP
 
   # If the parameter is a string the datetime is parsed out of it, otherwise returns nil.
   #
-  # @param [String] date_string String to parse 
+  # @param [String] date_string String to parse
   # @return [String,nil]
   def self.parse_datetime( date_string )
     if date_string.is_a?( String )

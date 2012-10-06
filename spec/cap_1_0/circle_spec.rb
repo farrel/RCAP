@@ -5,8 +5,8 @@ describe( RCAP::CAP_1_0::Circle ) do
     before( :each ) do
       @circle = RCAP::CAP_1_0::Circle.new do |circle|
         circle.lattitude = 0
-        circle.longitude = 0 
-        circle.radius = 1 
+        circle.longitude = 0
+        circle.radius = 1
       end
       @circle.should( be_valid )
     end
@@ -41,15 +41,15 @@ describe( RCAP::CAP_1_0::Circle ) do
     context( 'from XML' ) do
       before( :each ) do
         @original_circle = RCAP::CAP_1_0::Circle.new do |circle|
-          circle.radius = 10.5 
-          circle.lattitude = 30 
-          circle.longitude = 60 
+          circle.radius = 10.5
+          circle.lattitude = 30
+          circle.longitude = 60
         end
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info.add_area.add_circle do |circle|
           circle.radius = 10.5
           circle.lattitude = 30
-          circle.longitude = 60 
+          circle.longitude = 60
         end
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
@@ -71,10 +71,10 @@ describe( RCAP::CAP_1_0::Circle ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-      @original_circle = RCAP::CAP_1_0::Circle.new do |circle| 
+      @original_circle = RCAP::CAP_1_0::Circle.new do |circle|
         circle.radius = 10.5
         circle.lattitude = 30
-        circle.longitude = 60 
+        circle.longitude = 60
       end
         @circle = RCAP::CAP_1_0::Circle.from_h( @original_circle.to_h )
       end
@@ -92,10 +92,10 @@ describe( RCAP::CAP_1_0::Circle ) do
 
   context( 'when exported' ) do
     before( :each ) do
-      @circle = RCAP::CAP_1_0::Circle.new do |circle| 
+      @circle = RCAP::CAP_1_0::Circle.new do |circle|
         circle.radius = 10.5
         circle.lattitude = 30
-        circle.longitude = 60 
+        circle.longitude = 60
       end
     end
 

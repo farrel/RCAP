@@ -38,7 +38,7 @@ describe( RCAP::CAP_1_1::Geocode ) do
       @geocode = RCAP::CAP_1_1::Geocode.new do |geocode|
         geocode.name = 'name'
         geocode.value = 'value'
-      end                                 
+      end
     end
 
     context( 'to a hash' ) do

@@ -99,7 +99,7 @@ describe( RCAP::CAP_1_1::Circle ) do
         circle.lattitude = 30
         circle.longitude = 60
         circle.radius    = 10.5
-      end                 
+      end
     end
 
     context( 'to hash' ) do

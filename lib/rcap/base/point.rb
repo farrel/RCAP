@@ -33,7 +33,7 @@ module RCAP
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         '('+self.to_s+')'
       end
 
@@ -45,18 +45,18 @@ module RCAP
         [ self.lattitude, self.longitude ] == [ other.lattitude, other.longitude ]
       end
 
-      LATTITUDE_KEY = 'lattitude'  
-      LONGITUDE_KEY = 'longitude'  
+      LATTITUDE_KEY = 'lattitude'
+      LONGITUDE_KEY = 'longitude'
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ LATTITUDE_KEY, self.lattitude ],
                                        [ LONGITUDE_KEY, self.longitude ])
       end
 
       # @param [Hash] point_hash
       # @return [Point]
-      def self.from_h( point_hash ) 
+      def self.from_h( point_hash )
         self.new do |point|
           point.lattitude = point_hash[ LATTITUDE_KEY ]
           point.longitude = point_hash[ LONGITUDE_KEY ]

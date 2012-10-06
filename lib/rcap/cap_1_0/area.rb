@@ -16,7 +16,7 @@ module RCAP
       def polygon_class
         Polygon
       end
-      
+
       def circle_class
         Circle
       end

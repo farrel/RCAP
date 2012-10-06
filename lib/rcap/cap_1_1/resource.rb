@@ -5,14 +5,14 @@ module RCAP
     # * it has a resource description
     class Resource < RCAP::Base::Resource
 
-      # @return [String] Dereferenced URI - contents of URI Base64 encoded 
+      # @return [String] Dereferenced URI - contents of URI Base64 encoded
       attr_accessor( :deref_uri )
 
-      DEREF_URI_ELEMENT_NAME     = 'derefUri'     
-      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"     
+      DEREF_URI_ELEMENT_NAME     = 'derefUri'
+      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = super
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( RESOURCE_DESC_ELEMENT_NAME ).add_text( @resource_desc )
@@ -46,17 +46,17 @@ module RCAP
 
       # @param [REXML::Element] resource_xml_element
       # @return [Resource]
-      def self.from_xml_element( resource_xml_element ) 
+      def self.from_xml_element( resource_xml_element )
         super.tap do |resource|
           resource.deref_uri = RCAP.xpath_text( resource_xml_element, DEREF_URI_XPATH, resource.xmlns )
         end
       end
 
-      DEREF_URI_YAML     = "Derefrenced URI Data" 
+      DEREF_URI_YAML     = "Derefrenced URI Data"
 
       # @param [Hash] options
       # @return [String]
-      def to_yaml( options = {} ) 
+      def to_yaml( options = {} )
         RCAP.attribute_values_to_hash( [ RESOURCE_DESC_YAML, @resource_desc ],
                                        [ URI_YAML,           @uri ],
                                        [ MIME_TYPE_YAML,     @mime_type ],
@@ -67,16 +67,16 @@ module RCAP
 
       # @param [Hash] resource_yaml_data
       # @return [Resource]
-      def self.from_yaml_data( resource_yaml_data ) 
+      def self.from_yaml_data( resource_yaml_data )
         super.tap do |resource|
           resource.deref_uri = resource_yaml_data[ DEREF_URI_YAML ]
         end
       end
 
-      DEREF_URI_KEY     = 'deref_uri'     
+      DEREF_URI_KEY     = 'deref_uri'
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ RESOURCE_DESC_KEY, @resource_desc ],
                                        [ URI_KEY,           @uri],
                                        [ MIME_TYPE_KEY,     @mime_type],
@@ -87,7 +87,7 @@ module RCAP
 
       # @param [Hash] resource_hash
       # @return [Resource]
-      def self.from_h( resource_hash ) 
+      def self.from_h( resource_hash )
         super.tap do |resource|
           resource.deref_uri = resource_hash[ DEREF_URI_KEY ]
         end

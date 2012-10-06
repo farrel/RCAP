@@ -6,10 +6,10 @@ describe( RCAP::CAP_1_0::Parameter ) do
       before( :each ) do
         @original_parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
           parameter.name = 'name'
-          parameter.value = 'value' 
+          parameter.value = 'value'
         end
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.add_info.parameters << @original_parameter 
+        @alert.add_info.parameters << @original_parameter
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_xml_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS )
@@ -35,7 +35,7 @@ describe( RCAP::CAP_1_0::Parameter ) do
     before( :each ) do
       @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
         parameter.name = 'name'
-        parameter.value = 'value' 
+        parameter.value = 'value'
       end
     end
 
@@ -60,7 +60,7 @@ describe( RCAP::CAP_1_0::Parameter ) do
     before( :each ) do
       @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
         parameter.name = 'name'
-        parameter.value = 'value' 
+        parameter.value = 'value'
       end
     end
 
@@ -73,7 +73,7 @@ describe( RCAP::CAP_1_0::Parameter ) do
     before( :each ) do
       @parameter = RCAP::CAP_1_0::Parameter.new do |parameter|
         parameter.name = 'name'
-        parameter.value = 'value' 
+        parameter.value = 'value'
       end
     end
 

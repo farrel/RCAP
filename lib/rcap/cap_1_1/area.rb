@@ -8,7 +8,7 @@ module RCAP
     # * all Polygon objects contained in polygons are valid
     # * altitude has a value if ceiling is set
     class Area < RCAP::Base::Area
-      
+
       def xmlns
         Alert::XMLNS
       end
@@ -16,7 +16,7 @@ module RCAP
       def polygon_class
         Polygon
       end
-      
+
       def circle_class
         Circle
       end

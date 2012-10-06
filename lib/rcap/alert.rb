@@ -10,7 +10,7 @@ module RCAP
     # Initialise a RCAP Alert from a XML document.
     #
     # @param [IO,String] xml CAP alert in XML format. Can be a String or any IO object.
-    # @param [String] namespace_key The XML namespace that the CAP alert is in. If omitted  
+    # @param [String] namespace_key The XML namespace that the CAP alert is in. If omitted
     #  the namespace of the document is inspected and a CAP_1_0::Alert, CAP_1_1::Alert
     #  or CAP_1_2::Alert is instantiated accordingly. If no namespace can be detected
     #  a CAP 1.2 message will be assumed.
@@ -66,7 +66,7 @@ module RCAP
     #
     # @param [Hash] hash Alert as a Ruby hash.
     # @return [ RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
-    def self.from_h( hash ) 
+    def self.from_h( hash )
       case hash[ JSON_CAP_VERSION_KEY ]
       when CAP_1_0::Alert::CAP_VERSION
         CAP_1_0::Alert.from_h( hash )

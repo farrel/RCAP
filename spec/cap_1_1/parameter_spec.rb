@@ -36,8 +36,8 @@ describe( RCAP::CAP_1_1::Parameter ) do
   context( 'when exported' ) do
     before( :each ) do
       @parameter = RCAP::CAP_1_1::Parameter.new do |parameter|
-         parameter.name  = 'name' 
-         parameter.value = 'value' 
+         parameter.name  = 'name'
+         parameter.value = 'value'
       end
     end
 

@@ -14,7 +14,7 @@ module RCAP
       XMLNS = "urn:oasis:names:tc:emergency:cap:1.2"
       CAP_VERSION = "1.2"
 
-      STATUS_DRAFT    = "Draft"    
+      STATUS_DRAFT    = "Draft"
       # Valid values for status
       VALID_STATUSES = [ STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT ]
 

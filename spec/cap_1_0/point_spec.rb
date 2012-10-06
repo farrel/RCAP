@@ -5,7 +5,7 @@ describe( RCAP::CAP_1_0::Point ) do
     before( :each ) do
       @point = RCAP::CAP_1_0::Point.new do |point|
         point.lattitude = 0
-        point.longitude = 0 
+        point.longitude = 0
       end
 
       @point.should( be_valid )
@@ -40,7 +40,7 @@ describe( RCAP::CAP_1_0::Point ) do
     before( :each ) do
       @point = RCAP::CAP_1_0::Point.new do |p|
         p.lattitude = 1
-        p.longitude = 1 
+        p.longitude = 1
       end
     end
 

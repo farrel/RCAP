@@ -29,7 +29,7 @@ describe( RCAP::CAP_1_2::Resource ) do
         @original_resource = RCAP::CAP_1_2::Resource.new( &@resource_builder )
 
         @alert = RCAP::CAP_1_2::Alert.new
-        @alert.add_info.add_resource( &@resource_builder ) 
+        @alert.add_info.add_resource( &@resource_builder )
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info_element = RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_2::Info::XPATH, RCAP::CAP_1_2::Alert::XMLNS )
@@ -143,7 +143,7 @@ describe( RCAP::CAP_1_2::Resource ) do
     before( :each ) do
       @resource = RCAP::CAP_1_2::Resource.new do |resource|
         resource.resource_desc = 'Resource Description'
-        resource.mime_type = 'text/csv' 
+        resource.mime_type = 'text/csv'
       end
       @resource.should( be_valid )
     end
@@ -189,14 +189,14 @@ describe( RCAP::CAP_1_2::Resource ) do
   end
 
   context( 'with a dereferenced URI' ) do
-    before( :each ) do 
+    before( :each ) do
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64( @content )
       @resource = RCAP::CAP_1_2::Resource.new do |resource|
          resource.resource_desc = 'Resource Description'
          resource.mime_type     = 'text/csv'
          resource.uri           = 'http://tempuri.org/resource.csv'
-         resource.deref_uri     = @encoded_content 
+         resource.deref_uri     = @encoded_content
       end
     end
 

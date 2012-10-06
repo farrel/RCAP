@@ -188,7 +188,7 @@ describe( RCAP::CAP_1_1::Resource ) do
   context( 'which is valid' ) do
     before( :each ) do
       @resource = RCAP::CAP_1_1::Resource.new do |resource|
-        resource.resource_desc = 'Resource Description' 
+        resource.resource_desc = 'Resource Description'
       end
       @resource.should( be_valid )
     end
@@ -229,14 +229,14 @@ describe( RCAP::CAP_1_1::Resource ) do
   end
 
   context( 'with a dereferenced URI' ) do
-    before( :each ) do 
+    before( :each ) do
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64( @content )
       @resource = RCAP::CAP_1_1::Resource.new do |resource|
         resource.resource_desc = 'Resource Description'
         resource.mime_type     = 'text/csv'
         resource.uri           = 'http://tempuri.org/resource.csv'
-        resource.deref_uri     = @encoded_content 
+        resource.deref_uri     = @encoded_content
       end
     end
 

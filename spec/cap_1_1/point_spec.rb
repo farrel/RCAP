@@ -39,7 +39,7 @@ describe( RCAP::CAP_1_1::Point ) do
     before( :each ) do
       @point = RCAP::CAP_1_1::Point.new do |point|
         point.lattitude = 1
-        point.longitude = 1 
+        point.longitude = 1
       end
     end
 

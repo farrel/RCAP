@@ -60,7 +60,7 @@ describe( RCAP::CAP_1_0::Alert ) do
       it( 'should parse note correctly' )       { @alert.note.should        == @original_alert.note }
       it( 'should parse references correctly' ) { @alert.references.should  == @original_alert.references }
       it( 'should parse incidents correctly' )  { @alert.incidents.should   == @original_alert.incidents }
-      it( 'should parse infos correctly' ) do           
+      it( 'should parse infos correctly' ) do
         @alert.infos.size.should == @original_alert.infos.size
         @alert.infos.each{ |info| info.class.should == RCAP::CAP_1_0::Info }
       end
@@ -112,7 +112,7 @@ describe( RCAP::CAP_1_0::Alert ) do
          alert.sent       = DateTime.now
          alert.status     = RCAP::CAP_1_0::Alert::STATUS_TEST
          alert.msg_type   = RCAP::CAP_1_0::Alert::MSG_TYPE_ALERT
-         alert.scope      = RCAP::CAP_1_0::Alert::SCOPE_PUBLIC 
+         alert.scope      = RCAP::CAP_1_0::Alert::SCOPE_PUBLIC
       end
       @alert.should( be_valid )
     end
@@ -170,7 +170,7 @@ describe( RCAP::CAP_1_0::Alert ) do
           info.event     = 'Info Event'
           info.urgency   = RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE
           info.severity  = RCAP::CAP_1_0::Info::SEVERITY_EXTREME
-          info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY 
+          info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY
         end
         @info.categories << RCAP::CAP_1_0::Info::CATEGORY_GEO
         @info.event = nil
@@ -189,7 +189,7 @@ describe( RCAP::CAP_1_0::Alert ) do
     describe( '#add_info' ) do
       before( :each ) do
         @info = @alert.add_info do |info|
-          info.urgency = 'urgent' 
+          info.urgency = 'urgent'
         end
 
         @info.urgency.should == 'urgent'

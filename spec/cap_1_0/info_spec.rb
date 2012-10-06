@@ -23,7 +23,7 @@ describe( RCAP::CAP_1_0::Info ) do
 
         info.add_resource do |resource|
           resource.resource_desc = 'Resource Description'
-          resource.uri = 'http://tempuri.org/resource' 
+          resource.uri = 'http://tempuri.org/resource'
         end
 
         [ [ 'name1', 'value1' ], [ 'name2', 'value2' ]].each do |name, value|
@@ -45,7 +45,7 @@ describe( RCAP::CAP_1_0::Info ) do
             area.area_desc = area_desc
           end
         end
-      end      
+      end
     end
   context( 'on initialisation' ) do
     before( :each ) do
@@ -96,9 +96,9 @@ describe( RCAP::CAP_1_0::Info ) do
 
     context( 'from XML' ) do
       before( :each ) do
-        @original_info = create_info 
+        @original_info = create_info
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.infos << @original_info 
+        @alert.infos << @original_info
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new( @xml_string )
         @info = RCAP::CAP_1_0::Info.from_xml_element( RCAP.xpath_first( @xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS ))
@@ -109,7 +109,7 @@ describe( RCAP::CAP_1_0::Info ) do
 
     context( 'from a hash' ) do
       before( :each ) do
-        @original_info = create_info 
+        @original_info = create_info
         @info = RCAP::CAP_1_0::Info.from_h( @original_info.to_h )
       end
       it_should_behave_like( "it can parse into a CAP 1.0 Info object" )
@@ -120,10 +120,10 @@ describe( RCAP::CAP_1_0::Info ) do
     before( :each ) do
       @info = RCAP::CAP_1_0::Info.new do |info|
         info.event = 'Info Event'
-        info.categories <<  RCAP::CAP_1_0::Info::CATEGORY_GEO 
+        info.categories <<  RCAP::CAP_1_0::Info::CATEGORY_GEO
         info.urgency = RCAP::CAP_1_0::Info::URGENCY_IMMEDIATE
         info.severity = RCAP::CAP_1_0::Info::SEVERITY_EXTREME
-        info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY 
+        info.certainty = RCAP::CAP_1_0::Info::CERTAINTY_VERY_LIKELY
       end
       @info.valid?
       puts @info.errors.full_messages
@@ -250,7 +250,7 @@ describe( RCAP::CAP_1_0::Info ) do
       before( :each ) do
         @event_code = @info.add_event_code do |event_code|
            event_code.name = 'Event Code'
-           event_code.value = '1234' 
+           event_code.value = '1234'
         end
       end
 
@@ -269,7 +269,7 @@ describe( RCAP::CAP_1_0::Info ) do
       before( :each ) do
         @parameter = @info.add_parameter do |parameter|
            parameter.name = 'Parameter'
-           parameter.value = '1234' 
+           parameter.value = '1234'
         end
       end
 
@@ -287,7 +287,7 @@ describe( RCAP::CAP_1_0::Info ) do
     describe( '#add_resource' ) do
       before( :each ) do
         @resource = @info.add_resource do |resource|
-          resource.resource_desc = 'Resource' 
+          resource.resource_desc = 'Resource'
         end
       end
 
@@ -304,7 +304,7 @@ describe( RCAP::CAP_1_0::Info ) do
     describe( '#add_area' ) do
       before( :each ) do
         @area = @info.add_area do |area|
-          area.area_desc = 'Area' 
+          area.area_desc = 'Area'
         end
       end
 

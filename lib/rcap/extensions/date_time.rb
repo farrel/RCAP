@@ -6,7 +6,7 @@ class DateTime
 
   # Returns a string representaion of the time suitable for CAP.
   # @return [String]
-  # @example 
+  # @example
   #   DateTime.now.to_s_for_cap # => "2011-10-26T21:45:00+02:00"
   def to_s_for_cap
     t = self.strftime( RCAP_TIME_FORMAT ) + format( RCAP_ZONE_FORMAT , utc_hours_offset )

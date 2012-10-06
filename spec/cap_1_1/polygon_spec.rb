@@ -6,8 +6,8 @@ describe( RCAP::CAP_1_1::Polygon ) do
       @polygon = RCAP::CAP_1_1::Polygon.new do |polygon|
         3.times do
           polygon.add_point do |point|
-            point.lattitude = 0 
-            point.longitude = 0 
+            point.lattitude = 0
+            point.longitude = 0
           end
         end
         @polygon.should( be_valid )
@@ -31,10 +31,10 @@ describe( RCAP::CAP_1_1::Polygon ) do
         @original_polygon = RCAP::CAP_1_1::Polygon.new do |polygon|
           3.times do |i|
             polygon.add_point do |point|
-              point.lattitude = i 
-              point.longitude = i 
+              point.lattitude = i
+              point.longitude = i
             end
-          end    
+          end
         end
         @empty_original_polygon = RCAP::CAP_1_1::Polygon.new()
         @alert = RCAP::CAP_1_1::Alert.new
@@ -42,9 +42,9 @@ describe( RCAP::CAP_1_1::Polygon ) do
           area.add_polygon do |polygon|
             3.times do |i|
               polygon.add_point do |point|
-                point.lattitude = i 
-                point.longitude = i 
-              end                                          
+                point.lattitude = i
+                point.longitude = i
+              end
             end
           end
           area.add_polygon
@@ -76,11 +76,11 @@ describe( RCAP::CAP_1_1::Polygon ) do
         @polygon = RCAP::CAP_1_1::Polygon.new do |polygon|
           3.times do |i|
             polygon.add_point do |point|
-              point.lattitude = i 
-              point.longitude = i 
-            end                                          
+              point.lattitude = i
+              point.longitude = i
+            end
           end
-        end              
+        end
       end
 
       it( 'should load all the points' ) do
@@ -95,11 +95,11 @@ describe( RCAP::CAP_1_1::Polygon ) do
       @polygon = RCAP::CAP_1_1::Polygon.new do |polygon|
         3.times do |i|
           polygon.add_point do |point|
-            point.lattitude = i 
-            point.longitude = i 
-          end                                          
+            point.lattitude = i
+            point.longitude = i
+          end
         end
-      end              
+      end
     end
 
     context( 'to a hash' ) do
@@ -118,7 +118,7 @@ describe( RCAP::CAP_1_1::Polygon ) do
       before( :each ) do
         @point = @polygon.add_point do |point|
           point.lattitude = 1
-          point.longitude = 1 
+          point.longitude = 1
         end
       end
 

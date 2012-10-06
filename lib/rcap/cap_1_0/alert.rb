@@ -25,10 +25,10 @@ module RCAP
         Info
       end
 
-      PASSWORD_ELEMENT_NAME    = 'password'    
+      PASSWORD_ELEMENT_NAME    = 'password'
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_namespace( XMLNS )
         xml_element.add_element( IDENTIFIER_ELEMENT_NAME ).add_text( @identifier )   if @identifier
@@ -60,7 +60,7 @@ module RCAP
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         alert_inspect = [ "CAP Version:  #{ CAP_VERSION }",
                           "Identifier:   #{ @identifier }",
                           "Sender:       #{ @sender }",
@@ -83,18 +83,18 @@ module RCAP
       end
 
 
-      PASSWORD_XPATH    = "cap:#{ PASSWORD_ELEMENT_NAME }"    
+      PASSWORD_XPATH    = "cap:#{ PASSWORD_ELEMENT_NAME }"
 
       # @param [REXML::Element] alert_xml_element
       # @return [RCAP::CAP_1_0::Alert]
-      def self.from_xml_element( alert_xml_element ) 
+      def self.from_xml_element( alert_xml_element )
         super.tap do |alert|
           alert.password = RCAP.xpath_text( alert_xml_element, PASSWORD_XPATH, Alert::XMLNS )
         end
       end
 
 
-      PASSWORD_YAML    = "Password"           
+      PASSWORD_YAML    = "Password"
 
       # Returns a string containing the YAML representation of the alert.
       #
@@ -120,13 +120,13 @@ module RCAP
 
       # @param [Hash] alert_yaml_data
       # @return [RCAP::CAP_1_0::Alert]
-      def self.from_yaml_data( alert_yaml_data ) 
+      def self.from_yaml_data( alert_yaml_data )
         super.tap do |alert|
           alert.password    = alert_yaml_data[ PASSWORD_YAML ]
         end
       end
 
-      PASSWORD_KEY    = 'password'    
+      PASSWORD_KEY    = 'password'
 
       # Returns a Hash representation of an Alert object
       #

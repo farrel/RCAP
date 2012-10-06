@@ -10,13 +10,13 @@ module RCAP
       # @return [String]
       attr_accessor( :value )
 
-      XML_ELEMENT_NAME   = "parameter" 
-      NAME_ELEMENT_NAME  = "valueName" 
-      VALUE_ELEMENT_NAME = "value"     
+      XML_ELEMENT_NAME   = "parameter"
+      NAME_ELEMENT_NAME  = "valueName"
+      VALUE_ELEMENT_NAME = "value"
 
-      XPATH       = "cap:#{ XML_ELEMENT_NAME }"     
-      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"    
-      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"   
+      XPATH       = "cap:#{ XML_ELEMENT_NAME }"
+      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"
+      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"
 
       # @param [Hash] attributes
       # @option attributes [Symbol] :name Parameter name
@@ -26,7 +26,7 @@ module RCAP
       end
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( self.class::XML_ELEMENT_NAME )
         xml_element.add_element( self.class::NAME_ELEMENT_NAME ).add_text( @name )
         xml_element.add_element( self.class::VALUE_ELEMENT_NAME ).add_text( @value )
@@ -34,12 +34,12 @@ module RCAP
       end
 
       # @return [String]
-      def to_xml 
+      def to_xml
         self.to_xml_element.to_s
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         "#{ @name }: #{ @value }"
       end
 
@@ -60,7 +60,7 @@ module RCAP
       end
 
       # @param [REXML::Element] parameter_xml_element
-      # @return [Parameter] 
+      # @return [Parameter]
       def self.from_xml_element( parameter_xml_element )
         self.new do |parameter|
            parameter.name  = RCAP.xpath_text( parameter_xml_element, self::NAME_XPATH, parameter.xmlns )
@@ -69,13 +69,13 @@ module RCAP
       end
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ @name, @value ])
       end
 
       # @param [Hash] hash
       # @return [Parameter]
-      def self.from_h( hash ) 
+      def self.from_h( hash )
         key = hash.keys.first
         self.new do |parameter|
           parameter.name = key

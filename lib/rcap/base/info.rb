@@ -3,88 +3,88 @@ module RCAP
     class Info
       include Validation
 
-      CATEGORY_GEO       = "Geo"       
-      CATEGORY_MET       = "Met"       
-      CATEGORY_SAFETY    = "Safety"    
-      CATEGORY_SECURITY  = "Security"  
-      CATEGORY_RESCUE    = "Rescue"    
-      CATEGORY_FIRE      = "Fire"      
-      CATEGORY_HEALTH    = "Health"    
-      CATEGORY_ENV       = "Env"       
-      CATEGORY_TRANSPORT = "Transport" 
-      CATEGORY_INFRA     = "Infra"     
-      CATEGORY_CBRNE     = "CBRNE"     
-      CATEGORY_OTHER     = "Other"     
+      CATEGORY_GEO       = "Geo"
+      CATEGORY_MET       = "Met"
+      CATEGORY_SAFETY    = "Safety"
+      CATEGORY_SECURITY  = "Security"
+      CATEGORY_RESCUE    = "Rescue"
+      CATEGORY_FIRE      = "Fire"
+      CATEGORY_HEALTH    = "Health"
+      CATEGORY_ENV       = "Env"
+      CATEGORY_TRANSPORT = "Transport"
+      CATEGORY_INFRA     = "Infra"
+      CATEGORY_CBRNE     = "CBRNE"
+      CATEGORY_OTHER     = "Other"
       # Valid values for categories
       VALID_CATEGORIES = [ CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,
         CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
         CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
         CATEGORY_OTHER ]
 
-      URGENCY_IMMEDIATE = "Immediate" 
-      URGENCY_EXPECTED  = "Expected"  
-      URGENCY_FUTURE    = "Future"    
-      URGENCY_PAST      = "Past"      
-      URGENCY_UNKNOWN   = "Unknown"   
+      URGENCY_IMMEDIATE = "Immediate"
+      URGENCY_EXPECTED  = "Expected"
+      URGENCY_FUTURE    = "Future"
+      URGENCY_PAST      = "Past"
+      URGENCY_UNKNOWN   = "Unknown"
       # Valid values for urgency
       VALID_URGENCIES = [ URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,
         URGENCY_PAST, URGENCY_UNKNOWN ]
 
-      SEVERITY_EXTREME  = "Extreme"  
-      SEVERITY_SEVERE   = "Severe"   
-      SEVERITY_MODERATE = "Moderate" 
-      SEVERITY_MINOR    = "Minor"    
-      SEVERITY_UNKNOWN  = "Unknown"  
+      SEVERITY_EXTREME  = "Extreme"
+      SEVERITY_SEVERE   = "Severe"
+      SEVERITY_MODERATE = "Moderate"
+      SEVERITY_MINOR    = "Minor"
+      SEVERITY_UNKNOWN  = "Unknown"
       # Valid values for severity
       VALID_SEVERITIES = [ SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
         SEVERITY_MINOR, SEVERITY_UNKNOWN ]
 
-      CERTAINTY_VERY_LIKELY = "Very Likely" 
-      CERTAINTY_LIKELY      = "Likely"      
-      CERTAINTY_POSSIBLE    = "Possible"    
-      CERTAINTY_UNLIKELY    = "Unlikely"    
-      CERTAINTY_UNKNOWN     = "Unknown"     
+      CERTAINTY_VERY_LIKELY = "Very Likely"
+      CERTAINTY_LIKELY      = "Likely"
+      CERTAINTY_POSSIBLE    = "Possible"
+      CERTAINTY_UNLIKELY    = "Unlikely"
+      CERTAINTY_UNKNOWN     = "Unknown"
       # Valid valies for certainty
       VALID_CERTAINTIES = [ CERTAINTY_VERY_LIKELY, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
-      XML_ELEMENT_NAME           = 'info'         
-      LANGUAGE_ELEMENT_NAME      = 'language'     
-      CATEGORY_ELEMENT_NAME      = 'category'     
-      EVENT_ELEMENT_NAME         = 'event'        
-      URGENCY_ELEMENT_NAME       = 'urgency'      
-      SEVERITY_ELEMENT_NAME      = 'severity'     
-      CERTAINTY_ELEMENT_NAME     = 'certainty'    
-      AUDIENCE_ELEMENT_NAME      = 'audience'     
-      EVENT_CODE_ELEMENT_NAME    = 'eventCode'    
-      EFFECTIVE_ELEMENT_NAME     = 'effective'    
-      ONSET_ELEMENT_NAME         = 'onset'        
-      EXPIRES_ELEMENT_NAME       = 'expires'      
-      SENDER_NAME_ELEMENT_NAME   = 'senderName'   
-      HEADLINE_ELEMENT_NAME      = 'headline'     
-      DESCRIPTION_ELEMENT_NAME   = 'description'  
-      INSTRUCTION_ELEMENT_NAME   = 'instruction'  
-      WEB_ELEMENT_NAME           = 'web'          
-      CONTACT_ELEMENT_NAME       = 'contact'      
+      XML_ELEMENT_NAME           = 'info'
+      LANGUAGE_ELEMENT_NAME      = 'language'
+      CATEGORY_ELEMENT_NAME      = 'category'
+      EVENT_ELEMENT_NAME         = 'event'
+      URGENCY_ELEMENT_NAME       = 'urgency'
+      SEVERITY_ELEMENT_NAME      = 'severity'
+      CERTAINTY_ELEMENT_NAME     = 'certainty'
+      AUDIENCE_ELEMENT_NAME      = 'audience'
+      EVENT_CODE_ELEMENT_NAME    = 'eventCode'
+      EFFECTIVE_ELEMENT_NAME     = 'effective'
+      ONSET_ELEMENT_NAME         = 'onset'
+      EXPIRES_ELEMENT_NAME       = 'expires'
+      SENDER_NAME_ELEMENT_NAME   = 'senderName'
+      HEADLINE_ELEMENT_NAME      = 'headline'
+      DESCRIPTION_ELEMENT_NAME   = 'description'
+      INSTRUCTION_ELEMENT_NAME   = 'instruction'
+      WEB_ELEMENT_NAME           = 'web'
+      CONTACT_ELEMENT_NAME       = 'contact'
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"           
-      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"      
-      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"         
-      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"       
-      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"      
-      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"      
-      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"     
-      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"      
-      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"    
-      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"     
-      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"         
-      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"       
-      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"   
-      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"      
-      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"   
-      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"   
-      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"           
-      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"       
+      XPATH               = "cap:#{ XML_ELEMENT_NAME }"
+      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"
+      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"
+      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"
+      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"
+      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"
+      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"
+      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"
+      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"
+      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"
+      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"
+      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"
+      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"
+      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"
+      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"
+      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"
+      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"
+      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"
 
       DEFAULT_LANGUAGE = 'en-US'
 
@@ -99,21 +99,21 @@ module RCAP
 
       # @return [String]
       attr_accessor( :event )
-      # @return [String] Value can only be one of {VALID_URGENCIES} 
+      # @return [String] Value can only be one of {VALID_URGENCIES}
       attr_accessor( :urgency )
-      # @return [String] Value can only be one of {VALID_SEVERITIES} 
+      # @return [String] Value can only be one of {VALID_SEVERITIES}
       attr_accessor( :severity )
-      # @return [String] Value can only be one of {VALID_CERTAINTIES} 
+      # @return [String] Value can only be one of {VALID_CERTAINTIES}
       attr_accessor( :certainty )
       # @return [String]
       attr_accessor( :language )
       # @return [String]
       attr_accessor( :audience )
-      # @return [DateTime] Effective start time of information 
+      # @return [DateTime] Effective start time of information
       attr_accessor( :effective )
-      # @return [DateTime] Expected start of event 
+      # @return [DateTime] Expected start of event
       attr_accessor( :onset )
-      # @return [DateTime] Effective expiry time of information 
+      # @return [DateTime] Effective expiry time of information
       attr_accessor( :expires )
       # @return [String]
       attr_accessor( :sender_name )
@@ -128,7 +128,7 @@ module RCAP
       # @return [String]
       attr_accessor( :contact )
 
-      # @return [Array<String>] Collection of textual categories; elements can be one of {VALID_CATEGORIES} 
+      # @return [Array<String>] Collection of textual categories; elements can be one of {VALID_CATEGORIES}
       attr_reader( :categories )
       # @return [Array<EventCode>] Collection of {EventCode} objects
       attr_reader( :event_codes )
@@ -202,7 +202,7 @@ module RCAP
       end
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
         @categories.each do |category|
@@ -238,18 +238,18 @@ module RCAP
       end
 
       # @return [String]
-      def to_xml 
+      def to_xml
         self.to_xml_element.to_s
       end
 
       # @param [REXML::Element] info_xml_element
       # @return [Info]
-      def self.from_xml_element( info_xml_element ) 
+      def self.from_xml_element( info_xml_element )
         self.new do |info|
           info.language       = RCAP.xpath_text( info_xml_element, LANGUAGE_XPATH, info.xmlns ) || DEFAULT_LANGUAGE
 
           RCAP.xpath_match( info_xml_element, CATEGORY_XPATH, info.xmlns ).each do |element|
-            info.categories << element.text 
+            info.categories << element.text
           end
 
           info.event          = RCAP.xpath_text( info_xml_element, EVENT_XPATH, info.xmlns )
@@ -286,7 +286,7 @@ module RCAP
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         info_inspect = "Language:       #{ @language }\n"+
         "Categories:     #{ @categories.to_s_for_cap }\n"+
         "Event:          #{ @event }\n"+
@@ -322,29 +322,29 @@ module RCAP
         "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
       end
 
-      LANGUAGE_YAML       = 'Language'       
-      CATEGORIES_YAML     = 'Categories'     
-      EVENT_YAML          = 'Event'          
-      URGENCY_YAML        = 'Urgency'        
-      SEVERITY_YAML       = 'Severity'       
-      CERTAINTY_YAML      = 'Certainty'      
-      AUDIENCE_YAML       = 'Audience'       
-      EFFECTIVE_YAML      = 'Effective'      
-      ONSET_YAML          = 'Onset'          
-      EXPIRES_YAML        = 'Expires'        
-      SENDER_NAME_YAML    = 'Sender Name'    
-      HEADLINE_YAML       = 'Headline'       
-      DESCRIPTION_YAML    = 'Description'    
-      INSTRUCTION_YAML    = 'Instruction'    
-      WEB_YAML            = 'Web'            
-      CONTACT_YAML        = 'Contact'        
-      EVENT_CODES_YAML    = 'Event Codes'    
-      PARAMETERS_YAML     = 'Parameters'     
-      RESOURCES_YAML      = 'Resources'      
-      AREAS_YAML          = 'Areas'          
+      LANGUAGE_YAML       = 'Language'
+      CATEGORIES_YAML     = 'Categories'
+      EVENT_YAML          = 'Event'
+      URGENCY_YAML        = 'Urgency'
+      SEVERITY_YAML       = 'Severity'
+      CERTAINTY_YAML      = 'Certainty'
+      AUDIENCE_YAML       = 'Audience'
+      EFFECTIVE_YAML      = 'Effective'
+      ONSET_YAML          = 'Onset'
+      EXPIRES_YAML        = 'Expires'
+      SENDER_NAME_YAML    = 'Sender Name'
+      HEADLINE_YAML       = 'Headline'
+      DESCRIPTION_YAML    = 'Description'
+      INSTRUCTION_YAML    = 'Instruction'
+      WEB_YAML            = 'Web'
+      CONTACT_YAML        = 'Contact'
+      EVENT_CODES_YAML    = 'Event Codes'
+      PARAMETERS_YAML     = 'Parameters'
+      RESOURCES_YAML      = 'Resources'
+      AREAS_YAML          = 'Areas'
 
       # @return [String]
-      def to_yaml( options = {} ) 
+      def to_yaml( options = {} )
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
         RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       @language ],
@@ -371,7 +371,7 @@ module RCAP
 
       # @param [Hash] info_yaml_data
       # @return [Info]
-      def self.from_yaml_data( info_yaml_data ) 
+      def self.from_yaml_data( info_yaml_data )
         self.new do |info|
           info.language    = info_yaml_data [ LANGUAGE_YAML ]
           Array( info_yaml_data [ CATEGORIES_YAML ]).each do |category|
@@ -395,7 +395,7 @@ module RCAP
           Array( info_yaml_data [ EVENT_CODES_YAML ]).each do  |name,value|
             info.add_event_code do |event_code|
               event_code.name = name
-              event_code.value = value 
+              event_code.value = value
             end
           end
 
@@ -416,29 +416,29 @@ module RCAP
         end
       end
 
-      LANGUAGE_KEY       = 'language'       
-      CATEGORIES_KEY     = 'categories'     
-      EVENT_KEY          = 'event'          
-      URGENCY_KEY        = 'urgency'        
-      SEVERITY_KEY       = 'severity'       
-      CERTAINTY_KEY      = 'certainty'      
-      AUDIENCE_KEY       = 'audience'       
-      EFFECTIVE_KEY      = 'effective'      
-      ONSET_KEY          = 'onset'          
-      EXPIRES_KEY        = 'expires'        
-      SENDER_NAME_KEY    = 'sender_name'    
-      HEADLINE_KEY       = 'headline'       
-      DESCRIPTION_KEY    = 'description'    
-      INSTRUCTION_KEY    = 'instruction'    
-      WEB_KEY            = 'web'            
-      CONTACT_KEY        = 'contact'        
-      RESOURCES_KEY      = 'resources'      
-      EVENT_CODES_KEY    = 'event_codes'    
-      PARAMETERS_KEY     = 'parameters'     
-      AREAS_KEY          = 'areas'          
+      LANGUAGE_KEY       = 'language'
+      CATEGORIES_KEY     = 'categories'
+      EVENT_KEY          = 'event'
+      URGENCY_KEY        = 'urgency'
+      SEVERITY_KEY       = 'severity'
+      CERTAINTY_KEY      = 'certainty'
+      AUDIENCE_KEY       = 'audience'
+      EFFECTIVE_KEY      = 'effective'
+      ONSET_KEY          = 'onset'
+      EXPIRES_KEY        = 'expires'
+      SENDER_NAME_KEY    = 'sender_name'
+      HEADLINE_KEY       = 'headline'
+      DESCRIPTION_KEY    = 'description'
+      INSTRUCTION_KEY    = 'instruction'
+      WEB_KEY            = 'web'
+      CONTACT_KEY        = 'contact'
+      RESOURCES_KEY      = 'resources'
+      EVENT_CODES_KEY    = 'event_codes'
+      PARAMETERS_KEY     = 'parameters'
+      AREAS_KEY          = 'areas'
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,      @language ],
                                        [ CATEGORIES_KEY,     @categories ],
                                        [ EVENT_KEY,          @event ],
@@ -463,7 +463,7 @@ module RCAP
 
       # @param [Hash] info_hash
       # @return [Info]
-      def self.from_h( info_hash ) 
+      def self.from_h( info_hash )
         self.new do |info|
           info.language       = info_hash[ LANGUAGE_KEY ]
           Array( info_hash[ CATEGORIES_KEY ]).each do |category|
@@ -485,15 +485,15 @@ module RCAP
           info.contact        = info_hash[ CONTACT_KEY ]
 
           Array( info_hash[ RESOURCES_KEY ]).each do |resource_hash|
-            info.resources << info.resource_class.from_h( resource_hash ) 
+            info.resources << info.resource_class.from_h( resource_hash )
           end
 
           Array( info_hash[ EVENT_CODES_KEY ]).each do |event_code_hash|
-            info.event_codes << info.event_code_class.from_h( event_code_hash ) 
+            info.event_codes << info.event_code_class.from_h( event_code_hash )
           end
 
           Array( info_hash[ PARAMETERS_KEY ]).each do |parameter_hash|
-            info.parameters << info.parameter_class.from_h( parameter_hash ) 
+            info.parameters << info.parameter_class.from_h( parameter_hash )
           end
 
           Array( info_hash[ AREAS_KEY ]).each do |area_hash|

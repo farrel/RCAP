@@ -1,4 +1,4 @@
-class Array 
+class Array
   # Formats an array into a string suitable for a CAP message.
   #
   # @return [String]

@@ -1,5 +1,5 @@
-module Validation  
-  module ClassMethods 
+module Validation
+  module ClassMethods
 
     CAP_NUMBER_REGEX  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
     CAP_INTEGER_REGEX = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )

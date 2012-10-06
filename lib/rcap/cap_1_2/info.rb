@@ -11,31 +11,31 @@ module RCAP
     # * all Area objects in the areas collection are valid
     class Info < RCAP::Base::Info
 
-      RESPONSE_TYPE_SHELTER  = "Shelter"  
-      RESPONSE_TYPE_EVACUATE = "Evacuate" 
-      RESPONSE_TYPE_PREPARE  = "Prepare"  
-      RESPONSE_TYPE_EXECUTE  = "Execute"  
-      RESPONSE_TYPE_MONITOR  = "Monitor"  
-      RESPONSE_TYPE_ASSESS   = "Assess"   
-      RESPONSE_TYPE_NONE     = "None"     
+      RESPONSE_TYPE_SHELTER  = "Shelter"
+      RESPONSE_TYPE_EVACUATE = "Evacuate"
+      RESPONSE_TYPE_PREPARE  = "Prepare"
+      RESPONSE_TYPE_EXECUTE  = "Execute"
+      RESPONSE_TYPE_MONITOR  = "Monitor"
+      RESPONSE_TYPE_ASSESS   = "Assess"
+      RESPONSE_TYPE_NONE     = "None"
       # Valid values for response_type
       VALID_RESPONSE_TYPES = [ RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE ]
 
 
-      CERTAINTY_OBSERVED = "Observed" 
+      CERTAINTY_OBSERVED = "Observed"
       # Valid valies for certainty
       VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
         CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
-      RESPONSE_TYPE_ELEMENT_NAME = 'responseType' 
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }" 
+      RESPONSE_TYPE_ELEMENT_NAME = 'responseType'
+      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }"
 
 
       validates_length_of( :categories, :minimum => 1 )
       validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
       validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
 
-      # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES} 
+      # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES}
       attr_reader( :response_types )
 
       # @param [Hash] attributes
@@ -47,7 +47,7 @@ module RCAP
       # @option attributes [String] :urgency A member of {VALID_URGENCIES}
       # @option attributes [String] :severity A member of {VALID_SEVERITIES}
       # @option attributes [String] :certainty A member of {VALID_CERTAINTIES}
-      # @option attributes [DateTime] :effective 
+      # @option attributes [DateTime] :effective
       # @option attributes [DateTime] :onset
       # @option attributes [DateTime] :expires
       # @option attributes [Array<EventCode>] :event_codes Collection of {EventCode} objects
@@ -58,7 +58,7 @@ module RCAP
       # @option attributes [String] :web URL
       # @option attributes [String] :contact
       # @option attributes [Array<Parameter>] :parameters Collection of {Parameter} objects
-      # @option attributes [Array<Resource>] :resources Collection of {Resource} objects 
+      # @option attributes [Array<Resource>] :resources Collection of {Resource} objects
       # @option attributes [Array<Area>] :areas Collection of {Area} objects
       def initialize
         @response_types = []
@@ -86,7 +86,7 @@ module RCAP
       end
 
       # @return [REXML::Element]
-      def to_xml_element 
+      def to_xml_element
         xml_element = REXML::Element.new( XML_ELEMENT_NAME )
         xml_element.add_element( LANGUAGE_ELEMENT_NAME ).add_text( @language ) if @language
         @categories.each do |category|
@@ -125,12 +125,12 @@ module RCAP
       end
 
       # @return [String]
-      def to_xml 
+      def to_xml
         self.to_xml_element.to_s
       end
 
       # @return [String]
-      def inspect 
+      def inspect
         info_inspect = "Language:       #{ @language }\n"+
         "Categories:     #{ @categories.to_s_for_cap }\n"+
         "Event:          #{ @event }\n"+
@@ -169,7 +169,7 @@ module RCAP
 
       # @param [REXML::Element] info_xml_element
       # @return [Info]
-      def self.from_xml_element( info_xml_element ) 
+      def self.from_xml_element( info_xml_element )
         super.tap do |info|
           RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, Alert::XMLNS ).each do |element|
             info.response_types << element.text
@@ -177,10 +177,10 @@ module RCAP
         end
       end
 
-      RESPONSE_TYPES_YAML = 'Response Types' 
+      RESPONSE_TYPES_YAML = 'Response Types'
 
       # @return [String]
-      def to_yaml( options = {} ) 
+      def to_yaml( options = {} )
         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
         RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       @language ],
@@ -208,7 +208,7 @@ module RCAP
 
       # @param [Hash] info_yaml_data
       # @return [Info]
-      def self.from_yaml_data( info_yaml_data ) 
+      def self.from_yaml_data( info_yaml_data )
         super.tap do |info|
           Array( info_yaml_data [ RESPONSE_TYPES_YAML ]).each do |response_type|
             info.response_types << response_type
@@ -216,10 +216,10 @@ module RCAP
         end
       end
 
-      RESPONSE_TYPES_KEY = 'response_types' 
+      RESPONSE_TYPES_KEY = 'response_types'
 
       # @return [Hash]
-      def to_h 
+      def to_h
         RCAP.attribute_values_to_hash( [ LANGUAGE_KEY,       @language ],
                                        [ CATEGORIES_KEY,     @categories ],
                                        [ EVENT_KEY,          @event ],
@@ -245,7 +245,7 @@ module RCAP
 
       # @param [Hash] info_hash
       # @return [Info]
-      def self.from_h( info_hash ) 
+      def self.from_h( info_hash )
         super.tap do |info|
           info_hash[ RESPONSE_TYPES_KEY ].each do |response_type|
             info.response_types << response_type

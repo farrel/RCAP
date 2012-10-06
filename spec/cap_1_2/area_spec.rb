@@ -5,22 +5,22 @@ describe( RCAP::CAP_1_2::Area ) do
     @area_builder = lambda do |area|
       area.area_desc = 'Area Description'
       area.altitude  = 100
-      area.ceiling   = 200 
+      area.ceiling   = 200
 
       area.add_circle do |circle|
         circle.lattitude = 0
-        circle.longitude = 0 
-        circle.radius = 100 
+        circle.longitude = 0
+        circle.radius = 100
       end
 
       area.add_geocode do |geocode|
         geocode.name = 'name'
-        geocode.value = 'value' 
+        geocode.value = 'value'
       end
 
       area.add_polygon.add_point do |point|
-        point.lattitude = 1 
-        point.longitude = 1 
+        point.lattitude = 1
+        point.longitude = 1
       end
     end
   end
@@ -136,7 +136,7 @@ describe( RCAP::CAP_1_2::Area ) do
   context( 'is not valid if' ) do
     before( :each ) do
       @area = RCAP::CAP_1_2::Area.new do |area|
-        area.area_desc = "Cape Town Metropole" 
+        area.area_desc = "Cape Town Metropole"
       end
       @area.should( be_valid )
     end
@@ -228,7 +228,7 @@ describe( RCAP::CAP_1_2::Area ) do
         @circle = @area.add_circle do |circle|
           circle.lattitude = 1
           circle.longitude = 1
-          circle.radius = 1 
+          circle.radius = 1
         end
       end
 
@@ -248,7 +248,7 @@ describe( RCAP::CAP_1_2::Area ) do
       before( :each ) do
         @geocode = @area.add_geocode do |geocode|
           geocode.name = 'Geocode'
-          geocode.value = '123' 
+          geocode.value = '123'
         end
       end
 

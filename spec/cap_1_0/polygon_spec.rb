@@ -10,7 +10,7 @@ describe( RCAP::CAP_1_0::Polygon ) do
             point.longitude = i
           end
         end
-      end      
+      end
       @polygon.should( be_valid )
     end
 
@@ -35,7 +35,7 @@ describe( RCAP::CAP_1_0::Polygon ) do
               point.longitude = i
             end
           end
-        end      
+        end
         @empty_original_polygon = RCAP::CAP_1_0::Polygon.new()
         @alert = RCAP::CAP_1_0::Alert.new
         @alert.add_info do |info|
@@ -122,7 +122,7 @@ describe( RCAP::CAP_1_0::Polygon ) do
       before( :each ) do
         @point = @polygon.add_point do |polygon|
           polygon.lattitude = 1
-          polygon.longitude = 1 
+          polygon.longitude = 1
         end
       end
 
