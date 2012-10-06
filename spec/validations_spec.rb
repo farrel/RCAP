@@ -48,12 +48,28 @@ describe( Validation::ClassMethods ) do
     end
 
     it( 'should be valid if all the members are valid' ) do
-      @object_with_collection.collection = Array.new(3){ RCAP::CAP_1_1::Point.new( :lattitude => 0, :longitude => 0 )}
+      @object_with_collection.collection = Array.new(3) do
+        RCAP::CAP_1_1::Point.new do |point|
+          point.lattitude = 0
+          point.longitude = 0 
+        end
+      end
       @object_with_collection.should( be_valid )
     end
 
     it( 'should not be valid some of the members are invalid' ) do
-      @object_with_collection.collection = Array.new( 2 ){ RCAP::CAP_1_1::Point.new( :lattitude => 0, :longitude => 0 )} + [ RCAP::CAP_1_1::Point.new( :lattitude => "not a number", :longitude => 0)]
+      @object_with_collection.collection = Array.new( 2 ) do
+        RCAP::CAP_1_1::Point.new do |point|
+          point.lattitude = 0
+          point.longitude = 0 
+        end
+      end
+
+      @object_with_collection.collection << RCAP::CAP_1_1::Point.new do |point|
+        point.lattitude = "not a number"
+        point.longitude = 0
+      end
+
       @object_with_collection.should_not( be_valid )
     end
   end
