@@ -1,6 +1,7 @@
 Change Log
 ==========
 
+* Changed initialisation to block/builder style
 * Refactored RCAP so protocol versions are subclassed from classes in RCAP::Base module
 
 ## 1.3.1 - 25 February 2012

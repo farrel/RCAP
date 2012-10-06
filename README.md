@@ -54,30 +54,42 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 
 ### Creating an Alert
 
-    alert = Alert.new( sender:   'cape_town_disaster_relief@capetown.municipal.za',
-                       status:   Alert::STATUS_ACTUAL,
-                       msg_type: Alert::MSG_TYPE_ALERT,
-                       scope:    Alert::SCOPE_PUBLIC )
-   
-    info = alert.add_info( event:       'Liquid Petroleoum Tanker Fire',
-                           language:    'en-ZA',
-                           categories:  [ Info::CATEGORY_TRANSPORT, Info::CATEGORY_FIRE ],
-                           urgency:     Info::URGENCY_IMMEDIATE,
-                           severity:    Info::SEVERITY_SEVERE,
-                           certainty:   Info::CERTAINTY_OBSERVED,
-                           headline:    'LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY',
-                           description: 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
-                                        after the R300 interchange.  Municipal fire fighting crews have been dispatched.
-                                        Traffic control officers are on the scene and have diverted traffic onto
-                                        alternate routes.' )
-   
-    info.add_area( area_desc: 'N2 Highway/R300 Interchange' ).add_geocode( name: 'Intersection', value: 'N2-15' )
+    alert = Alert.new do |alert|
+      alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
+      alert.status   = Alert::STATUS_ACTUAL
+      alert.msg_type = Alert::MSG_TYPE_ALERT
+      alert.scope    = Alert::SCOPE_PUBLIC 
+    
+      alert.add_info do |info|
+        info.event       = 'Liquid Petroleoum Tanker Fire'
+        info.language    = 'en-ZA'
+        info.categories  << Info::CATEGORY_TRANSPORT
+        info.categofies  << Info::CATEGORY_FIRE ]
+        info.urgency     = Info::URGENCY_IMMEDIATE
+        info.severity    = Info::SEVERITY_SEVERE
+        info.certainty   = Info::CERTAINTY_OBSERVED
+        info.headline    = 'LIQUID PETROLEOUM TANKER FIRE ON N2 INCOMING FREEWAY'
+        info.description = 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
+                            after the R300 interchange.  Municipal fire fighting crews have been dispatched.
+                            Traffic control officers are on the scene and have diverted traffic onto
+                            alternate routes.' 
+    
+        info.add_area do |area|
+          area.area_desc = 'N2 Highway/R300 Interchange' 
+          area.add_geocode do |geocode|
+            geocode.name  = 'Intersection'
+            geocode.value = 'N2-15' 
+          end
+        end
+      end
+    end
    
     # Accessing attributes
-    alert.status                 # "Actual"
-    info.language                # "en-ZA"
-    info.categories.join( ', ' ) # "Transport, Fire"
-    info.areas.first             # "N2 Highway/R300 Interchange"
+    puts alert.status                 # "Actual"
+    info = alert.infos.first
+    puts info.language                # "en-ZA"
+    puts info.categories.join( ', ' ) # "Transport, Fire"
+    puts info.areas.first             # "N2 Highway/R300 Interchange"
 
 ### Parsing an Alert From An External Source
 
@@ -95,12 +107,14 @@ RCAP allows for the parsing of a CAP XML string
 
 The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
 
-    info = Info.new( event:      'Liquid Petroleoum Tanker Fire',
-                     language:   'en-ZA',
-                     categories: [ Info::CATEGORY_TRANSPORT, Info::CATEGORY_FIRE ],
-                     urgency:    Info::URGENCY_IMMEDIATE,
-                     severity:   nil,                     # Severity is not assigned
-                     certainty:  'Incorrect Certainty' )  # Certainty is assigned an incorrect value
+    info = Info.new do |info|
+      info.event = 'Liquid Petroleoum Tanker Fire'
+      info.language   = 'en-ZA'
+      ingo.categories << Info::CATEGORY_TRANSPORT
+      info.urgency    = Info::URGENCY_IMMEDIATE
+      info.severity   = nil                   # Severity is not assigned
+      info.certainty  = 'Incorrect Certainty' # Certainty is assigned an incorrect value
+    end
    
     puts "Is info valid: #{ info.valid? }"
     info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
