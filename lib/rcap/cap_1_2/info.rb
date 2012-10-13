@@ -24,12 +24,10 @@ module RCAP
 
       CERTAINTY_OBSERVED = "Observed"
       # Valid valies for certainty
-      VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY,
-        CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
+      VALID_CERTAINTIES = [ CERTAINTY_OBSERVED, CERTAINTY_LIKELY, CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN ]
 
       RESPONSE_TYPE_ELEMENT_NAME = 'responseType'
       RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }"
-
 
       validates_length_of( :categories, :minimum => 1 )
       validates_inclusion_of_members_of( :response_types, :in  => VALID_RESPONSE_TYPES, :allow_blank => true )
@@ -38,49 +36,36 @@ module RCAP
       # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES}
       attr_reader( :response_types )
 
-      # @param [Hash] attributes
-      # @option attributes [String] :language Defaults to {DEFAULT_LANGUAGE}
-     # @option attributes [Array<String>] :categories Collection of categories in {VALID_CATEGORIES}
-      # @option attributes [String] :audience
-      # @option attributes [String] :event
-      # @option attributes [Array<String>] :response_types Collection of textual response types from {VALID_RESPONSE_TYPES}
-      # @option attributes [String] :urgency A member of {VALID_URGENCIES}
-      # @option attributes [String] :severity A member of {VALID_SEVERITIES}
-      # @option attributes [String] :certainty A member of {VALID_CERTAINTIES}
-      # @option attributes [DateTime] :effective
-      # @option attributes [DateTime] :onset
-      # @option attributes [DateTime] :expires
-      # @option attributes [Array<EventCode>] :event_codes Collection of {EventCode} objects
-      # @option attributes [String] :sender_name
-      # @option attributes [String] :headline
-      # @option attributes [String] :description
-      # @option attributes [String] :instruction
-      # @option attributes [String] :web URL
-      # @option attributes [String] :contact
-      # @option attributes [Array<Parameter>] :parameters Collection of {Parameter} objects
-      # @option attributes [Array<Resource>] :resources Collection of {Resource} objects
-      # @option attributes [Array<Area>] :areas Collection of {Area} objects
+      # Initialises a new Info object which will be yielded to an attached block if given
+      # 
+      # @yieldparam info [Info] An instance of an Info object
+      # @return [Info]
       def initialize
         @response_types = []
         super
       end
 
+      # @return [Class]
       def event_code_class
         EventCode
       end
 
+      # @return [Class]
       def parameter_class
         Parameter
       end
 
+      # @return [Class]
       def area_class
         Area
       end
 
+      # @return [Class]
       def resource_class
         Resource
       end
 
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end

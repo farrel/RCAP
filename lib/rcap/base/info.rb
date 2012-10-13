@@ -139,6 +139,10 @@ module RCAP
       # @return [Array<Area>] Collection of {Area} objects
       attr_reader( :areas )
 
+
+      # Initialises a new Info object which will be yielded to an attached block if given 
+      # 
+      # @return [RCAP::CAP_1_0::Info,RCAP::CAP_1_1::Info,RCAP::CAP_1_2::Info]
       def initialize
         @language       = DEFAULT_LANGUAGE
         @categories     = []
@@ -149,10 +153,7 @@ module RCAP
         yield( self ) if block_given?
       end
 
-      # Creates a new EventCode object and adds it to the event_codes array. The
-      # event_code_attributes are passed as a parameter to EventCode.new.
-      #
-      # @see EventCode#initialize
+      # Creates a new EventCode object and adds it to the event_codes array. 
       #
       # @return [EventCode]
       def add_event_code
@@ -162,10 +163,7 @@ module RCAP
         event_code
       end
 
-      # Creates a new Parameter object and adds it to the parameters array. The
-      # parameter_attributes are passed as a parameter to Parameter.new.
-      #
-      # @see Parameter#initialize
+      # Creates a new Parameter object and adds it to the parameters array. 
       #
       # @return [Parameter]
       def add_parameter
@@ -175,10 +173,7 @@ module RCAP
         parameter
       end
 
-      # Creates a new Resource object and adds it to the resources array. The
-      # resource_attributes are passed as a parameter to Resource.new.
-      #
-      # @see Resource#initialize
+      # Creates a new Resource object and adds it to the resources array. 
       #
       # @return [Resource]
       def add_resource
@@ -188,10 +183,7 @@ module RCAP
         resource
       end
 
-      # Creates a new Area object and adds it to the areas array. The
-      # area_attributes are passed as a parameter to Area.new.
-      #
-      # @see Area#initialize
+      # Creates a new Area object and adds it to the areas array. 
       #
       # @return [Area]
       def add_area
