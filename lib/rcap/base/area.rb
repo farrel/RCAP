@@ -31,18 +31,13 @@ module RCAP
       CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"
 
       # @example
-      #   Area.new( area_desc: 'Cape Town CBD' )
-      # @param [Hash] attributes Area attributes
-      # @option attributes [String] :area_desc Area description
-      # @option attributes [Numeric] :altitude Altitude above sea level (in feet)
-      # @option attributes [Numeric] :ceiling Ceiling above sea level (in feet)
-      # @option attributes [Array<Circle>] :circles Collection of {Circle}
-      # @option attributes [Array<Geocode>] :geocodes Collection of {Geocode}
-      # @option attributes [Array<Polygon>] :polygons Collection of {Polygon}
+      #   Area.new do |area|
+      #     area.area_desc = 'Cape Town CVD'
+      #   end
       def initialize
         @area_desc = nil
-        @altitude = nil
-        @ceiling = nil
+        @altitude  = nil
+        @ceiling   = nil
 
         @circles  = []
         @geocodes = []
@@ -54,30 +49,30 @@ module RCAP
       #
       # @return [Polygon]
       def add_polygon
-        polygon = self.polygon_class.new
-        yield( polygon ) if block_given?
-        @polygons << polygon
-        polygon
+        self.polygon_class.new.tap do |polygon|
+          yield( polygon ) if block_given?
+          @polygons << polygon
+        end
       end
 
       # Creates a new {Circle} object and adds it to the {#circles} array.
       #
       # @return [Circle]
       def add_circle
-        circle = self.circle_class.new
-        yield( circle ) if block_given?
-        @circles << circle
-        circle
+        self.circle_class.new.tap do |circle|
+          yield( circle ) if block_given?
+          @circles << circle
+        end
       end
 
       # Creates a new {Geocode} object and adds it to the {#geocodes} array.
       #
       # @return [Geocode]
       def add_geocode
-        geocode = self.geocode_class.new
-        yield( geocode ) if block_given?
-        @geocodes << geocode
-        geocode
+        self.geocode_class.new do |geocode|
+          yield( geocode ) if block_given?
+          @geocodes << geocode
+        end
       end
 
       def self.from_xml_element( area_xml_element )

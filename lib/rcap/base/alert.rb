@@ -28,7 +28,7 @@ module RCAP
       attr_accessor( :identifier)
       # @return [String]
       attr_accessor( :sender )
-      # @return [DateTime] If not set will value will be time of creation.
+      # @return [DateTime] If not set will be time of creation.
       attr_accessor( :sent )
       # @return [String] Can only be one of {VALID_STATUSES}
       attr_accessor( :status )
@@ -38,7 +38,7 @@ module RCAP
       attr_accessor( :scope )
       # @return [String]
       attr_accessor( :source )
-      # @return [String ] Depends on scope being {SCOPE_RESTRICTED}
+      # @return [String ] Required if scope is {SCOPE_RESTRICTED}
       attr_accessor( :restriction )
       # @return [String]
       attr_accessor( :note )
@@ -87,7 +87,7 @@ module RCAP
         @references  = []
         @incidents   = []
         @infos       = []
-        yield ( self ) if block_given?
+        yield( self ) if block_given?
       end
 
       # Creates a new {Info} object and adds it to the {#infos} array.
