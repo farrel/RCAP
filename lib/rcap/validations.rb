@@ -4,6 +4,8 @@ module Validation
     CAP_NUMBER_REGEX  = Regexp.new( '^-{0,1}\d*\.{0,1}\d+$' )
     CAP_INTEGER_REGEX = Regexp.new( '\-{0,1}A[+-]?\d+\Z' )
 
+    # @example
+    #   validates_inclusion_of( :status, :in => VALID_STATUSES )
     def validates_inclusion_of( *attributes )
       options = {
         :message => 'is not in the required range'
@@ -17,6 +19,9 @@ module Validation
       end
     end
 
+    # Will validate all members of a collection are found in a given collection.
+    # @example
+    #   validates_inclusion_of_members_of( :categories, :in => VALID_CATEGORIES )
     def validates_inclusion_of_members_of( *attributes )
       options = {
         :message => 'contains members that are not valid'
