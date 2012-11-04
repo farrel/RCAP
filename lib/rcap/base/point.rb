@@ -63,14 +63,14 @@ module RCAP
         end
       end
 
-      LONGITUDE_INDEX = 0
-      LATTITUDE_INDEX = 1
+      LATTITUDE_INDEX = 0
+      LONGITUDE_INDEX = 1
 
       # @return [Array(Numeric, Numeric)]
       def to_a
         Array.new.tap do |array|
-          array[ LONGITUDE_INDEX ] = self.longitude
           array[ LATTITUDE_INDEX ] = self.lattitude
+          array[ LONGITUDE_INDEX ] = self.longitude
         end
       end
 
@@ -78,8 +78,8 @@ module RCAP
       # @return [Point]
       def self.from_a( point_array )
         self.new do |point|
-          point.longitude = point_array[ LONGITUDE_INDEX ]
           point.lattitude = point_array[ LATTITUDE_INDEX ]
+          point.longitude = point_array[ LONGITUDE_INDEX ]
         end
       end
     end
