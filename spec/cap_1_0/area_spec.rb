@@ -23,7 +23,7 @@ describe( RCAP::CAP_1_0::Area ) do
 
         area.add_polygon.add_point do |point|
           point.lattitude = 1
-          point.longitude = 1
+          point.longitude = 2
         end
       end
     end
