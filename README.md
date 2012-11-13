@@ -39,6 +39,7 @@ Web resources
 * The RCAP project page can be found at [http://www.aimred.com/projects/rcap](http://www.aimred.com/projects/rcap)
 * The RCAP API docs can be found at [http://www.aimred.com/projects/rcap/api](http://www.aimred.com/projects/rcap/api)
 * A public git repository can be found at [git://github.com/farrel/RCAP.git](git://github.com/farrel/RCAP.git)
+* A CAP Validator based on RCAP can be gound at [http://capvalidator.heroku.com](http://capvalidator.heroku.com)
 
 Usage
 -----
@@ -54,7 +55,9 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 
 ### Creating an Alert
 
-    alert = Alert.new do |alert|
+RCAP uses a builder style syntax to create alerts. 
+
+    new_alert = RCAP::CAP_1_2::Alert.new do |alert|
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
       alert.status   = Alert::STATUS_ACTUAL
       alert.msg_type = Alert::MSG_TYPE_ALERT
@@ -91,45 +94,9 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
     puts info.categories.join( ', ' ) # "Transport, Fire"
     puts info.areas.first             # "N2 Highway/R300 Interchange"
 
-### Parsing an Alert From An External Source
-
-RCAP can parse a CAP alert from a varierty of file formats. Besides the [standard XML](http://www.oasis-emergency.org/cap) representation, [YAML](http://yaml.org) and [JSON](http://json.org) support is also included.
-
-To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
-
-RCAP allows for the parsing of a CAP XML string
-
-    alert = RCAP::Alert.from_xml( xml_string )
-
-### Validating an alert
-
-The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
-
-    info = Info.new do |info|
-      info.event = 'Liquid Petroleoum Tanker Fire'
-      info.language   = 'en-ZA'
-      ingo.categories << Info::CATEGORY_TRANSPORT
-      info.urgency    = Info::URGENCY_IMMEDIATE
-      info.severity   = nil                   # Severity is not assigned
-      info.certainty  = 'Incorrect Certainty' # Certainty is assigned an incorrect value
-    end
-   
-    puts "Is info valid: #{ info.valid? }"
-    info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
-
-Will produce the following output:
-
-    Is info valid: false
-    Error: severity is not present
-    Error: certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
-
-All RCAP classes include the Validation module.
-
-A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
-
 ### Exporting an Alert
 
-Using the alert message created above
+Using the alert message created earlier
 
     puts alert.to_xml # Print out CAP XML message
 
@@ -161,9 +128,41 @@ Will print the following CAP XML
       </info>
     </alert>
 
-### DateTime and Time
+### Parsing an Alert From An External Source
 
-It is highly recommended that when dealing with date and time fields (onset, expires etc) that the DateTime class is used to ensure the correct formatting of dates. The Time class can be used when generating a CAP alert XML message however any CAP alert that is parsed from an external XML source will use DateTime by default.
+RCAP can parse a CAP alert from a varierty of file formats. Besides the [standard XML](http://www.oasis-emergency.org/cap) representation, [YAML](http://yaml.org) and [JSON](http://json.org) support is also included.
+
+To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
+
+To parse an alert from a XML:
+
+    alert = RCAP::Alert.from_xml( xml_string )
+
+### Validation
+
+The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
+
+    info = Info.new do |info|
+      info.event = 'Liquid Petroleoum Tanker Fire'
+      info.language   = 'en-ZA'
+      ingo.categories << Info::CATEGORY_TRANSPORT
+      info.urgency    = Info::URGENCY_IMMEDIATE
+      info.severity   = nil                   # Severity is not assigned
+      info.certainty  = 'Incorrect Certainty' # Certainty is assigned an incorrect value
+    end
+   
+    puts "Is info valid: #{ info.valid? }"
+    info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
+
+Will produce the following output:
+
+    Is info valid: false
+    Error: severity is not present
+    Error: certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
+
+All RCAP classes include the Validation module.
+
+A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
 
 Authors
 -------
