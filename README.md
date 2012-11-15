@@ -11,7 +11,7 @@ RCAP currently supports CAP 1.0, 1.1 and 1.2.
 Version
 -------
 
-1.3.1
+2.0.0
 
 Dependencies
 ------------
@@ -57,7 +57,7 @@ All RCAP classes reside in the RCAP namespace but including the RCAP module make
 
 RCAP uses a builder style syntax to create alerts. 
 
-    new_alert = RCAP::CAP_1_2::Alert.new do |alert|
+    alert = RCAP::CAP_1_2::Alert.new do |alert|
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
       alert.status   = Alert::STATUS_ACTUAL
       alert.msg_type = Alert::MSG_TYPE_ALERT
