@@ -96,10 +96,10 @@ module RCAP
       # @yield [Info] The newly initialised Info object.
       # @return [Info] The initialised Info object after being yielded to the block
       def add_info
-        info = self.info_class.new
-        yield( info ) if block_given?
-        @infos << info
-        info
+        self.info_class.new.tap do |info|
+          yield( info ) if block_given?
+          @infos << info
+        end
       end
 
       XML_ELEMENT_NAME         = 'alert'

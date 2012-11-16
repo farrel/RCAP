@@ -60,12 +60,7 @@ module RCAP
       # @param [REXML::Element] circle_xml_element
       # @return [Circle]
       def self.from_xml_element( circle_xml_element )
-        lattitude, longitude, radius = self.parse_circle_string( circle_xml_element.text )
-        circle = self.new do |circle|
-          circle.lattitude = lattitude
-          circle.longitude = longitude
-          circle.radius    = radius
-        end
+        self.from_a( self.parse_circle_string( circle_xml_element.text ))
       end
 
       # Two circles are equivalent if their lattitude, longitude and radius are equal.
@@ -73,7 +68,7 @@ module RCAP
       # @param [Circle] other
       # @return [true,false]
       def ==( other )
-        [ @lattitude, @longitude, @radius ] == [ other.lattitude, other.longitude, other.radius ]
+        self.to_a == other.to_a
       end
 
       # @param [Array(Numeric, Numeric, Numeric)] circle_yaml_data lattitude, longitude, radius
