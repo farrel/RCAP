@@ -15,6 +15,7 @@ require 'rcap/extensions/array'
 require 'rcap/extensions/string'
 require 'rcap/extensions/date_time'
 require 'rcap/extensions/time'
+require 'rcap/extensions/date'
 
 # RCAP
 require 'rcap/version'
