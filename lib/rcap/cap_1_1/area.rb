@@ -9,18 +9,22 @@ module RCAP
     # * altitude has a value if ceiling is set
     class Area < RCAP::Base::Area
 
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end
 
+      # @return [Class]
       def polygon_class
         Polygon
       end
 
+      # @return [Class]
       def circle_class
         Circle
       end
 
+      # @return [Class]
       def geocode_class
         Geocode
       end

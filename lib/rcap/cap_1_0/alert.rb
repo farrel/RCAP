@@ -17,10 +17,12 @@ module RCAP
       # @return [String]
       attr_accessor( :password )
 
+      # @return [String]
       def xmlns
         XMLNS
       end
 
+      # @return [Class]
       def info_class
         Info
       end

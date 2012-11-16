@@ -44,6 +44,7 @@ module RCAP
         self.calculate_hash_and_size
       end
 
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end

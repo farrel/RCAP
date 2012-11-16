@@ -8,6 +8,7 @@ module RCAP
 
       validates_length_of( :points, :minimum => 4 )
 
+      # @return [Class]
       def point_class
         Point
       end

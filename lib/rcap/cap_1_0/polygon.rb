@@ -6,6 +6,7 @@ module RCAP
     # * each Point object in the points collection is valid
     class Polygon < RCAP::Base::Polygon
 
+      # @return [Class]
       def point_class
         Point
       end

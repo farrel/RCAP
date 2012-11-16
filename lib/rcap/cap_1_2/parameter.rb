@@ -5,6 +5,8 @@ module RCAP
     # * it has a name
     # * it has a value
     class Parameter < RCAP::Base::Parameter
+
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end

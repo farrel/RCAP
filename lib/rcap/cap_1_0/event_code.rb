@@ -5,6 +5,7 @@ module RCAP
       XML_ELEMENT_NAME = 'eventCode'
       XPATH = "cap:#{ XML_ELEMENT_NAME }"
 
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end

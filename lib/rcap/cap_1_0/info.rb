@@ -13,22 +13,27 @@ module RCAP
 
       validates_inclusion_of( :certainty, :allow_nil => true, :in => VALID_CERTAINTIES, :message => "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
 
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end
 
+      # @return [Class]
       def event_code_class
         EventCode
       end
 
+      # @return [Class]
       def parameter_class
         Parameter
       end
 
+      # @return [Class]
       def resource_class
         Resource
       end
 
+      # @return [Class]
       def area_class
         Area
       end

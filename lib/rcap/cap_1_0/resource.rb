@@ -5,6 +5,8 @@ module RCAP
     # A Resource object is valid if
     # * it has a resource description
     class Resource < RCAP::Base::Resource
+
+      # @return [String]
       def xmlns
         Alert::XMLNS
       end
