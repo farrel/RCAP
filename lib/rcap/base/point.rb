@@ -74,7 +74,7 @@ module RCAP
         end
       end
 
-      # @param [Array(Numeric, Numeric)]
+      # @param [Array(Numeric, Numeric)] point_array
       # @return [Point]
       def self.from_a( point_array )
         self.new do |point|

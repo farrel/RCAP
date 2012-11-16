@@ -93,8 +93,8 @@ module RCAP
       # Creates a new {Info} object and adds it to the {#infos} array.
       #
       # @see Info#initialize
-      # @yield info [Info] The newly initialised Info object.
-      # @return [Info] The initialised Info object after being yeield to the block
+      # @yield [Info] The newly initialised Info object.
+      # @return [Info] The initialised Info object after being yielded to the block
       def add_info
         info = self.info_class.new
         yield( info ) if block_given?

@@ -111,6 +111,9 @@ module RCAP
       end
 
       RADIUS_INDEX = 2
+
+      # @param [Array] circle_array
+      # @return [Circle]
       def self.from_a( circle_array )
         self.new do |circle|
           circle.longitude = circle_array[ LONGITUDE_INDEX ]
