@@ -72,7 +72,7 @@ module RCAP
       # Initialises a new Alert object. Yields the initialised alert to a block.
       #
       # @example
-      #   alert = Alert.new do |alert|
+      #   alert = RCAP::CAP_1_2::Alert.new do |alert|
       #             alert.sender = alerts@example.org
       #             alert.status = Alert::STATUS_ACTUAL
       #             alert.msg_type = Alert::MSG_TYPE_ALERT
