@@ -34,7 +34,7 @@ module Validation
         end
       end
     end
-    
+
     def validates_length_of_members_of( *attributes )
       options = {
         :message => 'contains members with incorrect length'

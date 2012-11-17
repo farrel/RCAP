@@ -37,7 +37,7 @@ module RCAP
       attr_reader( :response_types )
 
       # Initialises a new Info object which will be yielded to an attached block if given
-      # 
+      #
       # @yieldparam info [Info] An instance of an Info object
       # @return [Info]
       def initialize
