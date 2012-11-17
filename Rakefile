@@ -7,7 +7,7 @@ Bundler::GemHelper.install_tasks
 
 YARD::Rake::YardocTask.new do |t|
   t.files = ['lib/**/*.rb' ]
-  t.options += [ '--title', "RCAP Ruby API" ]
+  t.options += [ '--title', "RCAP - Common Alerting Protocol for Ruby" ]
   t.options += [ '--main', 'README.md']
   t.options += [ '--files', 'CHANGELOG.md' ]
   t.options += [ '--output-dir', 'doc' ]

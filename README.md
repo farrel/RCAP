@@ -8,11 +8,6 @@ The Common Alerting Protocol is a lightweight standard to facilitate the distrib
 
 RCAP currently supports CAP 1.0, 1.1 and 1.2.
 
-Version
--------
-
-2.0.0
-
 Dependencies
 ------------
 
@@ -33,14 +28,6 @@ RCAP is distributed as a Ruby gem and is available from [Rubygems.org](http://ru
 
 The gem is also available for download and manual installation at [www.aimred.com/gems](http://www.aimred.com/gems).
 
-Web resources
--------------
-
-* The RCAP project page can be found at [http://www.aimred.com/projects/rcap](http://www.aimred.com/projects/rcap)
-* The RCAP API docs can be found at [http://www.aimred.com/projects/rcap/api](http://www.aimred.com/projects/rcap/api)
-* A public git repository can be found at [http://github.com/farrel/RCAP](http://github.com/farrel/RCAP)
-* A CAP Validator based on RCAP can be found at [http://capvalidator.heroku.com](http://capvalidator.heroku.com)
-
 Usage
 -----
 
@@ -48,14 +35,9 @@ To include RCAP into your application add the following require
 
     require 'rcap'
 
-All RCAP classes reside in the RCAP namespace but including the RCAP module makes the classes available at the top level without the RCAP prefix.
-
-    include RCAP:CAP_1_2 # Include RCAP:CAP_1_2 module into namespace
-    alert = Alert.new
-
 ### Creating an Alert
 
-RCAP uses a builder style syntax to create alerts. 
+RCAP uses a 'builder' style syntax to create alerts. 
 
     alert = RCAP::CAP_1_2::Alert.new do |alert|
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
@@ -98,7 +80,7 @@ RCAP uses a builder style syntax to create alerts.
 
 Using the alert message created earlier
 
-    puts alert.to_xml # Print out CAP XML message
+    puts alert.to_xml
 
 Will print the following CAP XML
 
@@ -142,10 +124,10 @@ To parse an alert from a XML:
 
 The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
 
-    info = Info.new do |info|
+    info = RCAP::CAP_1_2::Info.new do |info|
       info.event = 'Liquid Petroleoum Tanker Fire'
       info.language   = 'en-ZA'
-      ingo.categories << Info::CATEGORY_TRANSPORT
+      info.categories << Info::CATEGORY_TRANSPORT
       info.urgency    = Info::URGENCY_IMMEDIATE
       info.severity   = nil                   # Severity is not assigned
       info.certainty  = 'Incorrect Certainty' # Certainty is assigned an incorrect value
@@ -163,6 +145,14 @@ Will produce the following output:
 All RCAP classes include the Validation module.
 
 A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
+
+Web resources
+-------------
+
+* The RCAP project page can be found at [http://www.aimred.com/projects/rcap](http://www.aimred.com/projects/rcap)
+* The RCAP API docs can be found at [http://www.aimred.com/projects/rcap/api](http://www.aimred.com/projects/rcap/api)
+* A public git repository can be found at [http://github.com/farrel/RCAP](http://github.com/farrel/RCAP)
+* A CAP Validator based on RCAP can be found at [http://capvalidator.heroku.com](http://capvalidator.heroku.com)
 
 Authors
 -------
