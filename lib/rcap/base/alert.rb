@@ -175,7 +175,7 @@ module RCAP
       #
       # @return [String]
       def to_reference
-        "#{ @sender },#{ @identifier },#{ @sent }"
+        "#{ @sender },#{ @identifier },#{ RCAP.to_s_for_cap( @sent )}"
       end
 
       # @return [String]
@@ -206,7 +206,7 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @sender }/#{ @identifier }/#{ @sent }"
+        "#{ @sender }/#{ @identifier }/#{ RCAP.to_s_for_cap( @sent )}"
       end
 
       XPATH             = 'cap:alert'
