@@ -173,7 +173,7 @@ License
 
 RCAP is released under the BSD License.
 
-Copyright 2010 - 2011 AIMRED CC. All rights reserved.
+Copyright 2010 - 2013 AIMRED CC. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
