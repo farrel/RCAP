@@ -98,7 +98,7 @@ module RCAP
 
       # @return [String]
       def inspect
-        [ @resource_desc, @uri, @mime_type, @size ? format( "%.1fKB", @size_in_kb ) : nil ].compact.join(' - ')
+        [ @resource_desc, @uri, @mime_type, @size ? format( "%.1fKB", self.size_in_kb ) : nil ].compact.join(' - ')
       end
 
       # Returns a string representation of the resource of the form
