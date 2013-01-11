@@ -31,15 +31,14 @@ The gem is also available for download and manual installation at [www.aimred.co
 Usage
 -----
 
-To include RCAP into your application add the following require
-
-    require 'rcap'
-
 ### Creating an Alert
 
 RCAP uses a 'builder' style syntax to create alerts. 
 
-    alert = RCAP::CAP_1_2::Alert.new do |alert|
+    require 'rcap'
+    include RCAP::CAP_1_2 
+
+    alert = Alert.new do |alert|
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
       alert.status   = Alert::STATUS_ACTUAL
       alert.msg_type = Alert::MSG_TYPE_ALERT
@@ -112,8 +111,6 @@ Will print the following CAP XML
 
 ### Parsing an Alert From An External Source
 
-RCAP can parse a CAP alert from a varierty of file formats. Besides the [standard XML](http://www.oasis-emergency.org/cap) representation, [YAML](http://yaml.org) and [JSON](http://json.org) support is also included.
-
 To ensure the correct RCAP Alert object (RCAP::CAP_1_1::Alert or RCAP::CAP_1_2::Alert) is returned from an external source, a number of factories are defined in the RCAP::Alert module. If the version of the document to be parsed can not be ascertained a CAP 1.2 document will be assumed.
 
 To parse an alert from a XML:
@@ -122,9 +119,9 @@ To parse an alert from a XML:
 
 ### Validation
 
-The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules that can be checked using the Assistance API. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
+The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
 
-    info = RCAP::CAP_1_2::Info.new do |info|
+    info = Info.new do |info|
       info.event = 'Liquid Petroleoum Tanker Fire'
       info.language   = 'en-ZA'
       info.categories << Info::CATEGORY_TRANSPORT
@@ -141,8 +138,6 @@ Will produce the following output:
     Is info valid: false
     Error: severity is not present
     Error: certainty can only be assigned the following values: Observed, Likely, Possible, Unlikely, Unknown
-
-All RCAP classes include the Validation module.
 
 A full spec suite using [RSpec](http://www.rspec.info) was used to test the validations and currently numbers over 1000 tests.
 
@@ -166,7 +161,7 @@ Authors
 Change Log
 ----------
 
-[CHANGELOG](file.CHANGELOG.html)
+[CHANGELOG](CHANGELOG.html)
 
 License
 -------
