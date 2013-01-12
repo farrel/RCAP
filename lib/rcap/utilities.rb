@@ -65,15 +65,15 @@ module RCAP
       "'" + '-' * ( max_line_length + 2 ) + "'\n"
   end
 
-  # Converts an array of key value pairs into a hash, excluding any value that is nil or empty
+  # Converts an array of key value pairs into a hash, excluding any value that is nil.
   #
   # @param [Array<Array(Object,Object)>] attribute_values An array of arrays of key/value pairs
   # @return [Hash] Hash of attributes
   #
   # @example
-  #  RCAP.attribute_values_to_hash( ['a', 1], ['b' , []]) # => { 'a' => 1 }
+  #  RCAP.attribute_values_to_hash( ['a', 1], ['b' , nil ]) # => { 'a' => 1 }
   def self.attribute_values_to_hash( *attribute_values )
-    Hash[ *attribute_values.reject{ |key, value| value.nil? || ( value.respond_to?( :'empty?' ) && value.empty? )}.flatten( 1 )]
+    Hash[ *attribute_values.reject{ |key, value| value.nil? }.flatten( 1 )]
   end
 
   # Calls #to_s_for_cap on the object it it responds to that otherwise just calls #to_s

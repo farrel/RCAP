@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+## 2.1.0 - 12 January 2013
+
+* RCAP.attribute_values_to_hash now does not filter out values that are empty, only nil.
+
+## 2.0.2
+
+* Fixed typo
+
+## 2.0.1
+
+* Use CAP date format in Alert reference and to_s
+
 ## 2.0.0 - 17 November 2012
 
 * Changed initialisation to block/builder style

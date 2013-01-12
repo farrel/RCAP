@@ -60,10 +60,6 @@ describe( String ) do
       RCAP.attribute_values_to_hash( ["a", nil ]).should == {}
     end
 
-    it( 'should reject empty values' ) do
-      RCAP.attribute_values_to_hash( ["a", []]).should == {}
-    end
-
     it( 'should not reject non-nil and non-empty values' ) do
       RCAP.attribute_values_to_hash( [ "a", 1 ], [ "b", [ 2 ]]).should == { "a" => 1, "b" => [ 2 ]}
     end
