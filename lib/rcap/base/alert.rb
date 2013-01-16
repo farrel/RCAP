@@ -237,13 +237,15 @@ module RCAP
           alert.scope       = RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, alert.xmlns )
           alert.restriction = RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, alert.xmlns )
 
-          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, alert.xmlns )) ? address.unpack_cap_list : [] ).each do |address|
+          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, alert.xmlns )) ? address.unpack_cap_list : []).each do |address|
             alert.addresses << address
           end
+
           RCAP.xpath_match( alert_xml_element, CODE_XPATH, alert.xmlns ).each do |element|
             alert.codes << element.text
           end
-          alert.note        = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, alert.xmlns )
+
+          alert.note = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, alert.xmlns )
           (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, alert.xmlns )) ? references.split( ' ' ) : []).each do |reference|
             alert.references << reference
           end
