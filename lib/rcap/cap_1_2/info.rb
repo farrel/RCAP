@@ -157,7 +157,7 @@ module RCAP
       def self.from_xml_element( info_xml_element )
         super.tap do |info|
           RCAP.xpath_match( info_xml_element, RESPONSE_TYPE_XPATH, Alert::XMLNS ).each do |element|
-            info.response_types << element.text
+            info.response_types << element.text.strip if element && element.text
           end
         end
       end
@@ -196,7 +196,7 @@ module RCAP
       def self.from_yaml_data( info_yaml_data )
         super.tap do |info|
           Array( info_yaml_data [ RESPONSE_TYPES_YAML ]).each do |response_type|
-            info.response_types << response_type
+            info.response_types << response_type.strip
           end
         end
       end
@@ -233,7 +233,7 @@ module RCAP
       def self.from_h( info_hash )
         super.tap do |info|
           Array( info_hash[ RESPONSE_TYPES_KEY ]).each do |response_type|
-            info.response_types << response_type
+            info.response_types << response_type.strip
           end
         end
       end

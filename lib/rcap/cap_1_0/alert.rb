@@ -124,7 +124,7 @@ module RCAP
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_yaml_data( alert_yaml_data )
         super.tap do |alert|
-          alert.password    = alert_yaml_data[ PASSWORD_YAML ]
+          alert.password = alert_yaml_data[ PASSWORD_YAML ].strip if alert_yaml_data[ PASSWORD_YAML ]
         end
       end
 
@@ -158,7 +158,7 @@ module RCAP
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
         super.tap do |alert|
-          alert.password = alert_hash[ PASSWORD_KEY ]
+          alert.password = alert_hash[ PASSWORD_KEY ].strip if alert_hash[ PASSWORD_KEY ]
         end
       end
     end

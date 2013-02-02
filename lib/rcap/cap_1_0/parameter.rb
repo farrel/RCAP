@@ -17,8 +17,8 @@ module RCAP
       def self.from_xml_element( parameter_xml_element )
         parameter_hash = self.parse_parameter( parameter_xml_element.text )
         self.new do |parameter|
-          parameter.name = parameter_hash[ :name ]
-          parameter.value  = parameter_hash[ :value ]
+          parameter.name   = parameter_hash[ :name ].strip
+          parameter.value  = parameter_hash[ :value ].strip
         end
       end
 

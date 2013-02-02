@@ -242,16 +242,16 @@ module RCAP
           end
 
           RCAP.xpath_match( alert_xml_element, CODE_XPATH, alert.xmlns ).each do |element|
-            alert.codes << element.text
+            alert.codes << element.text.strip
           end
 
           alert.note = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, alert.xmlns )
           (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, alert.xmlns )) ? references.split( ' ' ) : []).each do |reference|
-            alert.references << reference
+            alert.references << reference.strip
           end
 
           (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, alert.xmlns )) ? incidents.split( ' ' ) : []).each do |incident|
-            alert.incidents << incident
+            alert.incidents << incident.strip
           end
 
           RCAP.xpath_match( alert_xml_element, Info::XPATH, alert.xmlns ).each do |element|

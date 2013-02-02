@@ -75,7 +75,7 @@ module RCAP
       # @return [Resource]
       def self.from_yaml_data( resource_yaml_data )
         super.tap do |resource|
-          resource.deref_uri = resource_yaml_data[ DEREF_URI_YAML ]
+          resource.deref_uri = resource_yaml_data[ DEREF_URI_YAML ].strip if resource_yaml_data[ DEREF_URI_YAML ]
         end
       end
 
@@ -95,7 +95,7 @@ module RCAP
       # @return [Resource]
       def self.from_h( resource_hash )
         super.tap do |resource|
-          resource.deref_uri = resource_hash[ DEREF_URI_KEY ]
+          resource.deref_uri = resource_hash[ DEREF_URI_KEY ].strip if resource_hash[ DEREF_URI_KEY ]
         end
       end
     end

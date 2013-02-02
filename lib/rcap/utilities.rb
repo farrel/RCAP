@@ -17,7 +17,7 @@ module RCAP
   # @return [String,nil] Text content of element matching XPath query or nil
   def self.xpath_text( xml_element, xpath, namespace )
     element = self.xpath_first( xml_element, xpath, namespace )
-    element.text if element
+    element.text.strip if element && element.text
   end
 
   # Returns first descendent that matches the given XPath expression.
@@ -57,11 +57,11 @@ module RCAP
   #  # | three |
   #  # '-------'
   def self.format_lines_for_inspect( header, inspect_string )
-    max_line_length = inspect_string.lines.map{ |line| line.chomp.length }.max
+    max_line_length = inspect_string.lines.map{ |line| line.strip.length }.max
     "\n." + '-' * (max_line_length + 2) + ".\n"+
       '| ' + header.ljust( max_line_length ) + " |\n"+
       '|' + '-' * ( max_line_length + 2 ) + "|\n"+
-      inspect_string.lines.map{ |line| '| ' + line.chomp.ljust( max_line_length ) +' |'}.join( "\n" ) + "\n" +
+      inspect_string.lines.map{ |line| '| ' + line.strip.ljust( max_line_length ) +' |'}.join( "\n" ) + "\n" +
       "'" + '-' * ( max_line_length + 2 ) + "'\n"
   end
 
