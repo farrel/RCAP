@@ -1,7 +1,9 @@
 Change Log
 ==========
 
-* Better whitespace handling using strip on input
+## 2.2.0 - 2 February 2013
+
+* Better whitespace handling on parsing
 
 ## 2.1.0 - 12 January 2013
 
