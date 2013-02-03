@@ -53,8 +53,8 @@ module RCAP
           self.new do |polygon|
             coordinates.each do |lattitude, longitude|
               polygon.add_point do |point|
-                point.lattitude = lattitude
-                point.longitude = longitude
+                point.lattitude = lattitude.to_f
+                point.longitude = longitude.to_f
               end
             end
           end
@@ -85,8 +85,8 @@ module RCAP
         self.new do |polygon|
           Array( polygon_yaml_data ).each do |lattitude, longitude|
             polygon.add_point do |point|
-              point.lattitude = lattitude
-              point.longitude = longitude
+              point.lattitude = lattitude.to_f
+              point.longitude = longitude.to_f
             end
           end
         end
@@ -104,8 +104,8 @@ module RCAP
         self.new do |polygon|
           Array( polygon_hash[ POINTS_KEY ]).each do |point_array|
             polygon.add_point do |point|
-              point.lattitude = point_array[ Point::LATTITUDE_INDEX ]
-              point.longitude = point_array[ Point::LONGITUDE_INDEX ]
+              point.lattitude = point_array[ Point::LATTITUDE_INDEX ].to_f
+              point.longitude = point_array[ Point::LONGITUDE_INDEX ].to_f
             end
           end
         end

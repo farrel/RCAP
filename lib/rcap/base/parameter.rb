@@ -78,8 +78,8 @@ module RCAP
       def self.from_h( hash )
         key = hash.keys.first
         self.new do |parameter|
-          parameter.name = key
-          parameter.value = hash[ key ]
+          parameter.name  = RCAP.strip_if_given( key )
+          parameter.value = RCAP.strip_if_given( hash[ key ])
         end
       end
     end

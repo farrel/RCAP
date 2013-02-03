@@ -230,15 +230,15 @@ module RCAP
         self.new do |alert|
           alert.identifier  = RCAP.xpath_text( alert_xml_element, IDENTIFIER_XPATH, alert.xmlns )
           alert.sender      = RCAP.xpath_text( alert_xml_element, SENDER_XPATH, alert.xmlns )
-          alert.sent        = (( sent = RCAP.xpath_first( alert_xml_element, SENT_XPATH, alert.xmlns )) ? DateTime.parse( sent.text ) : nil )
+          alert.sent        = RCAP.parse_datetime( RCAP.xpath_text( alert_xml_element, SENT_XPATH, alert.xmlns ))
           alert.status      = RCAP.xpath_text( alert_xml_element, STATUS_XPATH, alert.xmlns )
           alert.msg_type    = RCAP.xpath_text( alert_xml_element, MSG_TYPE_XPATH, alert.xmlns )
           alert.source      = RCAP.xpath_text( alert_xml_element, SOURCE_XPATH, alert.xmlns )
           alert.scope       = RCAP.xpath_text( alert_xml_element, SCOPE_XPATH, alert.xmlns )
           alert.restriction = RCAP.xpath_text( alert_xml_element, RESTRICTION_XPATH, alert.xmlns )
 
-          (( address = RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, alert.xmlns )) ? address.unpack_cap_list : []).each do |address|
-            alert.addresses << address
+          RCAP.unpack_if_given( RCAP.xpath_text( alert_xml_element, ADDRESSES_XPATH, alert.xmlns )).each do |address|
+            alert.addresses << address.strip
           end
 
           RCAP.xpath_match( alert_xml_element, CODE_XPATH, alert.xmlns ).each do |element|
@@ -246,11 +246,12 @@ module RCAP
           end
 
           alert.note = RCAP.xpath_text( alert_xml_element, NOTE_XPATH, alert.xmlns )
-          (( references = RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, alert.xmlns )) ? references.split( ' ' ) : []).each do |reference|
+
+          RCAP.unpack_if_given( RCAP.xpath_text( alert_xml_element, REFERENCES_XPATH, alert.xmlns )).each do |reference|
             alert.references << reference.strip
           end
 
-          (( incidents = RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, alert.xmlns )) ? incidents.split( ' ' ) : []).each do |incident|
+          RCAP.unpack_if_given( RCAP.xpath_text( alert_xml_element, INCIDENTS_XPATH, alert.xmlns )).each do |incident|
             alert.incidents << incident.strip
           end
 
@@ -325,26 +326,26 @@ module RCAP
       # @return [Alert]
       def self.from_yaml_data( alert_yaml_data )
         self.new do |alert|
-          alert.identifier  = alert_yaml_data[ IDENTIFIER_YAML ]
-          alert.sender      = alert_yaml_data[ SENDER_YAML ]
-          alert.sent        = ( sent = alert_yaml_data[ SENT_YAML ]).blank? ? nil : DateTime.parse( sent.to_s )
-          alert.status      = alert_yaml_data[ STATUS_YAML ]
-          alert.msg_type    = alert_yaml_data[ MSG_TYPE_YAML ]
-          alert.source      = alert_yaml_data[ SOURCE_YAML ]
-          alert.scope       = alert_yaml_data[ SCOPE_YAML ]
-          alert.restriction = alert_yaml_data[ RESTRICTION_YAML ]
+          alert.identifier  = RCAP.strip_if_given( alert_yaml_data[ IDENTIFIER_YAML ])
+          alert.sender      = RCAP.strip_if_given( alert_yaml_data[ SENDER_YAML ])
+          alert.sent        = RCAP.parse_datetime( alert_yaml_data[ SENT_YAML ])
+          alert.status      = RCAP.strip_if_given( alert_yaml_data[ STATUS_YAML ])
+          alert.msg_type    = RCAP.strip_if_given( alert_yaml_data[ MSG_TYPE_YAML ])
+          alert.source      = RCAP.strip_if_given( alert_yaml_data[ SOURCE_YAML ])
+          alert.scope       = RCAP.strip_if_given( alert_yaml_data[ SCOPE_YAML ])
+          alert.restriction = RCAP.strip_if_given( alert_yaml_data[ RESTRICTION_YAML ])
           Array( alert_yaml_data[ ADDRESSES_YAML ]).each do |address|
-            alert.addresses << address
+            alert.addresses << address.strip
           end
           Array( alert_yaml_data[ CODES_YAML ]).each do |code|
-            alert.codes << code
+            alert.codes << code.strip
           end
           alert.note        = alert_yaml_data[ NOTE_YAML ]
           Array( alert_yaml_data[ REFERENCES_YAML ]).each do |reference|
-            alert.references << reference
+            alert.references << reference.strip
           end
           Array( alert_yaml_data[ INCIDENTS_YAML ]).each do |incident|
-            alert.incidents << incident
+            alert.incidents << incident.strip
           end
           Array( alert_yaml_data[ INFOS_YAML ]).each do |info_yaml_data|
             alert.infos <<  alert.info_class.from_yaml_data( info_yaml_data )
@@ -395,27 +396,27 @@ module RCAP
       # @return [RCAP::CAP_1_0::Alert]
       def self.from_h( alert_hash )
         self.new do |alert|
-          alert.identifier  = alert_hash[ IDENTIFIER_KEY ]
-          alert.sender      = alert_hash[ SENDER_KEY ]
+          alert.identifier  = RCAP.strip_if_given( alert_hash[ IDENTIFIER_KEY ])
+          alert.sender      = RCAP.strip_if_given( alert_hash[ SENDER_KEY ])
           alert.sent        = RCAP.parse_datetime( alert_hash[ SENT_KEY ])
-          alert.status      = alert_hash[ STATUS_KEY ]
-          alert.msg_type    = alert_hash[ MSG_TYPE_KEY ]
-          alert.source      = alert_hash[ SOURCE_KEY ]
-          alert.scope       = alert_hash[ SCOPE_KEY ]
-          alert.restriction = alert_hash[ RESTRICTION_KEY ]
+          alert.status      = RCAP.strip_if_given( alert_hash[ STATUS_KEY ])
+          alert.msg_type    = RCAP.strip_if_given( alert_hash[ MSG_TYPE_KEY ])
+          alert.source      = RCAP.strip_if_given( alert_hash[ SOURCE_KEY ])
+          alert.scope       = RCAP.strip_if_given( alert_hash[ SCOPE_KEY ])
+          alert.restriction = RCAP.strip_if_given( alert_hash[ RESTRICTION_KEY ])
           Array( alert_hash[ ADDRESSES_KEY ]).each do |address|
-            alert.addresses << address
+            alert.addresses << address.strip
           end
           Array( alert_hash[ CODES_KEY ]).each do |code|
-            alert.codes << code
+            alert.codes << code.strip
           end
           alert.note = alert_hash[ NOTE_KEY ]
           Array( alert_hash[ REFERENCES_KEY ]).each do |reference|
-            alert.references << reference
+            alert.references << reference.strip
           end
 
           Array( alert_hash[ INCIDENTS_KEY ]).each do |incident|
-            alert.incidents << incident
+            alert.incidents << incident.strip
           end
 
           Array( alert_hash[ INFOS_KEY ]).each do |info_hash|

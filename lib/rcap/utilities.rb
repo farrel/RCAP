@@ -90,13 +90,77 @@ module RCAP
     end
   end
 
-  # If the parameter is a string the datetime is parsed out of it, otherwise returns nil.
+  # If the parameter is a string and not empty the datetime is parsed out of it, otherwise returns nil.
   #
-  # @param [String] date_string String to parse
+  # @param [String] date String to parse
   # @return [String,nil]
-  def self.parse_datetime( date_string )
-    if date_string.is_a?( String )
-      DateTime.parse( date_string )
+  def self.parse_datetime( date )
+    case date
+    when String
+      if  !date.empty?
+        DateTime.parse( date.strip )
+      end
+    when DateTime, Time, Date
+      date.to_datetime
+    end
+  end
+
+  # If the list is given will split it with the separator parameter otherwise
+  # retun an empty array.
+  #
+  # @param [String] list List to split
+  # @return [Array]
+  def RCAP.unpack_if_given( list )
+    if list
+      list.unpack_cap_list
+    else
+      []
+    end
+  end
+
+  # If the string given is not nil, String#strip is called otherwise nil is returned
+  #
+  # @param [String] string
+  # @return [String,nil]
+  def RCAP.strip_if_given( string )
+    if string
+      string.strip
+    end
+  end
+
+  # if the string is given, String#strip and then String#to_f are applied
+  # otherwise nil is returned.
+  #
+  # @param [String] string
+  # @return [Float,nil]
+  def RCAP.to_f_if_given( number )
+    if number
+      case number
+      when String
+        number.strip.to_f
+      when Numeric
+        number.to_f
+      else
+        number.to_s.strip.to_f
+      end
+    end
+  end
+  
+  # if the string is given, String#strip and then String#to_i are applied
+  # otherwise nil is returned.
+  #
+  # @param [String] string
+  # @return [Integer,nil]
+  def RCAP.to_i_if_given( number )
+    if number
+      case number
+      when String
+        number.strip.to_i
+      when Numeric
+        number.to_i
+      else
+        number.to_s.to_i
+      end
     end
   end
 end

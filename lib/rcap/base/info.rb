@@ -369,32 +369,32 @@ module RCAP
           Array( info_yaml_data [ CATEGORIES_YAML ]).each do |category|
             info.categories << category
           end
-          info.event       = info_yaml_data [ EVENT_YAML ]
-          info.urgency     = info_yaml_data [ URGENCY_YAML ]
-          info.severity    = info_yaml_data [ SEVERITY_YAML ]
-          info.certainty   = info_yaml_data [ CERTAINTY_YAML ]
-          info.audience    = info_yaml_data [ AUDIENCE_YAML ]
+          info.event       = RCAP.strip_if_given( info_yaml_data [ EVENT_YAML ])
+          info.urgency     = RCAP.strip_if_given( info_yaml_data [ URGENCY_YAML ])
+          info.severity    = RCAP.strip_if_given( info_yaml_data [ SEVERITY_YAML ])
+          info.certainty   = RCAP.strip_if_given( info_yaml_data [ CERTAINTY_YAML ])
+          info.audience    = RCAP.strip_if_given( info_yaml_data [ AUDIENCE_YAML ])
           info.effective   = RCAP.parse_datetime( info_yaml_data[ EFFECTIVE_YAML ])
           info.onset       = RCAP.parse_datetime( info_yaml_data[ ONSET_YAML ])
           info.expires     = RCAP.parse_datetime( info_yaml_data[ EXPIRES_YAML ])
-          info.sender_name = info_yaml_data [ SENDER_NAME_YAML ]
-          info.headline    = info_yaml_data [ HEADLINE_YAML ]
-          info.description = info_yaml_data [ DESCRIPTION_YAML ]
-          info.instruction = info_yaml_data [ INSTRUCTION_YAML ]
-          info.web         = info_yaml_data [ WEB_YAML ]
-          info.contact     = info_yaml_data [ CONTACT_YAML ]
+          info.sender_name = RCAP.strip_if_given( info_yaml_data [ SENDER_NAME_YAML ])
+          info.headline    = RCAP.strip_if_given( info_yaml_data [ HEADLINE_YAML ])
+          info.description = RCAP.strip_if_given( info_yaml_data [ DESCRIPTION_YAML ])
+          info.instruction = RCAP.strip_if_given( info_yaml_data [ INSTRUCTION_YAML ])
+          info.web         = RCAP.strip_if_given( info_yaml_data [ WEB_YAML ])
+          info.contact     = RCAP.strip_if_given( info_yaml_data [ CONTACT_YAML ])
 
           Array( info_yaml_data [ EVENT_CODES_YAML ]).each do  |name,value|
             info.add_event_code do |event_code|
-              event_code.name = name
-              event_code.value = value
+              event_code.name  = RCAP.strip_if_given( name )
+              event_code.value = RCAP.strip_if_given( value )
             end
           end
 
           Array( info_yaml_data [ PARAMETERS_YAML ]).each do |name,value|
             info.add_parameter do |parameter|
-              parameter.name = name
-              parameter.value = value
+              parameter.name  = RCAP.strip_if_given( name )
+              parameter.value = RCAP.strip_if_given( value )
             end
           end
 
@@ -459,22 +459,22 @@ module RCAP
         self.new do |info|
           info.language       = info_hash[ LANGUAGE_KEY ]
           Array( info_hash[ CATEGORIES_KEY ]).each do |category|
-            info.categories << category
+            info.categories << RCAP.strip_if_given( category )
           end
-          info.event          = info_hash[ EVENT_KEY ]
-          info.urgency        = info_hash[ URGENCY_KEY ]
-          info.severity       = info_hash[ SEVERITY_KEY ]
-          info.certainty      = info_hash[ CERTAINTY_KEY ]
-          info.audience       = info_hash[ AUDIENCE_KEY ]
+          info.event          = RCAP.strip_if_given( info_hash[ EVENT_KEY ])
+          info.urgency        = RCAP.strip_if_given( info_hash[ URGENCY_KEY ])
+          info.severity       = RCAP.strip_if_given( info_hash[ SEVERITY_KEY ])
+          info.certainty      = RCAP.strip_if_given( info_hash[ CERTAINTY_KEY ])
+          info.audience       = RCAP.strip_if_given( info_hash[ AUDIENCE_KEY ])
           info.effective      = RCAP.parse_datetime( info_hash[ EFFECTIVE_KEY ])
           info.onset          = RCAP.parse_datetime( info_hash[ ONSET_KEY ])
           info.expires        = RCAP.parse_datetime( info_hash[ EXPIRES_KEY ])
-          info.sender_name    = info_hash[ SENDER_NAME_KEY ]
-          info.headline       = info_hash[ HEADLINE_KEY ]
-          info.description    = info_hash[ DESCRIPTION_KEY ]
-          info.instruction    = info_hash[ INSTRUCTION_KEY ]
-          info.web            = info_hash[ WEB_KEY ]
-          info.contact        = info_hash[ CONTACT_KEY ]
+          info.sender_name    = RCAP.strip_if_given( info_hash[ SENDER_NAME_KEY ])
+          info.headline       = RCAP.strip_if_given( info_hash[ HEADLINE_KEY ])
+          info.description    = RCAP.strip_if_given( info_hash[ DESCRIPTION_KEY ])
+          info.instruction    = RCAP.strip_if_given( info_hash[ INSTRUCTION_KEY ])
+          info.web            = RCAP.strip_if_given( info_hash[ WEB_KEY ])
+          info.contact        = RCAP.strip_if_given( info_hash[ CONTACT_KEY ])
 
           Array( info_hash[ RESOURCES_KEY ]).each do |resource_hash|
             info.resources << info.resource_class.from_h( resource_hash )

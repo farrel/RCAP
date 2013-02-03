@@ -156,11 +156,11 @@ module RCAP
       # @return [Resource]
       def self.from_h( resource_hash )
         self.new do |resource|
-          resource.resource_desc = resource_hash[ RESOURCE_DESC_KEY ]
-          resource.uri           = resource_hash[ URI_KEY ]
-          resource.mime_type     = resource_hash[ MIME_TYPE_KEY ]
-          resource.size          = resource_hash[ SIZE_KEY ]
-          resource.digest        = resource_hash[ DIGEST_KEY ]
+          resource.resource_desc = RCAP.strip_if_given( resource_hash[ RESOURCE_DESC_KEY ])
+          resource.uri           = RCAP.strip_if_given( resource_hash[ URI_KEY ])
+          resource.mime_type     = RCAP.strip_if_given( resource_hash[ MIME_TYPE_KEY ])
+          resource.size          = RCAP.to_i_if_given( resource_hash[ SIZE_KEY ])
+          resource.digest        = RCAP.strip_if_given( resource_hash[ DIGEST_KEY ])
         end
       end
     end

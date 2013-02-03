@@ -1,6 +1,8 @@
 Change Log
 ==========
 
+* Better whitespace handling using strip on input
+
 ## 2.1.0 - 12 January 2013
 
 * RCAP.attribute_values_to_hash now does not filter out values that are empty, only nil.

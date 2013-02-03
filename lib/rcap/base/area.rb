@@ -78,8 +78,8 @@ module RCAP
       def self.from_xml_element( area_xml_element )
         self.new do |area|
           area.area_desc = RCAP.xpath_text( area_xml_element, AREA_DESC_XPATH, area.xmlns )
-          area.altitude  = (( alt = RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, area.xmlns )) ? alt.to_f : nil )
-          area.ceiling   = (( ceil = RCAP.xpath_text( area_xml_element, CEILING_XPATH, area.xmlns )) ? ceil.to_f : nil )
+          area.altitude  = RCAP.to_f_if_given( RCAP.xpath_text( area_xml_element, ALTITUDE_XPATH, area.xmlns ))
+          area.ceiling   = RCAP.to_f_if_given( RCAP.xpath_text( area_xml_element, CEILING_XPATH, area.xmlns ))
 
           RCAP.xpath_match( area_xml_element, area.circle_class::XPATH, area.xmlns ).each do |circle_element|
             area.circles << area.circle_class.from_xml_element( circle_element )

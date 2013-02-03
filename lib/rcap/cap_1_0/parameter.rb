@@ -17,8 +17,8 @@ module RCAP
       def self.from_xml_element( parameter_xml_element )
         parameter_hash = self.parse_parameter( parameter_xml_element.text )
         self.new do |parameter|
-          parameter.name   = parameter_hash[ :name ].strip
-          parameter.value  = parameter_hash[ :value ].strip
+          parameter.name   = RCAP.strip_if_given( parameter_hash[ :name ])
+          parameter.value  = RCAP.strip_if_given( parameter_hash[ :value ])
         end
       end
 
@@ -27,8 +27,8 @@ module RCAP
       def self.parse_parameter( parameter_string )
         name, value = parameter_string.split("=")
         if name && value
-          { :name  => name,
-            :value => value }
+          { :name  => RCAP.strip_if_given( name ),
+            :value => RCAP.strip_if_given( value )}
         end
       end
     end

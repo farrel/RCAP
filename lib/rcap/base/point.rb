@@ -58,8 +58,8 @@ module RCAP
       # @return [Point]
       def self.from_h( point_hash )
         self.new do |point|
-          point.lattitude = point_hash[ LATTITUDE_KEY ]
-          point.longitude = point_hash[ LONGITUDE_KEY ]
+          point.lattitude = point_hash[ LATTITUDE_KEY ].to_f
+          point.longitude = point_hash[ LONGITUDE_KEY ].to_f
         end
       end
 
@@ -78,8 +78,8 @@ module RCAP
       # @return [Point]
       def self.from_a( point_array )
         self.new do |point|
-          point.lattitude = point_array[ LATTITUDE_INDEX ]
-          point.longitude = point_array[ LONGITUDE_INDEX ]
+          point.lattitude = point_array[ LATTITUDE_INDEX ].to_f
+          point.longitude = point_array[ LONGITUDE_INDEX ].to_f
         end
       end
     end

@@ -76,9 +76,9 @@ module RCAP
       def self.from_yaml_data( circle_yaml_data )
         lattitude, longitude, radius = circle_yaml_data
         self.new do |circle|
-          circle.lattitude = lattitude
-          circle.longitude = longitude
-          circle.radius    = radius
+          circle.lattitude = lattitude.to_f
+          circle.longitude = longitude.to_f
+          circle.radius    = radius.to_f
         end
       end
 
@@ -94,9 +94,9 @@ module RCAP
       # @return [Circle]
       def self.from_h( circle_hash )
         self.new do |circle|
-          circle.radius    = circle_hash[ RADIUS_KEY ]
-          circle.lattitude = circle_hash[ LATTITUDE_KEY ]
-          circle.longitude = circle_hash[ LONGITUDE_KEY ]
+          circle.radius    = circle_hash[ RADIUS_KEY ].to_f
+          circle.lattitude = circle_hash[ LATTITUDE_KEY ].to_f
+          circle.longitude = circle_hash[ LONGITUDE_KEY ].to_f
         end
       end
 
@@ -111,9 +111,9 @@ module RCAP
       # @return [Circle]
       def self.from_a( circle_array )
         self.new do |circle|
-          circle.longitude = circle_array[ LONGITUDE_INDEX ]
-          circle.lattitude = circle_array[ LATTITUDE_INDEX ]
-          circle.radius    = circle_array[ RADIUS_INDEX ]
+          circle.longitude = circle_array[ LONGITUDE_INDEX ].to_f
+          circle.lattitude = circle_array[ LATTITUDE_INDEX ].to_f
+          circle.radius    = circle_array[ RADIUS_INDEX ].to_f
         end
       end
     end
