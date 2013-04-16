@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.2.1 - 16 April 2013
+
+* Added RCAP::Info to initialise an Info object semi-independently from an Alert.
+
 ## 2.2.0 - 2 February 2013
 
 * Better whitespace handling on parsing
