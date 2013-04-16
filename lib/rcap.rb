@@ -65,6 +65,8 @@ require 'rcap/cap_1_2/circle'
 require 'rcap/cap_1_2/polygon'
 require 'rcap/cap_1_2/geocode'
 require 'rcap/cap_1_2/area'
+
+require 'rcap/info'
 require 'rcap/alert'
 # Configuration
 require 'rcap/config'
