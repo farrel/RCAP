@@ -24,7 +24,7 @@ Installation
 
 RCAP is distributed as a Ruby gem and is available from [Rubygems.org](http://rubygems.org). From the command line you can install it with the gem command:
 
-    $ gem install rcap
+    gem install rcap
 
 The gem is also available for download and manual installation at [www.aimred.com/gems](http://www.aimred.com/gems).
 
@@ -36,9 +36,8 @@ Usage
 RCAP uses a 'builder' style syntax to create alerts. 
 
     require 'rcap'
-    include RCAP::CAP_1_2 
 
-    alert = Alert.new do |alert|
+    alert = RCAP::CAP_1_2::Alert.new do |alert|
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
       alert.status   = Alert::STATUS_ACTUAL
       alert.msg_type = Alert::MSG_TYPE_ALERT
@@ -121,7 +120,7 @@ To parse an alert from a XML:
 
 The RCAP API aims to codify as many of the rules of the CAP XML format into validation rules. The following Info object has two attributes ('severity' and 'certainty') set to incorrect values.
 
-    info = Info.new do |info|
+    info = RCAP::CAP_1_2::Info.new do |info|
       info.event = 'Liquid Petroleoum Tanker Fire'
       info.language   = 'en-ZA'
       info.categories << Info::CATEGORY_TRANSPORT
@@ -161,7 +160,7 @@ Authors
 Change Log
 ----------
 
-[CHANGELOG](CHANGELOG.html)
+[CHANGELOG](file.CHANGELOG.html)
 
 License
 -------

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 2.3.0 - 6 March 2014
+
+* Fixed YAML import and export. 
+* Ruby 2.1 tested
+
 ## 2.2.1 - 16 April 2013
 
 * Added RCAP::Info to initialise an Info object semi-independently from an Alert.

@@ -92,6 +92,7 @@ module RCAP
         end
       end
 
+      # @return [Hash]
       def to_yaml_data
         @points.map{ |point| [ point.lattitude, point.longitude ]}
       end
