@@ -131,7 +131,7 @@ module RCAP
   # if the string is given, String#strip and then String#to_f are applied
   # otherwise nil is returned.
   #
-  # @param [String] string
+  # @param [String] number
   # @return [Float,nil]
   def RCAP.to_f_if_given( number )
     if number
@@ -149,7 +149,7 @@ module RCAP
   # if the string is given, String#strip and then String#to_i are applied
   # otherwise nil is returned.
   #
-  # @param [String] string
+  # @param [String] number
   # @return [Integer,nil]
   def RCAP.to_i_if_given( number )
     if number

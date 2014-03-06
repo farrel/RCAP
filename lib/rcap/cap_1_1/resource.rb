@@ -55,15 +55,19 @@ module RCAP
 
       DEREF_URI_YAML     = "Derefrenced URI Data"
 
-      # @param [Hash] options
-      # @return [String]
-      def to_yaml( options = {} )
+      def to_yaml_data
         RCAP.attribute_values_to_hash( [ RESOURCE_DESC_YAML, @resource_desc ],
                                        [ URI_YAML,           @uri ],
                                        [ MIME_TYPE_YAML,     @mime_type ],
                                        [ DEREF_URI_YAML,     @deref_uri ],
                                        [ SIZE_YAML,          @size ],
-                                       [ DIGEST_YAML,        @digest ]).to_yaml( options )
+                                       [ DIGEST_YAML,        @digest ])
+      end
+
+      # @param [Hash] options
+      # @return [String]
+      def to_yaml( options = {} )
+        self.to_yaml_data.to_yaml( options )
       end
 
       # @param [Hash] resource_yaml_data

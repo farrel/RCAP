@@ -190,9 +190,9 @@ module RCAP
 
       RESPONSE_TYPES_YAML = 'Response Types'
 
-      # @return [String]
-      def to_yaml( options = {} )
-        parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
+      # @return [Hash]
+      def to_yaml_data
+         parameter_to_hash = lambda{ |hash, parameter| hash.merge( parameter.name => parameter.value )}
 
         RCAP.attribute_values_to_hash( [ LANGUAGE_YAML,       @language ],
                                        [ CATEGORIES_YAML,     @categories ],
@@ -213,8 +213,13 @@ module RCAP
                                        [ CONTACT_YAML,        @contact ],
                                        [ EVENT_CODES_YAML,    @event_codes.inject({}, &parameter_to_hash )],
                                        [ PARAMETERS_YAML,     @parameters.inject({}, &parameter_to_hash )],
-                                       [ RESOURCES_YAML,      @resources ],
-                                       [ AREAS_YAML,          @areas ]).to_yaml( options )
+                                       [ RESOURCES_YAML,      @resources.map( &:to_yaml_data )],
+                                       [ AREAS_YAML,          @areas.map( &:to_yaml_data )])
+      end
+
+      # @return [String]
+      def to_yaml( options = {} )
+        self.to_yaml_data.to_yaml( options )
       end
 
       # @param [Hash] info_yaml_data

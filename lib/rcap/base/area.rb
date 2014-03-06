@@ -150,14 +150,19 @@ module RCAP
       GEOCODES_YAML  = 'Geocodes'
       POLYGONS_YAML  = 'Polygons'
 
-      # @return [String] YAML representation of object
-      def to_yaml( options = {} )
+      # @return [Hash] 
+      def to_yaml_data
         RCAP.attribute_values_to_hash( [ AREA_DESC_YAML, @area_desc ],
                                        [ ALTITUDE_YAML,  @altitude ],
                                        [ CEILING_YAML,   @ceiling ],
                                        [ CIRCLES_YAML,   @circles.map{ |circle| circle.to_a }],
                                        [ GEOCODES_YAML,  @geocodes.inject({}){|h,geocode| h.merge( geocode.name => geocode.value )}],
-                                       [ POLYGONS_YAML,  @polygons ]).to_yaml( options )
+                                       [ POLYGONS_YAML,  @polygons.map( &:to_yaml_data )])
+      end
+
+      # @return [String] YAML representation of object
+      def to_yaml( options = {} )
+        self.to_yaml_data.to_yaml( options )
       end
 
       # @param [Hash] area_yaml_data

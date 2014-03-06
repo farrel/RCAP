@@ -92,9 +92,13 @@ module RCAP
         end
       end
 
+      def to_yaml_data
+        @points.map{ |point| [ point.lattitude, point.longitude ]}
+      end
+
       # @return [String]
       def to_yaml( options = {} )
-        @points.map{ |point| [ point.lattitude, point.longitude ]}.to_yaml( options )
+        self.to_yaml_data.to_yaml( options )
       end
 
       POINTS_KEY  = 'points'

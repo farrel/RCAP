@@ -309,7 +309,7 @@ module RCAP
                                        [ NOTE_YAML,        @note ],
                                        [ REFERENCES_YAML,  @references ],
                                        [ INCIDENTS_YAML,   @incidents ],
-                                       [ INFOS_YAML,       @infos ]).to_yaml( options )
+                                       [ INFOS_YAML,       @infos.map( &:to_yaml_data )]).to_yaml( options )
       end
 
       # Initialise an Alert object from a YAML string. Any object that is a subclass of IO (e.g. File) can be passed in.

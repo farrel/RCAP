@@ -117,7 +117,7 @@ module RCAP
                                        [ NOTE_YAML,        @note ],
                                        [ REFERENCES_YAML,  @references ],
                                        [ INCIDENTS_YAML,   @incidents ],
-                                       [ INFOS_YAML,       @infos ]).to_yaml( options )
+                                       [ INFOS_YAML,       @infos.map( &:to_yaml_data )]).to_yaml( options )
       end
 
       # @param [Hash] alert_yaml_data

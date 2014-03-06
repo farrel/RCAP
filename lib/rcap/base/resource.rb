@@ -63,9 +63,9 @@ module RCAP
         end
       end
 
-      # Calculates the SHA-1 hash and size of the contents of {#deref_uri}.
+      # Calculates the SHA-1 hash and size of the contents of {RCAP::Base::Resource#deref_uri}.
       # Returns an array containing the size (in bytes) and SHA-1 hash if
-      # {#deref_uri} is present otherwise returns nil.
+      # {RCAP::Base::Resource#deref_uri} is present otherwise returns nil.
       #
       # @return [nil,Array(Integer,String)]
       def calculate_hash_and_size
@@ -76,7 +76,7 @@ module RCAP
         end
       end
 
-      # The decoded contents of {#deref_uri} if present otherwise nil.
+      # The decoded contents of {RCAP::Base::Resource#deref_uri} if present otherwise nil.
       #
       # @return [nil,String]
       def decoded_deref_uri
@@ -115,14 +115,18 @@ module RCAP
       SIZE_YAML          = "Size"
       DIGEST_YAML        = "Digest"
 
-      # @param [Hash] options
-      # @return [String]
-      def to_yaml( options = {} )
+      def to_yaml_data
         RCAP.attribute_values_to_hash( [ RESOURCE_DESC_YAML, @resource_desc ],
                                        [ URI_YAML,           @uri ],
                                        [ MIME_TYPE_YAML,     @mime_type ],
                                        [ SIZE_YAML,          @size ],
-                                       [ DIGEST_YAML,        @digest ]).to_yaml( options )
+                                       [ DIGEST_YAML,        @digest ])
+      end
+
+      # @param [Hash] options
+      # @return [String]
+      def to_yaml( options = {} )
+        self.to_yaml_data.to_yaml( options )
       end
 
       # @param [Hash] resource_yaml_data
