@@ -146,7 +146,7 @@ Web resources
 * The RCAP project page can be found at [http://www.aimred.com/projects/rcap](http://www.aimred.com/projects/rcap)
 * The RCAP API docs can be found at [http://www.aimred.com/projects/rcap/api](http://www.aimred.com/projects/rcap/api)
 * A public git repository can be found at [http://github.com/farrel/RCAP](http://github.com/farrel/RCAP)
-* A CAP Validator based on RCAP can be found at [http://capvalidator.heroku.com](http://capvalidator.heroku.com)
+* A CAP Validator based on RCAP can be found at [http://capvalidator.herokuapp.com](http://capvalidator.herokuapp.com)
 
 Authors
 -------
