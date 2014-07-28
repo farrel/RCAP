@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.extra_rdoc_files = ['README.md','CHANGELOG.md']
-  s.add_dependency('assistance', '>= 0.1.5')
+  s.add_dependency('validation')
   s.add_dependency('json', '>= 1.5.1')
   s.add_dependency('uuidtools', '>= 2.1.2')
 
