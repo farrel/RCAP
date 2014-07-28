@@ -6,3 +6,4 @@ tags
 .bundle
 Gemfile.lock
 .yardoc
+*.sublime-*
