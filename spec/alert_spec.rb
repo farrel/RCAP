@@ -257,7 +257,7 @@ describe( RCAP::Alert ) do
 
         @alert.infos.size.should == 2
         info = @alert.infos.first
-        info.categories.include?( RCAP::CAP_1_1::Info::CATEGORY_GEO ).should( be_true )
+        info.categories.include?( RCAP::CAP_1_1::Info::CATEGORY_GEO ).should eq true
 
         info.areas.size.should == 1
         area = info.areas.first

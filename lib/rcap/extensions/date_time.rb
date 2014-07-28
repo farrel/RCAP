@@ -10,6 +10,10 @@ class DateTime
     t.sub(/\+(00:\d\d)$/, '-\1')
   end
 
+  def blank?
+    false
+  end
+
   private
   def utc_hours_offset
     self.offset * 24

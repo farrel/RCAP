@@ -26,4 +26,8 @@ class String
   def unpack_cap_list
     self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }
   end
+
+  def blank?
+    empty?
+  end
 end

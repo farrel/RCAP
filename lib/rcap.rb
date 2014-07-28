@@ -14,6 +14,9 @@ require 'assistance/extract_options'
 require 'assistance/validation'
 
 # Extensions
+require 'rcap/extensions/nil_class'
+require 'rcap/extensions/fixnum'
+require 'rcap/extensions/float'
 require 'rcap/extensions/array'
 require 'rcap/extensions/string'
 require 'rcap/extensions/date_time'
