@@ -9,6 +9,7 @@ require 'rexml/formatters/pretty'
 require 'open-uri'
 require 'base64'
 require 'digest/sha1'
+require 'validation' # this is included as source in this gem
 
 # Extensions
 require 'rcap/extensions/array'
