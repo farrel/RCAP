@@ -8,7 +8,10 @@ require 'rexml/formatters/pretty'
 require 'open-uri'
 require 'base64'
 require 'digest/sha1'
-require 'validation' # this is included as source in this gem
+
+# these files are taken from the defunct assitance gem and are included as source in this gem
+require 'assistance/extract_options'
+require 'assistance/validation'
 
 # Extensions
 require 'rcap/extensions/array'
