@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.4.0 - 29 July 2014
+
+* Removed assistance gem and extracted validations into a local file. (David van Geest)
+
 ## 2.3.0 - 6 March 2014
 
 * Fixed YAML import and export. 

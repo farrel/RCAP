@@ -1,11 +1,6 @@
 RCAP - Common Alerting Protocol for Ruby
 ========================================
 
-Note
-----
-
-This gem is a temporary fork to workaround this issue filed upstream: https://github.com/farrel/RCAP/issues/4
-
 Overview
 --------
 
@@ -18,7 +13,6 @@ Dependencies
 
 RCAP depends on the following gems
 
-* [Assistance](http://assistance.rubyforge.org)
 * [UUIDTools](http://uuidtools.rubyforge.org)
 * [JSON](http://json.rubyforge.org)
 
@@ -161,6 +155,7 @@ Authors
 ### Contributors
 
 * Earle Clubb - http://github.com/eclubb
+* David van Geest - https://github.com/DWvanGeest
 
 Change Log
 ----------
