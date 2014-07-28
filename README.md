@@ -1,6 +1,11 @@
 RCAP - Common Alerting Protocol for Ruby
 ========================================
 
+Note
+----
+
+This gem is a temporary fork to workaround this issue filed upstream: https://github.com/farrel/RCAP/issues/4
+
 Overview
 --------
 
@@ -33,7 +38,7 @@ Usage
 
 ### Creating an Alert
 
-RCAP uses a 'builder' style syntax to create alerts. 
+RCAP uses a 'builder' style syntax to create alerts.
 
     require 'rcap'
 
@@ -41,13 +46,13 @@ RCAP uses a 'builder' style syntax to create alerts.
       alert.sender   = 'cape_town_disaster_relief@capetown.municipal.za'
       alert.status   = Alert::STATUS_ACTUAL
       alert.msg_type = Alert::MSG_TYPE_ALERT
-      alert.scope    = Alert::SCOPE_PUBLIC 
-    
+      alert.scope    = Alert::SCOPE_PUBLIC
+
       alert.add_info do |info|
         info.event       = 'Liquid Petroleoum Tanker Fire'
         info.language    = 'en-ZA'
         info.categories  << Info::CATEGORY_TRANSPORT
-        info.categories  << Info::CATEGORY_FIRE 
+        info.categories  << Info::CATEGORY_FIRE
         info.urgency     = Info::URGENCY_IMMEDIATE
         info.severity    = Info::SEVERITY_SEVERE
         info.certainty   = Info::CERTAINTY_OBSERVED
@@ -55,18 +60,18 @@ RCAP uses a 'builder' style syntax to create alerts.
         info.description = 'A liquid petroleoum tanker has caught fire on the N2 incoming freeway 1km
                             after the R300 interchange.  Municipal fire fighting crews have been dispatched.
                             Traffic control officers are on the scene and have diverted traffic onto
-                            alternate routes.' 
-    
+                            alternate routes.'
+
         info.add_area do |area|
-          area.area_desc = 'N2 Highway/R300 Interchange' 
+          area.area_desc = 'N2 Highway/R300 Interchange'
           area.add_geocode do |geocode|
             geocode.name  = 'Intersection'
-            geocode.value = 'N2-15' 
+            geocode.value = 'N2-15'
           end
         end
       end
     end
-   
+
     # Accessing attributes
     puts alert.status                 # "Actual"
     info = alert.infos.first
@@ -128,7 +133,7 @@ The RCAP API aims to codify as many of the rules of the CAP XML format into vali
       info.severity   = nil                   # Severity is not assigned
       info.certainty  = 'Incorrect Certainty' # Certainty is assigned an incorrect value
     end
-   
+
     puts "Is info valid: #{ info.valid? }"
     info.errors.full_messages.each{ |message| puts "Error: #{ message }" }
 
