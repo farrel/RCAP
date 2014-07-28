@@ -1,6 +1,5 @@
 # System and require libs
 require 'date'
-require 'assistance'
 require 'uuidtools'
 require 'yaml'
 require 'json'
