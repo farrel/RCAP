@@ -12,4 +12,8 @@ class Array
   def blank?
     empty?
   end
+
+  def extract_options!
+    last.is_a?(Hash) ? pop : {}
+  end
 end

@@ -9,10 +9,6 @@ require 'open-uri'
 require 'base64'
 require 'digest/sha1'
 
-# these files are taken from the defunct assitance gem and are included as source in this gem
-require 'assistance/extract_options'
-require 'assistance/validation'
-
 # Extensions
 require 'rcap/extensions/nil_class'
 require 'rcap/extensions/fixnum'
@@ -26,7 +22,8 @@ require 'rcap/extensions/date'
 # RCAP
 require 'rcap/version'
 require 'rcap/utilities'
-require 'rcap/validations'
+require 'rcap/validation'
+require 'rcap/custom_validators'
 # Base
 require 'rcap/base/parameter'
 require 'rcap/base/point'
@@ -74,5 +71,6 @@ require 'rcap/cap_1_2/area'
 
 require 'rcap/info'
 require 'rcap/alert'
+
 # Configuration
 require 'rcap/config'
