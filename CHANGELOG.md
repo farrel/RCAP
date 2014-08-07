@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.4.1 - 7 August 2013
+
+* Further integration of validations.
+
 ## 2.4.0 - 29 July 2014
 
 * Removed assistance gem and extracted validations into a local file. (David van Geest)
