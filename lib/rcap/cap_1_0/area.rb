@@ -1,6 +1,5 @@
 module RCAP
   module CAP_1_0
-
     # An Area object is valid if
     # * it has an area description
     # * all Circle objects contained in circles are valid
@@ -8,7 +7,6 @@ module RCAP
     # * all Polygon objects contained in polygons are valid
     # * altitude has a value if ceiling is set
     class Area < RCAP::Base::Area
-
       # @return [String]
       def xmlns
         Alert::XMLNS

@@ -45,7 +45,7 @@ module Validation
   class Errors
     # Initializes a new instance of validation errors.
     def initialize
-      @errors = Hash.new {|h, k| h[k] = []}
+      @errors = Hash.new { |h, k| h[k] = [] }
     end
 
     # Returns true if no errors are stored.
@@ -71,9 +71,9 @@ module Validation
 
     # Returns an array of fully-formatted error messages.
     def full_messages
-      @errors.inject([]) do |m, kv| att, errors = *kv
-        errors.each {|e| m << "#{att} #{e}"}
-        m
+      @errors.reduce([]) do |m, kv| att, errors = *kv
+                                    errors.each { |e| m << "#{att} #{e}" }
+                                    m
       end
     end
   end
@@ -82,7 +82,7 @@ module Validation
   # the validates {} idiom.
   class Generator
     # Initializes a new generator.
-    def initialize(receiver ,&block)
+    def initialize(receiver, &block)
       @receiver = receiver
       instance_eval(&block)
     end
@@ -118,7 +118,7 @@ module Validation
 
     # Returns the validations hash for the class.
     def validations
-      @validations ||= Hash.new {|h, k| h[k] = []}
+      @validations ||= Hash.new { |h, k| h[k] = [] }
     end
 
     # Returns true if validations are defined.
@@ -133,7 +133,7 @@ module Validation
       end
       validations.each do |att, procs|
         v = o.send(att)
-        procs.each {|p| p[o, att, v]}
+        procs.each { |p| p[o, att, v] }
       end
     end
 
@@ -149,15 +149,15 @@ module Validation
     #     object.errors[attribute] << 'is not nice' unless value.nice?
     #   end
     def validates_each(*atts, &block)
-      atts.each {|a| validations[a] << block}
+      atts.each { |a| validations[a] << block }
     end
 
     # Validates acceptance of an attribute.
     def validates_acceptance_of(*atts)
       opts = {
-        :message => 'is not accepted',
-        :allow_nil => true,
-        :accept => '1'
+        message: 'is not accepted',
+        allow_nil: true,
+        accept: '1'
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|
@@ -169,7 +169,7 @@ module Validation
     # Validates confirmation of an attribute.
     def validates_confirmation_of(*atts)
       opts = {
-        :message => 'is not confirmed',
+        message: 'is not confirmed',
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|
@@ -182,11 +182,11 @@ module Validation
     # Validates the format of an attribute.
     def validates_format_of(*atts)
       opts = {
-        :message => 'is invalid',
+        message: 'is invalid',
       }.merge!(atts.extract_options!)
 
       unless opts[:with].is_a?(Regexp)
-        raise ArgumentError, "A regular expression must be supplied as the :with option of the options hash"
+        fail ArgumentError, 'A regular expression must be supplied as the :with option of the options hash'
       end
 
       validates_each(*atts) do |o, a, v|
@@ -198,9 +198,9 @@ module Validation
     # Validates the length of an attribute.
     def validates_length_of(*atts)
       opts = {
-        :too_long     => 'is too long',
-        :too_short    => 'is too short',
-        :wrong_length => 'is the wrong length'
+        too_long: 'is too long',
+        too_short: 'is too short',
+        wrong_length: 'is the wrong length'
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|
@@ -226,7 +226,7 @@ module Validation
     # Validates whether an attribute is a number.
     def validates_numericality_of(*atts)
       opts = {
-        :message => 'is not a number',
+        message: 'is not a number',
       }.merge!(atts.extract_options!)
 
       re = opts[:only_integer] ? INTEGER_RE : NUMBER_RE
@@ -240,7 +240,7 @@ module Validation
     # Validates the presence of an attribute.
     def validates_presence_of(*atts)
       opts = {
-        :message => 'is not present',
+        message: 'is not present',
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|
@@ -249,4 +249,3 @@ module Validation
     end
   end
 end
-

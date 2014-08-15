@@ -1,5 +1,5 @@
 class String
-  CAP_LIST_REGEX = Regexp.new( '"([\w\s]+)"|(\S+)' )
+  CAP_LIST_REGEX = Regexp.new('"([\w\s]+)"|(\S+)')
   WHITESPACE_REGEX = Regexp.new('^\s+$')
 
   # Reformats string for a CAP list. If the string contains whitespace it will
@@ -11,7 +11,7 @@ class String
   #   "two words".for_cap_list # => "\"two words\""
   def for_cap_list
     if self =~ /\s/
-      '"'+self+'"'
+      '"' + self + '"'
     else
       self
     end
@@ -24,7 +24,7 @@ class String
   #   "one \"two words\" three".unpack_cap_list # => [ "one", "two words", "three" ]
   # @see Array#to_s_for_cap
   def unpack_cap_list
-    self.split( CAP_LIST_REGEX ).reject{ |match| match == "" || match =~ WHITESPACE_REGEX }
+    split(CAP_LIST_REGEX).reject { |match| match == '' || match =~ WHITESPACE_REGEX }
   end
 
   def blank?
