@@ -97,18 +97,18 @@ module RCAP
 
       # @return [REXML::Element]
       def to_xml_element
-        xml_element = REXML::Element.new(XML_ELEMENT_NAME)
-        xml_element.add_element(AREA_DESC_ELEMENT_NAME).add_text(@area_desc.to_s)
-        add_to_xml_element = lambda do |element, object|
-          element.add_element(object.to_xml_element)
-          element
+        REXML::Element.new(XML_ELEMENT_NAME).tap do |xml_element|
+          xml_element.add_element(AREA_DESC_ELEMENT_NAME).add_text(@area_desc.to_s)
+          add_to_xml_element = lambda do |element, object|
+            element.add_element(object.to_xml_element)
+            element
+          end
+          @polygons.inject(xml_element, &add_to_xml_element)
+          @circles.inject(xml_element, &add_to_xml_element)
+          @geocodes.inject(xml_element, &add_to_xml_element)
+          xml_element.add_element(ALTITUDE_ELEMENT_NAME).add_text(@altitude.to_s) unless @altitude.blank?
+          xml_element.add_element(CEILING_ELEMENT_NAME).add_text(@ceiling.to_s)   unless @altitude.blank?
         end
-        @polygons.inject(xml_element, &add_to_xml_element)
-        @circles.inject(xml_element, &add_to_xml_element)
-        @geocodes.inject(xml_element, &add_to_xml_element)
-        xml_element.add_element(ALTITUDE_ELEMENT_NAME).add_text(@altitude.to_s) unless @altitude.blank?
-        xml_element.add_element(CEILING_ELEMENT_NAME).add_text(@ceiling.to_s)   unless @altitude.blank?
-        xml_element
       end
 
       # @return [String] XML representation of the Area
