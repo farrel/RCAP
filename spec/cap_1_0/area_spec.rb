@@ -219,7 +219,7 @@ describe(RCAP::CAP_1_0::Area) do
       end
 
       it('has an invalid geocode') do
-        @area.geocodes.first.value = nil
+        @area.geocodes.first.name = nil
         @area.should_not(be_valid)
       end
     end

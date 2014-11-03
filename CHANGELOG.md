@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.5.0 - 3 November 2014
+
+* Allow the values of parameters, area codes and event codes to be empty.
+
 ## 2.4.1 - 7 August 2013
 
 * Further integration of validations.

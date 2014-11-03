@@ -3,7 +3,7 @@ module RCAP
     class Parameter
       include Validation
 
-      validates_presence_of(:name, :value)
+      validates_presence_of(:name)
 
       # @return [String]
       attr_accessor(:name)
