@@ -141,7 +141,8 @@ module Validation
       }.merge!(attributes.extract_options!)
 
       validates_each(*attributes) do |object, attribute, collection|
-        next if  collection.nil? && options[:allow_nil]
+        next if collection.nil? && options[:allow_nil]
+        next if collection.empty? && options[:allow_empty]
         unless collection.first == collection.last
           object.errors[attribute] << options[:message]
         end

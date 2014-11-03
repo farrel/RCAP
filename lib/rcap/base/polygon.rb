@@ -7,8 +7,8 @@ module RCAP
       attr_reader(:points)
 
       validates_collection_of(:points)
-      validates_length_of(:points, minimum: 3)
-      validates_equality_of_first_and_last(:points)
+      validates_length_of(:points, minimum: 3, allow_blank: true)
+      validates_equality_of_first_and_last(:points, allow_empty: true)
 
       XML_ELEMENT_NAME = 'polygon'
       XPATH            = "cap:#{ XML_ELEMENT_NAME }"

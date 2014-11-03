@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.5.1 - 3 November 2014
+
+* Allow the polygons to be empty.
+
 ## 2.5.0 - 3 November 2014
 
 * Allow the values of parameters, area codes and event codes to be empty.

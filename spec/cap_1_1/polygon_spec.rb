@@ -10,18 +10,13 @@ describe(RCAP::CAP_1_1::Polygon) do
             point.longitude = 0
           end
         end
-        @polygon.should(be_valid)
       end
+      @polygon.should(be_valid)
+    end
 
-      it('does not have any points') do
-        @polygon.points.clear
-        @polygon.should_not(be_valid)
-      end
-
-      it('does not have a valid collection of points') do
-        @polygon.points.first.lattitude = nil
-        @polygon.should_not(be_valid)
-      end
+    it('does not have a valid collection of points') do
+      @polygon.points.first.lattitude = nil
+      @polygon.should_not(be_valid)
     end
   end
 
