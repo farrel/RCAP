@@ -30,7 +30,7 @@ describe(RCAP::Alert) do
       end
 
       shared_examples_for('it has parsed a CAP 1.0 alert correctly') do
-        it('should use the correct CAP Version') { @alert.class.should       == RCAP::CAP_1_0::Alert }
+        it('should use the correct CAP Version') { @alert.class.should      == RCAP::CAP_1_0::Alert }
         it('should parse identifier correctly') { @alert.identifier.should  == @original_alert.identifier }
         it('should parse sender correctly')     { @alert.sender.should      == @original_alert.sender }
         it('should parse sent correctly')       { @alert.sent.should(be_within(1).of(@original_alert.sent)) }
@@ -250,10 +250,10 @@ describe(RCAP::Alert) do
       end
 
       it('should parse the alert correctly') do
-        @alert.class.should == RCAP::CAP_1_1::Alert
-        @alert.status.should == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
+        @alert.class.should    == RCAP::CAP_1_1::Alert
+        @alert.status.should   == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
         @alert.msg_type.should == RCAP::CAP_1_1::Alert::MSG_TYPE_ALERT
-        @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+        @alert.scope.should    == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
 
         @alert.infos.size.should == 2
         info = @alert.infos.first
@@ -280,10 +280,10 @@ describe(RCAP::Alert) do
       end
 
       it('should parse the alert correctly') do
-        @alert.class.should == RCAP::CAP_1_1::Alert
-        @alert.status.should == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
-        @alert.msg_type.should == RCAP::CAP_1_1::Alert::MSG_TYPE_UPDATE
-        @alert.scope.should == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
+        @alert.class.should      == RCAP::CAP_1_1::Alert
+        @alert.status.should     == RCAP::CAP_1_1::Alert::STATUS_ACTUAL
+        @alert.msg_type.should   == RCAP::CAP_1_1::Alert::MSG_TYPE_UPDATE
+        @alert.scope.should      == RCAP::CAP_1_1::Alert::SCOPE_PUBLIC
         @alert.identifier.should == 'CA-EC-CWTO-2011-138776'
 
         @alert.infos.size.should == 2
