@@ -75,7 +75,8 @@ module RCAP
                          'Codes:',
                          @codes.map { |code| '  ' + code }.join("\n"),
                          "Note:         #{ @note }",
-                         "References:   #{ @references.join(' ')}",
+                         "References:",
+                           @references.join("\n "),
                          "Incidents:    #{ @incidents.join(' ')}",
                          'Information:',
                          @infos.map { |info| '  ' + info.to_s }.join("\n")].join("\n")
