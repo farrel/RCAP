@@ -11,7 +11,6 @@ module RCAP
 
       # @return [REXML::Element]
       def to_xml_element
-        xml_element = super
         xml_element = REXML::Element.new(XML_ELEMENT_NAME)
         xml_element.add_element(RESOURCE_DESC_ELEMENT_NAME).add_text(@resource_desc)
         xml_element.add_element(MIME_TYPE_ELEMENT_NAME).add_text(@mime_type) if @mime_type
