@@ -156,6 +156,7 @@ Authors
 
 * Earle Clubb - http://github.com/eclubb
 * David van Geest - https://github.com/DWvanGeest
+* Seth Deckard - https://github.com/sethdeckard
 
 Change Log
 ----------

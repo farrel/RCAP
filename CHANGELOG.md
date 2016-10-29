@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.6.0 - 30 October 2016
+
+* Adds GeoJSON export to Polygon and Circle
+
 ## 2.5.1 - 3 November 2014
 
 * Allow the polygons to be empty.
