@@ -99,6 +99,15 @@ describe(RCAP::CAP_1_0::Circle) do
       end
     end
 
+    context('to geojson') do
+      it('should be valid geojson') do
+        @circle.longitude = 5.6
+        expected = '{"type":"Feature","geometry":{"type":"Point",' \
+          '"coordinates":[5.6,30]},"properties":{"radius":10.5}}'
+        expect(@circle.to_geojson).to eq expected
+      end
+    end
+
     context('to hash') do
       it('should be correct') do
         @circle.to_h.should == { 'radius' => 10.5, 'lattitude' => 30, 'longitude' => 60 }

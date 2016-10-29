@@ -27,6 +27,12 @@ module RCAP
         point
       end
 
+      # Returns GeoJSON representation of the polygon
+      def to_geojson
+        coordinates = @points.map { |point| [point.longitude, point.lattitude] }
+        { 'type' => 'Polygon', 'coordinates' => coordinates }.to_json
+      end
+
       # Returns a string representation of the polygon of the form
       #  points[0] points[1] points[2] ...
       # where each point is formatted with Point#to_s

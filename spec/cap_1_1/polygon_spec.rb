@@ -97,6 +97,13 @@ describe(RCAP::CAP_1_1::Polygon) do
       end
     end
 
+    context('to geojson') do
+      it('should be valid geojson') do
+        expected = '{"type":"Polygon","coordinates":[[0,0],[1,1],[2,2]]}'
+        expect(@polygon.to_geojson).to eq expected
+      end
+    end
+
     context('to a hash') do
       it('should export correctly') do
         @polygon.to_h.should == { RCAP::CAP_1_1::Polygon::POINTS_KEY => @polygon.points.map { |point| point.to_a } }

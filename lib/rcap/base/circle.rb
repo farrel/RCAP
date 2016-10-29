@@ -21,6 +21,15 @@ module RCAP
         yield(self) if block_given?
       end
 
+      # Returns GeoJSON representation of the circle in the form of a Point
+      # with radius property
+      def to_geojson
+        { 'type' => 'Feature',
+          'geometry' => { 'type' => 'Point',
+                          'coordinates' => [@longitude, @lattitude] },
+          'properties' => { 'radius' => @radius } }.to_json
+      end
+
       # Returns a string representation of the circle of the form
       #  lattitude,longitude radius
       #
