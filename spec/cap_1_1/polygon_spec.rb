@@ -99,7 +99,7 @@ describe(RCAP::CAP_1_1::Polygon) do
 
     context('to geojson') do
       it('should be valid geojson') do
-        expected = '{"type":"Polygon","coordinates":[[0,0],[1,1],[2,2]]}'
+        expected = '{"type":"Polygon","coordinates":[[[0,0],[1,1],[2,2]]]}'
         expect(@polygon.to_geojson).to eq expected
       end
     end

@@ -30,7 +30,7 @@ module RCAP
       # Returns GeoJSON representation of the polygon
       def to_geojson
         coordinates = @points.map { |point| [point.longitude, point.lattitude] }
-        { 'type' => 'Polygon', 'coordinates' => coordinates }.to_json
+        { 'type' => 'Polygon', 'coordinates' => [coordinates] }.to_json
       end
 
       # Returns a string representation of the polygon of the form
