@@ -1,4 +1,4 @@
-class Fixnum
+class Integer
   def blank?
     false
   end

@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 2.7.0 - 22 March 2017
+
+* Coordinates of a polygon should be an array of coordinate arrays rather than a single coordinate array.  (Seth Deckard)
+* Moved Fixnum extenions to Integer
+* Ruby 2.4.0 tested
+
 ## 2.6.0 - 30 October 2016
 
 * Adds GeoJSON export to Polygon and Circle

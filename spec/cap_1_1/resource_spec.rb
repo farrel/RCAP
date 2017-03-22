@@ -209,7 +209,7 @@ describe(RCAP::CAP_1_1::Resource) do
       end
       @content = "1,2\n3,4"
       @encoded_content = Base64.encode64(@content)
-      stub_request(:get, @resource.uri).to_return(status: 200, body: @content)
+      expect(URI).to receive(:parse) { StringIO.new(@content) }
     end
 
     describe('#dereference_uri!') do

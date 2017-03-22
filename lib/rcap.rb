@@ -11,7 +11,7 @@ require 'digest/sha1'
 
 # Extensions
 require 'rcap/extensions/nil_class'
-require 'rcap/extensions/fixnum'
+require 'rcap/extensions/integer'
 require 'rcap/extensions/float'
 require 'rcap/extensions/array'
 require 'rcap/extensions/string'
