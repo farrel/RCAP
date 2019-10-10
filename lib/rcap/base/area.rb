@@ -226,6 +226,10 @@ module RCAP
                                       [GEOCODES_KEY,  @geocodes.map { |geocode| geocode.to_h }],
                                       [POLYGONS_KEY,  @polygons.map { |polygon| polygon.to_h }])
       end
+
+      def map_data?
+        @circles.any? || @polygons.any?
+      end
     end
   end
 end

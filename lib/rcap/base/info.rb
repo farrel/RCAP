@@ -493,6 +493,12 @@ module RCAP
           end
         end
       end
+
+      def map_data?
+        @areas.any? do |area|
+          area.map_data?
+        end
+      end
     end
   end
 end
