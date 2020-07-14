@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_2
     # A Resource object is valid if
@@ -9,9 +11,9 @@ module RCAP
 
       validates_presence_of(:mime_type)
 
-      DEREF_URI_ELEMENT_NAME     = 'derefUri'
+      DEREF_URI_ELEMENT_NAME = 'derefUri'
 
-      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"
+      DEREF_URI_XPATH = "cap:#{DEREF_URI_ELEMENT_NAME}"
 
       # @return [REXML::Element]
       def to_xml_element
@@ -54,7 +56,7 @@ module RCAP
         end
       end
 
-      DEREF_URI_YAML     = 'Derefrenced URI Data'
+      DEREF_URI_YAML = 'Derefrenced URI Data'
 
       # @param [Hash] options
       # @return [String]
@@ -65,7 +67,8 @@ module RCAP
           [MIME_TYPE_YAML,     @mime_type],
           [DEREF_URI_YAML,     @deref_uri],
           [SIZE_YAML,          @size],
-          [DIGEST_YAML,        @digest]).to_yaml(options)
+          [DIGEST_YAML,        @digest]
+        ).to_yaml(options)
       end
 
       # @param [Hash] resource_yaml_data
@@ -76,7 +79,7 @@ module RCAP
         end
       end
 
-      DEREF_URI_KEY     = 'deref_uri'
+      DEREF_URI_KEY = 'deref_uri'
 
       # @return [Hash]
       def to_h

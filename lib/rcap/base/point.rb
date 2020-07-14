@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Point
@@ -29,7 +31,7 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ lattitude },#{ longitude }"
+        "#{lattitude},#{longitude}"
       end
 
       # @return [String]
@@ -68,7 +70,7 @@ module RCAP
 
       # @return [Array(Numeric, Numeric)]
       def to_a
-        Array.new.tap do |array|
+        [].tap do |array|
           array[LATTITUDE_INDEX] = lattitude
           array[LONGITUDE_INDEX] = longitude
         end

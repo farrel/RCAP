@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # System and require libs
 require 'date'
 require 'uuidtools'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class String
   CAP_LIST_REGEX = Regexp.new('"([\w\s]+)"|(\S+)')
   WHITESPACE_REGEX = Regexp.new('^\s+$')
@@ -10,7 +12,7 @@ class String
   #   "one".for_cap_list       # => "one"
   #   "two words".for_cap_list # => "\"two words\""
   def for_cap_list
-    if self =~ /\s/
+    if /\s/.match?(self)
       '"' + self + '"'
     else
       self

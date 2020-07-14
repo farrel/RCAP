@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Info
@@ -17,9 +19,9 @@ module RCAP
       CATEGORY_OTHER     = 'Other'
       # Valid values for categories
       VALID_CATEGORIES = [CATEGORY_GEO, CATEGORY_MET, CATEGORY_SAFETY,
-                          CATEGORY_SECURITY, CATEGORY_RESCUE,   CATEGORY_FIRE, CATEGORY_HEALTH,
+                          CATEGORY_SECURITY, CATEGORY_RESCUE, CATEGORY_FIRE, CATEGORY_HEALTH,
                           CATEGORY_ENV, CATEGORY_TRANSPORT, CATEGORY_INFRA, CATEGORY_CBRNE,
-                          CATEGORY_OTHER]
+                          CATEGORY_OTHER].freeze
 
       URGENCY_IMMEDIATE = 'Immediate'
       URGENCY_EXPECTED  = 'Expected'
@@ -28,7 +30,7 @@ module RCAP
       URGENCY_UNKNOWN   = 'Unknown'
       # Valid values for urgency
       VALID_URGENCIES = [URGENCY_IMMEDIATE, URGENCY_EXPECTED, URGENCY_FUTURE,
-                         URGENCY_PAST, URGENCY_UNKNOWN]
+                         URGENCY_PAST, URGENCY_UNKNOWN].freeze
 
       SEVERITY_EXTREME  = 'Extreme'
       SEVERITY_SEVERE   = 'Severe'
@@ -37,7 +39,7 @@ module RCAP
       SEVERITY_UNKNOWN  = 'Unknown'
       # Valid values for severity
       VALID_SEVERITIES = [SEVERITY_EXTREME, SEVERITY_SEVERE, SEVERITY_MODERATE,
-                          SEVERITY_MINOR, SEVERITY_UNKNOWN]
+                          SEVERITY_MINOR, SEVERITY_UNKNOWN].freeze
 
       CERTAINTY_VERY_LIKELY = 'Very Likely'
       CERTAINTY_LIKELY      = 'Likely'
@@ -46,7 +48,7 @@ module RCAP
       CERTAINTY_UNKNOWN     = 'Unknown'
       # Valid valies for certainty
       VALID_CERTAINTIES = [CERTAINTY_VERY_LIKELY, CERTAINTY_LIKELY,
-                           CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN]
+                           CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN].freeze
 
       XML_ELEMENT_NAME           = 'info'
       LANGUAGE_ELEMENT_NAME      = 'language'
@@ -67,24 +69,24 @@ module RCAP
       WEB_ELEMENT_NAME           = 'web'
       CONTACT_ELEMENT_NAME       = 'contact'
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"
-      LANGUAGE_XPATH      = "cap:#{ LANGUAGE_ELEMENT_NAME }"
-      EVENT_XPATH         = "cap:#{ EVENT_ELEMENT_NAME }"
-      URGENCY_XPATH       = "cap:#{ URGENCY_ELEMENT_NAME }"
-      CATEGORY_XPATH      = "cap:#{ CATEGORY_ELEMENT_NAME }"
-      SEVERITY_XPATH      = "cap:#{ SEVERITY_ELEMENT_NAME }"
-      CERTAINTY_XPATH     = "cap:#{ CERTAINTY_ELEMENT_NAME }"
-      AUDIENCE_XPATH      = "cap:#{ AUDIENCE_ELEMENT_NAME }"
-      EVENT_CODE_XPATH    = "cap:#{ EVENT_CODE_ELEMENT_NAME }"
-      EFFECTIVE_XPATH     = "cap:#{ EFFECTIVE_ELEMENT_NAME }"
-      ONSET_XPATH         = "cap:#{ ONSET_ELEMENT_NAME }"
-      EXPIRES_XPATH       = "cap:#{ EXPIRES_ELEMENT_NAME }"
-      SENDER_NAME_XPATH   = "cap:#{ SENDER_NAME_ELEMENT_NAME }"
-      HEADLINE_XPATH      = "cap:#{ HEADLINE_ELEMENT_NAME }"
-      DESCRIPTION_XPATH   = "cap:#{ DESCRIPTION_ELEMENT_NAME }"
-      INSTRUCTION_XPATH   = "cap:#{ INSTRUCTION_ELEMENT_NAME }"
-      WEB_XPATH           = "cap:#{ WEB_ELEMENT_NAME }"
-      CONTACT_XPATH       = "cap:#{ CONTACT_ELEMENT_NAME }"
+      XPATH               = "cap:#{XML_ELEMENT_NAME}"
+      LANGUAGE_XPATH      = "cap:#{LANGUAGE_ELEMENT_NAME}"
+      EVENT_XPATH         = "cap:#{EVENT_ELEMENT_NAME}"
+      URGENCY_XPATH       = "cap:#{URGENCY_ELEMENT_NAME}"
+      CATEGORY_XPATH      = "cap:#{CATEGORY_ELEMENT_NAME}"
+      SEVERITY_XPATH      = "cap:#{SEVERITY_ELEMENT_NAME}"
+      CERTAINTY_XPATH     = "cap:#{CERTAINTY_ELEMENT_NAME}"
+      AUDIENCE_XPATH      = "cap:#{AUDIENCE_ELEMENT_NAME}"
+      EVENT_CODE_XPATH    = "cap:#{EVENT_CODE_ELEMENT_NAME}"
+      EFFECTIVE_XPATH     = "cap:#{EFFECTIVE_ELEMENT_NAME}"
+      ONSET_XPATH         = "cap:#{ONSET_ELEMENT_NAME}"
+      EXPIRES_XPATH       = "cap:#{EXPIRES_ELEMENT_NAME}"
+      SENDER_NAME_XPATH   = "cap:#{SENDER_NAME_ELEMENT_NAME}"
+      HEADLINE_XPATH      = "cap:#{HEADLINE_ELEMENT_NAME}"
+      DESCRIPTION_XPATH   = "cap:#{DESCRIPTION_ELEMENT_NAME}"
+      INSTRUCTION_XPATH   = "cap:#{INSTRUCTION_ELEMENT_NAME}"
+      WEB_XPATH           = "cap:#{WEB_ELEMENT_NAME}"
+      CONTACT_XPATH       = "cap:#{CONTACT_ELEMENT_NAME}"
 
       DEFAULT_LANGUAGE = 'en-US'
 
@@ -92,8 +94,8 @@ module RCAP
       validates_presence_of(:urgency)
       validates_presence_of(:severity)
       validates_presence_of(:certainty)
-      validates_inclusion_of(:severity, allow_nil: true, in: VALID_SEVERITIES,  message: "can only be assigned the following values: #{ VALID_SEVERITIES.join(', ') }")
-      validates_inclusion_of(:urgency, allow_nil: true, in: VALID_URGENCIES,   message: "can only be assigned the following values: #{ VALID_URGENCIES.join(', ') }")
+      validates_inclusion_of(:severity, allow_nil: true, in: VALID_SEVERITIES, message: "can only be assigned the following values: #{VALID_SEVERITIES.join(', ')}")
+      validates_inclusion_of(:urgency, allow_nil: true, in: VALID_URGENCIES, message: "can only be assigned the following values: #{VALID_URGENCIES.join(', ')}")
       validates_inclusion_of_members_of(:categories, in: VALID_CATEGORIES, allow_blank: true)
       validates_collection_of(:resources, :areas, :event_codes, :parameters)
 
@@ -237,7 +239,7 @@ module RCAP
       # @return [Info]
       def self.from_xml_element(info_xml_element)
         new do |info|
-          info.language       = RCAP.xpath_text(info_xml_element, LANGUAGE_XPATH, info.xmlns) || DEFAULT_LANGUAGE
+          info.language = RCAP.xpath_text(info_xml_element, LANGUAGE_XPATH, info.xmlns) || DEFAULT_LANGUAGE
 
           RCAP.xpath_match(info_xml_element, CATEGORY_XPATH, info.xmlns).each do |element|
             info.categories << element.text
@@ -266,8 +268,8 @@ module RCAP
             info.parameters <<  info.parameter_class.from_xml_element(element)
           end
 
-          RCAP.xpath_match(info_xml_element, info.resource_class::XPATH, info.xmlns).each do  |element|
-            info.resources <<  info.resource_class.from_xml_element(element)
+          RCAP.xpath_match(info_xml_element, info.resource_class::XPATH, info.xmlns).each do |element|
+            info.resources << info.resource_class.from_xml_element(element)
           end
 
           RCAP.xpath_match(info_xml_element, info.area_class::XPATH, info.xmlns).each do |element|
@@ -278,26 +280,26 @@ module RCAP
 
       # @return [String]
       def inspect
-        info_inspect = "Language:       #{ @language }\n"\
-        "Categories:     #{ @categories.to_s_for_cap }\n"\
-        "Event:          #{ @event }\n"\
-        "Urgency:        #{ @urgency }\n"\
-        "Severity:       #{ @severity }\n"\
-        "Certainty:      #{ @certainty }\n"\
-        "Audience:       #{ @audience }\n"\
-        "Event Codes:    #{ @event_codes.inspect }\n"\
-        "Effective:      #{ @effective }\n"\
-        "Onset:          #{ @onset }\n"\
-        "Expires:        #{ @expires }\n"\
-        "Sender Name:    #{ @sender_name }\n"\
-        "Headline:       #{ @headline }\n"\
-        "Description:\n" +           @description.to_s.lines.map { |line| '  ' + line }.join("\n") + "\n"\
-          "Instruction:    #{ @instruction }\n"\
-        "Web:            #{ @web }\n"\
-        "Contact:        #{ @contact }\n"\
-        "Parameters:\n" +           @parameters.map { |parameter| '  ' + parameter.inspect }.join("\n") + "\n"\
-          "Resources:\n" +           @resources.map { |resource| '  ' + resource.inspect }.join("\n") + "\n"\
-          "Area:\n" +           @areas.map { |area| "  #{ area }" }.join("\n") + "\n"
+        info_inspect = "Language:       #{@language}\n"\
+        "Categories:     #{@categories.to_s_for_cap}\n"\
+        "Event:          #{@event}\n"\
+        "Urgency:        #{@urgency}\n"\
+        "Severity:       #{@severity}\n"\
+        "Certainty:      #{@certainty}\n"\
+        "Audience:       #{@audience}\n"\
+        "Event Codes:    #{@event_codes.inspect}\n"\
+        "Effective:      #{@effective}\n"\
+        "Onset:          #{@onset}\n"\
+        "Expires:        #{@expires}\n"\
+        "Sender Name:    #{@sender_name}\n"\
+        "Headline:       #{@headline}\n"\
+        "Description:\n" + @description.to_s.lines.map { |line| '  ' + line }.join("\n") + "\n"\
+          "Instruction:    #{@instruction}\n"\
+        "Web:            #{@web}\n"\
+        "Contact:        #{@contact}\n"\
+        "Parameters:\n" + @parameters.map { |parameter| '  ' + parameter.inspect }.join("\n") + "\n"\
+          "Resources:\n" + @resources.map { |resource| '  ' + resource.inspect }.join("\n") + "\n"\
+          "Area:\n" + @areas.map { |area| "  #{area}" }.join("\n") + "\n"
         RCAP.format_lines_for_inspect('INFO', info_inspect)
       end
 
@@ -306,7 +308,7 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
+        "#{@event}(#{@urgency}/#{@severity}/#{@certainty})"
       end
 
       LANGUAGE_YAML       = 'Language'
@@ -332,7 +334,7 @@ module RCAP
 
       # @return [Hash]
       def to_yaml_data
-        parameter_to_hash = lambda { |hash, parameter| hash.merge(parameter.name => parameter.value) }
+        parameter_to_hash = ->(hash, parameter) { hash.merge(parameter.name => parameter.value) }
 
         RCAP.attribute_values_to_hash([LANGUAGE_YAML,       @language],
                                       [CATEGORIES_YAML,     @categories],
@@ -365,7 +367,7 @@ module RCAP
       # @return [Info]
       def self.from_yaml_data(info_yaml_data)
         new do |info|
-          info.language    = info_yaml_data [LANGUAGE_YAML]
+          info.language = info_yaml_data [LANGUAGE_YAML]
           Array(info_yaml_data [CATEGORIES_YAML]).each do |category|
             info.categories << category
           end
@@ -384,7 +386,7 @@ module RCAP
           info.web         = RCAP.strip_if_given(info_yaml_data [WEB_YAML])
           info.contact     = RCAP.strip_if_given(info_yaml_data [CONTACT_YAML])
 
-          Array(info_yaml_data [EVENT_CODES_YAML]).each do  |name, value|
+          Array(info_yaml_data [EVENT_CODES_YAML]).each do |name, value|
             info.add_event_code do |event_code|
               event_code.name  = RCAP.strip_if_given(name)
               event_code.value = RCAP.strip_if_given(value)
@@ -431,7 +433,7 @@ module RCAP
 
       # @return [Hash]
       def to_h
-        RCAP.attribute_values_to_hash([LANGUAGE_KEY,      @language],
+        RCAP.attribute_values_to_hash([LANGUAGE_KEY, @language],
                                       [CATEGORIES_KEY,     @categories],
                                       [EVENT_KEY,          @event],
                                       [URGENCY_KEY,        @urgency],
@@ -447,17 +449,17 @@ module RCAP
                                       [INSTRUCTION_KEY,    @instruction],
                                       [WEB_KEY,            @web],
                                       [CONTACT_KEY,        @contact],
-                                      [RESOURCES_KEY,      @resources.map { |resource| resource.to_h }],
-                                      [EVENT_CODES_KEY,    @event_codes.map { |event_code| event_code.to_h }],
-                                      [PARAMETERS_KEY,     @parameters.map { |parameter| parameter.to_h }],
-                                      [AREAS_KEY,          @areas.map { |area| area.to_h }])
+                                      [RESOURCES_KEY,      @resources.map(&:to_h)],
+                                      [EVENT_CODES_KEY,    @event_codes.map(&:to_h)],
+                                      [PARAMETERS_KEY,     @parameters.map(&:to_h)],
+                                      [AREAS_KEY,          @areas.map(&:to_h)])
       end
 
       # @param [Hash] info_hash
       # @return [Info]
       def self.from_h(info_hash)
         new do |info|
-          info.language       = info_hash[LANGUAGE_KEY]
+          info.language = info_hash[LANGUAGE_KEY]
           Array(info_hash[CATEGORIES_KEY]).each do |category|
             info.categories << RCAP.strip_if_given(category)
           end
@@ -489,15 +491,13 @@ module RCAP
           end
 
           Array(info_hash[AREAS_KEY]).each do |area_hash|
-            info.areas <<  info.area_class.from_h(area_hash)
+            info.areas << info.area_class.from_h(area_hash)
           end
         end
       end
 
       def map_data?
-        @areas.any? do |area|
-          area.map_data?
-        end
+        @areas.any?(&:map_data?)
       end
     end
   end

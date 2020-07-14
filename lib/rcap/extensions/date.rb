@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Date
-  alias_method :inspect, :to_s
+  alias inspect to_s
 
   # Returns a string representaion of the time suitable for CAP.
   # @return [String]

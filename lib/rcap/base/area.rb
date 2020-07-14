@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Area
@@ -25,10 +27,10 @@ module RCAP
       ALTITUDE_ELEMENT_NAME  = 'altitude'
       CEILING_ELEMENT_NAME   = 'ceiling'
 
-      XPATH           = "cap:#{ XML_ELEMENT_NAME }"
-      AREA_DESC_XPATH = "cap:#{ AREA_DESC_ELEMENT_NAME }"
-      ALTITUDE_XPATH  = "cap:#{ ALTITUDE_ELEMENT_NAME }"
-      CEILING_XPATH   = "cap:#{ CEILING_ELEMENT_NAME }"
+      XPATH           = "cap:#{XML_ELEMENT_NAME}"
+      AREA_DESC_XPATH = "cap:#{AREA_DESC_ELEMENT_NAME}"
+      ALTITUDE_XPATH  = "cap:#{ALTITUDE_ELEMENT_NAME}"
+      CEILING_XPATH   = "cap:#{CEILING_ELEMENT_NAME}"
 
       # @example
       #   Area.new do |area|
@@ -121,16 +123,16 @@ module RCAP
       # @param [Area] other Area object to compare
       # @return [true,false]
       def ==(other)
-        comparison_attributes = lambda { |area| [area.area_desc, area.altitude, area.ceiling, area.circles, area.geocodes, area.polygons] }
+        comparison_attributes = ->(area) { [area.area_desc, area.altitude, area.ceiling, area.circles, area.geocodes, area.polygons] }
         comparison_attributes.call(self) == comparison_attributes.call(other)
       end
 
       # @return [String]
       def inspect
-        area_inspect = "Area Description: #{ @area_desc }\n"\
-                       "Polygons:\n" +                        @polygons.map { |polygon| '  ' + polygon.inspect }.join("\n") + "\n"\
-                       "Circles:          #{ @circles.inspect }\n"\
-                       "Geocodes:         #{ @geocodes.inspect }\n"
+        area_inspect = "Area Description: #{@area_desc}\n"\
+                       "Polygons:\n" + @polygons.map { |polygon| '  ' + polygon.inspect }.join("\n") + "\n"\
+                       "Circles:          #{@circles.inspect}\n"\
+                       "Geocodes:         #{@geocodes.inspect}\n"
         RCAP.format_lines_for_inspect('AREA', area_inspect)
       end
 
@@ -153,7 +155,7 @@ module RCAP
         RCAP.attribute_values_to_hash([AREA_DESC_YAML, @area_desc],
                                       [ALTITUDE_YAML,  @altitude],
                                       [CEILING_YAML,   @ceiling],
-                                      [CIRCLES_YAML,   @circles.map { |circle| circle.to_a }],
+                                      [CIRCLES_YAML,   @circles.map(&:to_a)],
                                       [GEOCODES_YAML,  @geocodes.reduce({}) { |h, geocode| h.merge(geocode.name => geocode.value) }],
                                       [POLYGONS_YAML,  @polygons.map(&:to_yaml_data)])
       end
@@ -222,9 +224,9 @@ module RCAP
         RCAP.attribute_values_to_hash([AREA_DESC_KEY, @area_desc],
                                       [ALTITUDE_KEY,  @altitude],
                                       [CEILING_KEY,   @ceiling],
-                                      [CIRCLES_KEY,   @circles.map { |circle| circle.to_a }],
-                                      [GEOCODES_KEY,  @geocodes.map { |geocode| geocode.to_h }],
-                                      [POLYGONS_KEY,  @polygons.map { |polygon| polygon.to_h }])
+                                      [CIRCLES_KEY,   @circles.map(&:to_a)],
+                                      [GEOCODES_KEY,  @geocodes.map(&:to_h)],
+                                      [POLYGONS_KEY,  @polygons.map(&:to_h)])
       end
 
       def map_data?

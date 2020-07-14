@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_1
     # A Resource object is valid if
@@ -6,8 +8,8 @@ module RCAP
       # @return [String] Dereferenced URI - contents of URI Base64 encoded
       attr_accessor(:deref_uri)
 
-      DEREF_URI_ELEMENT_NAME     = 'derefUri'
-      DEREF_URI_XPATH     = "cap:#{ DEREF_URI_ELEMENT_NAME }"
+      DEREF_URI_ELEMENT_NAME = 'derefUri'
+      DEREF_URI_XPATH = "cap:#{DEREF_URI_ELEMENT_NAME}"
 
       # @return [REXML::Element]
       def to_xml_element
@@ -50,7 +52,7 @@ module RCAP
         end
       end
 
-      DEREF_URI_YAML     = 'Derefrenced URI Data'
+      DEREF_URI_YAML = 'Derefrenced URI Data'
 
       def to_yaml_data
         RCAP.attribute_values_to_hash([RESOURCE_DESC_YAML, @resource_desc],
@@ -75,7 +77,7 @@ module RCAP
         end
       end
 
-      DEREF_URI_KEY     = 'deref_uri'
+      DEREF_URI_KEY = 'deref_uri'
 
       # @return [Hash]
       def to_h

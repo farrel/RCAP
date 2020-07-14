@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Alert
@@ -8,7 +10,7 @@ module RCAP
       STATUS_SYSTEM   = 'System'
       STATUS_TEST     = 'Test'
       # Valid values for status
-      VALID_STATUSES = [STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST]
+      VALID_STATUSES = [STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST].freeze
 
       MSG_TYPE_ALERT  = 'Alert'
       MSG_TYPE_UPDATE = 'Update'
@@ -16,13 +18,13 @@ module RCAP
       MSG_TYPE_ACK    = 'Ack'
       MSG_TYPE_ERROR  = 'Error'
       # Valid values for msg_type
-      VALID_MSG_TYPES = [MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR]
+      VALID_MSG_TYPES = [MSG_TYPE_ALERT, MSG_TYPE_UPDATE, MSG_TYPE_CANCEL, MSG_TYPE_ACK, MSG_TYPE_ERROR].freeze
 
       SCOPE_PUBLIC     = 'Public'
       SCOPE_RESTRICTED = 'Restricted'
       SCOPE_PRIVATE    = 'Private'
       # Valid values for scope
-      VALID_SCOPES = [SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED]
+      VALID_SCOPES = [SCOPE_PUBLIC, SCOPE_PRIVATE, SCOPE_RESTRICTED].freeze
 
       # @return [String] If not set a UUID will be set by default on object initialisation
       attr_accessor(:identifier)
@@ -162,7 +164,7 @@ module RCAP
       # @return [String]
       def to_xml(pretty_print = false)
         if pretty_print
-          xml_document = ''
+          xml_document = +''
           RCAP::XML_PRETTY_PRINTER.write(to_xml_document, xml_document)
           xml_document
         else
@@ -175,27 +177,27 @@ module RCAP
       #
       # @return [String]
       def to_reference
-        "#{ @sender },#{ @identifier },#{ RCAP.to_s_for_cap(@sent)}"
+        "#{@sender},#{@identifier},#{RCAP.to_s_for_cap(@sent)}"
       end
 
       # @return [String]
       def inspect
-        alert_inspect = ["CAP Version:  #{ self.class::CAP_VERSION }",
-                         "Identifier:   #{ @identifier }",
-                         "Sender:       #{ @sender }",
-                         "Sent:         #{ @sent }",
-                         "Status:       #{ @status }",
-                         "Message Type: #{ @msg_type }",
-                         "Source:       #{ @source }",
-                         "Scope:        #{ @scope }",
-                         "Restriction:  #{ @restriction }",
-                         "Addresses:    #{ @addresses.to_s_for_cap }",
+        alert_inspect = ["CAP Version:  #{self.class::CAP_VERSION}",
+                         "Identifier:   #{@identifier}",
+                         "Sender:       #{@sender}",
+                         "Sent:         #{@sent}",
+                         "Status:       #{@status}",
+                         "Message Type: #{@msg_type}",
+                         "Source:       #{@source}",
+                         "Scope:        #{@scope}",
+                         "Restriction:  #{@restriction}",
+                         "Addresses:    #{@addresses.to_s_for_cap}",
                          'Codes:',
                          @codes.map { |code| '  ' + code }.join("\n") + '',
-                         "Note:         #{ @note }",
-                         "References:",
-                           @references.join("\n "),
-                         "Incidents:    #{ @incidents.join(' ')}",
+                         "Note:         #{@note}",
+                         'References:',
+                         @references.join("\n "),
+                         "Incidents:    #{@incidents.join(' ')}",
                          'Information:',
                          @infos.map { |info| '  ' + info.to_s }.join("\n")].join("\n")
         RCAP.format_lines_for_inspect('ALERT', alert_inspect)
@@ -207,23 +209,23 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @sender }/#{ @identifier }/#{ RCAP.to_s_for_cap(@sent)}"
+        "#{@sender}/#{@identifier}/#{RCAP.to_s_for_cap(@sent)}"
       end
 
       XPATH             = 'cap:alert'
-      IDENTIFIER_XPATH  = "cap:#{ IDENTIFIER_ELEMENT_NAME }"
-      SENDER_XPATH      = "cap:#{ SENDER_ELEMENT_NAME }"
-      SENT_XPATH        = "cap:#{ SENT_ELEMENT_NAME }"
-      STATUS_XPATH      = "cap:#{ STATUS_ELEMENT_NAME }"
-      MSG_TYPE_XPATH    = "cap:#{ MSG_TYPE_ELEMENT_NAME }"
-      SOURCE_XPATH      = "cap:#{ SOURCE_ELEMENT_NAME }"
-      SCOPE_XPATH       = "cap:#{ SCOPE_ELEMENT_NAME }"
-      RESTRICTION_XPATH = "cap:#{ RESTRICTION_ELEMENT_NAME }"
-      ADDRESSES_XPATH   = "cap:#{ ADDRESSES_ELEMENT_NAME }"
-      CODE_XPATH        = "cap:#{ CODE_ELEMENT_NAME }"
-      NOTE_XPATH        = "cap:#{ NOTE_ELEMENT_NAME }"
-      REFERENCES_XPATH  = "cap:#{ REFERENCES_ELEMENT_NAME }"
-      INCIDENTS_XPATH   = "cap:#{ INCIDENTS_ELEMENT_NAME }"
+      IDENTIFIER_XPATH  = "cap:#{IDENTIFIER_ELEMENT_NAME}"
+      SENDER_XPATH      = "cap:#{SENDER_ELEMENT_NAME}"
+      SENT_XPATH        = "cap:#{SENT_ELEMENT_NAME}"
+      STATUS_XPATH      = "cap:#{STATUS_ELEMENT_NAME}"
+      MSG_TYPE_XPATH    = "cap:#{MSG_TYPE_ELEMENT_NAME}"
+      SOURCE_XPATH      = "cap:#{SOURCE_ELEMENT_NAME}"
+      SCOPE_XPATH       = "cap:#{SCOPE_ELEMENT_NAME}"
+      RESTRICTION_XPATH = "cap:#{RESTRICTION_ELEMENT_NAME}"
+      ADDRESSES_XPATH   = "cap:#{ADDRESSES_ELEMENT_NAME}"
+      CODE_XPATH        = "cap:#{CODE_ELEMENT_NAME}"
+      NOTE_XPATH        = "cap:#{NOTE_ELEMENT_NAME}"
+      REFERENCES_XPATH  = "cap:#{REFERENCES_ELEMENT_NAME}"
+      INCIDENTS_XPATH   = "cap:#{INCIDENTS_ELEMENT_NAME}"
 
       # @param [REXML::Element] alert_xml_element
       # @return [RCAP::CAP_1_0::Alert]
@@ -318,7 +320,7 @@ module RCAP
       # @param [String] yaml
       # @return [Alert]
       def self.from_yaml(yaml)
-        from_yaml_data(YAML.load(yaml))
+        from_yaml_data(YAML.safe_load(yaml, [Time, DateTime]))
       end
 
       # Initialise an Alert object from a hash reutrned from YAML.load.
@@ -327,28 +329,28 @@ module RCAP
       # @return [Alert]
       def self.from_yaml_data(alert_yaml_data)
         new do |alert|
-          alert.identifier  = RCAP.strip_if_given(alert_yaml_data[ IDENTIFIER_YAML])
-          alert.sender      = RCAP.strip_if_given(alert_yaml_data[ SENDER_YAML])
-          alert.sent        = RCAP.parse_datetime(alert_yaml_data[ SENT_YAML])
-          alert.status      = RCAP.strip_if_given(alert_yaml_data[ STATUS_YAML])
-          alert.msg_type    = RCAP.strip_if_given(alert_yaml_data[ MSG_TYPE_YAML])
-          alert.source      = RCAP.strip_if_given(alert_yaml_data[ SOURCE_YAML])
-          alert.scope       = RCAP.strip_if_given(alert_yaml_data[ SCOPE_YAML])
-          alert.restriction = RCAP.strip_if_given(alert_yaml_data[ RESTRICTION_YAML])
-          Array(alert_yaml_data[ ADDRESSES_YAML]).each do |address|
+          alert.identifier  = RCAP.strip_if_given(alert_yaml_data[IDENTIFIER_YAML])
+          alert.sender      = RCAP.strip_if_given(alert_yaml_data[SENDER_YAML])
+          alert.sent        = RCAP.parse_datetime(alert_yaml_data[SENT_YAML])
+          alert.status      = RCAP.strip_if_given(alert_yaml_data[STATUS_YAML])
+          alert.msg_type    = RCAP.strip_if_given(alert_yaml_data[MSG_TYPE_YAML])
+          alert.source      = RCAP.strip_if_given(alert_yaml_data[SOURCE_YAML])
+          alert.scope       = RCAP.strip_if_given(alert_yaml_data[SCOPE_YAML])
+          alert.restriction = RCAP.strip_if_given(alert_yaml_data[RESTRICTION_YAML])
+          Array(alert_yaml_data[ADDRESSES_YAML]).each do |address|
             alert.addresses << address.strip
           end
-          Array(alert_yaml_data[ CODES_YAML]).each do |code|
+          Array(alert_yaml_data[CODES_YAML]).each do |code|
             alert.codes << code.strip
           end
-          alert.note        = alert_yaml_data[ NOTE_YAML]
-          Array(alert_yaml_data[ REFERENCES_YAML]).each do |reference|
+          alert.note = alert_yaml_data[NOTE_YAML]
+          Array(alert_yaml_data[REFERENCES_YAML]).each do |reference|
             alert.references << reference.strip
           end
-          Array(alert_yaml_data[ INCIDENTS_YAML]).each do |incident|
+          Array(alert_yaml_data[INCIDENTS_YAML]).each do |incident|
             alert.incidents << incident.strip
           end
-          Array(alert_yaml_data[ INFOS_YAML]).each do |info_yaml_data|
+          Array(alert_yaml_data[INFOS_YAML]).each do |info_yaml_data|
             alert.infos <<  alert.info_class.from_yaml_data(info_yaml_data)
           end
         end
@@ -388,7 +390,7 @@ module RCAP
                                       [NOTE_KEY,        @note],
                                       [REFERENCES_KEY,  @references],
                                       [INCIDENTS_KEY,   @incidents],
-                                      [INFOS_KEY,       @infos.map { |info| info.to_h  }])
+                                      [INFOS_KEY,       @infos.map(&:to_h)])
       end
 
       # Initialises an Alert object from a Hash produced by Alert#to_h
@@ -405,22 +407,22 @@ module RCAP
           alert.source      = RCAP.strip_if_given(alert_hash[SOURCE_KEY])
           alert.scope       = RCAP.strip_if_given(alert_hash[SCOPE_KEY])
           alert.restriction = RCAP.strip_if_given(alert_hash[RESTRICTION_KEY])
-          Array(alert_hash[ ADDRESSES_KEY]).each do |address|
+          Array(alert_hash[ADDRESSES_KEY]).each do |address|
             alert.addresses << address.strip
           end
-          Array(alert_hash[ CODES_KEY]).each do |code|
+          Array(alert_hash[CODES_KEY]).each do |code|
             alert.codes << code.strip
           end
-          alert.note = alert_hash[ NOTE_KEY]
-          Array(alert_hash[ REFERENCES_KEY]).each do |reference|
+          alert.note = alert_hash[NOTE_KEY]
+          Array(alert_hash[REFERENCES_KEY]).each do |reference|
             alert.references << reference.strip
           end
 
-          Array(alert_hash[ INCIDENTS_KEY]).each do |incident|
+          Array(alert_hash[INCIDENTS_KEY]).each do |incident|
             alert.incidents << incident.strip
           end
 
-          Array(alert_hash[ INFOS_KEY]).each do |info_hash|
+          Array(alert_hash[INFOS_KEY]).each do |info_hash|
             alert.infos << alert.info_class.from_h(info_hash)
           end
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Circle < Point
@@ -35,12 +37,12 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @lattitude },#{ @longitude } #{ @radius }"
+        "#{@lattitude},#{@longitude} #{@radius}"
       end
 
       # @return [String]
       def inspect
-        "(#{ self })"
+        "(#{self})"
       end
 
       # @return [REXML::Element]
@@ -63,7 +65,7 @@ module RCAP
       def self.parse_circle_string(circle_string)
         coordinates, radius = circle_string.split(' ')
         lattitude, longitude = coordinates.split(',')
-        [lattitude, longitude, radius].map { |e| e.to_f }
+        [lattitude, longitude, radius].map(&:to_f)
       end
 
       # @param [REXML::Element] circle_xml_element
@@ -91,7 +93,7 @@ module RCAP
         end
       end
 
-      RADIUS_KEY    = 'radius'
+      RADIUS_KEY = 'radius'
       # @return [Hash]
       def to_h
         RCAP.attribute_values_to_hash([RADIUS_KEY,    @radius],

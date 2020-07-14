@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_1
     # An Alert object is valid if
@@ -12,9 +14,9 @@ module RCAP
       XMLNS = 'urn:oasis:names:tc:emergency:cap:1.1'
       CAP_VERSION = '1.1'
 
-      STATUS_DRAFT    = 'Draft'
+      STATUS_DRAFT = 'Draft'
       # Valid values for status
-      VALID_STATUSES = [STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT]
+      VALID_STATUSES = [STATUS_ACTUAL, STATUS_EXERCISE, STATUS_SYSTEM, STATUS_TEST, STATUS_DRAFT].freeze
 
       # @return [String]
       def xmlns

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Parameter
@@ -14,9 +16,9 @@ module RCAP
       NAME_ELEMENT_NAME  = 'valueName'
       VALUE_ELEMENT_NAME = 'value'
 
-      XPATH       = "cap:#{ XML_ELEMENT_NAME }"
-      NAME_XPATH  = "cap:#{ NAME_ELEMENT_NAME }"
-      VALUE_XPATH = "cap:#{ VALUE_ELEMENT_NAME }"
+      XPATH       = "cap:#{XML_ELEMENT_NAME}"
+      NAME_XPATH  = "cap:#{NAME_ELEMENT_NAME}"
+      VALUE_XPATH = "cap:#{VALUE_ELEMENT_NAME}"
 
       # @param [Hash] attributes
       # @option attributes [Symbol] :name Parameter name
@@ -40,7 +42,7 @@ module RCAP
 
       # @return [String]
       def inspect
-        "#{ @name }: #{ @value }"
+        "#{@name}: #{@value}"
       end
 
       # Returns a string representation of the parameter of the form
