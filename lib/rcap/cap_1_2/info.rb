@@ -9,15 +9,18 @@ module RCAP
     # * all Resource objects in the resources collection are valid
     # * all Area objects in the areas collection are valid
     class Info < RCAP::Base::Info
-      RESPONSE_TYPE_SHELTER  = 'Shelter'
-      RESPONSE_TYPE_EVACUATE = 'Evacuate'
-      RESPONSE_TYPE_PREPARE  = 'Prepare'
-      RESPONSE_TYPE_EXECUTE  = 'Execute'
-      RESPONSE_TYPE_MONITOR  = 'Monitor'
-      RESPONSE_TYPE_ASSESS   = 'Assess'
-      RESPONSE_TYPE_NONE     = 'None'
+      RESPONSE_TYPE_SHELTER   = 'Shelter'
+      RESPONSE_TYPE_EVACUATE  = 'Evacuate'
+      RESPONSE_TYPE_PREPARE   = 'Prepare'
+      RESPONSE_TYPE_EXECUTE   = 'Execute'
+      RESPONSE_TYPE_AVOID     = 'Avoid'
+      RESPONSE_TYPE_MONITOR   = 'Monitor'
+      RESPONSE_TYPE_ASSESS    = 'Assess'
+      RESPONSE_TYPE_ALL_CLEAR = "AllClear"
+      RESPONSE_TYPE_NONE      = 'None'
+      
       # Valid values for response_type
-      VALID_RESPONSE_TYPES = [RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_NONE]
+      VALID_RESPONSE_TYPES = [RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, RESPONSE_TYPE_AVOID, RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_ALL_CLEAR, RESPONSE_TYPE_NONE]
 
       CERTAINTY_OBSERVED = 'Observed'
       # Valid valies for certainty
