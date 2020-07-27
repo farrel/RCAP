@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## 2.7.3 - 14 July 2020
+
+* Added `Avoid` and `All Clear` response types for CAP 1.2 
+
 ## 2.7.0 - 22 March 2017
 
 * Coordinates of a polygon should be an array of coordinate arrays rather than a single coordinate array.  (Seth Deckard)
