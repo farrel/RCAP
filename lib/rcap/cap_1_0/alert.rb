@@ -31,22 +31,22 @@ module RCAP
       def to_xml_element
         xml_element = REXML::Element.new(XML_ELEMENT_NAME)
         xml_element.add_namespace(XMLNS)
-        xml_element.add_element(IDENTIFIER_ELEMENT_NAME).add_text(@identifier)   if @identifier
-        xml_element.add_element(SENDER_ELEMENT_NAME).add_text(@sender)           if @sender
-        xml_element.add_element(SENT_ELEMENT_NAME).add_text(@sent.to_s_for_cap)  if @sent
-        xml_element.add_element(STATUS_ELEMENT_NAME).add_text(@status)           if @status
-        xml_element.add_element(MSG_TYPE_ELEMENT_NAME).add_text(@msg_type)       if @msg_type
-        xml_element.add_element(PASSWORD_ELEMENT_NAME).add_text(@password)       if @password
-        xml_element.add_element(SOURCE_ELEMENT_NAME).add_text(@source)           if @source
-        xml_element.add_element(SCOPE_ELEMENT_NAME).add_text(@scope)             if @scope
-        xml_element.add_element(RESTRICTION_ELEMENT_NAME).add_text(@restriction) if @restriction
+        xml_element.add_element(IDENTIFIER_ELEMENT_NAME).add_text(@identifier.to_s)   if @identifier
+        xml_element.add_element(SENDER_ELEMENT_NAME).add_text(@sender.to_s)           if @sender
+        xml_element.add_element(SENT_ELEMENT_NAME).add_text(@sent.to_s_for_cap.to_s)  if @sent
+        xml_element.add_element(STATUS_ELEMENT_NAME).add_text(@status.to_s)           if @status
+        xml_element.add_element(MSG_TYPE_ELEMENT_NAME).add_text(@msg_type.to_s)       if @msg_type
+        xml_element.add_element(PASSWORD_ELEMENT_NAME).add_text(@password.to_s)       if @password
+        xml_element.add_element(SOURCE_ELEMENT_NAME).add_text(@source.to_s)           if @source
+        xml_element.add_element(SCOPE_ELEMENT_NAME).add_text(@scope.to_s)             if @scope
+        xml_element.add_element(RESTRICTION_ELEMENT_NAME).add_text(@restriction.to_s) if @restriction
         if @addresses.any?
           xml_element.add_element(ADDRESSES_ELEMENT_NAME).add_text(@addresses.to_s_for_cap)
         end
         @codes.each do |code|
-          xml_element.add_element(CODE_ELEMENT_NAME).add_text(code)
+          xml_element.add_element(CODE_ELEMENT_NAME).add_text(code.to_s)
         end
-        xml_element.add_element(NOTE_ELEMENT_NAME).add_text(@note) if @note
+        xml_element.add_element(NOTE_ELEMENT_NAME).add_text(@note.to_s) if @note
         if @references.any?
           xml_element.add_element(REFERENCES_ELEMENT_NAME).add_text(@references.join(' '))
         end

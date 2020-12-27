@@ -44,10 +44,10 @@ module RCAP
       def to_xml_element
         xml_element = REXML::Element.new(XML_ELEMENT_NAME)
         xml_element.add_element(RESOURCE_DESC_ELEMENT_NAME).add_text(@resource_desc)
-        xml_element.add_element(MIME_TYPE_ELEMENT_NAME).add_text(@mime_type) if @mime_type
-        xml_element.add_element(SIZE_ELEMENT_NAME).add_text(@size.to_s)      if @size
-        xml_element.add_element(URI_ELEMENT_NAME).add_text(@uri)             if @uri
-        xml_element.add_element(DIGEST_ELEMENT_NAME).add_text(@digest)       if @digest
+        xml_element.add_element(MIME_TYPE_ELEMENT_NAME).add_text(@mime_type.to_s) if @mime_type
+        xml_element.add_element(SIZE_ELEMENT_NAME).add_text(@size.to_s)           if @size
+        xml_element.add_element(URI_ELEMENT_NAME).add_text(@uri.to_s)             if @uri
+        xml_element.add_element(DIGEST_ELEMENT_NAME).add_text(@digest.to_s)       if @digest
         xml_element
       end
 

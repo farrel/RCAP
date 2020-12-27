@@ -94,30 +94,30 @@ module RCAP
       # @return [REXML::Element]
       def to_xml_element
         xml_element = REXML::Element.new(XML_ELEMENT_NAME)
-        xml_element.add_element(LANGUAGE_ELEMENT_NAME).add_text(@language) if @language
+        xml_element.add_element(LANGUAGE_ELEMENT_NAME).add_text(@language.to_s) if @language
         @categories.each do |category|
-          xml_element.add_element(CATEGORY_ELEMENT_NAME).add_text(category)
+          xml_element.add_element(CATEGORY_ELEMENT_NAME).add_text(category.to_s)
         end
-        xml_element.add_element(EVENT_ELEMENT_NAME).add_text(@event)
+        xml_element.add_element(EVENT_ELEMENT_NAME).add_text(@event.to_s)
         @response_types.each do |response_type|
-          xml_element.add_element(RESPONSE_TYPE_ELEMENT_NAME).add_text(response_type)
+          xml_element.add_element(RESPONSE_TYPE_ELEMENT_NAME).add_text(response_type.to_s)
         end
-        xml_element.add_element(URGENCY_ELEMENT_NAME).add_text(@urgency)
-        xml_element.add_element(SEVERITY_ELEMENT_NAME).add_text(@severity)
-        xml_element.add_element(CERTAINTY_ELEMENT_NAME).add_text(@certainty)
-        xml_element.add_element(AUDIENCE_ELEMENT_NAME).add_text(@audience) if @audience
+        xml_element.add_element(URGENCY_ELEMENT_NAME).add_text(@urgency.to_s)
+        xml_element.add_element(SEVERITY_ELEMENT_NAME).add_text(@severity.to_s)
+        xml_element.add_element(CERTAINTY_ELEMENT_NAME).add_text(@certainty.to_s)
+        xml_element.add_element(AUDIENCE_ELEMENT_NAME).add_text(@audience.to_s) if @audience
         @event_codes.each do |event_code|
           xml_element.add_element(event_code.to_xml_element)
         end
         xml_element.add_element(EFFECTIVE_ELEMENT_NAME).add_text(@effective.to_s_for_cap) if @effective
         xml_element.add_element(ONSET_ELEMENT_NAME).add_text(@onset.to_s_for_cap)         if @onset
         xml_element.add_element(EXPIRES_ELEMENT_NAME).add_text(@expires.to_s_for_cap)     if @expires
-        xml_element.add_element(SENDER_NAME_ELEMENT_NAME).add_text(@sender_name)          if @sender_name
-        xml_element.add_element(HEADLINE_ELEMENT_NAME).add_text(@headline)                if @headline
-        xml_element.add_element(DESCRIPTION_ELEMENT_NAME).add_text(@description)          if @description
-        xml_element.add_element(INSTRUCTION_ELEMENT_NAME).add_text(@instruction)          if @instruction
-        xml_element.add_element(WEB_ELEMENT_NAME).add_text(@web)                          if @web
-        xml_element.add_element(CONTACT_ELEMENT_NAME).add_text(@contact)                  if @contact
+        xml_element.add_element(SENDER_NAME_ELEMENT_NAME).add_text(@sender_name.to_s)     if @sender_name
+        xml_element.add_element(HEADLINE_ELEMENT_NAME).add_text(@headline.to_s)           if @headline
+        xml_element.add_element(DESCRIPTION_ELEMENT_NAME).add_text(@description.to_s)     if @description
+        xml_element.add_element(INSTRUCTION_ELEMENT_NAME).add_text(@instruction.to_s)     if @instruction
+        xml_element.add_element(WEB_ELEMENT_NAME).add_text(@web.to_s)                     if @web
+        xml_element.add_element(CONTACT_ELEMENT_NAME).add_text(@contact.to_s)             if @contact
         @parameters.each do |parameter|
           xml_element.add_element(parameter.to_xml_element)
         end

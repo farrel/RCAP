@@ -28,8 +28,8 @@ module RCAP
       # @return [REXML::Element]
       def to_xml_element
         xml_element = REXML::Element.new(self.class::XML_ELEMENT_NAME)
-        xml_element.add_element(self.class::NAME_ELEMENT_NAME).add_text(@name)
-        xml_element.add_element(self.class::VALUE_ELEMENT_NAME).add_text(@value)
+        xml_element.add_element(self.class::NAME_ELEMENT_NAME).add_text(@name.to_s)
+        xml_element.add_element(self.class::VALUE_ELEMENT_NAME).add_text(@value.to_s)
         xml_element
       end
 
