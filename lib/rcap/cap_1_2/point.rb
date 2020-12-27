@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_2
     # A Point object is valid if

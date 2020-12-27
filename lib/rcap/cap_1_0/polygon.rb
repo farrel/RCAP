@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_0
     # A Polygon object is valid if

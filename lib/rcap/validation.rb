@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is ripped directly from the no-longer-maintained assistance gem. Other code in that gem
 # was causing issues, so I'm putting the needed code directly in rcap as a workaround.
 
@@ -62,7 +64,7 @@ module Validation
     def on(att)
       @errors[att]
     end
-    alias_method :[], :on
+    alias [] on
 
     # Adds an error for the given attribute.
     def add(att, msg)
@@ -71,9 +73,9 @@ module Validation
 
     # Returns an array of fully-formatted error messages.
     def full_messages
-      @errors.reduce([]) do |m, kv| att, errors = *kv
-                                    errors.each { |e| m << "#{att} #{e}" }
-                                    m
+      @errors.each_with_object([]) do |kv, m|
+        att, errors = *kv
+        errors.each { |e| m << "#{att} #{e}" }
       end
     end
   end
@@ -169,7 +171,7 @@ module Validation
     # Validates confirmation of an attribute.
     def validates_confirmation_of(*atts)
       opts = {
-        message: 'is not confirmed',
+        message: 'is not confirmed'
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|
@@ -182,11 +184,11 @@ module Validation
     # Validates the format of an attribute.
     def validates_format_of(*atts)
       opts = {
-        message: 'is invalid',
+        message: 'is invalid'
       }.merge!(atts.extract_options!)
 
       unless opts[:with].is_a?(Regexp)
-        fail ArgumentError, 'A regular expression must be supplied as the :with option of the options hash'
+        raise ArgumentError, 'A regular expression must be supplied as the :with option of the options hash'
       end
 
       validates_each(*atts) do |o, a, v|
@@ -226,7 +228,7 @@ module Validation
     # Validates whether an attribute is a number.
     def validates_numericality_of(*atts)
       opts = {
-        message: 'is not a number',
+        message: 'is not a number'
       }.merge!(atts.extract_options!)
 
       re = opts[:only_integer] ? INTEGER_RE : NUMBER_RE
@@ -240,7 +242,7 @@ module Validation
     # Validates the presence of an attribute.
     def validates_presence_of(*atts)
       opts = {
-        message: 'is not present',
+        message: 'is not present'
       }.merge!(atts.extract_options!)
 
       validates_each(*atts) do |o, a, v|

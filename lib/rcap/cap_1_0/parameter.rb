@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_0
     # A Parameter object is valid if
@@ -6,7 +8,7 @@ module RCAP
       # @return [REXML::Element]
       def to_xml_element
         xml_element = REXML::Element.new(self.class::XML_ELEMENT_NAME)
-        xml_element.add_text("#{ @name }=#{ @value }")
+        xml_element.add_text("#{@name}=#{@value}")
         xml_element
       end
 

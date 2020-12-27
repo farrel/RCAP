@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Time
   # Returns a string representaion of the time suitable for CAP.
   # @return [String]
@@ -9,6 +11,7 @@ class Time
   end
 
   private
+
   def utc_hours_offset
     localtime.utc_offset / 3600
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ALLOWED_CHARACTERS = /[^\s&<]+/
 
 module RCAP
@@ -17,7 +19,7 @@ module RCAP
   # @return [String,nil] Text content of element matching XPath query or nil
   def self.xpath_text(xml_element, xpath, namespace)
     element = xpath_first(xml_element, xpath, namespace)
-    element.text.strip if element && element.text
+    element.text.strip if element&.text
   end
 
   # Returns first descendent that matches the given XPath expression.
@@ -60,8 +62,8 @@ module RCAP
     max_line_length = inspect_string.lines.map { |line| line.strip.length }.max
     "\n." + '-' * (max_line_length + 2) + ".\n"\
       '| ' + header.ljust(max_line_length) + " |\n"\
-      '|' + '-' * ( max_line_length + 2) + "|\n" +       inspect_string.lines.map { |line| '| ' + line.strip.ljust(max_line_length) + ' |' }.join("\n") + "\n" \
-      "'" + '-' * ( max_line_length + 2) + "'\n"
+      '|' + '-' * (max_line_length + 2) + "|\n" + inspect_string.lines.map { |line| '| ' + line.strip.ljust(max_line_length) + ' |' }.join("\n") + "\n" \
+      "'" + '-' * (max_line_length + 2) + "'\n"
   end
 
   # Converts an array of key value pairs into a hash, excluding any value that is nil.
@@ -96,9 +98,7 @@ module RCAP
   def self.parse_datetime(date)
     case date
     when String
-      unless  date.empty?
-        DateTime.parse(date.strip)
-      end
+      DateTime.parse(date.strip) unless date.empty?
     when DateTime, Time, Date
       date.to_datetime
     end
@@ -122,9 +122,7 @@ module RCAP
   # @param [String] string
   # @return [String,nil]
   def self.strip_if_given(string)
-    if string
-      string.strip
-    end
+    string&.strip
   end
 
   # if the string is given, String#strip and then String#to_f are applied

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module RCAP
   module Alert
     XMLNS_KEY            = 'xmlns'
     YAML_CAP_VERSION_KEY = 'CAP Version'
     JSON_CAP_VERSION_KEY = 'cap_version'
 
-    CAP_NAMESPACES = [RCAP::CAP_1_0::Alert::XMLNS, RCAP::CAP_1_1::Alert::XMLNS, RCAP::CAP_1_2::Alert::XMLNS]
+    CAP_NAMESPACES = [RCAP::CAP_1_0::Alert::XMLNS, RCAP::CAP_1_1::Alert::XMLNS, RCAP::CAP_1_2::Alert::XMLNS].freeze
 
     # Initialise a RCAP Alert from a XML document.
     #
@@ -36,7 +38,7 @@ module RCAP
     # @param [IO, String] yaml CAP Alert in YAML format. Can be a String or any IO object.
     # @return [RCAP::CAP_1_0::Alert, RCAP::CAP_1_1::Alert, RCAP::CAP_1_2::Alert ]
     def self.from_yaml(yaml)
-      yaml_data = YAML.load(yaml)
+      yaml_data = YAML.safe_load(yaml, [Time, DateTime])
 
       case yaml_data[YAML_CAP_VERSION_KEY]
       when CAP_1_0::Alert::CAP_VERSION

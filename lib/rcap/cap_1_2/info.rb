@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_2
     # In Info object is valid if
@@ -13,25 +15,24 @@ module RCAP
       RESPONSE_TYPE_EVACUATE  = 'Evacuate'
       RESPONSE_TYPE_PREPARE   = 'Prepare'
       RESPONSE_TYPE_EXECUTE   = 'Execute'
-      RESPONSE_TYPE_AVOID     = 'Avoid'
       RESPONSE_TYPE_MONITOR   = 'Monitor'
+      RESPONSE_TYPE_AVOID     = 'Avoid'
       RESPONSE_TYPE_ASSESS    = 'Assess'
-      RESPONSE_TYPE_ALL_CLEAR = "AllClear"
+      RESPONSE_TYPE_ALL_CLEAR = 'AllClear'
       RESPONSE_TYPE_NONE      = 'None'
-      
       # Valid values for response_type
-      VALID_RESPONSE_TYPES = [RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, RESPONSE_TYPE_AVOID, RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_ALL_CLEAR, RESPONSE_TYPE_NONE]
+      VALID_RESPONSE_TYPES = [RESPONSE_TYPE_SHELTER, RESPONSE_TYPE_EVACUATE, RESPONSE_TYPE_PREPARE, RESPONSE_TYPE_EXECUTE, RESPONSE_TYPE_MONITOR, RESPONSE_TYPE_AVOID, RESPONSE_TYPE_ASSESS, RESPONSE_TYPE_ALL_CLEAR, RESPONSE_TYPE_NONE].freeze
 
       CERTAINTY_OBSERVED = 'Observed'
       # Valid valies for certainty
-      VALID_CERTAINTIES = [CERTAINTY_OBSERVED, CERTAINTY_LIKELY, CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN]
+      VALID_CERTAINTIES = [CERTAINTY_OBSERVED, CERTAINTY_LIKELY, CERTAINTY_POSSIBLE, CERTAINTY_UNLIKELY, CERTAINTY_UNKNOWN].freeze
 
       RESPONSE_TYPE_ELEMENT_NAME = 'responseType'
-      RESPONSE_TYPE_XPATH = "cap:#{ RESPONSE_TYPE_ELEMENT_NAME }"
+      RESPONSE_TYPE_XPATH = "cap:#{RESPONSE_TYPE_ELEMENT_NAME}"
 
       validates_length_of(:categories, minimum: 1)
       validates_inclusion_of_members_of(:response_types, in: VALID_RESPONSE_TYPES, allow_blank: true)
-      validates_inclusion_of(:certainty, allow_nil: true, in: VALID_CERTAINTIES, message: "can only be assigned the following values: #{ VALID_CERTAINTIES.join(', ') }")
+      validates_inclusion_of(:certainty, allow_nil: true, in: VALID_CERTAINTIES, message: "can only be assigned the following values: #{VALID_CERTAINTIES.join(', ')}")
 
       # @return [Array<String>] Collection of textual response types; elements must be from {VALID_RESPONSE_TYPES}
       attr_reader(:response_types)
@@ -116,27 +117,27 @@ module RCAP
 
       # @return [String]
       def inspect
-        info_inspect = "Language:       #{ @language }\n"\
-        "Categories:     #{ @categories.to_s_for_cap }\n"\
-        "Event:          #{ @event }\n"\
-        "Response Types: #{ @response_types.to_s_for_cap }\n"\
-        "Urgency:        #{ @urgency }\n"\
-        "Severity:       #{ @severity }\n"\
-        "Certainty:      #{ @certainty }\n"\
-        "Audience:       #{ @audience }\n"\
-        "Event Codes:    #{ @event_codes.inspect }\n"\
-        "Effective:      #{ @effective }\n"\
-        "Onset:          #{ @onset }\n"\
-        "Expires:        #{ @expires }\n"\
-        "Sender Name:    #{ @sender_name }\n"\
-        "Headline:       #{ @headline }\n"\
-        "Description:\n" +           @description.to_s.lines.map { |line| '  ' + line }.join("\n") + "\n"\
-          "Instruction:    #{ @instruction }\n"\
-        "Web:            #{ @web }\n"\
-        "Contact:        #{ @contact }\n"\
-        "Parameters:\n" +           @parameters.map { |parameter| '  ' + parameter.inspect }.join("\n") + "\n"\
-          "Resources:\n" +           @resources.map { |resource| '  ' + resource.inspect }.join("\n") + "\n"\
-          "Area:\n" +           @areas.map { |area| "  #{ area }" }.join("\n") + "\n"
+        info_inspect = "Language:       #{@language}\n"\
+        "Categories:     #{@categories.to_s_for_cap}\n"\
+        "Event:          #{@event}\n"\
+        "Response Types: #{@response_types.to_s_for_cap}\n"\
+        "Urgency:        #{@urgency}\n"\
+        "Severity:       #{@severity}\n"\
+        "Certainty:      #{@certainty}\n"\
+        "Audience:       #{@audience}\n"\
+        "Event Codes:    #{@event_codes.inspect}\n"\
+        "Effective:      #{@effective}\n"\
+        "Onset:          #{@onset}\n"\
+        "Expires:        #{@expires}\n"\
+        "Sender Name:    #{@sender_name}\n"\
+        "Headline:       #{@headline}\n"\
+        "Description:\n" + @description.to_s.lines.map { |line| '  ' + line }.join("\n") + "\n"\
+          "Instruction:    #{@instruction}\n"\
+        "Web:            #{@web}\n"\
+        "Contact:        #{@contact}\n"\
+        "Parameters:\n" + @parameters.map { |parameter| '  ' + parameter.inspect }.join("\n") + "\n"\
+          "Resources:\n" + @resources.map { |resource| '  ' + resource.inspect }.join("\n") + "\n"\
+          "Area:\n" + @areas.map { |area| "  #{area}" }.join("\n") + "\n"
         RCAP.format_lines_for_inspect('INFO', info_inspect)
       end
 
@@ -145,7 +146,7 @@ module RCAP
       #
       # @return [String]
       def to_s
-        "#{ @event }(#{ @urgency }/#{ @severity }/#{ @certainty })"
+        "#{@event}(#{@urgency}/#{@severity}/#{@certainty})"
       end
 
       # @param [REXML::Element] info_xml_element
@@ -162,7 +163,7 @@ module RCAP
 
       # @return [Hash]
       def to_yaml_data
-        parameter_to_hash = lambda { |hash, parameter| hash.merge(parameter.name => parameter.value) }
+        parameter_to_hash = ->(hash, parameter) { hash.merge(parameter.name => parameter.value) }
 
         RCAP.attribute_values_to_hash([LANGUAGE_YAML,       @language],
                                       [CATEGORIES_YAML,     @categories],
@@ -223,10 +224,10 @@ module RCAP
                                       [INSTRUCTION_KEY,    @instruction],
                                       [WEB_KEY,            @web],
                                       [CONTACT_KEY,        @contact],
-                                      [RESOURCES_KEY,      @resources.map { |resource| resource.to_h }],
-                                      [EVENT_CODES_KEY,    @event_codes.map { |event_code| event_code.to_h }],
-                                      [PARAMETERS_KEY,     @parameters.map { |parameter| parameter.to_h }],
-                                      [AREAS_KEY,          @areas.map { |area| area.to_h }])
+                                      [RESOURCES_KEY,      @resources.map(&:to_h)],
+                                      [EVENT_CODES_KEY,    @event_codes.map(&:to_h)],
+                                      [PARAMETERS_KEY,     @parameters.map(&:to_h)],
+                                      [AREAS_KEY,          @areas.map(&:to_h)])
       end
 
       # @param [Hash] info_hash

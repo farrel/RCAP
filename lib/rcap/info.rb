@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Info
     def self.from_h(alert, info_hash)

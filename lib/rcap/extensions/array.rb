@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Array
   # Formats an array into a string suitable for a CAP message.
   #

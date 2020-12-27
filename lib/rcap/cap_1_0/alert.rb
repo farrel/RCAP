@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module CAP_1_0
     # An Alert object is valid if
@@ -25,7 +27,7 @@ module RCAP
         Info
       end
 
-      PASSWORD_ELEMENT_NAME    = 'password'
+      PASSWORD_ELEMENT_NAME = 'password'
 
       # @return [REXML::Element]
       def to_xml_element
@@ -61,29 +63,29 @@ module RCAP
 
       # @return [String]
       def inspect
-        alert_inspect = ["CAP Version:  #{ CAP_VERSION }",
-                         "Identifier:   #{ @identifier }",
-                         "Sender:       #{ @sender }",
-                         "Sent:         #{ @sent }",
-                         "Status:       #{ @status }",
-                         "Message Type: #{ @msg_type }",
-                         "Password:     #{ @password }",
-                         "Source:       #{ @source }",
-                         "Scope:        #{ @scope }",
-                         "Restriction:  #{ @restriction }",
-                         "Addresses:    #{ @addresses.to_s_for_cap }",
+        alert_inspect = ["CAP Version:  #{CAP_VERSION}",
+                         "Identifier:   #{@identifier}",
+                         "Sender:       #{@sender}",
+                         "Sent:         #{@sent}",
+                         "Status:       #{@status}",
+                         "Message Type: #{@msg_type}",
+                         "Password:     #{@password}",
+                         "Source:       #{@source}",
+                         "Scope:        #{@scope}",
+                         "Restriction:  #{@restriction}",
+                         "Addresses:    #{@addresses.to_s_for_cap}",
                          'Codes:',
                          @codes.map { |code| '  ' + code }.join("\n"),
-                         "Note:         #{ @note }",
-                         "References:",
-                           @references.join("\n "),
-                         "Incidents:    #{ @incidents.join(' ')}",
+                         "Note:         #{@note}",
+                         'References:',
+                         @references.join("\n "),
+                         "Incidents:    #{@incidents.join(' ')}",
                          'Information:',
                          @infos.map { |info| '  ' + info.to_s }.join("\n")].join("\n")
         RCAP.format_lines_for_inspect('ALERT', alert_inspect)
       end
 
-      PASSWORD_XPATH    = "cap:#{ PASSWORD_ELEMENT_NAME }"
+      PASSWORD_XPATH = "cap:#{PASSWORD_ELEMENT_NAME}"
 
       # @param [REXML::Element] alert_xml_element
       # @return [RCAP::CAP_1_0::Alert]
@@ -93,7 +95,7 @@ module RCAP
         end
       end
 
-      PASSWORD_YAML    = 'Password'
+      PASSWORD_YAML = 'Password'
 
       # Returns a string containing the YAML representation of the alert.
       #
@@ -125,7 +127,7 @@ module RCAP
         end
       end
 
-      PASSWORD_KEY    = 'password'
+      PASSWORD_KEY = 'password'
 
       # Returns a Hash representation of an Alert object
       #
@@ -146,7 +148,7 @@ module RCAP
                                       [NOTE_KEY,         @note],
                                       [REFERENCES_KEY,   @references],
                                       [INCIDENTS_KEY,    @incidents],
-                                      [INFOS_KEY,        @infos.map { |info| info.to_h  }])
+                                      [INFOS_KEY,        @infos.map(&:to_h)])
       end
 
       # Initialises an Alert object from a Hash produced by Alert#to_h

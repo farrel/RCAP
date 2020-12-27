@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class DateTime
-  alias_method :inspect, :to_s
+  alias inspect to_s
 
   # Returns a string representaion of the time suitable for CAP.
   # @return [String]
@@ -15,6 +17,7 @@ class DateTime
   end
 
   private
+
   def utc_hours_offset
     offset * 24
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Resource
@@ -23,12 +25,12 @@ module RCAP
       DIGEST_ELEMENT_NAME        = 'digest'
       RESOURCE_DESC_ELEMENT_NAME = 'resourceDesc'
 
-      XPATH               = "cap:#{ XML_ELEMENT_NAME }"
-      MIME_TYPE_XPATH     = "cap:#{ MIME_TYPE_ELEMENT_NAME }"
-      SIZE_XPATH          = "cap:#{ SIZE_ELEMENT_NAME }"
-      URI_XPATH           = "cap:#{ URI_ELEMENT_NAME }"
-      DIGEST_XPATH        = "cap:#{ DIGEST_ELEMENT_NAME }"
-      RESOURCE_DESC_XPATH = "cap:#{ RESOURCE_DESC_ELEMENT_NAME }"
+      XPATH               = "cap:#{XML_ELEMENT_NAME}"
+      MIME_TYPE_XPATH     = "cap:#{MIME_TYPE_ELEMENT_NAME}"
+      SIZE_XPATH          = "cap:#{SIZE_ELEMENT_NAME}"
+      URI_XPATH           = "cap:#{URI_ELEMENT_NAME}"
+      DIGEST_XPATH        = "cap:#{DIGEST_ELEMENT_NAME}"
+      RESOURCE_DESC_XPATH = "cap:#{RESOURCE_DESC_ELEMENT_NAME}"
 
       # @param [Hash{Symbol => Object}] attributes
       # @option attributes [String] :mime_type
@@ -86,9 +88,7 @@ module RCAP
       # If size is defined returns the size in kilobytes
       # @return [Float]
       def size_in_kb
-        if @size
-          @size.to_f / 1024
-        end
+        @size.to_f / 1024 if @size
       end
 
       # @return [String]

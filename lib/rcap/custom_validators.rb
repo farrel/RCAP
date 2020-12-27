@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Validation
   module ClassMethods
     CAP_NUMBER_REGEX  = Regexp.new('^-{0,1}\d*\.{0,1}\d+$')
@@ -27,7 +29,7 @@ module Validation
       }.merge!(attributes.extract_options!)
 
       validates_each(*attributes) do |object, attribute, collection|
-        next if ( collection.nil? && options[:allow_nil]) || ( collection.empty? && options[:allow_empty])
+        next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
         unless collection.all? { |member| options[:in].include?(member) }
           object.errors[attribute] << options[:message]
         end
@@ -40,7 +42,7 @@ module Validation
       }.merge!(attributes.extract_options!)
 
       validates_each(*attributes) do |object, attribute, collection|
-        next if ( collection.nil? && options[:allow_nil]) || ( collection.empty? && options[:allow_empty])
+        next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
         unless options[:minimum] && collection.length >= options[:minimum]
           object.errors[attribute] << options[:message]
         end
@@ -54,9 +56,7 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, value|
         next if  value.nil? && options[:allow_nil]
-        unless value && value.valid?
-          object.errors[attribute] << options[:message]
-        end
+        object.errors[attribute] << options[:message] unless value&.valid?
       end
     end
 
@@ -66,8 +66,8 @@ module Validation
       }.merge!(attributes.extract_options!)
 
       validates_each(*attributes) do |object, attribute, collection|
-        next if ( collection.nil? && options[:allow_nil]) || ( collection.empty? && options[:allow_empty])
-        unless collection.all? { |element| element.valid? }
+        next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
+        unless collection.all?(&:valid?)
           object.errors[attribute] << options[:message]
         end
       end
@@ -107,16 +107,16 @@ module Validation
 
     def validates_numericality_of(*attributes)
       options = {
-        message: 'is not a number or does not meet a conditional requirement',
+        message: 'is not a number or does not meet a conditional requirement'
       }.merge!(attributes.extract_options!)
 
       re = options[:only_integer] ? CAP_INTEGER_REGEX : CAP_NUMBER_REGEX
 
       validates_each(*attributes) do |object, attribute, value|
         next if value.nil? && options[:allow_nil]
-        unless ( value.to_s =~ re) &&
-          ( options[:greater_than].nil? || value && value > options[:greater_than]) &&
-          ( options[:greater_than_or_equal].nil? || value && value >= options[:greater_than_or_equal])
+        unless (value.to_s =~ re) &&
+               (options[:greater_than].nil? || value && value > options[:greater_than]) &&
+               (options[:greater_than_or_equal].nil? || value && value >= options[:greater_than_or_equal])
           object.errors[attribute] << options[:message]
         end
       end

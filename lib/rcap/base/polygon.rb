@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RCAP
   module Base
     class Polygon
@@ -11,12 +13,12 @@ module RCAP
       validates_equality_of_first_and_last(:points, allow_empty: true)
 
       XML_ELEMENT_NAME = 'polygon'
-      XPATH            = "cap:#{ XML_ELEMENT_NAME }"
+      XPATH            = "cap:#{XML_ELEMENT_NAME}"
 
       # @param [Hash] attributes
       # @option attributes [Array<Point>] :points Collection of {Point} objects
       def initialize
-        @points =  []
+        @points = []
         yield(self) if block_given?
       end
 
@@ -42,7 +44,7 @@ module RCAP
 
       # @return [String]
       def inspect
-        "(#{ @points.map { |point| point.inspect }.join(', ')})"
+        "(#{@points.map(&:inspect).join(', ')})"
       end
 
       # @return [REXML::Element]
@@ -83,7 +85,7 @@ module RCAP
 
       # @return [Array<Array(Numeric,Numeric)>]
       def self.parse_polygon_string(polygon_string)
-        polygon_string.split(' ').map { |coordinate_string| coordinate_string.split(',').map { |coordinate| coordinate.to_f } }
+        polygon_string.split(' ').map { |coordinate_string| coordinate_string.split(',').map(&:to_f) }
       end
 
       # @return [Polygon]
@@ -108,7 +110,7 @@ module RCAP
         to_yaml_data.to_yaml(options)
       end
 
-      POINTS_KEY  = 'points'
+      POINTS_KEY = 'points'
 
       # @return [Polygon]
       def self.from_h(polygon_hash)
@@ -124,7 +126,7 @@ module RCAP
 
       # @return [Hash]
       def to_h
-        { POINTS_KEY => @points.map { |point| point.to_a } }
+        { POINTS_KEY => @points.map(&:to_a) }
       end
     end
   end
