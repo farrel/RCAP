@@ -34,19 +34,19 @@ describe(RCAP::CAP_1_1::Info) do
 
       [{ name: 'name1', value: 'value1' }, { name: 'name2', value: 'value2' }].each do |event_code_hash|
         info.add_event_code do |event_code|
-          event_code.name  = event_code_hash[ :name]
-          event_code.value = event_code_hash[ :value]
+          event_code.name  = event_code_hash[:name]
+          event_code.value = event_code_hash[:value]
         end
       end
 
       [{ name: 'name1', value: 'value1' }, { name: 'name2', value: 'value2' }].each do |parameter_hash|
         info.add_parameter do |parameter|
-          parameter.name  = parameter_hash[ :name]
-          parameter.value = parameter_hash[ :value]
+          parameter.name  = parameter_hash[:name]
+          parameter.value = parameter_hash[:value]
         end
       end
 
-      %w(Area1 Area2).each do |area_desc|
+      %w[Area1 Area2].each do |area_desc|
         info.add_area do |area|
           area.area_desc = area_desc
         end
@@ -315,87 +315,87 @@ describe(RCAP::CAP_1_1::Info) do
       end
 
       it('should export the language correctly') do
-        @info_hash[ RCAP::CAP_1_1::Info::LANGUAGE_KEY].should == @info.language
+        @info_hash[RCAP::CAP_1_1::Info::LANGUAGE_KEY].should == @info.language
       end
 
       it('should export the categories') do
-        @info_hash[ RCAP::CAP_1_1::Info::CATEGORIES_KEY].should == @info.categories
+        @info_hash[RCAP::CAP_1_1::Info::CATEGORIES_KEY].should == @info.categories
       end
 
       it('should export the event') do
-        @info_hash[ RCAP::CAP_1_1::Info::EVENT_KEY].should == @info.event
+        @info_hash[RCAP::CAP_1_1::Info::EVENT_KEY].should == @info.event
       end
 
       it('should export the response types') do
-        @info_hash[ RCAP::CAP_1_1::Info::RESPONSE_TYPES_KEY].should == @info.response_types
+        @info_hash[RCAP::CAP_1_1::Info::RESPONSE_TYPES_KEY].should == @info.response_types
       end
 
       it('should export the urgency') do
-        @info_hash[ RCAP::CAP_1_1::Info:: URGENCY_KEY].should == @info.urgency
+        @info_hash[RCAP::CAP_1_1::Info:: URGENCY_KEY].should == @info.urgency
       end
 
       it('should export the severity') do
-        @info_hash[ RCAP::CAP_1_1::Info:: SEVERITY_KEY].should == @info.severity
+        @info_hash[RCAP::CAP_1_1::Info:: SEVERITY_KEY].should == @info.severity
       end
 
       it('should export the certainty') do
-        @info_hash[ RCAP::CAP_1_1::Info:: CERTAINTY_KEY].should == @info.certainty
+        @info_hash[RCAP::CAP_1_1::Info:: CERTAINTY_KEY].should == @info.certainty
       end
 
       it('should export the audience') do
-        @info_hash[ RCAP::CAP_1_1::Info:: AUDIENCE_KEY].should == @info.audience
+        @info_hash[RCAP::CAP_1_1::Info:: AUDIENCE_KEY].should == @info.audience
       end
 
       it('should export the effective date') do
-        @info_hash[ RCAP::CAP_1_1::Info::EFFECTIVE_KEY].should == @info.effective.to_s_for_cap
+        @info_hash[RCAP::CAP_1_1::Info::EFFECTIVE_KEY].should == @info.effective.to_s_for_cap
       end
 
       it('should export the onset date') do
-        @info_hash[ RCAP::CAP_1_1::Info::ONSET_KEY].should == @info.onset.to_s_for_cap
+        @info_hash[RCAP::CAP_1_1::Info::ONSET_KEY].should == @info.onset.to_s_for_cap
       end
 
       it('should export the expires date') do
-        @info_hash[ RCAP::CAP_1_1::Info::EXPIRES_KEY].should == @info.expires.to_s_for_cap
+        @info_hash[RCAP::CAP_1_1::Info::EXPIRES_KEY].should == @info.expires.to_s_for_cap
       end
 
       it('should export the sender name') do
-        @info_hash[ RCAP::CAP_1_1::Info::SENDER_NAME_KEY].should == @info.sender_name
+        @info_hash[RCAP::CAP_1_1::Info::SENDER_NAME_KEY].should == @info.sender_name
       end
 
       it('should export the headline') do
-        @info_hash[ RCAP::CAP_1_1::Info::HEADLINE_KEY].should == @info.headline
+        @info_hash[RCAP::CAP_1_1::Info::HEADLINE_KEY].should == @info.headline
       end
 
       it('should export the description') do
-        @info_hash[ RCAP::CAP_1_1::Info::DESCRIPTION_KEY].should == @info.description
+        @info_hash[RCAP::CAP_1_1::Info::DESCRIPTION_KEY].should == @info.description
       end
 
       it('should export the instruction') do
-        @info_hash[ RCAP::CAP_1_1::Info::INSTRUCTION_KEY].should == @info.instruction
+        @info_hash[RCAP::CAP_1_1::Info::INSTRUCTION_KEY].should == @info.instruction
       end
 
       it('should export the web address ') do
-        @info_hash[ RCAP::CAP_1_1::Info::WEB_KEY].should == @info.web
+        @info_hash[RCAP::CAP_1_1::Info::WEB_KEY].should == @info.web
       end
 
       it('should export the contact') do
-        @info_hash[ RCAP::CAP_1_1::Info::CONTACT_KEY].should == @info.contact
+        @info_hash[RCAP::CAP_1_1::Info::CONTACT_KEY].should == @info.contact
       end
 
       it('should export the event codes') do
-        @info_hash[ RCAP::CAP_1_1::Info::EVENT_CODES_KEY].should == @info.event_codes.map { |event_code| event_code.to_h }
+        @info_hash[RCAP::CAP_1_1::Info::EVENT_CODES_KEY].should == @info.event_codes.map { |event_code| event_code.to_h }
       end
 
       it('should export the parameters ') do
-        @info_hash[ RCAP::CAP_1_1::Info::PARAMETERS_KEY].should == @info.parameters.map { |parameter| parameter.to_h }
+        @info_hash[RCAP::CAP_1_1::Info::PARAMETERS_KEY].should == @info.parameters.map { |parameter| parameter.to_h }
       end
 
       it('should export the resources ') do
-        @info_hash[ RCAP::CAP_1_1::Info::RESOURCES_KEY].should == @info.resources.map { |resource| resource.to_h }
+        @info_hash[RCAP::CAP_1_1::Info::RESOURCES_KEY].should == @info.resources.map { |resource| resource.to_h }
       end
 
       it('should export the areas') do
-        @info_hash[ RCAP::CAP_1_1::Info::AREAS_KEY].should == @info.areas.map { |area| area.to_h }
+        @info_hash[RCAP::CAP_1_1::Info::AREAS_KEY].should == @info.areas.map { |area| area.to_h }
       end
     end
   end

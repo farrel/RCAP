@@ -155,7 +155,6 @@ describe(Validation::ClassMethods) do
         @object.contingent_value = nil
         @object.should(be_valid)
       end
-
     end
 
     context('with :is') do

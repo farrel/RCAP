@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ALLOWED_CHARACTERS = /[^\s&<]+/
+ALLOWED_CHARACTERS = /[^\s&<]+/.freeze
 
 module RCAP
   # Returns a randomly generated UUID string

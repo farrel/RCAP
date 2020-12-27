@@ -12,14 +12,14 @@ describe(RCAP::CAP_1_2::Alert) do
       ['Address 1', 'Address 2'].each do |address|
         alert.addresses << address
       end
-      %w(Code1 Code2).each do |code|
+      %w[Code1 Code2].each do |code|
         alert.codes << code
       end
-      alert.note        = 'Note'
-      %w(Reference1 Reference2).each do |reference|
+      alert.note = 'Note'
+      %w[Reference1 Reference2].each do |reference|
         alert.references << reference
       end
-      %w(Incident1 Incident2).each do |incident|
+      %w[Incident1 Incident2].each do |incident|
         alert.incidents << incident
       end
       2.times do
@@ -29,7 +29,7 @@ describe(RCAP::CAP_1_2::Alert) do
   end
 
   context('on initialisation') do
-    before(:each)  do
+    before(:each) do
       @alert = RCAP::CAP_1_2::Alert.new
     end
 
@@ -77,7 +77,6 @@ describe(RCAP::CAP_1_2::Alert) do
       end
 
       it_should_behave_like('a successfully parsed CAP 1.2 alert')
-
     end
 
     context('from YAML') do
@@ -180,7 +179,7 @@ describe(RCAP::CAP_1_2::Alert) do
 
       it('has in invalid info attribute') do
         @info = RCAP::CAP_1_2::Info.new do |info|
-          info.event      = 'Info Event'
+          info.event = 'Info Event'
           info.categories << RCAP::CAP_1_2::Info::CATEGORY_GEO
           info.urgency    = RCAP::CAP_1_2::Info::URGENCY_IMMEDIATE
           info.severity   = RCAP::CAP_1_2::Info::SEVERITY_EXTREME
@@ -219,7 +218,7 @@ describe(RCAP::CAP_1_2::Alert) do
     describe('#to_xml') do
       context('with pretty_print = true') do
         it('should not raise an exception') do
-          lambda { @alert.to_xml(true) }.should_not(raise_exception)
+          -> { @alert.to_xml(true) }.should_not(raise_exception)
         end
       end
     end

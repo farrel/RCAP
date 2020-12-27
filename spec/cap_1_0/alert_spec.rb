@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe(RCAP::CAP_1_0::Alert) do
   context('on initialisation') do
-    before(:each)  do
+    before(:each) do
       @alert = RCAP::CAP_1_0::Alert.new
 
       @original_alert = RCAP::CAP_1_0::Alert.new do |alert|
@@ -15,17 +15,17 @@ describe(RCAP::CAP_1_0::Alert) do
         ['Address 1', 'Address 2'].each do |address|
           alert.addresses << address
         end
-        %w(Code1 Code2).each do |code|
+        %w[Code1 Code2].each do |code|
           alert.codes << code
         end
         alert.note = 'Note'
-        %w(Sender1 Sender2).each do |sender|
+        %w[Sender1 Sender2].each do |sender|
           a = RCAP::CAP_1_0::Alert.new do |a|
             a.sender = sender
           end
           alert.references << a.to_reference
         end
-        %w(Incident1 Incident2).each do |incident|
+        %w[Incident1 Incident2].each do |incident|
           alert.incidents << incident
         end
         2.times { alert.add_info }
@@ -75,7 +75,6 @@ describe(RCAP::CAP_1_0::Alert) do
       end
 
       it_should_behave_like('a successfully parsed CAP 1.0 alert')
-
     end
 
     context('from YAML') do

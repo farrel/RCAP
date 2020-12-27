@@ -66,9 +66,8 @@ describe(RCAP::CAP_1_0::Area) do
 
     context('from XML') do
       before(:each) do
-
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.add_info.areas <<  @original_area
+        @alert.add_info.areas << @original_area
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new(@xml_string)
         @info_xml_element = RCAP.xpath_first(@xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS)
@@ -81,7 +80,6 @@ describe(RCAP::CAP_1_0::Area) do
 
     context('from YAML Data') do
       before(:each) do
-
         @area = RCAP::CAP_1_0::Area.from_yaml_data(YAML.load(@original_area.to_yaml))
       end
 
@@ -90,7 +88,6 @@ describe(RCAP::CAP_1_0::Area) do
 
     context('from a hash') do
       before(:each) do
-
         @area = RCAP::CAP_1_0::Area.from_h(@original_area.to_h)
       end
 
@@ -129,27 +126,27 @@ describe(RCAP::CAP_1_0::Area) do
       end
 
       it('should export the area description correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::AREA_DESC_KEY].should == @area.area_desc
+        @area_hash[RCAP::CAP_1_0::Area::AREA_DESC_KEY].should == @area.area_desc
       end
 
       it('should export the altitude correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::ALTITUDE_KEY].should == @area.altitude
+        @area_hash[RCAP::CAP_1_0::Area::ALTITUDE_KEY].should == @area.altitude
       end
 
       it('should set the ceiling correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::CEILING_KEY].should == @area.ceiling
+        @area_hash[RCAP::CAP_1_0::Area::CEILING_KEY].should == @area.ceiling
       end
 
       it('should export the circles correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::CIRCLES_KEY].should == @area.circles.map { |circle| circle.to_a }
+        @area_hash[RCAP::CAP_1_0::Area::CIRCLES_KEY].should == @area.circles.map { |circle| circle.to_a }
       end
 
       it('should export the geocodes correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::GEOCODES_KEY].should == @area.geocodes.map { |geocode| geocode.to_h }
+        @area_hash[RCAP::CAP_1_0::Area::GEOCODES_KEY].should == @area.geocodes.map { |geocode| geocode.to_h }
       end
 
       it('should export the polygons correctly') do
-        @area_hash[ RCAP::CAP_1_0::Area::POLYGONS_KEY].should == @area.polygons.map { |polygon| polygon.to_h }
+        @area_hash[RCAP::CAP_1_0::Area::POLYGONS_KEY].should == @area.polygons.map { |polygon| polygon.to_h }
       end
     end
   end

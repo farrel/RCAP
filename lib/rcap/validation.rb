@@ -130,9 +130,7 @@ module Validation
 
     # Validates the given instance.
     def validate(o)
-      if superclass.respond_to?(:validate) && !@skip_superclass_validations
-        superclass.validate(o)
-      end
+      superclass.validate(o) if superclass.respond_to?(:validate) && !@skip_superclass_validations
       validations.each do |att, procs|
         v = o.send(att)
         procs.each { |p| p[o, att, v] }
@@ -164,6 +162,7 @@ module Validation
 
       validates_each(*atts) do |o, a, v|
         next if (v.nil? && opts[:allow_nil]) || (v.blank? && opts[:allow_blank])
+
         o.errors[a] << opts[:message] unless v == opts[:accept]
       end
     end
@@ -176,6 +175,7 @@ module Validation
 
       validates_each(*atts) do |o, a, v|
         next if (v.nil? && opts[:allow_nil]) || (v.blank? && opts[:allow_blank])
+
         c = o.send(:"#{a}_confirmation")
         o.errors[a] << opts[:message] unless v == c
       end
@@ -193,6 +193,7 @@ module Validation
 
       validates_each(*atts) do |o, a, v|
         next if (v.nil? && opts[:allow_nil]) || (v.blank? && opts[:allow_blank])
+
         o.errors[a] << opts[:message] unless v.to_s =~ opts[:with]
       end
     end
@@ -207,6 +208,7 @@ module Validation
 
       validates_each(*atts) do |o, a, v|
         next if (v.nil? && opts[:allow_nil]) || (v.blank? && opts[:allow_blank])
+
         if m = opts[:maximum]
           o.errors[a] << (opts[:message] || opts[:too_long]) unless v && v.size <= m
         end
@@ -222,8 +224,8 @@ module Validation
       end
     end
 
-    NUMBER_RE = /^\d*\.{0,1}\d+$/
-    INTEGER_RE = /\A[+-]?\d+\Z/
+    NUMBER_RE = /^\d*\.{0,1}\d+$/.freeze
+    INTEGER_RE = /\A[+-]?\d+\Z/.freeze
 
     # Validates whether an attribute is a number.
     def validates_numericality_of(*atts)
@@ -235,6 +237,7 @@ module Validation
 
       validates_each(*atts) do |o, a, v|
         next if (v.nil? && opts[:allow_nil]) || (v.blank? && opts[:allow_blank])
+
         o.errors[a] << opts[:message] unless v.to_s =~ re
       end
     end

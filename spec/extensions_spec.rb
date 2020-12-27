@@ -14,7 +14,7 @@ describe(Array) do
 
     context('without an element containing white space') do
       before(:all) do
-        @list = %w(one two three)
+        @list = %w[one two three]
       end
       it('should format the list correctly') do
         @list.to_s_for_cap.should == 'one two three'
@@ -51,7 +51,7 @@ describe(String) do
     end
 
     it('should unpack strings correclty') do
-      'Item1 Item2 Item3'.unpack_cap_list.should == %w(Item1 Item2 Item3)
+      'Item1 Item2 Item3'.unpack_cap_list.should == %w[Item1 Item2 Item3]
     end
   end
 

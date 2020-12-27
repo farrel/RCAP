@@ -14,9 +14,8 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, value|
         next if  value.nil? && options[:allow_nil]
-        unless options[:in].include?(value)
-          object.errors[attribute] << options[:message]
-        end
+
+        object.errors[attribute] << options[:message] unless options[:in].include?(value)
       end
     end
 
@@ -30,9 +29,8 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, collection|
         next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
-        unless collection.all? { |member| options[:in].include?(member) }
-          object.errors[attribute] << options[:message]
-        end
+
+        object.errors[attribute] << options[:message] unless collection.all? { |member| options[:in].include?(member) }
       end
     end
 
@@ -43,9 +41,8 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, collection|
         next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
-        unless options[:minimum] && collection.length >= options[:minimum]
-          object.errors[attribute] << options[:message]
-        end
+
+        object.errors[attribute] << options[:message] unless options[:minimum] && collection.length >= options[:minimum]
       end
     end
 
@@ -56,6 +53,7 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, value|
         next if  value.nil? && options[:allow_nil]
+
         object.errors[attribute] << options[:message] unless value&.valid?
       end
     end
@@ -67,9 +65,8 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, collection|
         next if (collection.nil? && options[:allow_nil]) || (collection.empty? && options[:allow_empty])
-        unless collection.all?(&:valid?)
-          object.errors[attribute] << options[:message]
-        end
+
+        object.errors[attribute] << options[:message] unless collection.all?(&:valid?)
       end
     end
 
@@ -80,6 +77,7 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, value|
         next if value.blank?
+
         contingent_on_attribute = object.send(options[:on])
         contingent_on_attribute_value = options[:with_value]
 
@@ -98,7 +96,10 @@ module Validation
         contingent_attribute_value = object.send(options[:when])
         required_contingent_attribute_value = options[:is]
 
-        next if contingent_attribute_value.nil? || contingent_attribute_value != required_contingent_attribute_value && !options[:is].blank?
+        if contingent_attribute_value.nil? || contingent_attribute_value != required_contingent_attribute_value && !options[:is].blank?
+          next
+        end
+
         if value.blank?
           object.errors[attribute] << options[:message].gsub(/:contingent_attribute/, options[:whenn].to_s)
         end
@@ -114,6 +115,7 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, value|
         next if value.nil? && options[:allow_nil]
+
         unless (value.to_s =~ re) &&
                (options[:greater_than].nil? || value && value > options[:greater_than]) &&
                (options[:greater_than_or_equal].nil? || value && value >= options[:greater_than_or_equal])
@@ -129,6 +131,7 @@ module Validation
 
       validates_each(*attributes) do |object, attribute, _value|
         next if  collection.nil? && options[:allow_nil]
+
         unless options[:to].all? { |method_name| object.respond_to?(method_name) }
           object.errors[attribute] << options [:message]
         end
@@ -143,9 +146,8 @@ module Validation
       validates_each(*attributes) do |object, attribute, collection|
         next if collection.nil? && options[:allow_nil]
         next if collection.empty? && options[:allow_empty]
-        unless collection.first == collection.last
-          object.errors[attribute] << options[:message]
-        end
+
+        object.errors[attribute] << options[:message] unless collection.first == collection.last
       end
     end
   end

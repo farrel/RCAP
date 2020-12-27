@@ -153,33 +153,33 @@ describe(RCAP::CAP_1_1::Resource) do
       end
 
       it('should set the resource description') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::RESOURCE_DESC_KEY].should == @resource.resource_desc
+        @resource_hash[RCAP::CAP_1_1::Resource::RESOURCE_DESC_KEY].should == @resource.resource_desc
       end
 
       it('should set the mime type') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::MIME_TYPE_KEY].should == @resource.mime_type
+        @resource_hash[RCAP::CAP_1_1::Resource::MIME_TYPE_KEY].should == @resource.mime_type
       end
 
       it('should set the size') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::SIZE_KEY].should == @resource.size
+        @resource_hash[RCAP::CAP_1_1::Resource::SIZE_KEY].should == @resource.size
       end
 
       it('should set the URI') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::URI_KEY].should == @resource.uri
+        @resource_hash[RCAP::CAP_1_1::Resource::URI_KEY].should == @resource.uri
       end
 
       it('should set the dereferenced URI') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::DEREF_URI_KEY].should == @resource.deref_uri
+        @resource_hash[RCAP::CAP_1_1::Resource::DEREF_URI_KEY].should == @resource.deref_uri
       end
 
       it('should set the digest') do
-        @resource_hash[ RCAP::CAP_1_1::Resource::DIGEST_KEY].should == @resource.digest
+        @resource_hash[RCAP::CAP_1_1::Resource::DIGEST_KEY].should == @resource.digest
       end
     end
 
     context('to xml') do
       it('should be successful') do
-        lambda { @resource_xml = @resource.to_xml }.should_not(raise_exception)
+        -> { @resource_xml = @resource.to_xml }.should_not(raise_exception)
       end
     end
   end
@@ -214,15 +214,15 @@ describe(RCAP::CAP_1_1::Resource) do
 
     describe('#dereference_uri!') do
       it('should fetch the content and store it in deref_uri as Base64 encoded content') do
-        lambda { @resource.dereference_uri! }.should(change(@resource, :deref_uri).to(@encoded_content))
+        -> { @resource.dereference_uri! }.should(change(@resource, :deref_uri).to(@encoded_content))
       end
 
       it('should generate the correct SHA1 hash') do
-        lambda { @resource.dereference_uri! }.should(change(@resource, :digest).to(Digest::SHA1.hexdigest(@encoded_content)))
+        -> { @resource.dereference_uri! }.should(change(@resource, :digest).to(Digest::SHA1.hexdigest(@encoded_content)))
       end
 
       it('should set the size in bytes') do
-        lambda { @resource.dereference_uri! }.should(change(@resource, :size).to(@encoded_content.bytesize))
+        -> { @resource.dereference_uri! }.should(change(@resource, :size).to(@encoded_content.bytesize))
       end
     end
   end
@@ -241,11 +241,11 @@ describe(RCAP::CAP_1_1::Resource) do
 
     describe('#calculate_hash_and_size') do
       it('should generate the correct SHA1 hash') do
-        lambda { @resource.calculate_hash_and_size }.should(change(@resource, :digest).to(Digest::SHA1.hexdigest(@encoded_content)))
+        -> { @resource.calculate_hash_and_size }.should(change(@resource, :digest).to(Digest::SHA1.hexdigest(@encoded_content)))
       end
 
       it('should set the size in bytes') do
-        lambda { @resource.calculate_hash_and_size }.should(change(@resource, :size).to(@encoded_content.bytesize))
+        -> { @resource.calculate_hash_and_size }.should(change(@resource, :size).to(@encoded_content.bytesize))
       end
     end
 

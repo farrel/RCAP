@@ -12,14 +12,14 @@ describe(RCAP::CAP_1_1::Alert) do
       ['Address 1', 'Address 2'].each do |address|
         alert.addresses << address
       end
-      %w(Code1 Code2).each do |code|
+      %w[Code1 Code2].each do |code|
         alert.codes << code
       end
-      alert.note        = 'Note'
-      %w(Reference1 Reference2).each do |reference|
+      alert.note = 'Note'
+      %w[Reference1 Reference2].each do |reference|
         alert.references << reference
       end
-      %w(Incident1 Incident2).each do |_incident|
+      %w[Incident1 Incident2].each do |_incident|
       end
       alert.add_info
       alert.add_info
@@ -27,7 +27,7 @@ describe(RCAP::CAP_1_1::Alert) do
   end
 
   context('on initialisation') do
-    before(:each)  do
+    before(:each) do
       @alert = RCAP::CAP_1_1::Alert.new
     end
 
@@ -75,7 +75,6 @@ describe(RCAP::CAP_1_1::Alert) do
       end
 
       it_should_behave_like('a successfully parsed CAP 1.1 alert')
-
     end
 
     context('from YAML') do
@@ -168,7 +167,7 @@ describe(RCAP::CAP_1_1::Alert) do
     context('has an info element and it') do
       it('is not valid') do
         @info = @alert.add_info do |info|
-          info.event      = 'Info Event'
+          info.event = 'Info Event'
           info.categories << RCAP::CAP_1_1::Info::CATEGORY_GEO
           info.urgency    = RCAP::CAP_1_1::Info::URGENCY_IMMEDIATE
           info.severity   = RCAP::CAP_1_1::Info::SEVERITY_EXTREME

@@ -86,7 +86,6 @@ describe(RCAP::CAP_1_0::Resource) do
         @resource.digest.should == @original_resource.digest
       end
     end
-
   end
 
   context('when exported') do
@@ -106,29 +105,29 @@ describe(RCAP::CAP_1_0::Resource) do
       end
 
       it('should set the resource description') do
-        @resource_hash[ RCAP::CAP_1_0::Resource::RESOURCE_DESC_KEY].should == @resource.resource_desc
+        @resource_hash[RCAP::CAP_1_0::Resource::RESOURCE_DESC_KEY].should == @resource.resource_desc
       end
 
       it('should set the mime type') do
-        @resource_hash[ RCAP::CAP_1_0::Resource::MIME_TYPE_KEY].should == @resource.mime_type
+        @resource_hash[RCAP::CAP_1_0::Resource::MIME_TYPE_KEY].should == @resource.mime_type
       end
 
       it('should set the size') do
-        @resource_hash[ RCAP::CAP_1_0::Resource::SIZE_KEY].should == @resource.size
+        @resource_hash[RCAP::CAP_1_0::Resource::SIZE_KEY].should == @resource.size
       end
 
       it('should set the URI') do
-        @resource_hash[ RCAP::CAP_1_0::Resource::URI_KEY].should == @resource.uri
+        @resource_hash[RCAP::CAP_1_0::Resource::URI_KEY].should == @resource.uri
       end
 
       it('should set the digest') do
-        @resource_hash[ RCAP::CAP_1_0::Resource::DIGEST_KEY].should == @resource.digest
+        @resource_hash[RCAP::CAP_1_0::Resource::DIGEST_KEY].should == @resource.digest
       end
     end
 
     context('to xml') do
       it('should be successful') do
-        lambda { @resource_xml = @resource.to_xml }.should_not(raise_exception)
+        -> { @resource_xml = @resource.to_xml }.should_not(raise_exception)
       end
     end
   end

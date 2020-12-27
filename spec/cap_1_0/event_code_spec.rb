@@ -9,7 +9,7 @@ describe(RCAP::CAP_1_0::EventCode) do
           event_code.value = 'value'
         end
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.add_info.event_codes <<  @original_event_code
+        @alert.add_info.event_codes << @original_event_code
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new(@xml_string)
         @info_xml_element = RCAP.xpath_first(@xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS)

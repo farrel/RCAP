@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe(RCAP::Alert) do
   describe('initialising') do
-
     context('a CAP 1.0 alert') do
       before(:each) do
         @original_alert = RCAP::CAP_1_0::Alert.new do |alert|
@@ -15,14 +14,14 @@ describe(RCAP::Alert) do
           ['Address 1', 'Address 2'].each do |address|
             alert.addresses << address
           end
-          %w(Code1 Code2).each do |code|
+          %w[Code1 Code2].each do |code|
             alert.codes << code
           end
           alert.note = 'Note'
           ['1.0,1', '1.0,2'].each do |reference|
             alert.references << reference
           end
-          %w(Incident1 Incident2).each do |incident|
+          %w[Incident1 Incident2].each do |incident|
             alert.incidents << incident
           end
           2.times { alert.add_info }
@@ -87,14 +86,14 @@ describe(RCAP::Alert) do
           ['Address 1', 'Address 2'].each do |address|
             alert.addresses << address
           end
-          %w(Code1 Code2).each do |code|
+          %w[Code1 Code2].each do |code|
             alert.codes << code
           end
           alert.note = 'Note'
           ['1,1,1', '1,1,2'].each do |reference|
             alert.references << reference
           end
-          %w(Incident1 Incident2).each do |incident|
+          %w[Incident1 Incident2].each do |incident|
             alert.incidents << incident
           end
           2.times { alert.add_info }
@@ -102,7 +101,7 @@ describe(RCAP::Alert) do
       end
 
       shared_examples_for('it has parsed a CAP 1.1 alert correctly') do
-        it('should use the correct CAP Version') { @alert.class.should       == RCAP::CAP_1_1::Alert }
+        it('should use the correct CAP Version') { @alert.class.should == RCAP::CAP_1_1::Alert }
         it('should parse identifier correctly') { @alert.identifier.should  == @original_alert.identifier }
         it('should parse sender correctly')     { @alert.sender.should      == @original_alert.sender }
         it('should parse sent correctly')       { @alert.sent.should(be_within(1).of(@original_alert.sent)) }
@@ -159,14 +158,14 @@ describe(RCAP::Alert) do
           ['Address 1', 'Address 2'].each do |address|
             alert.addresses << address
           end
-          %w(Code1 Code2).each do |code|
+          %w[Code1 Code2].each do |code|
             alert.codes << code
           end
           alert.note = 'Note'
           ['1,1,1', '1,1,2'].each do |reference|
             alert.references << reference
           end
-          %w(Incident1 Incident2).each do |incident|
+          %w[Incident1 Incident2].each do |incident|
             alert.incidents << incident
           end
           2.times { alert.add_info }
@@ -174,7 +173,7 @@ describe(RCAP::Alert) do
       end
 
       shared_examples_for('it has parsed a CAP 1.2 alert correctly') do
-        it('should use the correct CAP Version') { @alert.class.should       == RCAP::CAP_1_2::Alert }
+        it('should use the correct CAP Version') { @alert.class.should == RCAP::CAP_1_2::Alert }
         it('should parse identifier correctly') { @alert.identifier.should  == @original_alert.identifier }
         it('should parse sender correctly')     { @alert.sender.should      == @original_alert.sender }
         it('should parse sent correctly')       { @alert.sent.should(be_within(1).of(@original_alert.sent)) }

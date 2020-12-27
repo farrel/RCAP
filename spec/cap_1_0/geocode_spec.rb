@@ -9,7 +9,7 @@ describe(RCAP::CAP_1_0::Geocode) do
           geocode.value = 'value'
         end
         @alert = RCAP::CAP_1_0::Alert.new
-        @alert.add_info.add_area.geocodes <<  @original_geocode
+        @alert.add_info.add_area.geocodes << @original_geocode
         @xml_string = @alert.to_xml
         @xml_document = REXML::Document.new(@xml_string)
         @info_xml_element = RCAP.xpath_first(@xml_document.root, RCAP::CAP_1_0::Info::XPATH, RCAP::CAP_1_0::Alert::XMLNS)

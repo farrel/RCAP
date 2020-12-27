@@ -42,19 +42,13 @@ module RCAP
         xml_element.add_element(SOURCE_ELEMENT_NAME).add_text(@source.to_s)           if @source
         xml_element.add_element(SCOPE_ELEMENT_NAME).add_text(@scope.to_s)             if @scope
         xml_element.add_element(RESTRICTION_ELEMENT_NAME).add_text(@restriction.to_s) if @restriction
-        if @addresses.any?
-          xml_element.add_element(ADDRESSES_ELEMENT_NAME).add_text(@addresses.to_s_for_cap)
-        end
+        xml_element.add_element(ADDRESSES_ELEMENT_NAME).add_text(@addresses.to_s_for_cap) if @addresses.any?
         @codes.each do |code|
           xml_element.add_element(CODE_ELEMENT_NAME).add_text(code.to_s)
         end
         xml_element.add_element(NOTE_ELEMENT_NAME).add_text(@note.to_s) if @note
-        if @references.any?
-          xml_element.add_element(REFERENCES_ELEMENT_NAME).add_text(@references.join(' '))
-        end
-        if @incidents.any?
-          xml_element.add_element(INCIDENTS_ELEMENT_NAME).add_text(@incidents.join(' '))
-        end
+        xml_element.add_element(REFERENCES_ELEMENT_NAME).add_text(@references.join(' ')) if @references.any?
+        xml_element.add_element(INCIDENTS_ELEMENT_NAME).add_text(@incidents.join(' ')) if @incidents.any?
         @infos.each do |info|
           xml_element.add_element(info.to_xml_element)
         end

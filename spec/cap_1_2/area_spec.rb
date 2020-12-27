@@ -108,27 +108,27 @@ describe(RCAP::CAP_1_2::Area) do
       end
 
       it('should export the area description correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::AREA_DESC_KEY].should == @area.area_desc
+        @area_hash[RCAP::CAP_1_2::Area::AREA_DESC_KEY].should == @area.area_desc
       end
 
       it('should export the altitude correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::ALTITUDE_KEY].should == @area.altitude
+        @area_hash[RCAP::CAP_1_2::Area::ALTITUDE_KEY].should == @area.altitude
       end
 
       it('should set the ceiling correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::CEILING_KEY].should == @area.ceiling
+        @area_hash[RCAP::CAP_1_2::Area::CEILING_KEY].should == @area.ceiling
       end
 
       it('should export the circles correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::CIRCLES_KEY].should == @area.circles.map { |circle| circle.to_a }
+        @area_hash[RCAP::CAP_1_2::Area::CIRCLES_KEY].should == @area.circles.map { |circle| circle.to_a }
       end
 
       it('should export the geocodes correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::GEOCODES_KEY].should == @area.geocodes.map { |geocode| geocode.to_h }
+        @area_hash[RCAP::CAP_1_2::Area::GEOCODES_KEY].should == @area.geocodes.map { |geocode| geocode.to_h }
       end
 
       it('should export the polygons correctly') do
-        @area_hash[ RCAP::CAP_1_2::Area::POLYGONS_KEY].should == @area.polygons.map { |polygon| polygon.to_h }
+        @area_hash[RCAP::CAP_1_2::Area::POLYGONS_KEY].should == @area.polygons.map { |polygon| polygon.to_h }
       end
     end
   end
